@@ -8,7 +8,8 @@
 
 global rel_path := "" . A_ScriptDir . "\assets\"
 ;global img_path := %rel_path%p_wh_wh.png
-global img_path := "" . rel_path . "p_wh_wh.png"
+
+;  global img_path := "" . rel_path . "p_wh_wh.png"
 
 
 ; Exit
@@ -48,7 +49,7 @@ global my_color := "white"
 
 ;make_new_position()
 CreateBoard()
-GetMyColor()
+;GetMyColor()
 ;Output()
 
 SpotTest() {
@@ -104,63 +105,37 @@ IDPiece(spot) {
   img_x := 0
   img_y := 0
 
-;  MsgBox, %rel_path%
   Sleep, 50
 
-;  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %rel_path%p_wh_wh.png
-;  MouseMove, x, y
-;  MsgBox, % "image info:  x:" . x1 . " y:" . y1 . " x:" . x2 . " y:" . y2 . "img_x_y: " . img_x . "  " . img_y . ""
-;  Return img_x
-
   if (IsPawn(x1, y1, x2, y2)) {
-;    MsgBox, Found PAWN.
     return "pawn"
   } else {
-;    MsgBox, no find
-;    MsgBox, %img_path%
     return "unsure"
   }
 }
 
 IsPawn(x1, y1, x2, y2) {
-  img_path := "" rel_path . "p_wh_wh.png"
-;  MsgBox, % "" . img_path . "  " . x1 . " " . y1 " " . x2 . " " . y2 . ""
-;  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %rel_path%p_wh_wh.png
-  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
-  MouseMove, x1 + 50, y1 + 50
-;  MsgBox, % "" . img_path . "  " . img_x . "   " . img_y . ""
-;  ImgSearch(x, y, x1, y1, x2, y2, piece_img)
-  if img_x {
-;    MsgBox, % "" . img_path . "  TRUE  " . x . "   " . y . ""
-    return true
-  } else {
-;    MsgBox, FALSE
-    return false
+  pawn_images := ["p_wh_wh.png", "p_wh_gr.png", "p_bl_wh.png", "p_wh_gr.png"]
+  Loop, 4 {
+    pawn_img := pawn_images[A_Index]
+    img_path := "" rel_path . pawn_img . ""
+
+    if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
+      MouseMove, x1 + 50, y1 + 50
+      return true
+    } else {
+      MouseMove, x1 + 50, y1 + 50
+    }
   }
 }
-  ; } else {
-  ;   ImageSearch, x, y, x1, y1, x2, y2, *100 %rel_path%\p_wh_wh.png
-  ;   if x {
-  ;     return true
-  ;   }
-  ; }
-  ; MouseMove, x, y
-  ; MsgBox, % "image info:  x:" . x1 . " y:" . y1 . " x:" . x2 . " y:" . y2 . "img_x_y: " . img_x . "  " . img_y . ""
 
-
-  ; return
-;}
-
-
-ImgSearch(x1, y1, x2, y2) {
-  piece_img := "p_wh_wh.png"
-  img_path := "" rel_path . piece_img . ""
+ImageMatches(x1, y1, x2, y2, img_path) {
   ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
-  MsgBox, % "" . img_path . "  img_x_y: " . img_x . "  " . img_y ""
   if (img_x) {
     return true
+  } else {
+    return false
   }
-
 }
 
 
