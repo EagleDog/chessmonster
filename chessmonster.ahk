@@ -4,20 +4,12 @@
 ;board_scope := "147, 205  to  849, 908" ;(702 x 761 )
 ;square_size := "87 by 95"  ;87 x 87
 
-; global x_begin := 191
-; global y_begin := 861
-; global x_incr := 87
-; global y_incr := -95
-; global a1 := [191, 861]
-; global b1 := [0, 0]
-; global x_pos := 0
-; global y_pos := 0
-; global black := 0x565352
-; global board_gr := 0x779954
-; global board_wh := 0xEDEDCC
+;#Include VA.ahk
 
+global rel_path := "" . A_ScriptDir . "\assets\"
+;global img_path := %rel_path%p_wh_wh.png
+global img_path := "" . rel_path . "p_wh_wh.png"
 
-#Include VA.ahk
 
 ; Exit
 ; Pause On
@@ -59,34 +51,135 @@ CreateBoard()
 GetMyColor()
 ;Output()
 
+SpotTest() {
+  x := board["a2"].x
+  y := board["a2"].y
+  MsgBox, % "" . x . "   " . y . ""
+  Output()
+}
 
-;      END MAIN LOOP ============   END MAIN LOOP END     END MAIN LOOP END
+IDTest() {
+  x := board["a2"].x
+  y := board["a2"].y
+  MouseMove, x, y
+  MsgBox, %img_path%
+  IDPiece("a2")
+;  MsgBox, % "" . IDPiece("a2") . ""
+  Sleep, 100
+;  IsPawn()
 
-Listen() {
-;  msgbox, Listening...
-  triggerVol := 0.0001
-  audioMeter := VA_GetAudioMeter()
-  VA_IAudioMeterInformation_GetMeteringChannelCount(audioMeter, channelCount)
-  VA_GetDevicePeriod("capture", devicePeriod)
-;  Return
-  VA_IAudioMeterInformation_GetPeakValue(audioMeter, peakValue)
-  ;msgbox, %peakValue% 
-  loop{
-    while (peakValue > triggerVol)
-    {
-;      click
-;      SoundBeep
-      msgbox, I heard that
-      sleep, 20
-      VA_IAudioMeterInformation_GetPeakValue(audioMeter, peakValue) 
+}
+
+FindMyGuys() {
+;  source := "a1"  ---  source is a spot
+  source := RandomSquare()
+  ; if (SquareID(source) = my_color) {
+  ; } else {
+    while (SquareID(source) != my_color) {
+      sleep, 50
+      MouseMove, board[source].x, board[source].y
+;      MsgBox, % "Source: " . source . "  ID: " . SquareID(source) . "   my_color: " . my_color . ""
+      sleep, 50
+      source := RandomSquare()
     }
-    sleep, 10
-  }
+    sleep, 50
+    guy_spot := source
+    MouseMove, board[source].x, board[source].y
+    MsgBox, % "Found my guy.  Source: " . source . "  ID: " . SquareID(source) . "   my_color: " . my_color . ""
+
+    MsgBox, % "" . IDPiece(guy_spot) . ""
+
+;  }
 }
 
 
 
+IDPiece(spot) {
+  x := board[spot].x
+  y := board[spot].y - 30
+  x1 := x - 50
+  y1 := y - 50
+  x2 := x + 50
+  y2 := y + 50
+  img_x := 0
+  img_y := 0
 
+;  MsgBox, %rel_path%
+  Sleep, 50
+
+;  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %rel_path%p_wh_wh.png
+;  MouseMove, x, y
+;  MsgBox, % "image info:  x:" . x1 . " y:" . y1 . " x:" . x2 . " y:" . y2 . "img_x_y: " . img_x . "  " . img_y . ""
+;  Return img_x
+
+  if (IsPawn(x1, y1, x2, y2)) {
+;    MsgBox, Found PAWN.
+    return "pawn"
+  } else {
+;    MsgBox, no find
+;    MsgBox, %img_path%
+    return "unsure"
+  }
+}
+
+IsPawn(x1, y1, x2, y2) {
+  img_path := "" rel_path . "p_wh_wh.png"
+;  MsgBox, % "" . img_path . "  " . x1 . " " . y1 " " . x2 . " " . y2 . ""
+;  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %rel_path%p_wh_wh.png
+  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
+  MouseMove, x1 + 50, y1 + 50
+;  MsgBox, % "" . img_path . "  " . img_x . "   " . img_y . ""
+;  ImgSearch(x, y, x1, y1, x2, y2, piece_img)
+  if img_x {
+;    MsgBox, % "" . img_path . "  TRUE  " . x . "   " . y . ""
+    return true
+  } else {
+;    MsgBox, FALSE
+    return false
+  }
+}
+  ; } else {
+  ;   ImageSearch, x, y, x1, y1, x2, y2, *100 %rel_path%\p_wh_wh.png
+  ;   if x {
+  ;     return true
+  ;   }
+  ; }
+  ; MouseMove, x, y
+  ; MsgBox, % "image info:  x:" . x1 . " y:" . y1 . " x:" . x2 . " y:" . y2 . "img_x_y: " . img_x . "  " . img_y . ""
+
+
+  ; return
+;}
+
+
+ImgSearch(x1, y1, x2, y2) {
+  piece_img := "p_wh_wh.png"
+  img_path := "" rel_path . piece_img . ""
+  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
+  MsgBox, % "" . img_path . "  img_x_y: " . img_x . "  " . img_y ""
+  if (img_x) {
+    return true
+  }
+
+}
+
+
+
+IsKnight() {
+  return
+}
+IsBishop() {
+  return
+}
+IsRook() {
+  return
+}
+IsQueen() {
+  return
+}
+IsKing() {
+  return
+}
 NewGame() {
   next_move := 1
   GetMyColor()
@@ -212,29 +305,6 @@ Output() {
   MsgBox, % "b2:  x: " . board["b2"].x . "  y: " . board["b2"].y . ""
 }
 
-FindMyGuys() {
-;  source := "a1"
-  source := RandomSquare()
-  ; if (SquareID(source) = my_color) {
-  ; } else {
-    while (SquareID(source) != my_color) {
-      sleep, 50
-      MouseMove, board[source].x, board[source].y
-      MsgBox, % "Source: " . source . "  ID: " . SquareID(source) . "   my_color: " . my_color . ""
-      sleep, 50
-      source := RandomSquare()
-    }
-    sleep, 50
-    MouseMove, board[source].x, board[source].y
-    MsgBox, % "Found my guy.  Source: " . source . "  ID: " . SquareID(source) . "   my_color: " . my_color . ""
-
-
-;  }
-}
-
-
-
-
 
 
 SquareID(spot) {
@@ -278,11 +348,6 @@ CheckColor(spot, the_color, color_name) {
   x2 := board[spot].x
   y2 := board[spot].y
 
-  ; if color_name = "board_gr" or "board_wh"
-  ;   variation = 60
-  ; else
-  ;   variation = 20
-
   PixelSearch, color_x, color_y , x1, y1, x2, y2, the_color, 10, Fast
   MouseMove, x2, y2
   If color_x {
@@ -293,39 +358,25 @@ CheckColor(spot, the_color, color_name) {
 ;  GetColor(spot)
 }
 
+
+
+
 ;======= KEYBOARD SHORTCUTS ===================
 
 ^+z::Pause           ; ctrl + shift + z
 ^+x::ExitApp            ; ctrl + shift + x
 
-; 1::GetColor("b3")
-; 2::GetColor("c3")
-; 3::GetColor("d1")
-; 4::GetColor("a6")
 
-; 1::MovePiece("e2", "e4")
-; 2::MovePiece("d2", "d3")
-; 3::MovePiece("a2", "a3")
-; 4::MovePiece("g1", "f3")
-
-; a::CheckColor("c7", black, "black")
-; s::CheckColor("d7", black, "black")
-; d::CheckColor("e7", black, "black")
-; f::CheckColor("f3", black, "black")
-
-; z::CheckColor("b3", white, "white")
-; x::CheckColor("c3", white, "white")
-; c::CheckColor("d3", white, "white")
-; v::CheckColor("d4", board_gr, "board_gr")
-; b::CheckColor("d5", board_wh, "board_wh")
-; n::CheckColor("f3", board_wh, "board_wh")
-; m::CheckColor("g3", board_wh, "board_wh")
 
 
 
 1::NewGame()
 2::TryMove()
+
 3::DriftMouse()
 4::FindMyGuys()
 
-0::Listen()
+
+;0::SpotTest()
+0::IDTest()
+;0::MsgBox, % "" . IDPiece("a2") . ""
