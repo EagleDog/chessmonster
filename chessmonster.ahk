@@ -107,27 +107,68 @@ IDPiece(spot) {
 
   Sleep, 50
 
-  if (IsPawn(x1, y1, x2, y2)) {
-    return "pawn"
-  } else {
-    return "unsure"
-  }
+  return WhichPiece(x1, y1, x2, y2)
+
+  ; if ( IsPawn(x1, y1, x2, y2) ) {
+  ;   return "pawn"
+  ; } else if (IsKnight(x1, y1, x2, y2)) {
+  ;   return "knight"
+  ; } else if (IsBishop(x1, y1, x2, y2)) {
+  ;   return "bishop"
+  ; } else if (IsRook(x1, y1, x2, y2)) {
+  ;   return "rook"
+  ; } else if (IsQueen(x1, y1, x2, y2)) {
+  ;   return "queen"
+  ; } else if (IsKing(x1, y1, x2, y2)) {
+  ;   return "king"
+  ; } else {
+  ;   return "unsure"
+  ; }
 }
 
-IsPawn(x1, y1, x2, y2) {
-  pawn_images := ["p_wh_wh.png", "p_wh_gr.png", "p_bl_wh.png", "p_wh_gr.png"]
-  Loop, 4 {
-    pawn_img := pawn_images[A_Index]
-    img_path := "" rel_path . pawn_img . ""
+; IsPawn(x1, y1, x2, y2) {
+;   pawn_images := ["p_wh_wh.png", "p_wh_gr.png", "p_bl_wh.png", "p_wh_gr.png"]
+;   Loop, 4 {
+;     pawn_img := pawn_images[A_Index]
+;     img_path := "" rel_path . pawn_img . ""
 
-    if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
-      MouseMove, x1 + 50, y1 + 50
-      return true
-    } else {
-      MouseMove, x1 + 50, y1 + 50
+;     if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
+;       MouseMove, x1 + 50, y1 + 50
+;       return true
+;     } else {
+;       MouseMove, x1 + 50, y1 + 50
+;     }
+;   }
+; }
+
+WhichPiece(x1, y1, x2, y2) {
+  pawn_images := ["p_wh_wh.png", "p_wh_gr.png", "p_bl_wh.png", "p_wh_gr.png"]
+  knight_images := ["N_wh_wh.png", "N_wh_gr.png", "N_bl_wh.png", "N_wh_gr.png"]
+  bishop_images := ["B_wh_wh.png", "B_wh_gr.png", "B_bl_wh.png", "B_wh_gr.png"]
+  rook_images := ["R_wh_wh.png", "R_wh_gr.png", "R_bl_wh.png", "R_wh_gr.png"]
+  queen_images := ["Q_wh_wh.png", "Q_wh_gr.png", "Q_bl_wh.png", "Q_wh_gr.png"]
+  king_images := ["K_wh_wh.png", "K_wh_gr.png", "K_bl_wh.png", "K_wh_gr.png"]
+
+  piece_names := ["pawn", "knight", "bishop", "rook", "queen", "king"]
+  piece_images := [pawn_images, knight_images, bishop_images, rook_images, queen_images, king_images]
+
+  Loop, 6 {
+    piece_name := piece_names[A_Index]
+    image_set := piece_images[A_Index]
+    Loop, 4 {
+      piece_img := image_set[A_Index]
+      img_path := "" rel_path . piece_img . ""
+
+      if (ImageMatches(x1, y1, x2, y2, img_path)) {
+        MouseMove, x1 + 50, y1 + 50
+        return piece_name
+      ; } else {
+      ;   MouseMove, x1 + 50, y1 + 50
+      }
     }
   }
 }
+
 
 ImageMatches(x1, y1, x2, y2, img_path) {
   ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
@@ -140,21 +181,23 @@ ImageMatches(x1, y1, x2, y2, img_path) {
 
 
 
-IsKnight() {
-  return
-}
-IsBishop() {
-  return
-}
-IsRook() {
-  return
-}
-IsQueen() {
-  return
-}
-IsKing() {
-  return
-}
+; IsKnight(x1, y1, x2, y2) {
+;   return
+; }
+; IsBishop(x1, y1, x2, y2) {
+;   return
+; }
+; IsRook(x1, y1, x2, y2) {
+;   return
+; }
+; IsQueen(x1, y1, x2, y2) {
+;   return
+; }
+; IsKing(x1, y1, x2, y2) {
+;   return
+; }
+
+
 NewGame() {
   next_move := 1
   GetMyColor()
