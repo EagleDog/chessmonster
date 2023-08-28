@@ -5,24 +5,25 @@
 ;square_size := "87 by 95"  ;87 x 87
 
 ;#Include VA.ahk
-
+#Include board_map.ahk
+#Include board_watcher.ahk
+#Include mouse_movements.ahk
 #Include piece_moves.ahk
 
 global rel_path := "" . A_ScriptDir . "\assets\"
 ;global img_path := %rel_path%p_wh_wh.png
-
-;  global img_path := "" . rel_path . "p_wh_wh.png"
-
+;global img_path := "" . rel_path . "p_wh_wh.png"
 
 ; Exit
 ; Pause On
 
-global board := {}
+; global board := {}
+; global b := board
 
-global x_start := 195
-global y_start := 880
-global sq_width := 87
-global sq_height := -88
+; global x_start := 195
+; global y_start := 880
+; global sq_width := 87
+; global sq_height := -88
 
 
 global black := 0x525356
@@ -56,24 +57,14 @@ CreateBoard()
 ;GetMyColor()
 ;Output()
 
-SpotTest() {
-  x := board["a2"].x
-  y := board["a2"].y
-  MsgBox, % "" . x . "   " . y . ""
-  Output()
+
+NewGame() {
+  next_move := 1
+  GetMyColor()
+  FlipBoard()
 }
 
-IDTest() {
-  x := board["a2"].x
-  y := board["a2"].y
-  MouseMove, x, y
-  MsgBox, %img_path%
-  IDPiece("a2")
-;  MsgBox, % "" . IDPiece("a2") . ""
-  Sleep, 100
-;  IsPawn()
 
-}
 
 FindMyGuys() {
   source := RandomSquare()   ;source is a spot
@@ -130,6 +121,12 @@ TryMove() {
   Sleep, 10
 }
 
+; MakeBigMove(spot="f4") {
+;   if FindMove(spot) {
+;     return
+;   }
+; }
+
 FindMove(spot, piece_type) {      ; "e3", "pawn"
   source_rank := board[spot].rank
   source_column := board[spot].column
@@ -141,80 +138,17 @@ FindMove(spot, piece_type) {      ; "e3", "pawn"
 
   target_spot := "" . target_file . target_rank . ""
 
-  MsgBox %target_spot%
-  MovePawn1("e3")
+;  MsgBox %target_spot%
+  target := PawnMoves(spot)
+  if target {
+    MovePiece(spot, target)
+  }
   return target_spot
 }
 
-PawnMove1() {
-  
-}
 
 
-MovePiece(source, target) {
-  MouseMove, board[source].x, board[source].y
-  Click, Down
-  MouseMove, board[target].x, board[target].y
-  Click, Up
-}
 
-DriftMouse() {
-  Random, x, 0, 80
-  Random, y, 0, 80  
-  Random, speed, 1, 7 
-  MouseMove, x - 40, y - 40, speed, Relative
-}
-
-IDPiece(spot) {
-  x := board[spot].x
-  y := board[spot].y - 30
-  x1 := x - 50
-  y1 := y - 50
-  x2 := x + 50
-  y2 := y + 50
-  img_x := 0
-  img_y := 0
-  Sleep, 50
-  return WhichPiece(x1, y1, x2, y2)
-}
-
-WhichPiece(x1, y1, x2, y2) {
-  pawn_images := ["p_wh_wh.png", "p_wh_gr.png", "p_bl_wh.png", "p_wh_gr.png"]
-  knight_images := ["N_wh_wh.png", "N_wh_gr.png", "N_bl_wh.png", "N_wh_gr.png"]
-  bishop_images := ["B_wh_wh.png", "B_wh_gr.png", "B_bl_wh.png", "B_wh_gr.png"]
-  rook_images := ["R_wh_wh.png", "R_wh_gr.png", "R_bl_wh.png", "R_wh_gr.png"]
-  queen_images := ["Q_wh_wh.png", "Q_wh_gr.png", "Q_bl_wh.png", "Q_wh_gr.png"]
-  king_images := ["K_wh_wh.png", "K_wh_gr.png", "K_bl_wh.png", "K_wh_gr.png"]
-
-  piece_names := ["pawn", "knight", "bishop", "rook", "queen", "king"]
-  piece_images := [pawn_images, knight_images, bishop_images, rook_images, queen_images, king_images]
-
-  Loop, 6 {
-    piece_name := piece_names[A_Index]
-    image_set := piece_images[A_Index]
-    Loop, 4 {
-      piece_img := image_set[A_Index]
-      img_path := "" rel_path . piece_img . ""
-
-      if (ImageMatches(x1, y1, x2, y2, img_path)) {
-        MouseMove, x1 + 50, y1 + 50
-        return piece_name
-      ; } else {
-      ;   MouseMove, x1 + 50, y1 + 50
-      }
-    }
-  }
-}
-
-
-ImageMatches(x1, y1, x2, y2, img_path) {
-  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
-  if (img_x) {
-    return true
-  } else {
-    return false
-  }
-}
 
 
 
@@ -249,39 +183,6 @@ RandomSquare() {
 }
 
 
-
-CreateBoard() {             ; populate with x y coords 64 squares
-
-  Loop, 8 {       ; Ranks (rows)
-    rank := A_Index
-    row := rank
-    Loop, 8 {     ; Files (columns)
-      column := A_Index
-      file := Chr(96 + column)     ; a_index > a-h
-      spot := file . rank
-
-      x := (column - 1) * sq_width + x_start
-      y := (row - 1) * sq_height + y_start
-      
-      board[spot] := {  x: x, y: y, rank: rank, file: file, column: column }
-    }
-  }
-  return
-}
-
-NewGame() {
-  next_move := 1
-  GetMyColor()
-  FlipBoard()
-}
-
-FlipBoard() {
-  if (my_color = "white") {
-    my_color := "white"
-  } else {
-    my_color := "black"
-  }
-}
 
 
 
@@ -380,4 +281,4 @@ GetColor(spot, the_color) {
 ;0::IDTest()
 ;0::MsgBox, % "" . IDPiece("a2") . ""
 
-0::FindMove("e3", "pawn")
+0::FindMove("f4", "pawn")
