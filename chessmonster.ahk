@@ -6,6 +6,8 @@
 
 ;#Include VA.ahk
 
+#Include piece_moves.ahk
+
 global rel_path := "" . A_ScriptDir . "\assets\"
 ;global img_path := %rel_path%p_wh_wh.png
 
@@ -44,6 +46,8 @@ global moves := [move1, move2, move3, move4, move5, move6, move7, move8, move9, 
 global next_move := 1
 
 global my_color := "white"
+global opp_color := "black"
+
 
 ; MAIN LOOP =====================      MAIN LOOP      MAIN LOOP
 
@@ -72,28 +76,94 @@ IDTest() {
 }
 
 FindMyGuys() {
-;  source := "a1"  ---  source is a spot
-  source := RandomSquare()
-  ; if (SquareID(source) = my_color) {
+  source := RandomSquare()   ;source is a spot
+  ; if (SquareStatus(source) = my_color) {
   ; } else {
-    while (SquareID(source) != my_color) {
+    while (SquareStatus(source) != my_color) {
       sleep, 50
       MouseMove, board[source].x, board[source].y
-;      MsgBox, % "Source: " . source . "  ID: " . SquareID(source) . "   my_color: " . my_color . ""
+;      MsgBox, % "Source: " . source . "  ID: " . SquareStatus(source) . "   my_color: " . my_color . ""
       sleep, 50
       source := RandomSquare()
     }
     sleep, 50
     guy_spot := source
     MouseMove, board[source].x, board[source].y
-    MsgBox, % "Found my guy.  Source: " . source . "  ID: " . SquareID(source) . "   my_color: " . my_color . ""
+    MsgBox, % "Found my guy.  Source: " . source . "  ID: " . SquareStatus(source) . "   my_color: " . my_color . ""
 
     MsgBox, % "" . IDPiece(guy_spot) . ""
 
 ;  }
 }
 
+TryMove() {
+  Sleep, 10
+  source := RandomSquare()
+  while (SquareStatus(source) != my_color) {   ; find my guys
+    sleep, 10
+    ; MsgBox, % "Source: " . source . " SquareStatus source:  " . SquareStatus(source) . "   my_color:  " . my_color . ""
+    MouseMove, board[source].x, board[source].y
+    sleep, 10
+    source := RandomSquare()
+  }
+  sleep, 10
+  guy_spot := source        ; found my guy
+  MouseMove, board[guy_spot].x, board[guy_spot].y
+  piece_type := IDPiece(guy_spot)
+  MsgBox, % "" . piece_type . ""  ; piece_type
 
+  if (piece_type = "pawn") {
+    target := FindMove(guy_spot, piece_type)
+    MovePiece(guy_spot, target)
+  }
+
+;  target := RandomSquare()
+  ; while (SquareStatus(target) = my_color) {
+  ;   target := RandomSquare()
+  ; }
+  ; x1 := board[source].x
+  ; y1 := board[source].y
+  ; x2 := board[target].x
+  ; y2 := board[target].y
+  ;        ; Left button, x1, y1, x2, y2 [, speed 0-100, relative]
+  ; MouseClickDrag, Left, x1, y1, x2, y2, 3
+  Sleep, 10
+}
+
+FindMove(spot, piece_type) {      ; "e3", "pawn"
+  source_rank := board[spot].rank
+  source_column := board[spot].column
+  source_file := board[spot].file
+
+  target_rank := source_rank + 1
+  target_column := source_column
+  target_file := Chr(96 + target_column)  ; num > a-h
+
+  target_spot := "" . target_file . target_rank . ""
+
+  MsgBox %target_spot%
+  MovePawn1("e3")
+  return target_spot
+}
+
+PawnMove1() {
+  
+}
+
+
+MovePiece(source, target) {
+  MouseMove, board[source].x, board[source].y
+  Click, Down
+  MouseMove, board[target].x, board[target].y
+  Click, Up
+}
+
+DriftMouse() {
+  Random, x, 0, 80
+  Random, y, 0, 80  
+  Random, speed, 1, 7 
+  MouseMove, x - 40, y - 40, speed, Relative
+}
 
 IDPiece(spot) {
   x := board[spot].x
@@ -104,42 +174,9 @@ IDPiece(spot) {
   y2 := y + 50
   img_x := 0
   img_y := 0
-
   Sleep, 50
-
   return WhichPiece(x1, y1, x2, y2)
-
-  ; if ( IsPawn(x1, y1, x2, y2) ) {
-  ;   return "pawn"
-  ; } else if (IsKnight(x1, y1, x2, y2)) {
-  ;   return "knight"
-  ; } else if (IsBishop(x1, y1, x2, y2)) {
-  ;   return "bishop"
-  ; } else if (IsRook(x1, y1, x2, y2)) {
-  ;   return "rook"
-  ; } else if (IsQueen(x1, y1, x2, y2)) {
-  ;   return "queen"
-  ; } else if (IsKing(x1, y1, x2, y2)) {
-  ;   return "king"
-  ; } else {
-  ;   return "unsure"
-  ; }
 }
-
-; IsPawn(x1, y1, x2, y2) {
-;   pawn_images := ["p_wh_wh.png", "p_wh_gr.png", "p_bl_wh.png", "p_wh_gr.png"]
-;   Loop, 4 {
-;     pawn_img := pawn_images[A_Index]
-;     img_path := "" rel_path . pawn_img . ""
-
-;     if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
-;       MouseMove, x1 + 50, y1 + 50
-;       return true
-;     } else {
-;       MouseMove, x1 + 50, y1 + 50
-;     }
-;   }
-; }
 
 WhichPiece(x1, y1, x2, y2) {
   pawn_images := ["p_wh_wh.png", "p_wh_gr.png", "p_bl_wh.png", "p_wh_gr.png"]
@@ -181,58 +218,9 @@ ImageMatches(x1, y1, x2, y2, img_path) {
 
 
 
-; IsKnight(x1, y1, x2, y2) {
-;   return
-; }
-; IsBishop(x1, y1, x2, y2) {
-;   return
-; }
-; IsRook(x1, y1, x2, y2) {
-;   return
-; }
-; IsQueen(x1, y1, x2, y2) {
-;   return
-; }
-; IsKing(x1, y1, x2, y2) {
-;   return
-; }
 
 
-NewGame() {
-  next_move := 1
-  GetMyColor()
-  FlipBoard()
-}
 
-GetMyColor() {
-  if SquareID("a1") = "white" {
-    my_color := "white"
-  } else {
-    my_color := "black"
-  }
-}
-
-FlipBoard() {
-  if (my_color = "white") {
-    my_color := "white"
-  } else {
-    my_color := "black"
-  }
-}
-
-DriftMouse() {
-  Random, x, 0, 80
-  Random, y, 0, 80  
-  Random, speed, 1, 7 
-  MouseMove, x - 40, y - 40, speed, Relative
-}
-
-MovePiece(source, target) {
-  MouseMove, board[source].x, board[source].y
-  Click, Down
-  MouseMove, board[target].x, board[target].y
-  Click, Up
-}
 
 MakeMove() {
   if (next_move >= 11) {
@@ -246,28 +234,6 @@ MakeMove() {
   }
 }
 
-TryMove() {
-  Sleep, 10
-  source := RandomSquare()
-  while (SquareID(source) != my_color) {
-    sleep, 10
-    ; MsgBox, % "Source: " . source . " SquareID source:  " . SquareID(source) . "   my_color:  " . my_color . ""
-    MouseMove, board[source].x, board[source].y
-    sleep, 10
-    source := RandomSquare()
-  }
-  target := RandomSquare()
-  ; while (SquareID(target) = my_color) {
-  ;   target := RandomSquare()
-  ; }
-  x1 := board[source].x
-  y1 := board[source].y
-  x2 := board[target].x
-  y2 := board[target].y
-         ; Left button, x1, y1, x2, y2 [, speed 0-100, relative]
-  MouseClickDrag, Left, x1, y1, x2, y2, 3
-  Sleep, 10
-}
 
 ChooseMove() {
   MsgBox, % RandomSquare()
@@ -293,26 +259,29 @@ CreateBoard() {             ; populate with x y coords 64 squares
       column := A_Index
       file := Chr(96 + column)     ; a_index > a-h
       spot := file . rank
-      
-      ; Calculate x and y coordinates based on square position
+
       x := (column - 1) * sq_width + x_start
       y := (row - 1) * sq_height + y_start
       
-      ; Create an object for the square and store its coordinates
-      board[spot] := { x: x, y: y }
-;      MsgBox, % "board info: " . board["a1"].x . ""
+      board[spot] := {  x: x, y: y, rank: rank, file: file, column: column }
     }
   }
   return
 }
 
+NewGame() {
+  next_move := 1
+  GetMyColor()
+  FlipBoard()
+}
 
-
-
-
-
-
-
+FlipBoard() {
+  if (my_color = "white") {
+    my_color := "white"
+  } else {
+    my_color := "black"
+  }
+}
 
 
 
@@ -325,14 +294,24 @@ Output() {
 
 
 
-SquareID(spot) {
-  if ColorTest(spot, white) {
+GetMyColor() {
+  if SquareStatus("a1") = "white" {
+    my_color := "white"
+    opp_color := "black"
+  } else {
+    my_color := "black"
+    opp_color := "white"
+  }
+}
+
+SquareStatus(spot) {
+  if GetColor(spot, white) {
     sq_contains := "white"
-  } else if ColorTest(spot, black) {
+  } else if GetColor(spot, black) {
     sq_contains := "black"
-  } else if ColorTest(spot, board_gr) {
+  } else if GetColor(spot, board_gr) {
     sq_contains := "board green"
-  } else if ColorTest(spot, board_wh) {
+  } else if GetColor(spot, board_wh) {
     sq_contains := "board light"
   } else {
     sq_contains := "not sure"
@@ -340,7 +319,7 @@ SquareID(spot) {
   return sq_contains
 }
 
-ColorTest(spot, the_color) {
+GetColor(spot, the_color) {
   x1 := board[spot].x - 2
   y1 := board[spot].y - 2
   x2 := board[spot].x
@@ -353,28 +332,30 @@ ColorTest(spot, the_color) {
   } 
 }
 
-GetColor(spot) {
-  x := board[spot].x
-  y := board[spot].y
-  PixelGetColor, spot_color, x, y
-  MsgBox, % "spot_color is:  " . spot_color . ""
-}
 
-CheckColor(spot, the_color, color_name) {
-  x1 := board[spot].x - 2
-  y1 := board[spot].y - 2
-  x2 := board[spot].x
-  y2 := board[spot].y
 
-  PixelSearch, color_x, color_y , x1, y1, x2, y2, the_color, 10, Fast
-  MouseMove, x2, y2
-  If color_x {
-    MsgBox, %color_name%
-  } Else {
-    MsgBox, Not %color_name%
-  }
-;  GetColor(spot)
-}
+; GetColor(spot) {
+;   x := board[spot].x
+;   y := board[spot].y
+;   PixelGetColor, spot_color, x, y
+;   MsgBox, % "spot_color is:  " . spot_color . ""
+; }
+
+; CheckColor(spot, the_color, color_name) {
+;   x1 := board[spot].x - 2
+;   y1 := board[spot].y - 2
+;   x2 := board[spot].x
+;   y2 := board[spot].y
+
+;   PixelSearch, color_x, color_y , x1, y1, x2, y2, the_color, 10, Fast
+;   MouseMove, x2, y2
+;   If color_x {
+;     MsgBox, %color_name%
+;   } Else {
+;     MsgBox, Not %color_name%
+;   }
+; ;  GetColor(spot)
+; }
 
 
 
@@ -396,5 +377,7 @@ CheckColor(spot, the_color, color_name) {
 
 
 ;0::SpotTest()
-0::IDTest()
+;0::IDTest()
 ;0::MsgBox, % "" . IDPiece("a2") . ""
+
+0::FindMove("e3", "pawn")
