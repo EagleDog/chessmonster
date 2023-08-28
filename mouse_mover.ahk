@@ -1,4 +1,4 @@
-;mouse_movements.ahk
+;mouse_mover.ahk
 ;
 ; MovePiece(source, target)
 ; ClickDrag(s,t)
@@ -14,8 +14,8 @@ MovePiece(source, target) {
   ; Click, Up
 }
 
-ClickDrag(s, t) {  ; s-source t-target b-board L-Left
-  MouseClickDrag, L, b[s].x, b[s].y, b[t].x, b[t].y, 3
+ClickDrag(s, t) {  ; s-source t-target b-board L-Left 2-Speed 0-100
+  MouseClickDrag, L, b[s].x, b[s].y, b[t].x, b[t].y, 2
 }
 
 DriftMouse() {
