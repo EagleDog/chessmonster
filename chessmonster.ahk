@@ -5,6 +5,7 @@
 ;square_size := "87 by 95"  ;87 x 87
 
 ;#Include VA.ahk
+#Include chess_gui.ahk
 #Include board_map.ahk
 #Include board_watcher.ahk
 #Include mouse_mover.ahk
@@ -168,6 +169,6 @@ Output() {
 3::DriftMouse()
 ; 4::FindMyGuys()
 
-8::MoveKnight1("b1")
+8::KnightMoves("b1")
 
 0::FindMove("f4", "pawn")
