@@ -8,7 +8,8 @@
 #Include board_map.ahk
 #Include board_watcher.ahk
 #Include mouse_mover.ahk
-#Include piece_moves.ahk
+#Include pawn_mover.ahk
+#Include knight_mover.ahk
 
 global rel_path := "" . A_ScriptDir . "\assets\"
 ;global img_path := %rel_path%p_wh_wh.png
@@ -167,5 +168,6 @@ Output() {
 3::DriftMouse()
 ; 4::FindMyGuys()
 
+8::MoveKnight1("b1")
 
 0::FindMove("f4", "pawn")

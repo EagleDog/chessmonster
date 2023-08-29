@@ -21,7 +21,7 @@ CreateBoard() {             ; populate with x y coords 64 squares
       x := (column - 1) * sq_width + x_start
       y := (row - 1) * sq_height + y_start
       
-      board[spot] := {  x: x, y: y, rank: rank, file: file, column: column }
+      board[spot] := { x: x, y: y, rank: rank, file: file, column: column }
     }
   }
   b := board
