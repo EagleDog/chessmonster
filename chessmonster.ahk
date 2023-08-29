@@ -75,7 +75,8 @@ NewGame() {
 ; ;  }
 ; }
 
-TryMove() {
+;TryMove() calls RandomSquare, SquareStatus, IDPiece,
+TryMove() { ; TryMove, FindMove, MovePiece
   Loop {
     Sleep, 10
     spot := RandomSquare()
@@ -92,7 +93,7 @@ TryMove() {
     piece_type := IDPiece(spot)
   ;  MsgBox, % "" . piece_type . ""  ; piece_type
 
-    if (piece_type != "pawn") {
+    if ((piece_type != "pawn") AND (piece_type != "pawn")) {
       TryMove()
     }
     if (piece_type = "pawn") {
@@ -105,24 +106,13 @@ TryMove() {
   }
 }
 
-FindMove(spot, piece_type) {      ; "f4", "pawn"
-  ; source_rank := board[spot].rank
-  ; source_column := board[spot].column
-  ; source_file := board[spot].file
-
-  ; target_rank := source_rank + 1
-  ; target_column := source_column
-  ; target_file := Chr(96 + target_column)  ; num > a-h
-
-  ; target_spot := "" . target_file . target_rank . ""
-
-;  MsgBox %target_spot%
+FindMove(spot, piece_type) { ;"f4", "pawn"
   target := PawnMoves(spot)
 ;  MsgBox, %target%
   ; if target {
   ;   MovePiece(spot, target)
   ; }
-  ; return target_spot
+  ; return target
   return target
 }
 

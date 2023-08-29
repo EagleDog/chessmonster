@@ -1,4 +1,4 @@
-;piece_moves.ahk
+;pawn_moves.ahk
 ;
 ; PawnMoves(spot)
 ; MovePawn1(spot)
