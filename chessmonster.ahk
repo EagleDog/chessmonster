@@ -5,7 +5,7 @@
 ;square_size := "87 by 95"  ;87 x 87
 
 ;#Include VA.ahk
-#Include chess_gui.ahk
+;#Include chess_gui.ahk
 #Include board_map.ahk
 #Include board_watcher.ahk
 #Include mouse_mover.ahk
@@ -19,6 +19,7 @@ global rel_path := "" . A_ScriptDir . "\assets\"
 ; Exit
 ; Pause On
 
+;MsgBox, Hello `n hello
 
 
 global my_color := "white"
@@ -172,3 +173,5 @@ Output() {
 8::KnightMoves("b1")
 
 0::FindMove("f4", "pawn")
+
+a::GetPositions()
