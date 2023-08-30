@@ -8,29 +8,19 @@ global y_start := 880
 global sq_width := 87
 global sq_height := -88
 
-GetMyColor() {
-  if SquareStatus("a1") = "white" {
-    my_color := "white"
-    opp_color := "black"
-  } else {
-    my_color := "black"
-    opp_color := "white"
-  }
-}
-
 CreateBoard() {             ; populate with x y coords 64 squares
   Loop, 8 {       ; Ranks (rows)
     rank := A_Index
     row := rank
     Loop, 8 {     ; Files (columns)
-      column := A_Index
-      file := Chr(96 + column)     ; a_index > a-h
+      col := A_Index
+      file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
 
-      x := (column - 1) * sq_width + x_start
+      x := (col - 1) * sq_width + x_start
       y := (row - 1) * sq_height + y_start
       
-      board[spot] := { x: x, y: y, rank: rank, file: file, column: column, spot: spot }
+      board[spot] := { x: x, y: y, col: col, row: row, file: file, rank: rank, spot: spot }
     }
   }
   b := board

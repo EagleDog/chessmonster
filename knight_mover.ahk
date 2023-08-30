@@ -28,7 +28,7 @@ MoveKnight(spot) {
 ; STEP 1
 FindJumps(spot) {
   rank := board[spot].rank
-  col := board[spot].column
+  col := board[spot].col
   jumps := {}
   jumps["j1"] := { col: col - 1, rank: rank + 2, file: Chr(96 + col - 1), spot: Chr(96 + col - 1) . rank + 2, color: SqStat(jspot) }
   jumps["j2"] := { col: col + 1, rank: rank + 2, file: Chr(96 + col + 1), spot: Chr(96 + col + 1) . rank + 2, color: SqStat(jspot) }

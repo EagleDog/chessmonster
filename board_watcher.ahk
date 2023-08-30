@@ -48,8 +48,8 @@ GetPositions() {
     rank := A_Index
     row := rank
     Loop, 8 {     ; files (columns)
-      column := A_Index
-      file := Chr(96 + column)     ; a_index > a-h
+      col := A_Index
+      file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
       p_color := SquareStatus(spot)
       piece := IDPiece(spot)  ; <<==========   <<======
@@ -59,7 +59,7 @@ GetPositions() {
       } else {
         p_abbr := p_abbr . " "
       }
-      positions[spot] := { piece: piece, p_color: p_color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, column: column }
+      positions[spot] := { piece: piece, p_color: p_color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
     }
   }
   p := positions
@@ -74,8 +74,8 @@ OutputPositions() {
     rank := A_Index
     row := rank
     Loop, 8 {
-      column := A_Index
-      file := Chr(96 + column)     ; a_index > a-h
+      col := A_Index
+      file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
       p_abbr := p[spot].p_abbr
       p_text := % "" . p_text . p_abbr . " "
@@ -194,9 +194,15 @@ GetColor(spot, the_color) {
   } 
 }
 
-
-
-
+GetMyColor() {
+  if SquareStatus("a1") = "white" {
+    my_color := "white"
+    opp_color := "black"
+  } else {
+    my_color := "black"
+    opp_color := "white"
+  }
+}
 
 ; GetColor(spot) {
 ;   x := board[spot].x

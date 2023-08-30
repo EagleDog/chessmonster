@@ -19,13 +19,9 @@ global rel_path := "" . A_ScriptDir . "\assets\"
 ; Exit
 ; Pause On
 
-;MsgBox, Hello `n hello
-
-
 global my_color := "white"
 global opp_color := "black"
 global target_status := "empty"
-
 
 move1 := ["e2", "e4"] ; e pawn
 move2 := ["g1", "f3"] ; g Nnight
@@ -51,7 +47,7 @@ if WinExist("Play Chess") {
 ;  WinActivate, Play Chess
 
 CreateBoard()
-;GetMyColor()
+GetMyColor()
 
 ; sleep, 1000
 ; gui_text := "BBBB"
@@ -155,5 +151,5 @@ Output() {
 
 a::GetPositions()
 
-0::OutputPositions()
-9::OutputDebug, % "Output Debug Output Debug" . my_color . ""
+;0::OutputPositions()
+;9::OutputDebug, % "Output Debug Output Debug" . my_color . ""

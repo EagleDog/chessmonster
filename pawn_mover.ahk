@@ -69,7 +69,7 @@ MovePawn3(spot) {  ; Forward One Square
 
 FindDiags(spot) {
   rank := board[spot].rank
-  col := board[spot].column
+  col := board[spot].col
 
   diag_1_rank := rank + 1
   diag_1_col := col - 1
