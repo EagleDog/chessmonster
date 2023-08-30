@@ -27,7 +27,7 @@ GetMyColor() {
 }
 
 GetPositions() {
-  MsgBox, Begin GetPositions().
+;  MsgBox, Begin GetPositions().
   p_text := ""
   p_abbr := ""
   piece := ""
@@ -63,7 +63,7 @@ GetPositions() {
 GetAbbr(piece) {
   switch piece {
     case "empty":
-      p_abbr := "."
+      p_abbr := " . "
     case "pawn":
       p_abbr := "p"
     case "knight":
@@ -77,7 +77,7 @@ GetAbbr(piece) {
     case "king":
       p_abbr := "K"
     default:
-      p_abbr := " . "
+      p_abbr := "."
   }
   return p_abbr
 }
@@ -106,21 +106,30 @@ IDPiece(spot) {
     MouseMove, x, y
     return "empty"
   } else if (spot_color = "white") {
-    return WhichWhite(x1, y1, x2, y2)
+    return WhichPiece(x1, y1, x2, y2, "white")
   } else {
-    return WhichPiece(x1, y1, x2, y2)
+    return WhichPiece(x1, y1, x2, y2, "black")
   }
 ;  return WhichPiece(x1, y1, x2, y2)
 }
 
-WhichWhite(x1, y1, x2, y2) {
-  pawn_images := ["p_wh_wh.png", "p_wh_gr.png"] ;, "p_bl_wh.png", "p_bl_gr.png"]
-  knight_images := ["N_wh_wh.png", "N_wh_gr.png"] ;, "N_bl_wh.png", "N_bl_gr.png"]
-  bishop_images := ["B_wh_wh.png", "B_wh_gr.png"] ;, "B_bl_wh.png", "B_bl_gr.png"]
-  rook_images := ["R_wh_wh.png", "R_wh_gr.png"] ;, "R_bl_wh.png", "R_bl_gr.png"]
-  queen_images := ["Q_wh_wh.png", "Q_wh_gr.png"] ;, "Q_bl_wh.png", "Q_bl_gr.png"]
-  king_images := ["K_wh_wh.png", "K_wh_gr.png"] ;, "K_bl_wh.png", "K_bl_gr.png"]
-
+WhichPiece(x1, y1, x2, y2, piece_color="white") {
+;  empty_images := ["e_wh.png", "e_wh.png", "e_gr.png", "e_gr.png"]
+  if (piece_color = "white") {
+    pawn_images := ["p_wh_wh.png", "p_wh_gr.png"] ;, "p_bl_wh.png", "p_bl_gr.png"]
+    knight_images := ["N_wh_wh.png", "N_wh_gr.png"] ;, "N_bl_wh.png", "N_bl_gr.png"]
+    bishop_images := ["B_wh_wh.png", "B_wh_gr.png"] ;, "B_bl_wh.png", "B_bl_gr.png"]
+    rook_images := ["R_wh_wh.png", "R_wh_gr.png"] ;, "R_bl_wh.png", "R_bl_gr.png"]
+    queen_images := ["Q_wh_wh.png", "Q_wh_gr.png"] ;, "Q_bl_wh.png", "Q_bl_gr.png"]
+    king_images := ["K_wh_wh.png", "K_wh_gr.png"] ;, "K_bl_wh.png", "K_bl_gr.png"]
+  } else {
+    pawn_images := ["p_bl_wh.png", "p_bl_gr.png"]
+    knight_images := ["N_bl_wh.png", "N_bl_gr.png"]
+    bishop_images := ["B_bl_wh.png", "B_bl_gr.png"]
+    rook_images := ["R_bl_wh.png", "R_bl_gr.png"]
+    queen_images := ["Q_bl_wh.png", "Q_bl_gr.png"]
+    king_images := ["K_bl_wh.png", "K_bl_gr.png"]
+  }
   piece_names := ["pawn", "knight", "bishop", "rook", "queen", "king"]
   piece_images := [pawn_images, knight_images, bishop_images, rook_images, queen_images, king_images]
 
@@ -135,45 +144,9 @@ WhichWhite(x1, y1, x2, y2) {
 
       if (ImageMatches(x1, y1, x2, y2, img_path)) {
         MouseMove, x1 + 20, y1 + 35
-        MsgBox, %piece_name%
+;        MsgBox, %piece_name%
         return piece_name
       }
-
-      ; } else {
-      ;   MouseMove, x1 + 50, y1 + 50
-      ; }
-    }
-  }
-;  return "empty"
-}
-
-
-
-WhichPiece(x1, y1, x2, y2, color="white") {
-  empty_images := ["e_wh.png", "e_wh.png", "e_gr.png", "e_gr.png"]
-  pawn_images := ["p_wh_wh.png", "p_wh_gr.png", "p_bl_wh.png", "p_bl_gr.png"]
-  knight_images := ["N_wh_wh.png", "N_wh_gr.png", "N_bl_wh.png", "N_bl_gr.png"]
-  bishop_images := ["B_wh_wh.png", "B_wh_gr.png", "B_bl_wh.png", "B_bl_gr.png"]
-  rook_images := ["R_wh_wh.png", "R_wh_gr.png", "R_bl_wh.png", "R_bl_gr.png"]
-  queen_images := ["Q_wh_wh.png", "Q_wh_gr.png", "Q_bl_wh.png", "Q_bl_gr.png"]
-  king_images := ["K_wh_wh.png", "K_wh_gr.png", "K_bl_wh.png", "K_bl_gr.png"]
-
-  piece_names := ["empty", "pawn", "knight", "bishop", "rook", "queen", "king"]
-  piece_images := [empty_images, pawn_images, knight_images, bishop_images, rook_images, queen_images, king_images]
-
-  piece_name := ""
-
-  Loop, 7 {
-    piece_name := piece_names[A_Index]
-    image_set := piece_images[A_Index]
-    Loop, 4 {
-      piece_img := image_set[A_Index]
-      img_path := "" rel_path . piece_img . ""
-
-      if (ImageMatches(x1, y1, x2, y2, img_path)) {
-        return piece_name
-      }
-;      MouseMove, x1 + 20, y1 + 35
       ; } else {
       ;   MouseMove, x1 + 50, y1 + 50
       ; }

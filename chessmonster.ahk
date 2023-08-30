@@ -45,6 +45,11 @@ global next_move := 1
 
 ; MAIN LOOP =====================      MAIN LOOP      MAIN LOOP
 
+if WinExist("Play Chess") {
+  WinActivate, Play Chess
+}
+;  WinActivate, Play Chess
+
 CreateBoard()
 ;GetMyColor()
 
