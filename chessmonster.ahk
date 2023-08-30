@@ -111,12 +111,16 @@ TryMove() { ; TryMove, FindMove, MovePiece
 
   ;  MsgBox, % "" . piece_type . ""
 
-    if ((piece_type != "pawn") AND (piece_type != "pawn")) {
+    if ((piece_type != "pawn") AND (piece_type != "knight")) {
       TryMove()
     }
     if (piece_type = "pawn") {
-      target := FindMove(spot, piece_type)
+      target := MovePawn(spot)
     }
+    if (piece_type = "knight") {
+      target := MoveKnight(spot)
+    }
+
     if target {
       MovePiece(spot, target)
     }
@@ -125,7 +129,7 @@ TryMove() { ; TryMove, FindMove, MovePiece
 }
 
 FindMove(spot, piece_type) { ;"f4", "pawn"
-  target := PawnMoves(spot)
+  target := MovePawn(spot)
 ;  MsgBox, %target%
   ; if target {
   ;   MovePiece(spot, target)
@@ -182,10 +186,10 @@ Output() {
 1::NewGame()
 2::TryMove()
 
-3::DriftMouse()
+7::DriftMouse()
 ; 4::FindMyGuys()
 
-8::KnightMoves("b1")
+3::MoveKnight("e2")
 
 ;0::FindMove("f4", "pawn")
 

@@ -7,7 +7,7 @@
 ;
 ;
 
-PawnMoves(spot) {
+MovePawn(spot) {
   target := MovePawn1(spot)
   if target {
     return target

@@ -16,16 +16,6 @@ global board_wh := 0xCCEDE9
 global positions := {}
 global p := positions
 
-GetMyColor() {
-  if SquareStatus("a1") = "white" {
-    my_color := "white"
-    opp_color := "black"
-  } else {
-    my_color := "black"
-    opp_color := "white"
-  }
-}
-
 GetAbbr(piece) {
   switch piece {
     case "empty":
@@ -49,25 +39,18 @@ GetAbbr(piece) {
 }
 
 GetPositions() {
-;  MsgBox, Begin GetPositions().
   gui_text := "Getting positions....."
   GuiControl,, gui_output, % gui_text
   piece := ""
   p_color := ""
-  p_text := ""
   p_abbr := ""
-  text_rows := ["","","","","","","",""]
-  Loop, 8 {       ; Ranks (rows)
+  Loop, 8 {       ; ranks (rows)
     rank := A_Index
     row := rank
-    Loop, 8 {     ; Files (columns)
+    Loop, 8 {     ; files (columns)
       column := A_Index
       file := Chr(96 + column)     ; a_index > a-h
       spot := file . rank
-
-;      x := (column - 1) * sq_width + x_start
-;      y := (row - 1) * sq_height + y_start
-
       p_color := SquareStatus(spot)
       piece := IDPiece(spot)  ; <<==========   <<======
       p_abbr := GetAbbr(piece)
@@ -76,22 +59,11 @@ GetPositions() {
       } else {
         p_abbr := p_abbr . " "
       }
-
       positions[spot] := { piece: piece, p_color: p_color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, column: column }
-;      MsgBox, %p_abbr%
-      p_text := % "" . p_text . p_abbr . " "
     }
-    text_rows[A_index] := p_text
-;    MsgBox, % "" . text_rows[A_index] . ""
-    p_text := ""
   }
   p := positions
-  p_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
-  ; MsgBox, %p_text%
-  ; MsgBox, I have gotten the positions.
-  gui_text := p_text
-  GuiControl,, gui_output, % gui_text
-;  return
+  OutputPositions()
 }
 
 OutputPositions() {
