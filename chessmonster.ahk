@@ -71,45 +71,21 @@ NewGame() {
   FlipBoard()
 }
 
-; FindMyGuys() {
-;   source := RandomSquare()   ;source is a spot
-;   ; if (SquareStatus(source) = my_color) {
-;   ; } else {
-;     while (SquareStatus(source) != my_color) {
-;       sleep, 50
-;       MouseMove, board[source].x, board[source].y
-; ;      MsgBox, % "Source: " . source . "  ID: " . SquareStatus(source) . "   my_color: " . my_color . ""
-;       sleep, 50
-;       source := RandomSquare()
-;     }
-;     sleep, 50
-;     guy_spot := source
-;     MouseMove, board[source].x, board[source].y
-;     MsgBox, % "Found my guy.  Source: " . source . "  ID: " . SquareStatus(source) . "   my_color: " . my_color . ""
 
-;     MsgBox, % "" . IDPiece(guy_spot) . ""
-
-; ;  }
-; }
-
-;TryMove() calls RandomSquare, SquareStatus, IDPiece,
-TryMove() { ; TryMove, FindMove, MovePiece
-  Loop {
+;TryMove() calls RandomSquare(), SquareStatus(spot),
+TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
+  Loop {      ;  MovePawn(spot), MoveKnight(spot)
     Sleep, 10
     spot := RandomSquare()
     while (SquareStatus(spot) != my_color) {   ; find my guys
       sleep, 10
-      ; MsgBox, % "Source: " . source . " SquareStatus source:  " . SquareStatus(source) . "   my_color:  " . my_color . ""
       MouseMove, board[spot].x, board[spot].y
       sleep, 10
       spot := RandomSquare()
       sleep, 10        ; found my guy
-    ;  spot := source
       MouseMove, board[spot].x, board[spot].y
     }
-    piece_type := IDPiece(spot)  ;  <<============
-
-  ;  MsgBox, % "" . piece_type . ""
+    piece_type := IDPiece(spot)  ;       <<============
 
     if ((piece_type != "pawn") AND (piece_type != "knight")) {
       TryMove()
@@ -120,24 +96,12 @@ TryMove() { ; TryMove, FindMove, MovePiece
     if (piece_type = "knight") {
       target := MoveKnight(spot)
     }
-
     if target {
       MovePiece(spot, target)
     }
     Sleep, 10
   }
 }
-
-FindMove(spot, piece_type) { ;"f4", "pawn"
-  target := MovePawn(spot)
-;  MsgBox, %target%
-  ; if target {
-  ;   MovePiece(spot, target)
-  ; }
-  ; return target
-  return target
-}
-
 
 MakeMove() {
   if (next_move >= 11) {
@@ -150,10 +114,6 @@ MakeMove() {
     next_move += 1
   }
 }
-
-; ChooseMove() {
-;   MsgBox, % RandomSquare()
-; }
 
 RandomSquare() {
   Random, rank, 1, 8
