@@ -5,7 +5,7 @@
 ;square_size := "87 by 95"  ;87 x 87
 
 ;#Include VA.ahk
-;#Include chess_gui.ahk
+#Include chess_gui.ahk
 #Include board_map.ahk
 #Include board_watcher.ahk
 #Include mouse_mover.ahk
@@ -52,6 +52,15 @@ if WinExist("Play Chess") {
 
 CreateBoard()
 ;GetMyColor()
+
+; sleep, 1000
+; gui_text := "BBBB"
+; GuiControl,, gui_output, % gui_text
+; sleep, 1000
+; gui_text := "CCCC"
+; GuiControl,, gui_output, % gui_text
+
+
 
 ; ====== END MAIN LOOP ================    END MAIN LOOP    END MAIN LOOP
 
