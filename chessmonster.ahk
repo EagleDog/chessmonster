@@ -107,8 +107,9 @@ TryMove() { ; TryMove, FindMove, MovePiece
     ;  spot := source
       MouseMove, board[spot].x, board[spot].y
     }
-    piece_type := IDPiece(spot)
-  ;  MsgBox, % "" . piece_type . ""  ; piece_type
+    piece_type := IDPiece(spot)  ;  <<============
+
+  ;  MsgBox, % "" . piece_type . ""
 
     if ((piece_type != "pawn") AND (piece_type != "pawn")) {
       TryMove()
@@ -186,6 +187,9 @@ Output() {
 
 8::KnightMoves("b1")
 
-0::FindMove("f4", "pawn")
+;0::FindMove("f4", "pawn")
 
 a::GetPositions()
+
+0::OutputPositions()
+9::OutputDebug, % "Output Debug Output Debug" . my_color . ""
