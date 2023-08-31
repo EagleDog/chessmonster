@@ -11,6 +11,7 @@
 #Include mouse_mover.ahk
 #Include pawn_mover.ahk
 #Include knight_mover.ahk
+#Include bishop_mover.ahk
 
 global rel_path := "" . A_ScriptDir . "\assets\"
 ;global img_path := %rel_path%p_wh_wh.png
@@ -83,7 +84,8 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
     }
     piece_type := IDPiece(spot)  ;       <<============
 
-    if ((piece_type != "pawn") AND (piece_type != "knight")) {
+;    if ( (piece_type != "bishop") ) {
+    if ( (piece_type != "pawn") AND (piece_type != "knight") AND (piece_type != "bishop") ) {
       TryMove()
     }
     if (piece_type = "pawn") {
@@ -91,6 +93,9 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
     }
     if (piece_type = "knight") {
       target := MoveKnight(spot)
+    }
+    if (piece_type = "bishop") {
+      target := MoveBishop(spot)
     }
     if target {
       MovePiece(spot, target)
