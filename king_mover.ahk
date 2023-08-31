@@ -16,22 +16,23 @@
 ; STEP 5 - move to empty square
 
 
-;MoveKing("c1")
+
+
+
+
 MoveKing(spot) {
-
   ; check for castle option
-  castle := false
-
-  moves := FindKMoves(spot)
-;  OutputKMoves(moves)
-
-  target := KingCapture(moves)
+  castle := false                                 ;         CASTLE
+  diffs := FindKDiffs(spot)                       ;          DIFFS
+  poss_moves := PossKMoves(spot, diff) ; 8 moves possible     POSSKMOVES
+  moves := KingMoves(poss_moves)    ; eliminate walls and collisions   KINGMOVES
+  ; OutputKMoves(moves)
+  target := KingCapture(moves)      ; KingCapture(moves)   CAPTURE
   if target {
-
     MovePiece(spot, target)
   } else {
 
-    target := KingMoveEmpty(moves)
+    target := KingMoveEmpty(moves)    ; KnigMoveEmpty(moves)   EMPTY
     if target {
 
       MovePiece(spot, target)
@@ -39,16 +40,55 @@ MoveKing(spot) {
   }
 }
 
-FindKMoves(spot) {
-  m1 := spot
-  m2 := spot
-  m3 := spot
-  m4 := spot
-  m5 := spot
-  m6 := spot
-  m7 := spot
-  m8 := spot
-  moves := [m1, m2, m3, m4, m5, m6, m7, m8]
+FindKDiffs(spot) {               ; Find 8 King Diffs          DIFFS
+  m1 := [  0,  1 ]
+  m2 := [  1,  1 ]
+  m3 := [  1,  0 ]
+  m4 := [  1, -1 ]
+  m5 := [  0, -1 ]
+  m6 := [ -1, -1 ]
+  m7 := [ -1,  0 ]
+  m8 := [ -1,  1 ]
+  diffs := [m1, m2, m3, m4, m5, m6, m7, m8]
+  return diffs
+}
+
+PossKMoves(spot, diffs) {       ; 8 Possible King Moves
+  col := board[spot].col          ;   based on diffs
+  row := board[spot].row
+  file := Chr(96 + col)
+  rank := row
+  poss_moves := {}
+
+  Loop, 8 {                       ;   n ~ x
+    n := A_Index
+    col += diffs[n][1]     ; 1,1... 1,2... 2,1... 2,2... 3,1... 3,2...
+    file := Chr(96 + col)
+    row += diffs[n][2]
+    rank := row
+    spot := file . rank
+    color := SqStat(spot)
+    Sleep, 10
+    MouseMove, board[spot].x, board[spot].y
+    poss_moves[n] := { col: col, row: row, file: file, rank: rank, spot: spot, color: color }
+    Sleep, 10
+    ; if (color = my_color) {     ; collision same color
+      ; ...
+  }
+  return poss_moves
+}
+
+KingMoves(poss_moves) {         ; eliminate collisions and out-of-bounds
+  loop, 8 {
+    n := A_Index
+    moves := poss_moves
+    this_move := moves[n]
+    if ( (this_move.color = my_color) OR (this_move.col < 1)
+        OR (this_move.row < 1) OR (this_move.col > 8) 
+        OR (this_move.row > 8) ) {
+      this_move := ""
+    }
+  }
   return moves
 }
 
@@ -81,42 +121,6 @@ KingMoveEmpty(moves) {    ; KING MOVE TO EMPTY SQUARE
 }
 
 
-FindKMoves(spot) {         ; Find 8 King Moves
-  col := board[spot].col
-  row := board[spot].row
-
-  moves := {}
-
-
-  ; .... This is where I'm working right now.....
-
-
-
-  while (row < 8) {
-    n := A_Index
-    row += 1
-    rank := row
-    file := Chr(96 + col)
-    spot := file . rank
-    color := SqStat(spot)
-    MouseMove, board[spot].x, board[spot].y
-    moves[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-    Sleep, 10
-    if (color = my_color) {   ; collision same color
-      return m1
-    }
-  }
-  return m1
-}
-
-
-FindKMove1() {
-  return
-}
-
-
-
-
 OutputKMoves(moves) {
   n := 1
   spot_text := ""
@@ -132,9 +136,6 @@ OutputKMoves(moves) {
   }
   MsgBox, % move_text
 }
-
-
-
 
 
 
