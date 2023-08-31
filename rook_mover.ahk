@@ -1,9 +1,9 @@
-;bishop_mover.ahk
+;rook_mover.ahk
 ;
-; p1.1 - up, left
-; p2.1 - up, right
-; p3.1 - down, right
-; p4.1 - down, left
+; path_1 - up
+; path_2 - right
+; path_3 - down
+; path_4 - left
 ;
 ; STEP 1 - explore 4 paths
 ; STEP 2 - end blocked paths (wall or collistion)
@@ -12,25 +12,25 @@
 
 
 
-;MoveBishop("c1")
-MoveBishop(spot) {
-  paths := FindDPaths(spot)
-  ; OutputDPath(paths[1])
-  ; OutputDPath(paths[2])
-  ; OutputDPath(paths[3])
-  ; OutputDPath(paths[4])
-  target := DiagCapture(paths)
+;MoveRook("c1")
+MoveRook(spot) {
+  paths := FindRPaths(spot)
+  ; OutputRPath(paths[1])
+  ; OutputRPath(paths[2])
+  ; OutputRPath(paths[3])
+  ; OutputRPath(paths[4])
+  target := RookCapture(paths)
   if target {
     MovePiece(spot, target)
   } else {
-    target := DMoveEmpty(paths)
+    target := RMoveEmpty(paths)
     if target {
       MovePiece(spot, target)
     }
   }
 }
 
-DMoveEmpty(paths) {    ; DIAG MOVE TO EMPTY SQUARE
+RMoveEmpty(paths) {    ; DIAG MOVE TO EMPTY SQUARE
   n := 1
   while paths[n] {
     nn := 1
@@ -44,7 +44,7 @@ DMoveEmpty(paths) {    ; DIAG MOVE TO EMPTY SQUARE
   }
 }
 
-DiagCapture(paths) {    ; DIAG CAPTURE OPPONENT
+RookCapture(paths) {    ; DIAG CAPTURE OPPONENT
   n := 1
   while paths[n] {
     nn := 1
@@ -58,23 +58,22 @@ DiagCapture(paths) {    ; DIAG CAPTURE OPPONENT
   }
 }
 
-FindDPaths(spot) {
-  p1 := FindDPath1(spot)
-  p2 := FindDPath2(spot)
-  p3 := FindDPath3(spot)
-  p4 := FindDPath4(spot)
+FindRPaths(spot) {
+  p1 := FindRPath1(spot)
+  p2 := FindRPath2(spot)
+  p3 := FindRPath3(spot)
+  p4 := FindRPath4(spot)
   paths := [p1, p2, p3, p4]
   return paths
 }
 
-FindDPath1(spot) {             ; DIAG PATH 1
+FindRPath1(spot) {         ; ROOK PATH 1 UP
   col := board[spot].col
   row := board[spot].row
   p1 := {}
 
-  while ( (col > 1) and (row < 8) ) {
+  while (row < 8) {
     n := A_Index
-    col -= 1
     row += 1
     rank := row
     file := Chr(96 + col)
@@ -84,22 +83,21 @@ FindDPath1(spot) {             ; DIAG PATH 1
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 100
 
-    if (color = my_color) {   ; COLLISION SAME COLOR
+    if (color = my_color) {   ; collision same color
       return p1
     }
   }
   return p1
 }
 
-FindDPath2(spot) {             ; DIAG PATH 2
+FindRPath2(spot) {         ; ROOK PATH 2 RIGHT
   col := board[spot].col
   row := board[spot].row
   p2 := {}
 
-  while ( (col < 8) and (row < 8) ) {
+  while (col < 8) {
     n := A_Index
     col += 1
-    row += 1
     rank := row
     file := Chr(96 + col)
     spot := file . rank
@@ -107,21 +105,20 @@ FindDPath2(spot) {             ; DIAG PATH 2
     MouseMove, board[spot].x, board[spot].y
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 100
-    if (color = my_color) {     ; COLLISION SAME COLOR
+    if (color = my_color) {   ; collision same color
       return p2
     }
   }
   return p2
 }
 
-FindDPath3(spot) {             ; DIAG PATH 3
+FindRPath3(spot) {         ; ROOK PATH 3 DOWN
   col := board[spot].col
   row := board[spot].row
   p3 := {}
 
-  while ( (col < 8) and (row > 1) ) {
+  while (row > 1) {
     n := A_Index
-    col += 1
     row -= 1
     rank := row
     file := Chr(96 + col)
@@ -130,22 +127,21 @@ FindDPath3(spot) {             ; DIAG PATH 3
     MouseMove, board[spot].x, board[spot].y
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 100
-    if (color = my_color) {   ; COLLISION SAME COLOR
+    if (color = my_color) {   ; collision same color
       return p3
     }
   }
   return p3
 }
 
-FindDPath4(spot) {             ; DIAG PATH 4
+FindRPath4(spot) {         ; ROOK PATH 4 LEFT
   col := board[spot].col
   row := board[spot].row
   p4 := {}
 
-  while ( (col > 1) and (row > 1) ) {
+  while (col > 1) {
     n := A_Index
     col -= 1
-    row -= 1
     rank := row
     file := Chr(96 + col)
     spot := file . rank
@@ -153,7 +149,7 @@ FindDPath4(spot) {             ; DIAG PATH 4
     MouseMove, board[spot].x, board[spot].y
     p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 100
-    if (color = my_color) {   ; COLLISION SAME COLOR
+    if (color = my_color) {   ; collision same color
       return p4
     }
   }
@@ -162,7 +158,7 @@ FindDPath4(spot) {             ; DIAG PATH 4
 
 
 
-OutputDPath(path) {
+OutputRPath(path) {
   n := 1
   spot_text := ""
   path_text := ""

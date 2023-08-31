@@ -12,6 +12,7 @@
 #Include pawn_mover.ahk
 #Include knight_mover.ahk
 #Include bishop_mover.ahk
+#Include rook_mover.ahk
 
 global rel_path := "" . A_ScriptDir . "\assets\"
 ;global img_path := %rel_path%p_wh_wh.png
@@ -84,21 +85,26 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
     }
     piece_type := IDPiece(spot)  ;       <<============
 
-;    if ( (piece_type != "bishop") ) {
-    if ( (piece_type != "pawn") AND (piece_type != "knight") AND (piece_type != "bishop") ) {
+;    if ( (piece_type != "pawn") ) {
+    if ( (piece_type != "pawn") AND (piece_type != "knight")
+        AND (piece_type != "bishop") AND (piece_type != "rook") ) {
       TryMove()
     }
     if (piece_type = "pawn") {
       target := MovePawn(spot)
-    }
-    if (piece_type = "knight") {
+    } else if (piece_type = "knight") {
       target := MoveKnight(spot)
-    }
-    if (piece_type = "bishop") {
+    } else if (piece_type = "bishop") {
       target := MoveBishop(spot)
+    } else if (piece_type = "rook") {
+      target := MoveRook(spot)
     }
     if target {
       MovePiece(spot, target)
+      if ( (piece_type = "pawn") AND (target contains 8) ) {
+        Sleep, 100
+        MouseClick, Left    ; promotion choose queen
+      }
     }
     Sleep, 10
   }
