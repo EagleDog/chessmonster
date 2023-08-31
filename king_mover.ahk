@@ -16,7 +16,8 @@
 ; STEP 5 - move to empty square
 
 
-
+; known problem: king often evades detection, 
+;          especially on f file.
 
 
 
