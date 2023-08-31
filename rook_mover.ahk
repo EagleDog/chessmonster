@@ -30,7 +30,7 @@ MoveRook(spot) {
   }
 }
 
-RMoveEmpty(paths) {    ; DIAG MOVE TO EMPTY SQUARE
+RMoveEmpty(paths) {    ; ROOK MOVE TO EMPTY SQUARE
   n := 1
   while paths[n] {
     nn := 1
@@ -44,7 +44,7 @@ RMoveEmpty(paths) {    ; DIAG MOVE TO EMPTY SQUARE
   }
 }
 
-RookCapture(paths) {    ; DIAG CAPTURE OPPONENT
+RookCapture(paths) {    ; ROOK CAPTURE OPPONENT
   n := 1
   while paths[n] {
     nn := 1
@@ -71,7 +71,6 @@ FindRPath1(spot) {         ; ROOK PATH 1 UP
   col := board[spot].col
   row := board[spot].row
   p1 := {}
-
   while (row < 8) {
     n := A_Index
     row += 1
@@ -81,8 +80,7 @@ FindRPath1(spot) {         ; ROOK PATH 1 UP
     color := SqStat(spot)
     MouseMove, board[spot].x, board[spot].y
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-    Sleep, 100
-
+;    Sleep, 10
     if (color = my_color) {   ; collision same color
       return p1
     }
@@ -94,7 +92,6 @@ FindRPath2(spot) {         ; ROOK PATH 2 RIGHT
   col := board[spot].col
   row := board[spot].row
   p2 := {}
-
   while (col < 8) {
     n := A_Index
     col += 1
@@ -104,7 +101,7 @@ FindRPath2(spot) {         ; ROOK PATH 2 RIGHT
     color := SqStat(spot)
     MouseMove, board[spot].x, board[spot].y
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-    Sleep, 100
+;    Sleep, 10
     if (color = my_color) {   ; collision same color
       return p2
     }
@@ -116,7 +113,6 @@ FindRPath3(spot) {         ; ROOK PATH 3 DOWN
   col := board[spot].col
   row := board[spot].row
   p3 := {}
-
   while (row > 1) {
     n := A_Index
     row -= 1
@@ -126,7 +122,7 @@ FindRPath3(spot) {         ; ROOK PATH 3 DOWN
     color := SqStat(spot)
     MouseMove, board[spot].x, board[spot].y
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-    Sleep, 100
+;    Sleep, 10
     if (color = my_color) {   ; collision same color
       return p3
     }
@@ -138,7 +134,6 @@ FindRPath4(spot) {         ; ROOK PATH 4 LEFT
   col := board[spot].col
   row := board[spot].row
   p4 := {}
-
   while (col > 1) {
     n := A_Index
     col -= 1
@@ -157,14 +152,12 @@ FindRPath4(spot) {         ; ROOK PATH 4 LEFT
 }
 
 
-
 OutputRPath(path) {
   n := 1
   spot_text := ""
   path_text := ""
   while path[n] {
     n := A_Index
- 
     spot_text := path[n].spot . " " path[n].color . " | "
     path_text := path_text . spot_text
   }

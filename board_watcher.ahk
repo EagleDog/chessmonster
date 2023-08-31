@@ -103,10 +103,9 @@ IDPiece(spot) {       ;    <<==========
     MouseMove, x, y
     return "empty"
   } else if (spot_color = "white") {
-
-    return WhichPiece(x1, y1, x2, y2, "white") ; <<====
+    return WhichPiece(x1, y1, x2, y2, "white")  ;   <<=======
   } else {
-    return WhichPiece(x1, y1, x2, y2, "black") ; <<====
+    return WhichPiece(x1, y1, x2, y2, "black")  ;   <<=======
   }
 ;  return WhichPiece(x1, y1, x2, y2)
 }

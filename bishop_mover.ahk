@@ -1,9 +1,9 @@
 ;bishop_mover.ahk
 ;
-; p1.1 - up, left
-; p2.1 - up, right
-; p3.1 - down, right
-; p4.1 - down, left
+; path_1 - up, left
+; path_2 - up, right
+; path_3 - down, right
+; path_4 - down, left
 ;
 ; STEP 1 - explore 4 paths
 ; STEP 2 - end blocked paths (wall or collistion)
@@ -82,8 +82,7 @@ FindDPath1(spot) {             ; DIAG PATH 1
     color := SqStat(spot)
     MouseMove, board[spot].x, board[spot].y
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-    Sleep, 100
-
+;    Sleep, 10
     if (color = my_color) {   ; COLLISION SAME COLOR
       return p1
     }
@@ -95,7 +94,6 @@ FindDPath2(spot) {             ; DIAG PATH 2
   col := board[spot].col
   row := board[spot].row
   p2 := {}
-
   while ( (col < 8) and (row < 8) ) {
     n := A_Index
     col += 1
@@ -106,7 +104,7 @@ FindDPath2(spot) {             ; DIAG PATH 2
     color := SqStat(spot)
     MouseMove, board[spot].x, board[spot].y
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-    Sleep, 100
+;    Sleep, 10
     if (color = my_color) {     ; COLLISION SAME COLOR
       return p2
     }
@@ -129,7 +127,7 @@ FindDPath3(spot) {             ; DIAG PATH 3
     color := SqStat(spot)
     MouseMove, board[spot].x, board[spot].y
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-    Sleep, 100
+;    Sleep, 10
     if (color = my_color) {   ; COLLISION SAME COLOR
       return p3
     }
@@ -152,7 +150,7 @@ FindDPath4(spot) {             ; DIAG PATH 4
     color := SqStat(spot)
     MouseMove, board[spot].x, board[spot].y
     p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-    Sleep, 100
+;    Sleep, 10
     if (color = my_color) {   ; COLLISION SAME COLOR
       return p4
     }
