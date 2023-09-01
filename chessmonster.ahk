@@ -176,6 +176,8 @@ b::
 
 ;0::FindMove("f4", "pawn")
 
+0::GuiOutput("test")
+
 a::GetPositions()
 
 ;0::OutputPositions()

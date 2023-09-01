@@ -39,8 +39,9 @@ GetAbbr(piece) {
 }
 
 GetPositions() {
-  gui_text := "Getting positions....."
-  GuiControl,, gui_output, % gui_text
+  GuiOutput("Getting positions.....")
+  ; gui_text := "Getting positions....."
+  ; GuiControl,, gui_output, % gui_text
   piece := ""
   spot_color := ""
   p_abbr := ""
@@ -84,8 +85,10 @@ OutputPositions() {
     p_text := ""
   }
   p_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
-  gui_text := p_text
-  GuiControl,, gui_output, % p_text
+
+  GuiOutput(p_text)
+  ; gui_text := p_text
+  ; GuiControl,, gui_output, % p_text
 }
 
 IDPiece(spot, spot_color) {       ;    <<==========
