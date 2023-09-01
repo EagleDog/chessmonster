@@ -5,25 +5,26 @@ Gui, +AlwaysOnTop +ToolWindow -SysMenu ; +Disabled ;-SysMenu ; +NoActivate ; +Ow
 Gui, Color, 0xaaaaaa
 Gui, Font, s14 w1000, Courier New
 Gui, Add, Text, w280 h20 y+20 center, __CHESSMONSTER__
-Gui, Add, Text, w280 h20 center Vgui_output1, % gui_text
-Gui, Add, Text, w280 h360 center Vgui_output2, % gui_text
+Gui, Add, Text, w280 h20 center Vtimer_field, % gui_text
+Gui, Add, Text, w280 h20 center Vmain_field, % gui_text
+Gui, Add, Text, w280 h360 center Vpositions_field, % gui_text
 ;Gui, Add, Text, x+5 y+5 w200 h25 vVarDisplay, % gui_text
 
-GuiOutput1(" ---timer--- ")
-GuiOutput("press A for positions")
+LogTimer(" ---timer--- ")
+LogMain("press A for positions")
 
 Gui, Show, x1240 y60 w320 h400, chessmonster info, NoActivate ;, NoActivate avoids deactivating the currently active window.
 
-
-GuiOutput(gui_text) {
-  gui_text := gui_text
-  GuiControl,, gui_output2, % gui_text
+LogMain(gui_text) {
+  GuiControl,, main_field, % gui_text
+}
+LogTimer(gui_text) {
+  GuiControl,, timer_field, % gui_text
+}
+LogPositions(gui_text) {
+  GuiControl,, positions_field, % gui_text
 }
 
-GuiOutput1(gui_text) {
-  gui_text := gui_text
-  GuiControl,, gui_output1, % gui_text
-}
 
 
 ; GuiTest() {

@@ -8,23 +8,23 @@
 ;Return
  
 Listen() {
-  GuiOutput("listening...")
+  LogMain("listening...")
   peakValue := 0.01
   triggerVol := 0.00001
   audioMeter := VA_GetAudioMeter()
 
   timer_count := 0.00
   timer_text := "0:" . timer_count
-  GuiOutput1(timer_text)
+  LogTimer(timer_text)
   VA_IAudioMeterInformation_GetMeteringChannelCount(audioMeter, channelCount)
   VA_GetDevicePeriod("capture", devicePeriod)
 
   loop {
     timer_text := "0:" . timer_count
-    GuiOutput1(timer_text)
+    LogTimer(timer_text)
     VA_IAudioMeterInformation_GetPeakValue(audioMeter, peakValue)
     if (peakValue > triggervol) {
-      GuiOutput(peakValue)
+      LogMain(peakValue)
       return "go"
     }
     Sleep, 400

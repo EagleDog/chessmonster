@@ -109,6 +109,9 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
         Sleep, 100
         MouseClick, Left    ;  Promotion  choose queen
       }
+      UpdatePosition(target)
+      UpdatePosition(spot)
+      OutputPositions()
       sleep, 500
       Listen()
       sleep, 100

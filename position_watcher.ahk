@@ -1,4 +1,5 @@
-;position_watcher.ahk
+;positions_watcher.ahk
+; UpdatePosition(spot)
 ; GetPositions()
 ; OutputPositions()
 ; GetAbbr(piece)
@@ -7,14 +8,19 @@ global positions := {}
 global p := positions
 
 UpdatePosition(spot) {
-  piece := ""
-  spot_color := ""
-  p_abbr := ""
-  positions[spot] := { piece: piece, color: spot_color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
+  spot_color := SquareStatus(spot)
+  spot_piece := IDPiece(spot, spot_color)
+  p_abbr := GetAbbr(piece)
+  if (spot_color = "black") {
+    p_abbr := p_abbr . "*"
+  } else {
+    p_abbr := p_abbr . " "
+  }
+  positions[spot] := { piece: spot_piece, color: spot_color, p_abbr: p_abbr }
 }
 
 GetPositions() {
-  GuiOutput("Getting positions.....")
+  LogMain("Getting positions.....")
   ; gui_text := "Getting positions....."
   ; GuiControl,, gui_output, % gui_text
   piece := ""
@@ -62,7 +68,7 @@ OutputPositions() {
   }
   p_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
 
-  GuiOutput(p_text)
+  LogPositions(p_text)
   ; gui_text := p_text
   ; GuiControl,, gui_output, % p_text
 }
