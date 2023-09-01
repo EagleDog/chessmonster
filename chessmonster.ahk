@@ -4,8 +4,9 @@
 ;board_scope := "147, 205  to  849, 908" ;(702 x 761 )
 ;square_size := "87 by 95"  ;87 x 87
 
-;#Include VA.ahk
 #Include chess_gui.ahk
+#Include VA.ahk
+#Include listener.ahk
 #Include board_map.ahk
 #Include board_watcher.ahk
 #Include mouse_mover.ahk
@@ -96,19 +97,35 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
    ;  ;     AND (piece_type != "queen") ) {
    ;    TryMove()
    ;  }
-    if (piece_type = "pawn") {
-      target := MovePawn(spot)
-    } else if (piece_type = "knight") {
-      target := MoveKnight(spot)
-    } else if (piece_type = "bishop") {
-      target := MoveBishop(spot)
-    } else if (piece_type = "rook") {
-      target := MoveRook(spot)
-    } else if (piece_type = "queen") {
-      target := MoveQueen(spot)
-    } else if (piece_type = "king") {
-      target := MoveKing(spot)
+    switch piece_type {
+      case "pawn":
+        target := MovePawn(spot)
+      case "knight":
+        target := MoveKnight(spot)
+      case "bishop":
+        target := MoveBishop(spot)
+      case "rook":
+        target := MoveRook(spot)
+      case "queen":
+        target := MoveQueen(spot)
+      case "king":
+        target := MoveKing(spot)
     }
+
+    ; if (piece_type = "pawn") {
+    ;   target := MovePawn(spot)
+    ; } else if (piece_type = "knight") {
+    ;   target := MoveKnight(spot)
+    ; } else if (piece_type = "bishop") {
+    ;   target := MoveBishop(spot)
+    ; } else if (piece_type = "rook") {
+    ;   target := MoveRook(spot)
+    ; } else if (piece_type = "queen") {
+    ;   target := MoveQueen(spot)
+    ; } else if (piece_type = "king") {
+    ;   target := MoveKing(spot)
+    ; }
+
     if target {
       MovePiece(spot, target)
       if ( (piece_type = "pawn") AND (target contains 8) ) {
@@ -116,7 +133,9 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
         MouseClick, Left    ;  Promotion  choose queen
       }
     }
-    Sleep, 10
+    sleep, 300
+    Listen()
+    sleep, 10
   }
 }
 
@@ -176,9 +195,12 @@ b::
 
 ;0::FindMove("f4", "pawn")
 
-0::GuiOutput("test")
-
 a::GetPositions()
 
-;0::OutputPositions()
+0::GuiOutput("test")
+
+f1::Listen()
+
+z::SoundBeep, 400, 500  ; , [ Frequency, Duration]
+
 ;9::OutputDebug, % "Output Debug Output Debug" . my_color . ""
