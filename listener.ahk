@@ -24,8 +24,9 @@ Listen() {
     LogTimer(timer_text)
     VA_IAudioMeterInformation_GetPeakValue(audioMeter, peakValue)
     if (peakValue > triggervol) {
-      LogMain(peakValue)
-      return "go"
+      LogVolume(peakValue)
+      LogMain(" ")
+      return
     }
     Sleep, 400
     timer_count += 400/1000

@@ -8,15 +8,26 @@ global positions := {}
 global p := positions
 
 UpdatePosition(spot) {
-  spot_color := SquareStatus(spot)
-  spot_piece := IDPiece(spot, spot_color)
+  color := SquareStatus(spot)
+  piece := IDPiece(spot, color)
   p_abbr := GetAbbr(piece)
-  if (spot_color = "black") {
+  if (color = "black") {
     p_abbr := p_abbr . "*"
   } else {
     p_abbr := p_abbr . " "
   }
-  positions[spot] := { piece: spot_piece, color: spot_color, p_abbr: p_abbr }
+  positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr }
+;  MsgBox, % "spot: " . spot . " p_abbr: " . p_abbr . " color: " . color . ""
+  OutputPositions()
+}
+UpdateTwoPositions(spot, target) {
+  Sleep, 10
+  UpdatePosition(target)
+  Sleep, 50
+  UpdatePosition(spot)
+  Sleep, 10
+  ; OutputPositions()
+  ; Sleep, 10
 }
 
 GetPositions() {
@@ -41,7 +52,7 @@ GetPositions() {
       } else {
         p_abbr := p_abbr . " "
       }
-      positions[spot] := { piece: piece, color: spot_color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
+      positions[spot] := { spot: spot, piece: piece, color: spot_color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
     }
   }
   p := positions

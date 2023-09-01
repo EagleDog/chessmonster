@@ -4,9 +4,10 @@
 Gui, +AlwaysOnTop +ToolWindow -SysMenu ; +Disabled ;-SysMenu ; +NoActivate ; +Owner ; +Disabled +Resize ; +MinSize300x200 ; +Owner avoids a taskbar button.
 Gui, Color, 0xaaaaaa
 Gui, Font, s14 w1000, Courier New
-Gui, Add, Text, w280 h20 y+20 center, __CHESSMONSTER__
-Gui, Add, Text, w280 h20 center Vtimer_field, % gui_text
-Gui, Add, Text, w280 h20 center Vmain_field, % gui_text
+Gui, Add, Text, w280 h15 y+15 center, __CHESSMONSTER__
+Gui, Add, Text, w280 h15 center Vtimer_field, % gui_text
+Gui, Add, Text, w280 h15 center Vmain_field, % gui_text
+Gui, Add, Text, w280 h15 center Vvolume_field, % gui_text
 Gui, Add, Text, w280 h360 center Vpositions_field, % gui_text
 ;Gui, Add, Text, x+5 y+5 w200 h25 vVarDisplay, % gui_text
 
@@ -15,11 +16,14 @@ LogMain("press A for positions")
 
 Gui, Show, x1240 y60 w320 h400, chessmonster info, NoActivate ;, NoActivate avoids deactivating the currently active window.
 
+LogTimer(gui_text) {
+  GuiControl,, timer_field, % gui_text
+}
 LogMain(gui_text) {
   GuiControl,, main_field, % gui_text
 }
-LogTimer(gui_text) {
-  GuiControl,, timer_field, % gui_text
+LogVolume(gui_text) {
+  GuiControl,, volume_field, % gui_text
 }
 LogPositions(gui_text) {
   GuiControl,, positions_field, % gui_text
