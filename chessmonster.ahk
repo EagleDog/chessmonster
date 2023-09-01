@@ -80,6 +80,7 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
       sleep, 10
       spot := RandomSquare()
       spot_color := SquareStatus(spot)
+      UpdatePosition(spot)
       sleep, 10
       MouseMove, board[spot].x, board[spot].y
     }

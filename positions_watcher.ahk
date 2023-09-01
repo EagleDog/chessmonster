@@ -19,6 +19,7 @@ UpdatePosition(spot) {
   positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr }
 ;  MsgBox, % "spot: " . spot . " p_abbr: " . p_abbr . " color: " . color . ""
   OutputPositions()
+  p := positions
 }
 UpdateTwoPositions(spot, target) {
   Sleep, 10
@@ -57,6 +58,7 @@ GetPositions() {
   }
   p := positions
   OutputPositions()
+  LogMain(" ")
 }
 
 OutputPositions() {
@@ -106,4 +108,39 @@ GetAbbr(piece) {
   }
   return p_abbr
 }
+
+GetStartingPositions() {
+  LogMain("Get Starting positions.....")
+  ; gui_text := "Getting positions....."
+  ; GuiControl,, gui_output, % gui_text
+  row1 := [R, N, B, Q, K, B, N, R]
+
+  if (my_color = "white") {
+    piece := ""
+    spot_color := ""
+    p_abbr := ""
+    rank := 1
+    row := rank
+    Loop, 8 {     ; files (columns)
+      col := A_Index
+      file := Chr(96 + col)     ; a_index > a-h
+      spot := file . rank
+      spot_color := "white"
+      piece := IDPiece(spot, spot_color)  ; <<==========   <<======
+      p_abbr := GetAbbr(piece)
+      if (spot_color = "black") {
+        p_abbr := p_abbr . "*"
+      } else {
+        p_abbr := p_abbr . " "
+      }
+      positions[spot] := { spot: spot, piece: piece, color: spot_color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
+    }
+
+  }
+
+  p := positions
+  OutputPositions()
+}
+
+
 
