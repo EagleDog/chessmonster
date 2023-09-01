@@ -3,10 +3,15 @@
 global board := {}
 global b := board
 
-global x_start := 195
-global y_start := 880
+global x_start := 194
+global y_start := 875
 global sq_width := 87
 global sq_height := -88
+
+; global x_start := 195
+; global y_start := 880
+; global sq_width := 87
+; global sq_height := -88
 
 CreateBoard() {             ; populate with x y coords 64 squares
   Loop, 8 {       ; Ranks (rows)

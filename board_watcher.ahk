@@ -42,7 +42,7 @@ GetPositions() {
   gui_text := "Getting positions....."
   GuiControl,, gui_output, % gui_text
   piece := ""
-  p_color := ""
+  spot_color := ""
   p_abbr := ""
   Loop, 8 {       ; ranks (rows)
     rank := A_Index
@@ -51,15 +51,15 @@ GetPositions() {
       col := A_Index
       file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
-      p_color := SquareStatus(spot)
-      piece := IDPiece(spot)  ; <<==========   <<======
+      spot_color := SquareStatus(spot)
+      piece := IDPiece(spot, spot_color)  ; <<==========   <<======
       p_abbr := GetAbbr(piece)
-      if (p_color = "black") {
+      if (spot_color = "black") {
         p_abbr := p_abbr . "*"
       } else {
         p_abbr := p_abbr . " "
       }
-      positions[spot] := { piece: piece, p_color: p_color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
+      positions[spot] := { piece: piece, color: spot_color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
     }
   }
   p := positions
@@ -88,7 +88,7 @@ OutputPositions() {
   GuiControl,, gui_output, % p_text
 }
 
-IDPiece(spot) {       ;    <<==========
+IDPiece(spot, spot_color) {       ;    <<==========
   x := board[spot].x
   y := board[spot].y - 30
   x1 := x - 20
@@ -98,7 +98,7 @@ IDPiece(spot) {       ;    <<==========
   img_x := 0
   img_y := 0
 ;  Sleep, 50
-  spot_color := SqStat(spot)
+;  spot_color := p_color  ;SqStat(spot)
   if ((spot_color = "empty") OR (spot_color = "not sure")) {
     MouseMove, x, y
     return "empty"
@@ -149,16 +149,6 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
   }
 }
 
-
-ImageMatches(x1, y1, x2, y2, img_path) {
-  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
-  if (img_x) {
-    return true
-  } else {
-    return false
-  }
-}
-
 SquareStatus(spot) {
   if GetColor(spot, white) {
     sq_contains := "white"
@@ -173,6 +163,7 @@ SquareStatus(spot) {
   } else {
     sq_contains := "not sure"
   }
+;  MsgBox, % sq_contains
   return sq_contains
 }
 SqStat(spot) {
@@ -181,10 +172,10 @@ SqStat(spot) {
 
 
 GetColor(spot, the_color) {
-  x1 := board[spot].x - 2
-  y1 := board[spot].y - 2
-  x2 := board[spot].x
-  y2 := board[spot].y
+  x1 := board[spot].x - 1
+  y1 := board[spot].y - 1
+  x2 := board[spot].x + 1
+  y2 := board[spot].y + 1
   PixelSearch, found_x, found_y , x1, y1, x2, y2, the_color, 10, Fast
   if found_x {
     return true
@@ -202,6 +193,16 @@ GetMyColor() {
     opp_color := "white"
   }
 }
+
+ImageMatches(x1, y1, x2, y2, img_path) {
+  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
+  if (img_x) {
+    return true
+  } else {
+    return false
+  }
+}
+
 
 ; GetColor(spot) {
 ;   x := board[spot].x

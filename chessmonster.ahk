@@ -77,22 +77,25 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
   Loop {      ;  MovePawn(spot), MoveKnight(spot)
     Sleep, 10
     spot := RandomSquare()
-    while (SquareStatus(spot) != my_color) {   ; find my guys
+    spot_color := SquareStatus(spot)
+    while (spot_color != my_color) {   ; find my guys
+;    while (SquareStatus(spot) != my_color) {   ; find my guys
       sleep, 10
       MouseMove, board[spot].x, board[spot].y
       sleep, 10
       spot := RandomSquare()
-      sleep, 10        ; found my guy
+      spot_color := SquareStatus(spot)
+      sleep, 10
       MouseMove, board[spot].x, board[spot].y
     }
-    piece_type := IDPiece(spot)  ;       <<============
+    piece_type := IDPiece(spot, spot_color)  ;       <<============
 
-   if ( (piece_type != "king") ) {
-    ; if ( (piece_type != "pawn") AND (piece_type != "knight")
-    ;     AND (piece_type != "bishop") AND (piece_type != "rook")
-    ;     AND (piece_type != "queen") ) {
-      TryMove()
-    }
+   ; if ( (piece_type != "king") ) {
+   ;  ; if ( (piece_type != "pawn") AND (piece_type != "knight")
+   ;  ;     AND (piece_type != "bishop") AND (piece_type != "rook")
+   ;  ;     AND (piece_type != "queen") ) {
+   ;    TryMove()
+   ;  }
     if (piece_type = "pawn") {
       target := MovePawn(spot)
     } else if (piece_type = "knight") {
@@ -104,7 +107,7 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
     } else if (piece_type = "queen") {
       target := MoveQueen(spot)
     } else if (piece_type = "king") {
-      target := MoveQueen(spot)
+      target := MoveKing(spot)
     }
     if target {
       MovePiece(spot, target)
@@ -130,10 +133,9 @@ MakeMove() {
 }
 
 RandomSquare() {
+  Random, col, 1, 8
   Random, rank, 1, 8
-  Random, file, 1, 8
-;  rank := rand_num1
-  file := Chr(96 + file)   ; file > a-h
+  file := Chr(96 + col)   ; file > a-h
   spot := file . rank
   return spot
 }
