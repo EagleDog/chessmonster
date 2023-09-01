@@ -18,7 +18,9 @@ MovePawn(spot) {
     }  
   } else {
     target := MovePawn3(spot)
-    return target
+    if target {
+      return target
+    }
   }
 }
 

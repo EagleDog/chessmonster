@@ -175,11 +175,11 @@ SqStat(spot) {
 
 
 GetColor(spot, the_color) {
-  x1 := board[spot].x - 1
-  y1 := board[spot].y - 1
-  x2 := board[spot].x + 1
-  y2 := board[spot].y + 1
-  PixelSearch, found_x, found_y , x1, y1, x2, y2, the_color, 10, Fast
+  x1 := board[spot].x - 3
+  y1 := board[spot].y - 3
+  x2 := board[spot].x + 3
+  y2 := board[spot].y + 3
+  PixelSearch, found_x, found_y , x1, y1, x2, y2, the_color, 20, Fast
   if found_x {
     return true
   } else {

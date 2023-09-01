@@ -8,16 +8,16 @@
 ;Return
  
 Listen() {
-GuiOutput("listening...")
-peakValue := 0.01
-triggerVol := 0.00001
-audioMeter := VA_GetAudioMeter()
+  GuiOutput("listening...")
+  peakValue := 0.01
+  triggerVol := 0.00001
+  audioMeter := VA_GetAudioMeter()
 
-timer_count := 0.00
-timer_text := "0:" . timer_count
-GuiOutput1(timer_text)
-VA_IAudioMeterInformation_GetMeteringChannelCount(audioMeter, channelCount)
-VA_GetDevicePeriod("capture", devicePeriod)
+  timer_count := 0.00
+  timer_text := "0:" . timer_count
+  GuiOutput1(timer_text)
+  VA_IAudioMeterInformation_GetMeteringChannelCount(audioMeter, channelCount)
+  VA_GetDevicePeriod("capture", devicePeriod)
 
   loop {
     timer_text := "0:" . timer_count

@@ -26,7 +26,7 @@ global rel_path := "" . A_ScriptDir . "\assets\"
 
 global my_color := "white"
 global opp_color := "black"
-global target_status := "empty"
+;global target_status := "empty"
 
 move1 := ["e2", "e4"] ; e pawn
 move2 := ["g1", "f3"] ; g Nnight
@@ -49,17 +49,10 @@ global next_move := 1
 if WinExist("Play Chess") {
   WinActivate, Play Chess
 }
-;  WinActivate, Play Chess
 
+sleep, 400
 CreateBoard()
 GetMyColor()
-
-; sleep, 1000
-; gui_text := "BBBB"
-; GuiControl,, gui_output, % gui_text
-; sleep, 1000
-; gui_text := "CCCC"
-; GuiControl,, gui_output, % gui_text
 
 
 
@@ -92,11 +85,8 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
     piece_type := IDPiece(spot, spot_color)  ;       <<============
 
    ; if ( (piece_type != "king") ) {
-   ;  ; if ( (piece_type != "pawn") AND (piece_type != "knight")
-   ;  ;     AND (piece_type != "bishop") AND (piece_type != "rook")
-   ;  ;     AND (piece_type != "queen") ) {
-   ;    TryMove()
-   ;  }
+   ;   TryMove()
+   ; }
     switch piece_type {
       case "pawn":
         target := MovePawn(spot)
@@ -112,20 +102,6 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
         target := MoveKing(spot)
     }
 
-    ; if (piece_type = "pawn") {
-    ;   target := MovePawn(spot)
-    ; } else if (piece_type = "knight") {
-    ;   target := MoveKnight(spot)
-    ; } else if (piece_type = "bishop") {
-    ;   target := MoveBishop(spot)
-    ; } else if (piece_type = "rook") {
-    ;   target := MoveRook(spot)
-    ; } else if (piece_type = "queen") {
-    ;   target := MoveQueen(spot)
-    ; } else if (piece_type = "king") {
-    ;   target := MoveKing(spot)
-    ; }
-
     if target {
       MovePiece(spot, target)
       if ( (piece_type = "pawn") AND (target contains 8) ) {
@@ -133,9 +109,9 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
         MouseClick, Left    ;  Promotion  choose queen
       }
     }
-    sleep, 300
-    Listen()
-    sleep, 10
+      sleep, 500
+      Listen()
+      sleep, 100
   }
 }
 
@@ -167,8 +143,15 @@ Output() {
   MsgBox, % "b2:  x: " . board["b2"].x . "  y: " . board["b2"].y . ""
 }
 
+MyColorWhite() {
+  my_color := "white"
+  opp_color := "black"
+}
 
-
+MyColorBlack() {
+  my_color := "black"
+  opp_color := "white"
+}
 
 
 ;======= KEYBOARD SHORTCUTS ===================
@@ -177,27 +160,28 @@ Output() {
 ^+x::ExitApp            ; ctrl + shift + x
 
 
-w::
-  my_color := "white"
-  opp_color := "black"
-b::
-  my_color := "black"
-  opp_color := "white"
+w::MyColorWhite()
+  ; my_color := "white"
+  ; opp_color := "black"
+b::MyColorBlack()
+  ; my_color := "black"
+  ; opp_color := "white"
 
 
 1::NewGame()
 2::TryMove()
 
 7::DriftMouse()
+
 ; 4::FindMyGuys()
 
-3::MoveKnight("e2")
+; 3::MoveKnight("e2")
 
 ;0::FindMove("f4", "pawn")
 
 a::GetPositions()
 
-0::GuiOutput("test")
+; 0::GuiOutput("test")
 
 f1::Listen()
 
