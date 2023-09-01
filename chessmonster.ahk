@@ -9,6 +9,7 @@
 #Include listener.ahk
 #Include board_map.ahk
 #Include board_watcher.ahk
+#Include position_watcher.ahk
 #Include mouse_mover.ahk
 #Include pawn_mover.ahk
 #Include knight_mover.ahk
@@ -108,10 +109,10 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
         Sleep, 100
         MouseClick, Left    ;  Promotion  choose queen
       }
-    }
       sleep, 500
       Listen()
       sleep, 100
+    }
   }
 }
 
@@ -153,11 +154,21 @@ MyColorBlack() {
   opp_color := "white"
 }
 
+SublimeGo() {
+  WinActivate, ahk_class PX_WINDOW_CLASS
+}
+
+ExitChessMonster() {
+  SublimeGo()
+  ExitApp
+}
 
 ;======= KEYBOARD SHORTCUTS ===================
 
 ^+z::Pause           ; ctrl + shift + z
-^+x::ExitApp            ; ctrl + shift + x
+;^+x::ExitApp            ; ctrl + shift + x
+^+x::ExitChessMonster() ; ctrl + shift + x
+; ^+c::SublimeGo() ; ctrl + shift + x
 
 
 w::MyColorWhite()

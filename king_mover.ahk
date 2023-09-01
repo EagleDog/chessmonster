@@ -16,8 +16,11 @@
 ; STEP 5 - move to empty square
 
 
-; known problem: king often evades detection, 
+; known problem: white king often evades detection, 
 ;          especially on f file.
+
+
+; doing good. let's randomize move decisions........
 
 
 
@@ -107,6 +110,7 @@ KingMoveEmpty(moves) {    ; KING MOVE TO EMPTY SQUARE
   n := 1
   loop, 8 {
     n := A_Index
+    Random, n, 1, 8    ; begin random move effort randomization
     if (moves[n]) {
       if (moves[n].color = "empty") {
         return moves[n].spot

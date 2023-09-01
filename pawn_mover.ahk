@@ -8,7 +8,8 @@
 ;
 
 MovePawn(spot) {
-  target := MovePawn1(spot)
+  diags := FindDiags(spot)   ;array
+  target := PawnAttack(diags)  ; diag attacks
   if target {
     return target
   } else if (b[spot].rank = 2) {
@@ -24,8 +25,8 @@ MovePawn(spot) {
   }
 }
 
-MovePawn1(spot) {  ; Diagonal Attack
-  diags := FindDiags(spot) ;array
+PawnAttack(diags) {  ; Diagonal Attack
+;  diags := FindDiags(spot) ;array
   diag_1 := diags[1] ;spot
   diag_2 := diags[2] ;spot
   ; diag_1_status := SquareStatus(diag_1)
@@ -47,14 +48,25 @@ MovePawn2(spot) {  ; Forward Two Squares
   target_2 := "" . file . t_rank_2 . ""
   t1_stat := SqStat(target_1)  ;SqStat()--SquareStatus()
   t2_stat := SqStat(target_2)
-  if (t2_stat = "empty" AND t1_stat = "empty") {
-    return target_2
-  } else if (t1_stat = "empty") {
-    return target_1
-  } else {
-    return
+  if (t1_stat = "empty") {
+    Random, rand_choice, 1, 2   ; randomize randomize randomize randomize
+    if (rand_choice = 1) {
+      return target_1
+    } else if (t2_stat = "empty") {
+      return target_2
+    } else {
+      return
+    }
   }
 }
+;   if (t2_stat = "empty" AND t1_stat = "empty") {
+;     return target_2
+;   } else if (t1_stat = "empty") {
+;     return target_1
+;   } else {
+;     return
+;   }
+; }
 
 MovePawn3(spot) {  ; Forward One Square
   file := b[spot].file

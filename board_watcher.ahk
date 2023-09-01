@@ -1,95 +1,18 @@
 ;board_watcher.ahk
-; GetMyColor()
-; GetPositions()
 ; IDPiece(spot)
 ; WhichPiece(x1, y1, x2, y2)
 ; ImageMatches(x1, y1, x2, y2, img_path)
 ; SquareStatus(spot)
 ; SqStat(spot)
 ; GetColor(spot, the_color)
+; GetMyColor()
+; ImageMatches(x1, y1, x2, y2, img_path)
 
 global black := 0x525356
 global white := 0xF8F8F8
 global board_gr := 0x549977
 global board_wh := 0xCCEDE9
 
-global positions := {}
-global p := positions
-
-GetAbbr(piece) {
-  switch piece {
-    case "empty":
-      p_abbr := "."
-    case "pawn":
-      p_abbr := "p"
-    case "knight":
-      p_abbr := "N"
-    case "bishop":
-      p_abbr := "B"
-    case "rook":
-      p_abbr := "R"
-    case "queen":
-      p_abbr := "Q"
-    case "king":
-      p_abbr := "K"
-    default:
-      p_abbr := "`"
-  }
-  return p_abbr
-}
-
-GetPositions() {
-  GuiOutput("Getting positions.....")
-  ; gui_text := "Getting positions....."
-  ; GuiControl,, gui_output, % gui_text
-  piece := ""
-  spot_color := ""
-  p_abbr := ""
-  Loop, 8 {       ; ranks (rows)
-    rank := A_Index
-    row := rank
-    Loop, 8 {     ; files (columns)
-      col := A_Index
-      file := Chr(96 + col)     ; a_index > a-h
-      spot := file . rank
-      spot_color := SquareStatus(spot)
-      piece := IDPiece(spot, spot_color)  ; <<==========   <<======
-      p_abbr := GetAbbr(piece)
-      if (spot_color = "black") {
-        p_abbr := p_abbr . "*"
-      } else {
-        p_abbr := p_abbr . " "
-      }
-      positions[spot] := { piece: piece, color: spot_color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
-    }
-  }
-  p := positions
-  OutputPositions()
-}
-
-OutputPositions() {
-  p_text := ""
-  p_abbr := ""
-  text_rows := ["","","","","","","",""]
-  Loop, 8 {
-    rank := A_Index
-    row := rank
-    Loop, 8 {
-      col := A_Index
-      file := Chr(96 + col)     ; a_index > a-h
-      spot := file . rank
-      p_abbr := p[spot].p_abbr
-      p_text := % "" . p_text . p_abbr . " "
-    }
-    text_rows[A_index] := p_text
-    p_text := ""
-  }
-  p_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
-
-  GuiOutput(p_text)
-  ; gui_text := p_text
-  ; GuiControl,, gui_output, % p_text
-}
 
 IDPiece(spot, spot_color) {       ;    <<==========
   x := board[spot].x
@@ -179,7 +102,7 @@ GetColor(spot, the_color) {
   y1 := board[spot].y - 3
   x2 := board[spot].x + 3
   y2 := board[spot].y + 3
-  PixelSearch, found_x, found_y , x1, y1, x2, y2, the_color, 20, Fast
+  PixelSearch, found_x, found_y , x1, y1, x2, y2, the_color, 30, Fast
   if found_x {
     return true
   } else {

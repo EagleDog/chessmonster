@@ -6,6 +6,10 @@
 ; FindJMoves(jumps, jbounds)    STEP 3 -- attack opponents; eliminate collisions
 ; FindJEmpties(jumps, jbounds)  STEP 4 -- move to empty square
 
+
+;   doing good. now let's randomize move decisions.
+
+
 MoveKnight(spot) {
   jumps := {}
   jumps := FindJumps(spot)   ;{j1.col,j1.rank,j1.spot,j1.color,j2.col,j2.rank,j3.col,j3.rank}
@@ -83,6 +87,7 @@ FindJEmpties(jumps, jbounds) {
   jkeys := ["j1","j2","j3","j4","j5","j6","j7","j8"]
   Loop, 8 {
     n := A_Index
+    Random, n, 1, 8       ; randomize randomize randomize randomize randomize
     key := jkeys[n]
     jspot := jumps[key].spot
     if jbounds[n] {
