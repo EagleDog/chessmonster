@@ -14,6 +14,29 @@ global board_gr := 0x549977
 global board_wh := 0xCCEDE9
 
 
+CheckForGameEnd() {
+;  three_spot := [400, 475]
+  three_spot := [400, 555]
+  three_image := "three.png"
+  img_path := rel_path . three_image
+  x := three_spot[1]
+  y := three_spot[2]
+  x1 := x - 25
+  y1 := y - 25
+  x2 := x + 25
+  y2 := y + 25
+;  MsgBox, % img_path
+  if ImageMatches(x1, y1, x2, y2, img_path) {
+    MouseMove, x, y
+    Click, x, y
+    Sleep, 1000
+    NewGame()
+  } else {
+    MouseMove, x, y
+  }
+}
+
+
 IDPiece(spot, spot_color) {       ;    <<==========
   x := board[spot].x
   y := board[spot].y - 30
@@ -65,8 +88,7 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
     Loop, 2 {
       piece_img := image_set[A_Index]
       img_path := "" rel_path . piece_img . ""
-
-      if (ImageMatches(x1, y1, x2, y2, img_path)) {
+      if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
         MouseMove, x1 + 20, y1 + 35
 ;        MsgBox, %piece_name%
         return piece_name

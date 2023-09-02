@@ -8,7 +8,7 @@
 ;
 
 MovePawn(spot) {
-  if ( RandomChoice() ) {    ; 1:2 odds reduce pawn move frequency
+  if ( RandomChoice(3) ) {    ; 1:3 odds reduce pawn move frequency
     return
   }
   diags := FindDiags(spot)   ;array

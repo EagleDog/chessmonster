@@ -49,7 +49,7 @@ QueenCapture(paths) {    ; QUEEN CAPTURE OPPONENT
     nn := 1
     while paths[n][nn] {
       if (paths[n][nn].color = opp_color) {
-        if RandomChoice() {                   ; randomize 1:2 odds takes piece
+        if RandomChoice(2) {                   ; randomize 1:2 odds
           return paths[n][nn].spot
         }
       }

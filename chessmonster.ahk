@@ -43,31 +43,30 @@ move10 := ["c4", "b3"] ; f bishop (light)
 global moves := [move1, move2, move3, move4, move5, move6, move7, move8, move9, move10]
 global next_move := 1
 
-
-
-; MAIN LOOP =====================      MAIN LOOP      MAIN LOOP
+;
+;
+; === MAIN LOOP ===================      MAIN LOOP      MAIN LOOP
 
 if WinExist("Play Chess") {
   WinActivate, Play Chess
 }
-
-sleep, 400
+sleep, 800
 CreateBoard()
-GetMyColor()
-GetStartingPositions()
-
-
+sleep, 200
+CheckForGameEnd()
 
 ; ====== END MAIN LOOP ================    END MAIN LOOP    END MAIN LOOP
-
+;
+;
 
 NewGame() {
   next_move := 1
   GetMyColor()
   GetStartingPositions()
   FlipBoard()
+  Sleep, 500
+  TryMove()
 }
-
 
 ;TryMove() calls RandomSquare(), SquareStatus(spot),
 TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
@@ -140,8 +139,8 @@ RandomSquare() {
   return spot
 }
 
-RandomChoice() {
-  random, choice, 0, 1
+RandomChoice(max=2) {
+  random, choice, 0, max
   return choice
 }
 
@@ -201,7 +200,7 @@ b::MyColorBlack()
 
 a::GetPositions()
 
-; 0::GuiOutput("test")
+0::CheckForGameEnd()
 
 f1::Listen()
 
