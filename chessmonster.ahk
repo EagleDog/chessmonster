@@ -64,6 +64,7 @@ GetStartingPositions()
 NewGame() {
   next_move := 1
   GetMyColor()
+  GetStartingPositions()
   FlipBoard()
 }
 

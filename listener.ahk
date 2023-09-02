@@ -25,12 +25,14 @@ Listen() {
     VA_IAudioMeterInformation_GetPeakValue(audioMeter, peakValue)
     if (peakValue > triggervol) {
       LogVolume(peakValue)
-      LogMain(" ")
+      LogMain(" sound detected ")
       return
     }
     Sleep, 400
     timer_count += 400/1000
     if (timer_count > 3) {
+      LogMain("timeout")
+      LogVolume(0.000)
       return
     }
   }

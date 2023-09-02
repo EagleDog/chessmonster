@@ -22,7 +22,7 @@ LogMain(gui_text) {
   GuiControl,, main_field, % gui_text
 }
 LogVolume(gui_text) {
-  GuiControl,, volume_field, % gui_text
+  GuiControl,, volume_field, % "volume: " . gui_text
 }
 LogPositions(gui_text) {
   GuiControl,, positions_field, % gui_text
