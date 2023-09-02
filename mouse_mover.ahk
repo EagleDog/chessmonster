@@ -25,4 +25,3 @@ DriftMouse() {
   Random, speed, 1, 7 
   MouseMove, x - 40, y - 40, speed, Relative
 }
-

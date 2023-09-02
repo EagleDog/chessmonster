@@ -182,6 +182,3 @@ GenericColumnsLoop(row, color, abbrs) {
 }
 
 
-
-
-

@@ -268,7 +268,3 @@ OutputQPaths(paths) {
 }
 
 
-
-
-
-

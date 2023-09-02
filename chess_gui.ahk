@@ -77,3 +77,4 @@ LogPositions(gui_text) {
 ; ControlSetText,, %var1%, ahk_id %myedit%
 
 ; Return
+
