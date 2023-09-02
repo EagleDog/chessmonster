@@ -54,6 +54,7 @@ if WinExist("Play Chess") {
 sleep, 400
 CreateBoard()
 GetMyColor()
+GetStartingPositions()
 
 
 
