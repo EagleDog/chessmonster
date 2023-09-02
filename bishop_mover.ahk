@@ -32,16 +32,20 @@ MoveBishop(spot) {
 
 DMoveEmpty(paths) {    ; DIAG MOVE TO EMPTY SQUARE
   n := 1
+  poss_diags := []
   while paths[n] {
     nn := 1
     while paths[n][nn] {
       if (paths[n][nn].color = "empty") {
-        return paths[n][nn].spot
+        poss_diags.push(paths[n][nn])      ; randomize randomize
       }
       nn += 1
     }
     n += 1
   }
+  num_options := poss_diags.length()
+  random, which_option, 1, num_options         ; randomize randomize randomize randomize randomize
+  return poss_diags[which_option].spot
 }
 
 DiagCapture(paths) {    ; DIAG CAPTURE OPPONENT

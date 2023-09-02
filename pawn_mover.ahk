@@ -8,6 +8,9 @@
 ;
 
 MovePawn(spot) {
+  if ( RandomChoice() ) {    ; 1:2 odds reduce pawn move frequency
+    return
+  }
   diags := FindDiags(spot)   ;array
   target := PawnAttack(diags)  ; diag attacks
   if target {

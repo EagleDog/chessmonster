@@ -99,7 +99,7 @@ KingCapture(moves) {    ; KING CAPTURE OPPONENT
   loop, 8 {
     n := A_Index
     if (moves[n]) {
-      if (moves[n].color = opp_color) {
+      if ( (moves[n].color = opp_color) AND (RandomChoice()) ) {    ; 1:2 odds randomized
         return moves[n].spot
       }
     }

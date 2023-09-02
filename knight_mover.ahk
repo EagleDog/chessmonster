@@ -19,7 +19,6 @@ MoveKnight(spot) {
   best_jump := FindJMoves(jumps, jbounds)
 
   if best_jump {
-    MsgBox, % "Best jump: " . best_jump . ""
     return best_jump
   } else {
     best_jump := FindJEmpties(jumps, jbounds)

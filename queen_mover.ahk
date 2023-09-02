@@ -49,7 +49,9 @@ QueenCapture(paths) {    ; QUEEN CAPTURE OPPONENT
     nn := 1
     while paths[n][nn] {
       if (paths[n][nn].color = opp_color) {
-        return paths[n][nn].spot
+        if RandomChoice() {                   ; randomize 1:2 odds takes piece
+          return paths[n][nn].spot
+        }
       }
       nn += 1
     }
@@ -59,16 +61,20 @@ QueenCapture(paths) {    ; QUEEN CAPTURE OPPONENT
 
 QueenMoveEmpty(paths) {    ; QUEEN MOVE TO EMPTY SQUARE
   n := 1
+  poss_paths := []
   while paths[n] {
     nn := 1
     while paths[n][nn] {
       if (paths[n][nn].color = "empty") {
-        return paths[n][nn].spot
+        poss_paths.push(paths[n][nn])          ; randomize
       }
       nn += 1
     }
     n += 1
   }
+  num_options := poss_paths.length()
+  random, which_option, 1, num_options         ; randomize randomize randomize randomize randomize
+  return poss_paths[which_option].spot
 }
 
 

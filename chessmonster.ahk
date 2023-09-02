@@ -88,7 +88,8 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
     }
     piece_type := IDPiece(spot, spot_color)  ;       <<============
 
-   ; if ( (piece_type != "king") ) {
+   ; if ( (piece_type != "bishop") AND (piece_type != "rook") 
+   ;    AND (piece_type != "knight") AND (piece_type != "queen") ) {
    ;   TryMove()
    ; }
     switch piece_type {
@@ -132,11 +133,16 @@ MakeMove() {
 }
 
 RandomSquare() {
-  Random, col, 1, 8
-  Random, rank, 1, 8
+  random, col, 1, 8
+  random, rank, 1, 8
   file := Chr(96 + col)   ; file > a-h
   spot := file . rank
   return spot
+}
+
+RandomChoice() {
+  random, choice, 0, 1
+  return choice
 }
 
 
