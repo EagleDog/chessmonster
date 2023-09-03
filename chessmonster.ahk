@@ -41,7 +41,7 @@ move9 := ["a2", "a3"] ; a pawn
 move10 := ["c4", "b3"] ; f bishop (light)
 
 global moves := [move1, move2, move3, move4, move5, move6, move7, move8, move9, move10]
-global next_move := 1
+global move_num := 1
 
 ;
 ;
@@ -53,33 +53,33 @@ if WinExist("Play Chess") {
 sleep, 800
 CreateBoard()
 sleep, 200
-CheckForGameEnd()
+;CheckForGameEnd()
 
 ; ====== END MAIN LOOP ================    END MAIN LOOP    END MAIN LOOP
 ;
 ;
 
 NewGame() {
-  next_move := 1
+  move_num := 1
   GetMyColor()
   GetStartingPositions()
   FlipBoard()
   Sleep, 500
-  TryMove()
+  MakeMove()
 }
 
-;TryMove() calls RandomSquare(), SquareStatus(spot),
+         ; calls ChooseSquare(), SquareStatus(spot),
 TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
-  Loop {      ;  MovePawn(spot), MoveKnight(spot)
-    Sleep, 10
-    spot := RandomSquare()
+  Loop {      ;  MovePawn(spot), MoveKnight(spot), MoveBishop(spot),
+    Sleep, 10   ; MoveRook(spot), MoveQueen(spot), MoveKing(spot)
+    spot := ChooseSquare()
     spot_color := SquareStatus(spot)
     while (spot_color != my_color) {   ; find my guys
 ;    while (SquareStatus(spot) != my_color) {   ; find my guys
       sleep, 10
       MouseMove, board[spot].x, board[spot].y
       sleep, 10
-      spot := RandomSquare()
+      spot := ChooseSquare()
       spot_color := SquareStatus(spot)
       UpdatePosition(spot)
       sleep, 10
@@ -120,15 +120,28 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
 }
 
 MakeMove() {
-  if (next_move >= 11) {
+;  if (move_num >= 11) {
+  if (move_num <= 1) {
     TryMove()
     ; MsgBox, No more moves.
-    ; next_move := 1
+    ; move_num := 1
   } else {
-    MovePiece(moves[next_move].1, moves[next_move].2)
-    ; MsgBox, % " the_move: " . moves[next_move].1 . "  " . moves[next_move].2 . ""
-    next_move += 1
+    MovePiece(moves[move_num].1, moves[move_num].2)
+    ; MsgBox, % " the_move: " . moves[move_num].1 . "  " . moves[move_num].2 . ""
+    move_num += 1
   }
+}
+
+ChooseSquare() {
+  if (RandomChoice(3) != 1) {
+    my_spots := GetMySpots()
+    length_my_spots := my_spots.length()
+    Random, spot_num, 1, length_my_spots
+    spot := my_spots[spot_num]
+  } else {
+    spot := RandomSquare()
+  }
+  return spot
 }
 
 RandomSquare() {
@@ -139,9 +152,13 @@ RandomSquare() {
   return spot
 }
 
-RandomChoice(max=2) {
+RandomChoice(max=1) {
   random, choice, 0, max
-  return choice
+  if (choice = 1) {
+    return true
+  } else {
+    return false
+  }
 }
 
 
@@ -188,7 +205,8 @@ b::MyColorBlack()
 
 
 1::NewGame()
-2::TryMove()
+2::MakeMove()
+; 2::TryMove()
 
 7::DriftMouse()
 

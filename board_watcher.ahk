@@ -13,7 +13,6 @@ global white := 0xF8F8F8
 global board_gr := 0x549977
 global board_wh := 0xCCEDE9
 
-
 CheckForGameEnd() {
 ;  three_spot := [400, 475]
   three_spot := [400, 555]
@@ -35,7 +34,6 @@ CheckForGameEnd() {
     MouseMove, x, y
   }
 }
-
 
 IDPiece(spot, spot_color) {       ;    <<==========
   x := board[spot].x

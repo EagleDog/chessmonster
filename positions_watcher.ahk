@@ -29,6 +29,18 @@ UpdateTwoPositions(spot, target) {
   ; Sleep, 10
 }
 
+GetMySpots() {
+  my_spots := []
+  loop, 64 {
+    n := A_Index
+    spot := all_spots[n]
+    if (positions[spot].color = my_color) {
+      my_spots.push(spot)
+    }
+  }
+  return my_spots
+}
+
 GetPositions() {
   LogMain("Getting positions.....")
   ; gui_text := "Getting positions....."
@@ -82,6 +94,58 @@ OutputPositions() {
   ; GuiControl,, gui_output, % p_text
 }
 
+GetStartingPositions() {
+  LogMain("Get Starting positions.....")
+  white_row_abbrs := ["R", "N", "B", "Q", "K", "B", "N", "R"]
+  pawn_row_abbrs := ["p", "p", "p", "p", "p", "p", "p", "p"]
+  empty_row_abbrs := [".", ".", ".", ".", ".", ".", ".", "."]
+  black_row_abbrs := ["R", "N", "B", "K", "Q", "B", "N", "R"]
+  wh := white_row_abbrs
+  p := pawn_row_abbrs
+  e := empty_row_abbrs
+  bl := black_row_abbrs
+  if (my_color = "white") {
+    abbrs := [wh, p, e, e, e, e, p, wh]
+  } else {
+    abbrs := [bl, p, e, e, e, e, p, bl]
+  }
+
+  loop, 2 {     ; bottom 2 rows
+    row := A_Index
+    color := my_color
+    GenericColumnsLoop(row, color, abbrs)
+  }
+  loop, 2 {     ; top 2 rows
+    row := A_Index + 6
+    color := opp_color
+    GenericColumnsLoop(row, color, abbrs)
+  }
+  loop, 4 {     ; empty rows
+    row := A_Index + 2
+    color := "empty"
+    GenericColumnsLoop(row, color, abbrs)
+  }
+  OutputPositions()
+  LogMain("Begin Match")
+}
+
+GenericColumnsLoop(row, color, abbrs) {
+  loop, 8 {       ; columns
+    col := A_Index
+    file := Chr(96 + col)
+    row := row
+    rank := row
+    spot := file . rank
+    p_abbr := abbrs[row][col]
+    piece := GetFullName(p_abbr)
+    if (color = "black") {
+      p_abbr := p_abbr . "*"
+    } else {
+      p_abbr := p_abbr . " "
+    }
+    positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr }
+  }
+}
 
 GetAbbr(piece) {
   switch piece {
@@ -125,60 +189,4 @@ GetFullName(abbr) {
   }
   return fullname
 }
-
-
-GetStartingPositions() {
-  LogMain("Get Starting positions.....")
-  white_row_abbrs := ["R", "N", "B", "Q", "K", "B", "N", "R"]
-  pawn_row_abbrs := ["p", "p", "p", "p", "p", "p", "p", "p"]
-  empty_row_abbrs := [".", ".", ".", ".", ".", ".", ".", "."]
-  black_row_abbrs := ["R", "N", "B", "K", "Q", "B", "N", "R"]
-  wh := white_row_abbrs
-  p := pawn_row_abbrs
-  e := empty_row_abbrs
-  bl := black_row_abbrs
-  if (my_color = "white") {
-    abbrs := [wh, p, e, e, e, e, p, wh]
-  } else {
-    abbrs := [bl, p, e, e, e, e, p, bl]
-  }
-
-  loop, 2 {     ; bottom 2 rows
-    row := A_Index
-    color := my_color
-    GenericColumnsLoop(row, color, abbrs)
-  }
-  loop, 2 {     ; top 2 rows
-    row := A_Index + 6
-    color := opp_color
-    GenericColumnsLoop(row, color, abbrs)
-  }
-  loop, 4 {     ; empty rows
-    row := A_Index + 2
-    color := "empty"
-    GenericColumnsLoop(row, color, abbrs)
-  }
-  OutputPositions()
-  LogMain("Begin Match")
-}
-
-
-GenericColumnsLoop(row, color, abbrs) {
-  loop, 8 {       ; columns
-    col := A_Index
-    file := Chr(96 + col)
-    row := row
-    rank := row
-    spot := file . rank
-    p_abbr := abbrs[row][col]
-    piece := GetFullName(p_abbr)
-    if (color = "black") {
-      p_abbr := p_abbr . "*"
-    } else {
-      p_abbr := p_abbr . " "
-    }
-    positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr }
-  }
-}
-
 
