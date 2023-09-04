@@ -7,9 +7,6 @@
 ; FindJEmpties(jumps, jbounds)  STEP 4 -- move to empty square
 
 
-;   doing good. now let's randomize move decisions.
-
-
 MoveKnight(spot) {
   jumps := {}
   jumps := FindJumps(spot)   ;{j1.col,j1.rank,j1.spot,j1.color,j2.col,j2.rank,j3.col,j3.rank}

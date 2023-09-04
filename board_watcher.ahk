@@ -4,7 +4,7 @@
 ; ImageMatches(x1, y1, x2, y2, img_path)
 ; SquareStatus(spot)
 ; SqStat(spot)
-; GetColor(spot, the_color)
+; CheckColor(spot, the_color)
 ; GetMyColor()
 ; ImageMatches(x1, y1, x2, y2, img_path)
 
@@ -96,14 +96,14 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
 }
 
 SquareStatus(spot) {
-  if GetColor(spot, white) {
+  if CheckColor(spot, white) {
     sq_contains := "white"
-  } else if GetColor(spot, black) {
+  } else if CheckColor(spot, black) {
     sq_contains := "black"
-  } else if GetColor(spot, board_gr) {
+  } else if CheckColor(spot, board_gr) {
     sq_contains := "empty"
     ; sq_contains := "board green"
-  } else if GetColor(spot, board_wh) {
+  } else if CheckColor(spot, board_wh) {
     sq_contains := "empty"
     ; sq_contains := "board light"
   } else {
@@ -116,8 +116,7 @@ SqStat(spot) {
   return SquareStatus(spot)
 }
 
-
-GetColor(spot, the_color) {
+CheckColor(spot, the_color) {
   x1 := board[spot].x - 3
   y1 := board[spot].y - 3
   x2 := board[spot].x + 3
@@ -150,30 +149,18 @@ ImageMatches(x1, y1, x2, y2, img_path) {
 }
 
 
-; GetColor(spot) {
-;   x := board[spot].x
-;   y := board[spot].y
-;   PixelGetColor, spot_color, x, y
-;   MsgBox, % "spot_color is:  " . spot_color . ""
-; }
-
-; CheckColor(spot, the_color, color_name) {
-;   x1 := board[spot].x - 2
-;   y1 := board[spot].y - 2
-;   x2 := board[spot].x
-;   y2 := board[spot].y
-
-;   PixelSearch, color_x, color_y , x1, y1, x2, y2, the_color, 10, Fast
-;   MouseMove, x2, y2
-;   If color_x {
-;     MsgBox, %color_name%
-;   } Else {
-;     MsgBox, Not %color_name%
-;   }
-; ;  GetColor(spot)
-; }
+GetColor(spot) {
+  x := board[spot].x
+  y := board[spot].y
+  PixelGetColor, spot_color, x, y
+  MsgBox, % "spot_color is:  " . spot_color . ""
+}
 
 
-
-
+SqStatTest() {
+  square_status := SqStat("e2")
+  MsgBox, %square_status%
+  id_test := IDPiece("e2", "white")
+  MsgBox, %id_test%
+}
 

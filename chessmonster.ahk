@@ -218,7 +218,7 @@ b::MyColorBlack()
 
 a::GetPositions()
 
-0::CheckForGameEnd()
+0::SqStatTest()
 
 f1::Listen()
 

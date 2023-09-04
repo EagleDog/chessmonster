@@ -17,7 +17,7 @@ Keyboard Shortcuts are at bottom of main file
     ^+z::Pause
     ^+x::Exit
 
-    1::NewGame()  ;GetColor()
+    1::NewGame()
     0::TryMoves()
 
 chessmonster.ahk is main file
@@ -27,7 +27,10 @@ chessmonster.ahk is main file
 chessmonster
   \___board_map
    |__board_watcher
+   |__positions_watcher
    |__mouse_mover
+   |__chess_gui
+   |__listener
    |__pawn_mover
    |__knight_mover
    |__bishop_mover

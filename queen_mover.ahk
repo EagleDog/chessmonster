@@ -14,8 +14,6 @@
 ; STEP 3 - attack opponents
 ; STEP 4 - move to empty square
 
-
-;MoveQueen("c1")
 MoveQueen(spot) {
   paths := FindQPaths(spot)
 ;  OutputQPaths(paths)
@@ -266,5 +264,4 @@ OutputQPaths(paths) {
   }
   MsgBox, % path_text
 }
-
 
