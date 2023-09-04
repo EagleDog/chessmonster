@@ -160,7 +160,7 @@ GetColor(spot) {
 SqStatTest() {
   square_status := SqStat("e2")
   MsgBox, %square_status%
-  id_test := IDPiece("e2", "white")
+  id_test := IDPiece("f1", "black")
   MsgBox, %id_test%
 }
 

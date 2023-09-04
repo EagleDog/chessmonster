@@ -41,7 +41,7 @@ move9 := ["a2", "a3"] ; a pawn
 move10 := ["c4", "b3"] ; f bishop (light)
 
 global moves := [move1, move2, move3, move4, move5, move6, move7, move8, move9, move10]
-global move_num := 1
+global move_num := 0
 
 ;
 ;
@@ -60,7 +60,7 @@ sleep, 200
 ;
 
 NewGame() {
-  move_num := 1
+  move_num := 0
   GetMyColor()
   GetStartingPositions()
   FlipBoard()
@@ -128,7 +128,6 @@ MakeMove() {
   } else {
     MovePiece(moves[move_num].1, moves[move_num].2)
     ; MsgBox, % " the_move: " . moves[move_num].1 . "  " . moves[move_num].2 . ""
-    move_num += 1
   }
 }
 
@@ -195,32 +194,14 @@ ExitChessMonster() {
 ^+x::ExitChessMonster() ; ctrl + shift + x
 ; ^+c::SublimeGo() ; ctrl + shift + x
 
-
-w::MyColorWhite()
-  ; my_color := "white"
-  ; opp_color := "black"
-b::MyColorBlack()
-  ; my_color := "black"
-  ; opp_color := "white"
-
-
 1::NewGame()
 2::MakeMove()
-; 2::TryMove()
-
 7::DriftMouse()
-
-; 4::FindMyGuys()
-
-; 3::MoveKnight("e2")
-
-;0::FindMove("f4", "pawn")
-
-a::GetPositions()
-
 0::SqStatTest()
 
-f1::Listen()
+a::GetPositions()
+w::MyColorWhite()
+b::MyColorBlack()
 
 z::SoundBeep, 400, 500  ; , [ Frequency, Duration]
 

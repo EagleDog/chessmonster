@@ -9,6 +9,8 @@
 MovePiece(spot, target) {
   ClickDrag(spot, target)
   UpdateTwoPositions(spot, target)
+  move_num += 1
+  LogMoves("Move # " . move_num)
   ; MouseMove, board[spot].x, board[spot].y
   ; Click, Down
   ; MouseMove, board[target].x, board[target].y

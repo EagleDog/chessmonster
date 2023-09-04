@@ -8,10 +8,13 @@ Gui, Add, Text, w280 h20 y+14 center, __CHESSMONSTER__
 Gui, Add, Text, w280 h20 center Vtimer_field, % gui_text
 Gui, Add, Text, w280 h20 center Vmain_field, % gui_text
 Gui, Add, Text, w280 h20 center Vvolume_field, % gui_text
-Gui, Add, Text, w280 h360 center Vpositions_field, % gui_text
+Gui, Add, Text, w280 h200 center Vpositions_field, % gui_text
+Gui, Add, Text, w280 h20 center Vmoves_field, % gui_text
 
 LogTimer(" ---timer--- ")
-LogMain("press A for positions")
+LogMain("press 1 to start")
+LogPositions("press A for positions")
+LogMoves("Move # 0")
 
 Gui, Show, x1240 y40 w340 h500, chessmonster info, NoActivate ;, NoActivate avoids deactivating the currently active window.
 
@@ -26,6 +29,9 @@ LogVolume(gui_text) {
 }
 LogPositions(gui_text) {
   GuiControl,, positions_field, % gui_text
+}
+LogMoves(gui_text) {
+  GuiControl,, moves_field, % gui_text
 }
 
 
