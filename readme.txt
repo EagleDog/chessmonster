@@ -38,3 +38,19 @@ chessmonster
    |__queen_mover
    |__king_mover
 
+
+
+
+
+____roadmap____
+
+increase position polling (esp. opp.'s side of board)
+
+**figure out a way to check for mated king**
+  --especially: after 15 or 20 moves or so
+  --possibly: check if piece tried to move, but stayed in same spot
+
+
+increase play speed
+
+
