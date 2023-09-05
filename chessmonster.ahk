@@ -68,20 +68,30 @@ NewGame() {
   MakeMove()
 }
 
+MakeMove() {
+;  if (move_num >= 11) {
+  if (move_num <= 1) {
+    TryMove()
+  } else {
+    MovePiece(moves[move_num].1, moves[move_num].2)
+  }
+}
+
          ; calls ChooseSquare(), SquareStatus(spot),
 TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
   Loop {      ;  MovePawn(spot), MoveKnight(spot), MoveBishop(spot),
     Sleep, 10   ; MoveRook(spot), MoveQueen(spot), MoveKing(spot)
     spot := ChooseSquare()
-    spot_color := SquareStatus(spot)
+    spot_color := UpdatePosition(spot)
+    ; spot_color := SquareStatus(spot)
     while (spot_color != my_color) {   ; find my guys
 ;    while (SquareStatus(spot) != my_color) {   ; find my guys
       sleep, 10
       MouseMove, board[spot].x, board[spot].y
       sleep, 10
       spot := ChooseSquare()
-      spot_color := SquareStatus(spot)
-      UpdatePosition(spot)
+      spot_color := UpdatePosition(spot)
+;      UpdatePosition(spot)
       sleep, 10
       MouseMove, board[spot].x, board[spot].y
     }
@@ -119,20 +129,8 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
   }
 }
 
-MakeMove() {
-;  if (move_num >= 11) {
-  if (move_num <= 1) {
-    TryMove()
-    ; MsgBox, No more moves.
-    ; move_num := 1
-  } else {
-    MovePiece(moves[move_num].1, moves[move_num].2)
-    ; MsgBox, % " the_move: " . moves[move_num].1 . "  " . moves[move_num].2 . ""
-  }
-}
-
 ChooseSquare() {
-  if (RandomChoice(3) != 1) {
+  if ( RandomChoice(3) ) {
     my_spots := GetMySpots()
     length_my_spots := my_spots.length()
     Random, spot_num, 1, length_my_spots

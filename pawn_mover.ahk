@@ -8,10 +8,10 @@
 ;
 
 MovePawn(spot) {
-  if ( RandomChoice(4) ) {    ; 1:3 odds reduce pawn move frequency
+  if ( RandomChoice(3) ) {  ; reduce pawn move frequency
     return
   }
-  diags := FindDiags(spot)   ;array
+  diags := FindDiags(spot)   ; array
   target := PawnAttack(diags)  ; diag attacks
   if target {
     return target
@@ -34,9 +34,9 @@ PawnAttack(diags) {  ; Diagonal Attack
   diag_2 := diags[2] ;spot
   ; diag_1_status := SquareStatus(diag_1)
   ; diag_2_status := SquareStatus(diag_2)
-  if (SqStat(diag_1) = opp_color) {
+  if (UpdatePosition(diag_1) = opp_color) {
     return diag_1
-  } else if (SqStat(diag_2) = opp_color) {
+  } else if (UpdatePosition(diag_2) = opp_color) {
     return diag_2
   } else {
     return
@@ -49,8 +49,8 @@ MovePawn2(spot) {  ; Forward Two Squares
   t_rank_2 := b[spot].rank + 2
   target_1 := "" . file . t_rank_1 . ""
   target_2 := "" . file . t_rank_2 . ""
-  t1_stat := SqStat(target_1)  ;SqStat()--SquareStatus()
-  t2_stat := SqStat(target_2)
+  t1_stat := UpdatePosition(target_1)  ;SqStat()--SquareStatus()
+  t2_stat := UpdatePosition(target_2)
   if (t1_stat = "empty") {
     Random, rand_choice, 1, 2   ; randomize randomize randomize randomize
     if (rand_choice = 1) {
@@ -76,7 +76,7 @@ MovePawn3(spot) {  ; Forward One Square
   t_rank := b[spot].rank + 1
   target := "" . file . t_rank . ""
 ;  MsgBox, %target%
-  if SqStat(target) = "empty" {
+  if UpdatePosition(target) = "empty" {
     return target
   } else {
     return

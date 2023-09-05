@@ -86,7 +86,7 @@ FindQPath1(spot) {         ; PATH 1   STRAIGHT   UP
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 10
@@ -107,7 +107,7 @@ FindQPath2(spot) {         ; PATH 2   STRAIGHT   RIGHT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 10
@@ -128,7 +128,7 @@ FindQPath3(spot) {         ; PATH 3   STRAIGHT    DOWN
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 10
@@ -149,7 +149,7 @@ FindQPath4(spot) {         ; PATH 4   STRAIGHT   LEFT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 10
@@ -172,7 +172,7 @@ FindQPath5(spot) {             ; PATH 5  DIAG   UP/LEFT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 10
@@ -194,7 +194,7 @@ FindQPath6(spot) {             ; PATH 6  DIAG  UP/RIGHT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 10
@@ -216,7 +216,7 @@ FindQPath7(spot) {             ; PATH 7  DIAG   DOWN/RIGHT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 10
@@ -238,7 +238,7 @@ FindQPath8(spot) {             ; PATH 8   DIAG  DOWN/LEFT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 10
@@ -258,9 +258,9 @@ OutputQPaths(paths) {
     while paths[n][nn] {
       spot_text := paths[n][nn].spot . " " paths[n][nn].color . " | "
       path_text := path_text . spot_text
-    nn += 1
+      nn += 1
     }
-  n += 1
+    n += 1
   }
   MsgBox, % path_text
 }

@@ -15,10 +15,7 @@
 ;MoveRook("c1")
 MoveRook(spot) {
   paths := FindRPaths(spot)
-  ; OutputRPath(paths[1])
-  ; OutputRPath(paths[2])
-  ; OutputRPath(paths[3])
-  ; OutputRPath(paths[4])
+  ; OutputRPaths(paths)
   target := RookCapture(paths)
   if target {
     MovePiece(spot, target)
@@ -81,7 +78,7 @@ FindRPath1(spot) {         ; ROOK PATH 1 UP
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
 ;    Sleep, 10
@@ -102,7 +99,7 @@ FindRPath2(spot) {         ; ROOK PATH 2 RIGHT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
 ;    Sleep, 10
@@ -123,7 +120,7 @@ FindRPath3(spot) {         ; ROOK PATH 3 DOWN
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
 ;    Sleep, 10
@@ -144,7 +141,7 @@ FindRPath4(spot) {         ; ROOK PATH 4 LEFT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 100
@@ -156,14 +153,18 @@ FindRPath4(spot) {         ; ROOK PATH 4 LEFT
 }
 
 
-OutputRPath(path) {
+OutputRPath(paths) {
   n := 1
   spot_text := ""
   path_text := ""
-  while path[n] {
-    n := A_Index
-    spot_text := path[n].spot . " " path[n].color . " | "
-    path_text := path_text . spot_text
+  while paths[n] {
+    nn := 1
+    while paths[n][nn] {
+      spot_text := paths[n][nn].spot . " " paths[n][nn].color . " | "
+      path_text := path_text . spot_text
+      nn += 1
+    }
+    n += 1
   }
   MsgBox, % path_text
 }

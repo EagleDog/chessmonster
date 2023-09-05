@@ -71,7 +71,7 @@ PossKMoves(spot, diffs) {       ; 8 Possible King Moves
     m_row := row + diffs[n][2]
     m_rank := m_row
     m_spot := m_file . m_rank
-    m_color := SqStat(m_spot)
+    m_color := UpdatePosition(m_spot)
     Sleep, 10
     MouseMove, board[m_spot].x, board[m_spot].y
     poss_moves[n] := { col: m_col, row: m_row, file: m_file, rank: m_rank, spot: m_spot, color: m_color }

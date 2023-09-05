@@ -83,7 +83,7 @@ FindDPath1(spot) {             ; DIAG PATH 1
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
 ;    Sleep, 10
@@ -105,7 +105,7 @@ FindDPath2(spot) {             ; DIAG PATH 2
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
 ;    Sleep, 10
@@ -128,7 +128,7 @@ FindDPath3(spot) {             ; DIAG PATH 3
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
 ;    Sleep, 10
@@ -151,7 +151,7 @@ FindDPath4(spot) {             ; DIAG PATH 4
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := SqStat(spot)
+    color := UpdatePosition(spot)
     MouseMove, board[spot].x, board[spot].y
     p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
 ;    Sleep, 10

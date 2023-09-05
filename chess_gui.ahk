@@ -1,22 +1,37 @@
 ; chess_gui.ahk
 ;
 
-Gui, +AlwaysOnTop +ToolWindow -SysMenu ; +Disabled ;-SysMenu ; +NoActivate ; +Owner ; +Disabled +Resize ; +MinSize300x200 ; +Owner avoids a taskbar button.
-Gui, Color, 0xaaaaaa
+; Gui, 1: +AlwaysOnTop +Border -Caption +Owner
+; Gui, 1: Color, 99B0B9
+
+; Gui, Show, , Border Example
+
+
+
+
+
+Gui, Add, Text, w280 h10 center, 
+GuiAddBorder("Black", 4, "0 0 w400 h80")
+; Gui, Add, Text, xp yp wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
 Gui, Font, s14 w1000, Courier New
-Gui, Add, Text, w280 h20 y+14 center, __CHESSMONSTER__
-Gui, Add, Text, w280 h20 center Vtimer_field, % gui_text
-Gui, Add, Text, w280 h20 center Vmain_field, % gui_text
-Gui, Add, Text, w280 h20 center Vvolume_field, % gui_text
-Gui, Add, Text, w280 h200 center Vpositions_field, % gui_text
-Gui, Add, Text, w280 h20 center Vmoves_field, % gui_text
+Gui, Add, Text, xp-40 yp-10 wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
+
+Gui, Color, 0x777777
+Gui, +AlwaysOnTop +ToolWindow -SysMenu ; +Disabled ;-SysMenu ; +NoActivate ; +Owner ; +Disabled +Resize ; +MinSize300x200 ; +Owner avoids a taskbar button.
+; Gui, Add, Text, w280 h20 x20 y70 center, __CHESSMONSTER__
+Gui, Add, Text, w280 h20 x20 y100 center Vmain_field, % gui_text
+Gui, Add, Text, w280 h20 x20 y120 center Vtimer_field, % gui_text
+Gui, Add, Text, w280 h20 x20 y140 center Vvolume_field, % gui_text
+Gui, Add, Text, w280 h20 x20 y190 center Vmoves_field, % gui_text
+Gui, Add, Text, w280 h200 x20 y230 center Vpositions_field, % gui_text
+
 
 LogTimer(" ---timer--- ")
 LogMain("press 1 to start")
 LogPositions("press A for positions")
 LogMoves("Move # 0")
 
-Gui, Show, x1240 y40 w340 h500, chessmonster info, NoActivate ;, NoActivate avoids deactivating the currently active window.
+Gui, Show, x851 y70 w340 h700, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
 
 LogTimer(gui_text) {
   GuiControl,, timer_field, % gui_text
@@ -33,6 +48,33 @@ LogPositions(gui_text) {
 LogMoves(gui_text) {
   GuiControl,, moves_field, % gui_text
 }
+
+
+
+GuiAddBorder(Color, Width, PosAndSize) {
+   ; -------------------------------------------------------------------------------------------------------------------------------
+   ; Color        -  border color as used with the 'Gui, Color, ...' command, must be a "string"
+   ; Width        -  the width of the border in pixels
+   ; PosAndSize   -  a string defining the position and size like Gui commands, e.g. "xm ym w400 h200".
+   ;                 You should not pass other control options!
+   ; -------------------------------------------------------------------------------------------------------------------------------
+   LFW := WinExist() ; save the last-found window, if any
+   DefGui := A_DefaultGui ; save the current default GUI
+   Gui, Add, Text, %PosAndSize% +hwndHTXT
+   GuiControlGet, T, Pos, %HTXT%
+   Gui, New, +Parent%HTXT% +LastFound -Caption ; create a unique child Gui for the text control
+   Gui, Color, %Color%
+   X1 := Width
+   X2 := TW - Width
+   Y1 := Width
+   Y2 := TH - Width
+   WinSet, Region, 0-0 %TW%-0 %TW%-%TH% 0-%TH% 0-0   %X1%-%Y1% %X2%-%Y1% %X2%-%Y2% %X1%-%Y2% %X1%-%Y1%
+   Gui, Show, x0 y0 w%TW% h%TH%
+   Gui, %DefGui%:Default ; restore the default Gui
+   If (LFW) ; restore the last-found window, if any
+      WinExist(LFW)
+}
+
 
 
 

@@ -8,7 +8,8 @@
 
 MovePiece(spot, target) {
   ClickDrag(spot, target)
-  UpdateTwoPositions(spot, target)
+  UpdatePosition(spot)
+  UpdatePosition(target)
   move_num += 1
   LogMoves("Move # " . move_num)
   ; MouseMove, board[spot].x, board[spot].y
@@ -17,8 +18,8 @@ MovePiece(spot, target) {
   ; Click, Up
 }
 
-ClickDrag(s, t) {  ; s-spot t-target b-board L-Left 2-Speed 0-100
-  MouseClickDrag, L, b[s].x, b[s].y, b[t].x, b[t].y, 2
+ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
+  MouseClickDrag, L, b[spot].x, b[spot].y, b[target].x, b[target].y, 2
 }
 
 DriftMouse() {

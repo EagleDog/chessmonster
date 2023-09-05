@@ -44,7 +44,16 @@ chessmonster
 
 ____roadmap____
 
+needed bug fix: queen, bishop, rook sometimes try to jump past opponent's pieces
+
 increase position polling (esp. opp.'s side of board)
+  - position polling during move:
+    - pawn      done
+    - knight    done
+    - bishop    done
+    - rook      done
+    - queen     done
+    - king      done
 
 **figure out a way to check for mated king**
   --especially: after 15 or 20 moves or so
@@ -52,5 +61,10 @@ increase position polling (esp. opp.'s side of board)
 
 
 increase play speed
+
+____finished tasks____
+
+
+
 
 

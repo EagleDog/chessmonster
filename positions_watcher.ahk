@@ -9,24 +9,21 @@ global positions := {}
 UpdatePosition(spot) {
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
-  p_abbr := GetAbbr(piece)
-  if (color = "black") {
-    p_abbr := p_abbr . "*"
-  } else {
-    p_abbr := p_abbr . " "
-  }
+  p_abbr := GetAbbr(piece, color)
   positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr }
-;  MsgBox, % "spot: " . spot . " p_abbr: " . p_abbr . " color: " . color . ""
   OutputPositions()
+  return color
 }
-UpdateTwoPositions(spot, target) {
-  Sleep, 10
-  UpdatePosition(target)
-  Sleep, 50
-  UpdatePosition(spot)
-  Sleep, 10
-  ; OutputPositions()
-  ; Sleep, 10
+
+PollPosition(spot) {
+  color := SquareStatus(spot)
+  piece := IDPiece(spot, color)
+  p_abbr := GetAbbr(piece, color)
+}
+
+PostPosition(spot, piece, color, p_abbr) {
+  positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr }
+  OutputPositions()
 }
 
 GetMySpots() {
@@ -46,7 +43,7 @@ GetPositions() {
   ; gui_text := "Getting positions....."
   ; GuiControl,, gui_output, % gui_text
   piece := ""
-  spot_color := ""
+  color := ""
   p_abbr := ""
   Loop, 8 {       ; ranks (rows)
     rank := A_Index
@@ -55,15 +52,10 @@ GetPositions() {
       col := A_Index
       file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
-      spot_color := SquareStatus(spot)
-      piece := IDPiece(spot, spot_color)  ; <<==========   <<======
-      p_abbr := GetAbbr(piece)
-      if (spot_color = "black") {
-        p_abbr := p_abbr . "*"
-      } else {
-        p_abbr := p_abbr . " "
-      }
-      positions[spot] := { spot: spot, piece: piece, color: spot_color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
+      color := SquareStatus(spot)
+      piece := IDPiece(spot, color)  ; <<==========   <<======
+      p_abbr := GetAbbr(piece, color)
+      positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
     }
   }
   OutputPositions()
@@ -137,17 +129,22 @@ GenericColumnsLoop(row, color, abbrs) {
     rank := row
     spot := file . rank
     p_abbr := abbrs[row][col]
+    p_abbr := AddAbbrBlack(p_abbr, color)
     piece := GetFullName(p_abbr)
-    if (color = "black") {
-      p_abbr := p_abbr . "*"
-    } else {
-      p_abbr := p_abbr . " "
-    }
     positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr }
   }
 }
 
-GetAbbr(piece) {
+AddAbbrBlack(p_abbr, color) {
+  if (color = "black") {
+    p_abbr := p_abbr . "*"
+  } else {
+    p_abbr := p_abbr . " "
+  }
+  return p_abbr
+}
+
+GetAbbr(piece, color) {
   switch piece {
     case "empty":
       p_abbr := "."
@@ -166,9 +163,11 @@ GetAbbr(piece) {
     default:
       p_abbr := "`"
   }
+  p_abbr := AddAbbrBlack(p_abbr, color)
   return p_abbr
 }
 GetFullName(abbr) {
+  abbr := SubStr(abbr, 1, 1)
   switch abbr {
     case ".":
       fullname := "empty"
