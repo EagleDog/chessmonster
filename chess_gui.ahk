@@ -11,27 +11,28 @@
 
 
 Gui, Add, Text, w280 h10 center, 
-GuiAddBorder("Black", 4, "0 0 w400 h80")
+GuiAddBorder("Black", 10, "0 10 w400 h80")
 ; Gui, Add, Text, xp yp wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
 Gui, Font, s14 w1000, Courier New
 Gui, Add, Text, xp-40 yp-10 wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
 
-Gui, Color, 0x777777
+Gui, Color, 0x888877     ; BACKGROUND COLOR  <-------
+
 Gui, +AlwaysOnTop +ToolWindow -SysMenu ; +Disabled ;-SysMenu ; +NoActivate ; +Owner ; +Disabled +Resize ; +MinSize300x200 ; +Owner avoids a taskbar button.
 ; Gui, Add, Text, w280 h20 x20 y70 center, __CHESSMONSTER__
-Gui, Add, Text, w280 h20 x20 y100 center Vmain_field, % gui_text
-Gui, Add, Text, w280 h20 x20 y120 center Vtimer_field, % gui_text
-Gui, Add, Text, w280 h20 x20 y140 center Vvolume_field, % gui_text
-Gui, Add, Text, w280 h20 x20 y190 center Vmoves_field, % gui_text
-Gui, Add, Text, w280 h200 x20 y230 center Vpositions_field, % gui_text
+Gui, Add, Text, w280 h20 x20 y140 center Vmain_field, % gui_text
+Gui, Add, Text, w280 h20 x20 y160 center Vtimer_field, % gui_text
+Gui, Add, Text, w280 h20 x20 y180 center Vvolume_field, % gui_text
+Gui, Add, Text, w280 h20 x20 y230 center Vmoves_field, % gui_text
+Gui, Add, Text, w280 h200 x20 y270 center Vpositions_field, % gui_text
 
 
-LogTimer(" ---timer--- ")
 LogMain("press 1 to start")
-LogPositions("press A for positions")
+LogTimer("")
 LogMoves("Move # 0")
+LogPositions("press A for positions")
 
-Gui, Show, x851 y70 w340 h700, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+Gui, Show, x851 y82 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
 
 LogTimer(gui_text) {
   GuiControl,, timer_field, % gui_text

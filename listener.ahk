@@ -8,7 +8,7 @@
 ;Return
  
 Listen() {
-  LogMain("listening...")
+  LogMain("listening")
   peakValue := 0.01
   triggerVol := 0.00001
   audioMeter := VA_GetAudioMeter()
@@ -28,9 +28,9 @@ Listen() {
       LogMain(" sound detected ")
       return
     }
-    Sleep, 400
-    timer_count += 400/1000
-    if (timer_count > 1) {
+    Sleep, 100
+    timer_count += 200/1000
+    if (timer_count > 0.7) {
       LogMain("timeout")
       LogVolume(0.000)
       CheckForGameEnd()

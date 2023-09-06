@@ -43,9 +43,10 @@ move10 := ["c4", "b3"] ; f bishop (light)
 global moves := [move1, move2, move3, move4, move5, move6, move7, move8, move9, move10]
 global move_num := 0
 
-;
-;
-; === MAIN LOOP ===================      MAIN LOOP      MAIN LOOP
+
+;  =====================================================================
+;    === MAIN LOOP ===================      MAIN LOOP      MAIN LOOP
+
 
 if WinExist("Play Chess") {
   WinActivate, Play Chess
@@ -55,10 +56,20 @@ CreateBoard()
 sleep, 200
 ;CheckForGameEnd()
 
-; ====== END MAIN LOOP ================    END MAIN LOOP    END MAIN LOOP
-;
-;
 
+
+;   ===== END MAIN LOOP ================    END MAIN LOOP
+; ======================================================================
+
+
+
+
+;**********************************************************************************************
+;
+;    BeginFunctions()     BeginFunctions()      BeginFunctions()      BeginFunctions()
+;
+;**********************************************************************************************
+;
 NewGame() {
   move_num := 0
   GetMyColor()
@@ -195,7 +206,8 @@ ExitChessMonster() {
 1::NewGame()
 2::MakeMove()
 7::DriftMouse()
-0::SqStatTest()
+0::UpdatePosition("e5")
+; 0::SqStatTest()
 
 a::GetPositions()
 w::MyColorWhite()
