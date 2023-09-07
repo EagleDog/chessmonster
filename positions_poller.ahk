@@ -34,9 +34,9 @@ PollOppSide() {
 
 HowManyPieces() {
   both_spots := GetBothSpots()
-  num_pieces_white := both_spots[1].length()
-  num_pieces_black := both_spots[2].length()
-  num_pieces_both := " W  " . num_pieces_white . "     B  " . num_pieces_black
+  num_pieces_mine := both_spots[1].length()
+  num_pieces_opp := both_spots[2].length()
+  num_pieces_both := my_color . " " . num_pieces_mine . "  " . opp_color . " " . num_pieces_opp
   return num_pieces_both
 }
 
@@ -45,6 +45,8 @@ PollPosition(spot) {
   piece := IDPiece(spot, color)
   p_abbr := GetAbbr(piece, color)
   positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
+  OutputPositions()
+  LogMain0(" " . p_abbr . "     " . spot . "     " . spot . "     " . p_abbr . "")
 }
 
 PostPosition(spot, piece, color, p_abbr) {
@@ -57,7 +59,7 @@ GetMySpots() {
 }
 
 GetBothSpots() {
-  my_spots := []
+  my_spots := []    ; my_spots is global array ["a3","d5","e1",...]
   opp_spots := []
   loop, 64 {
     n := A_Index
@@ -72,3 +74,16 @@ GetBothSpots() {
   return both_spots
 }
 
+WhereIsMyKing() {
+  my_spots := GetMySpots()
+  n := 1
+  loop, 16 {
+    n := A_Index
+    spot := my_spots[n]
+    spot_piece := positions[spot].piece
+    if (spot_piece = "king") {
+;      MsgBox, % "king found" . spot
+      return spot
+    }
+  }
+}

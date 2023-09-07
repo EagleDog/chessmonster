@@ -18,6 +18,7 @@ gui add, Text, xp-40 yp-5 wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0
 gui +AlwaysOnTop +ToolWindow -SysMenu
 gui color, 0x888877     ; BACKGROUND COLOR  <-------
 
+gui add, Text, w280 h20 x20 y130 left Vmain0_field, % main0_text
 gui add, Text, w280 h20 x20 y150 center Vmain_field, % main_text
 gui add, Text, w280 h20 x20 y170 center Vtimer_field, % timer_text
 gui add, Text, w280 h20 x20 y190 center Vvolume_field, % volume_text
@@ -25,23 +26,27 @@ gui add, Text, w280 h200 x20 y260 center Vpositions_field, % positions_text
 gui add, Text, w280 h20 x20 y500 center Vnum_pieces_field, % num_pieces_text
 gui add, Text, w280 h20 x20 y560 center Vmoves_field, % moves_text
 
-LogMain("press 1 to start")
+LogMain0("    press 1 to start")
+LogMain("press r for rematch")
 LogTimer(".")
 LogPositions("press A for positions")
-LogNumPieces("W  1      B  1")
+LogNumPieces("white 16  black 16")
 LogMoves("Move # 0")
 
 ShakeGui()
 
-CreateGUI() {
-  LogMain("CreateGUI()")
+CreateGui() {
+  LogMain("CreateGui()")
 }
 
-LogTimer(timer_text) {
-  GuiControl,, timer_field, % timer_text
+LogMain0(main0_text) {
+  GuiControl,, main0_field, % main0_text
 }
 LogMain(main_text) {
   GuiControl,, main_field, % main_text
+}
+LogTimer(timer_text) {
+  GuiControl,, timer_field, % timer_text
 }
 LogVolume(volume_text) {
   GuiControl,, volume_field, % "volume: " . volume_text
@@ -85,22 +90,24 @@ MoveGui2() {
   ActivateChess()
 }
 ShakeGui() {
-  gui show, x840 y95 w340 h680, chessmonster info, NoActivate
-  sleep 20
-  gui show, x851 y110 w340 h680, chessmonster info, NoActivate
-  sleep 20
-  Gui, Show, x864 y94 w340 h680, chessmonster info, NoActivate
-  sleep 20
-  Gui, Show, x838 y125 w340 h680, chessmonster info, NoActivate
-  sleep 20
-  Gui, Show, x872 y102 w340 h680, chessmonster info, NoActivate
-  sleep 20
-  Gui, Show, x842 y93 w340 h680, chessmonster info, NoActivate
-  sleep 20
-  Gui, Show, x867 y112 w340 h680, chessmonster info, NoActivate
-  sleep 20
   gui show, x851 y106 w340 h680, chessmonster info, NoActivate
-  sleep 80
+  sleep 10
+  gui show, x840 y98 w340 h680, chessmonster info, NoActivate
+  sleep 10
+  gui show, x851 y109 w340 h680, chessmonster info, NoActivate
+  sleep 10
+  Gui, Show, x864 y97 w340 h680, chessmonster info, NoActivate
+  sleep 10
+  Gui, Show, x838 y105 w340 h680, chessmonster info, NoActivate
+  sleep 10
+  Gui, Show, x872 y102 w340 h680, chessmonster info, NoActivate
+  sleep 10
+  Gui, Show, x842 y96 w340 h680, chessmonster info, NoActivate
+  sleep 10
+  Gui, Show, x867 y108 w340 h680, chessmonster info, NoActivate
+  sleep 10
+  gui show, x851 y106 w340 h680, chessmonster info, NoActivate
+  sleep 50
 }
 
 

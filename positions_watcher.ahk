@@ -17,6 +17,8 @@ UpdatePosition(spot) {
   p_abbr := GetAbbr(piece, color)
   positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
   OutputPositions()
+  LogMain0(" " . p_abbr . "     " . spot . "     " . spot . "     " . p_abbr . "")
+  ; LogMain0("  '" . spot . "' " . piece . " " . color . " " . p_abbr . "")
   return color
 }
 
@@ -71,6 +73,7 @@ OutputPositions() {
 }
 
 GetStartingPositions() {
+  GetMyColor()
   LogMain("Get Starting positions.....")
   white_row_abbrs := ["R", "N", "B", "Q", "K", "B", "N", "R"]
   pawn_row_abbrs := ["p", "p", "p", "p", "p", "p", "p", "p"]

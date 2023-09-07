@@ -53,18 +53,20 @@ global move_num := 0
 ;  =====================================================================
 ;    === BEGIN MAIN SEQUENCE ===================      MAIN LOOP      MAIN LOOP
 
-CreateGUI()
+CreateGui()
 LogMain("CreateGUI()")
-sleep, 300
 LogMain("ActivateChess()")
 ActivateChess()
-sleep, 300
+sleep, 400
 LogMain("CreateBoard()")
 CreateBoard()
-sleep, 200
+sleep, 400
+LogMain("GetMyColor()")
+GetMyColor()
+sleep, 400
 LogMain("GetStartingPositions()")
 GetStartingPositions()
-sleep, 200
+sleep, 400
 
 ;CheckForGameEnd()
 
@@ -162,7 +164,7 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
 
       Listen()
 
-      sleep 100
+      sleep 200
       PollOppSide()
       PollOppSide()
       PollOppSide()
@@ -174,27 +176,53 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
       PollOppSide()
       PollOppSide()
       PollOppSide()
-      PollOppSide()
-      PollOppSide()
-
-      sleep, 100
+      sleep 50
     }
   }
 }
 
 ChooseSquare() {
   LogMain("ChooseSquare()")
-  if ( RandomChoice(3) ) {
+  if ( failed_moves > 0 ) {   ; failed_moves from mouse_mover.ahk
+    LogMain("FailedChooseSquare()")
+    spot := FailedChooseSquare()
+  } else if ( RandomChoice(3) ) {
+    spot := ChooseMySpots()
+    ; my_spots := GetMySpots()
+    ; length_my_spots := my_spots.length()
+    ; Random, spot_num, 1, length_my_spots
+    ; spot := my_spots[spot_num]
+    ; LogMain("ChooseSquare() " . spot . " my guy")
+    ; sleep 200
+  } else {
+    spot := RandomSquare()
+    LogMain("ChooseSquare() " . spot . " rand square")
+    sleep 200
+  }
+  return spot
+}
+
+ChooseMySpots() {
     my_spots := GetMySpots()
     length_my_spots := my_spots.length()
     Random, spot_num, 1, length_my_spots
     spot := my_spots[spot_num]
     LogMain("ChooseSquare() " . spot . " my guy")
     sleep 200
+    return spot
+}
+
+FailedChooseSquare() {
+  LogMain("FailedChooseSquare()")
+  if RandomChoice() {
+    king_spot := WhereIsMyKing()
+    if ( king_spot ) {
+      spot := king_spot
+    } else {
+      spot := ChooseMySpots()
+    }
   } else {
-    spot := RandomSquare()
-    LogMain("ChooseSquare() " . spot . " rand square")
-    sleep 200
+    spot := ChooseMySpots()
   }
   return spot
 }
