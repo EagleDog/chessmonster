@@ -212,7 +212,8 @@ ExitChessMonster() {
 1::NewGame()
 2::MakeMove()
 7::DriftMouse()
-0::RematchComputer()
+r::RematchComputer()
+
 ; 0::UpdatePosition("e5")
 ; 0::SqStatTest()
 

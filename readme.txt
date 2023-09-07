@@ -18,7 +18,14 @@ Keyboard Shortcuts are at bottom of main file
     ^+x::Exit
 
     1::NewGame()
-    0::TryMoves()
+    2::MakeMove()
+    7::DriftMouse()
+    r::RematchComputer()
+
+    a::GetPositions()
+    w::MyColorWhite()
+    b::MyColorBlack()
+
 
 chessmonster.ahk is main file
 
