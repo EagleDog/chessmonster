@@ -7,49 +7,60 @@
 ; Gui, Show, , Border Example
 
 
-
-
-
 Gui, Add, Text, w280 h10 center, 
 GuiAddBorder("Black", 10, "0 10 w400 h80")
 ; Gui, Add, Text, xp yp wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
 Gui, Font, s14 w1000, Courier New
-Gui, Add, Text, xp-40 yp-10 wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
+Gui, Add, Text, xp-40 yp-5 wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
 
 Gui, Color, 0x888877     ; BACKGROUND COLOR  <-------
 
-Gui, +AlwaysOnTop +ToolWindow -SysMenu ; +Disabled ;-SysMenu ; +NoActivate ; +Owner ; +Disabled +Resize ; +MinSize300x200 ; +Owner avoids a taskbar button.
-; Gui, Add, Text, w280 h20 x20 y70 center, __CHESSMONSTER__
-Gui, Add, Text, w280 h20 x20 y140 center Vmain_field, % gui_text
-Gui, Add, Text, w280 h20 x20 y160 center Vtimer_field, % gui_text
-Gui, Add, Text, w280 h20 x20 y180 center Vvolume_field, % gui_text
-Gui, Add, Text, w280 h20 x20 y230 center Vmoves_field, % gui_text
-Gui, Add, Text, w280 h200 x20 y270 center Vpositions_field, % gui_text
+Gui, +AlwaysOnTop +ToolWindow -SysMenu
 
+Gui, Add, Text, w280 h20 x20 y150 center Vmain_field, % main_text
+
+Gui, Add, Text, w280 h20 x20 y170 center Vtimer_field, % timer_text
+
+Gui, Add, Text, w280 h20 x20 y190 center Vvolume_field, % volume_text
+
+
+
+Gui, Add, Text, w280 h200 x20 y260 center Vpositions_field, % positions_text
+
+
+Gui, Add, Text, w280 h20 x20 y500 center Vnum_pieces_field, % num_pieces_text
+
+Gui, Add, Text, w280 h20 x20 y560 center Vmoves_field, % moves_text
 
 LogMain("press 1 to start")
-LogTimer("")
-LogMoves("Move # 0")
+LogTimer(".")
 LogPositions("press A for positions")
+LogNumPieces("W  1      B  1")
+LogMoves("Move # 0")
 
-Gui, Show, x851 y82 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+;            X   Y
+Gui, Show, x1220 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+; Gui, Show, x851 y82 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
 
-LogTimer(gui_text) {
-  GuiControl,, timer_field, % gui_text
-}
-LogMain(gui_text) {
-  GuiControl,, main_field, % gui_text
-}
-LogVolume(gui_text) {
-  GuiControl,, volume_field, % "volume: " . gui_text
-}
-LogPositions(gui_text) {
-  GuiControl,, positions_field, % gui_text
-}
-LogMoves(gui_text) {
-  GuiControl,, moves_field, % gui_text
-}
 
+LogTimer(timer_text) {
+  GuiControl,, timer_field, % timer_text
+}
+LogMain(main_text) {
+  GuiControl,, main_field, % main_text
+}
+LogVolume(volume_text) {
+  GuiControl,, volume_field, % "volume: " . volume_text
+}
+LogPositions(positions_text) {
+  GuiControl,, positions_field, % positions_text
+}
+LogNumPieces(num_pieces_text) {
+  GuiControl,, num_pieces_field, % num_pieces_text
+}
+LogMoves(moves_text) {
+  GuiControl,, moves_field, % moves_text
+}
 
 
 GuiAddBorder(Color, Width, PosAndSize) {
@@ -61,6 +72,7 @@ GuiAddBorder(Color, Width, PosAndSize) {
    ; -------------------------------------------------------------------------------------------------------------------------------
    LFW := WinExist() ; save the last-found window, if any
    DefGui := A_DefaultGui ; save the current default GUI
+   ; Gui, Add, Text, y80 h200 +hwndHTXT
    Gui, Add, Text, %PosAndSize% +hwndHTXT
    GuiControlGet, T, Pos, %HTXT%
    Gui, New, +Parent%HTXT% +LastFound -Caption ; create a unique child Gui for the text control

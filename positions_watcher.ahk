@@ -5,12 +5,22 @@
 ; GetAbbr(piece)
 
 global positions := {}
+global my_spots := []
+global opp_spots := []
+
+HowManyPieces() {
+  both_spots := GetBothSpots()
+  num_pieces_white := both_spots[1].length()
+  num_pieces_black := both_spots[2].length()
+  num_pieces_both := " W  " . num_pieces_white . "     B  " . num_pieces_black
+  return num_pieces_both
+}
 
 UpdatePosition(spot) {
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
   p_abbr := GetAbbr(piece, color)
-  positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr }
+  positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
   OutputPositions()
   return color
 }
@@ -22,20 +32,29 @@ PollPosition(spot) {
 }
 
 PostPosition(spot, piece, color, p_abbr) {
-  positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr }
+  positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
   OutputPositions()
 }
 
 GetMySpots() {
+  GetBothSpots()
+  return my_spots
+}
+
+GetBothSpots() {
   my_spots := []
+  opp_spots := []
   loop, 64 {
     n := A_Index
-    spot := all_spots[n]
+    spot := all_spots[n]   ; all_spots is global array
     if (positions[spot].color = my_color) {
       my_spots.push(spot)
+    } else if (positions[spot].color = opp_color) {
+      opp_spots.push(spot)
     }
   }
-  return my_spots
+  both_spots := [my_spots, opp_spots]
+  return both_spots
 }
 
 GetPositions() {
@@ -82,8 +101,10 @@ OutputPositions() {
   p_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
 
   LogPositions(p_text)
-  ; gui_text := p_text
-  ; GuiControl,, gui_output, % p_text
+
+  num_pieces_both := HowManyPieces()
+  LogNumPieces(num_pieces_both)
+
 }
 
 GetStartingPositions() {

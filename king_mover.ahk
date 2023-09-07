@@ -32,7 +32,7 @@ MoveKing(spot) {
   moves := KingMoves(poss_moves)    ; eliminate walls and collisions   KINGMOVES
 ;  OutputKMoves(moves)
   target := KingCapture(moves)      ; KingCapture(moves)   CAPTURE
-  if target {
+  if (target AND RandomChoice()) {       ; randomize 1/2 chance take opp_piece
     MovePiece(spot, target)
   } else {
     target := KingMoveEmpty(moves)    ; KnigMoveEmpty(moves)   EMPTY

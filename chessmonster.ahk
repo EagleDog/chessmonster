@@ -10,7 +10,9 @@
 #Include board_map.ahk
 #Include board_watcher.ahk
 #Include positions_watcher.ahk
+#Include rematch_computer.ahk
 #Include mouse_mover.ahk
+
 #Include pawn_mover.ahk
 #Include knight_mover.ahk
 #Include bishop_mover.ahk
@@ -43,9 +45,12 @@ move10 := ["c4", "b3"] ; f bishop (light)
 global moves := [move1, move2, move3, move4, move5, move6, move7, move8, move9, move10]
 global move_num := 0
 
-
+;
+;
+;
+;
 ;  =====================================================================
-;    === MAIN LOOP ===================      MAIN LOOP      MAIN LOOP
+;    === BEGIN MAIN SEQUENCE ===================      MAIN LOOP      MAIN LOOP
 
 
 if WinExist("Play Chess") {
@@ -58,11 +63,12 @@ sleep, 200
 
 
 
-;   ===== END MAIN LOOP ================    END MAIN LOOP
+;   ===== END MAIN SEQUENCE ================    END MAIN LOOP
 ; ======================================================================
-
-
-
+;
+;
+;
+;
 
 ;**********************************************************************************************
 ;
@@ -206,7 +212,8 @@ ExitChessMonster() {
 1::NewGame()
 2::MakeMove()
 7::DriftMouse()
-0::UpdatePosition("e5")
+0::RematchComputer()
+; 0::UpdatePosition("e5")
 ; 0::SqStatTest()
 
 a::GetPositions()

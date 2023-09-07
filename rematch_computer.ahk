@@ -8,12 +8,34 @@
 
 
 plus_sign_button_spot := [980, 860]
+plus_sign_button_color := 0x454441
+
 
 yes_button_spot :=  [1040, 790]
+yes_button_spot :=  [1020, 770]
+yes_button_spot_color := 0x98c65b
 
+rematch_button_spot_a := [940,860]
+rematch_button_color_a := 0x90be59
+rematch_button_spot_b := [950,860]
+rematch_button_color_b := 0x94c25a
 
+big_green_button_spot := [380, 410]
+big_green_button_color := 0xa3d160
 
+; main sequence
+;
+;
+  ; sleep 50
 
+  ; RematchComputer()
+
+  ; sleep 50
+;
+;
+;
+;
+; main sequence end
 
 
 
@@ -23,13 +45,10 @@ Aaaaa() {
 }
 
 
-RematchLoop() {
+
+RematchComputer() {
   sleep 50
-  
-
-
-
-
+  click yes_button_spot[1], yes_button_spot[2]
 
 }
 
