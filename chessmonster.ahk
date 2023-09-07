@@ -89,6 +89,7 @@ ActivateChess() {
   }
 }
 NewGame() {
+  ActivateChess()
   move_num := 0
   GetMyColor()
   GetStartingPositions()
@@ -143,11 +144,16 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
       case "king":
         target := MoveKing(spot)
     }
-    LogMain(piece_type)
+    LogMain(piece_type . "    '" . spot . "'" )
     sleep 500
 
     if target {
+      LogMain("MovePiece: " . piece_type . " '" . spot . "'" )
       MovePiece(spot, target)
+      ;
+      ;  current work: failed move detection
+      ;                in mouse_mover.ahk
+      ;
       if ( (piece_type = "pawn") AND (target contains 8) ) {
         sleep 100
         mouseclick Left    ;  Promotion  choose queen
@@ -250,7 +256,9 @@ ExitChessMonster() {
 2::MakeMove()
 7::DriftMouse()
 r::RematchComputer()
-
+q::MoveGui1()
+e::MoveGui2()
+s::ShakeGui()
 ; 0::UpdatePosition("e5")
 ; 0::SqStatTest()
 

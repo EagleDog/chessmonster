@@ -3,7 +3,9 @@
 ; GetPositions()
 ; OutputPositions()
 ; GetAbbr(piece)
-
+;
+;  piece_types := ["empty","pawn","knight","bishop","rook","queen","king"]
+;
 global positions := {}
 global my_spots := []
 global opp_spots := []

@@ -19,12 +19,17 @@ GoClick(spot) {
 }
 
 MovePiece(spot, target) {
-  spot1 := spot
+  ID1 := positions[spot].piece
   ClickDrag(spot, target)
   UpdatePosition(spot)
   UpdatePosition(target)
-  if ( spot = spot1 ) {
-    LogMain("failed move")
+  ID2 := positions[spot].piece
+  ;
+  ;  current work: failed move detection
+  ;
+  if ( ID2 = ID1 ) {
+    LogMain("ID2: " . ID2 . "  ID1: " . ID1 . " failed move")
+    sleep 1000
   } else {
     move_num += 1
     LogMoves("Move # " . move_num)
