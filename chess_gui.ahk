@@ -6,30 +6,20 @@
 
 ; Gui, Show, , Border Example
 
+; Gui, Add, Text, xp yp wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
 
 Gui, Add, Text, w280 h10 center, 
 GuiAddBorder("Black", 10, "0 10 w400 h80")
-; Gui, Add, Text, xp yp wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
 Gui, Font, s14 w1000, Courier New
 Gui, Add, Text, xp-40 yp-5 wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
-
+Gui, +AlwaysOnTop +ToolWindow -SysMenu
 Gui, Color, 0x888877     ; BACKGROUND COLOR  <-------
 
-Gui, +AlwaysOnTop +ToolWindow -SysMenu
-
 Gui, Add, Text, w280 h20 x20 y150 center Vmain_field, % main_text
-
 Gui, Add, Text, w280 h20 x20 y170 center Vtimer_field, % timer_text
-
 Gui, Add, Text, w280 h20 x20 y190 center Vvolume_field, % volume_text
-
-
-
 Gui, Add, Text, w280 h200 x20 y260 center Vpositions_field, % positions_text
-
-
 Gui, Add, Text, w280 h20 x20 y500 center Vnum_pieces_field, % num_pieces_text
-
 Gui, Add, Text, w280 h20 x20 y560 center Vmoves_field, % moves_text
 
 LogMain("press 1 to start")
@@ -38,10 +28,11 @@ LogPositions("press A for positions")
 LogNumPieces("W  1      B  1")
 LogMoves("Move # 0")
 
-;            X   Y
-Gui, Show, x1220 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
-; Gui, Show, x851 y82 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+ShakeGui()
 
+CreateGUI() {
+  LogMain("CreateGUI()")
+}
 
 LogTimer(timer_text) {
   GuiControl,, timer_field, % timer_text
@@ -60,6 +51,53 @@ LogNumPieces(num_pieces_text) {
 }
 LogMoves(moves_text) {
   GuiControl,, moves_field, % moves_text
+}
+
+MoveGui1() {
+  gui show, x1151 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 15
+  gui show, x1051 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 15
+  gui show, x951 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 15
+  gui show, x901 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 15
+  gui show, x851 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 15
+  LogMain("1 MoveGui1()")
+  ActivateChess()
+}
+MoveGui2() {
+  gui, show, x870 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 15
+  gui, show, x970 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 15
+  gui, show, x1070 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 15
+  gui, show, x1170 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 15
+  gui, show, x1220 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 15
+  LogMain("2 MoveGui2()")
+  ActivateChess()
+}
+ShakeGui() {
+  gui show, x840 y95 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 20
+  gui show, x851 y110 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 20
+  Gui, Show, x864 y94 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 20
+  Gui, Show, x838 y125 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 20
+  Gui, Show, x872 y102 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 20
+  Gui, Show, x842 y93 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 20
+  Gui, Show, x867 y112 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 20
+  gui show, x851 y106 w340 h680, chessmonster info, NoActivate ; Border Example ;, NoActivate avoids deactivating the currently active window.
+  sleep 80
 }
 
 

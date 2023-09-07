@@ -8,13 +8,6 @@ global positions := {}
 global my_spots := []
 global opp_spots := []
 
-HowManyPieces() {
-  both_spots := GetBothSpots()
-  num_pieces_white := both_spots[1].length()
-  num_pieces_black := both_spots[2].length()
-  num_pieces_both := " W  " . num_pieces_white . "     B  " . num_pieces_black
-  return num_pieces_both
-}
 
 UpdatePosition(spot) {
   color := SquareStatus(spot)
@@ -23,38 +16,6 @@ UpdatePosition(spot) {
   positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
   OutputPositions()
   return color
-}
-
-PollPosition(spot) {
-  color := SquareStatus(spot)
-  piece := IDPiece(spot, color)
-  p_abbr := GetAbbr(piece, color)
-}
-
-PostPosition(spot, piece, color, p_abbr) {
-  positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
-  OutputPositions()
-}
-
-GetMySpots() {
-  GetBothSpots()
-  return my_spots
-}
-
-GetBothSpots() {
-  my_spots := []
-  opp_spots := []
-  loop, 64 {
-    n := A_Index
-    spot := all_spots[n]   ; all_spots is global array
-    if (positions[spot].color = my_color) {
-      my_spots.push(spot)
-    } else if (positions[spot].color = opp_color) {
-      opp_spots.push(spot)
-    }
-  }
-  both_spots := [my_spots, opp_spots]
-  return both_spots
 }
 
 GetPositions() {

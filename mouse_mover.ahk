@@ -19,11 +19,16 @@ GoClick(spot) {
 }
 
 MovePiece(spot, target) {
+  spot1 := spot
   ClickDrag(spot, target)
   UpdatePosition(spot)
   UpdatePosition(target)
-  move_num += 1
-  LogMoves("Move # " . move_num)
+  if ( spot = spot1 ) {
+    LogMain("failed move")
+  } else {
+    move_num += 1
+    LogMoves("Move # " . move_num)
+  }
 }
 
 ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100

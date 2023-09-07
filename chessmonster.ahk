@@ -10,6 +10,7 @@
 #Include board_map.ahk
 #Include board_watcher.ahk
 #Include positions_watcher.ahk
+#Include positions_poller.ahk
 #Include rematch_computer.ahk
 #Include mouse_mover.ahk
 
@@ -52,13 +53,19 @@ global move_num := 0
 ;  =====================================================================
 ;    === BEGIN MAIN SEQUENCE ===================      MAIN LOOP      MAIN LOOP
 
-
-if WinExist("Play Chess") {
-  WinActivate, Play Chess
-}
-sleep, 800
+CreateGUI()
+LogMain("CreateGUI()")
+sleep, 300
+LogMain("ActivateChess()")
+ActivateChess()
+sleep, 300
+LogMain("CreateBoard()")
 CreateBoard()
 sleep, 200
+LogMain("GetStartingPositions()")
+GetStartingPositions()
+sleep, 200
+
 ;CheckForGameEnd()
 
 
@@ -76,6 +83,11 @@ sleep, 200
 ;
 ;**********************************************************************************************
 ;
+ActivateChess() {
+  if WinExist("Play Chess") {
+    WinActivate, Play Chess
+  }
+}
 NewGame() {
   move_num := 0
   GetMyColor()
@@ -101,21 +113,20 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
     spot := ChooseSquare()
     spot_color := UpdatePosition(spot)
     ; spot_color := SquareStatus(spot)
+  
     while (spot_color != my_color) {   ; find my guys
-;    while (SquareStatus(spot) != my_color) {   ; find my guys
-      sleep, 10
+      sleep 10
       MouseMove, board[spot].x, board[spot].y
-      sleep, 10
+      sleep 10
       spot := ChooseSquare()
       spot_color := UpdatePosition(spot)
-;      UpdatePosition(spot)
-      sleep, 10
+      sleep 10
       MouseMove, board[spot].x, board[spot].y
     }
     piece_type := IDPiece(spot, spot_color)  ;       <<============
 
-   ; if ( (piece_type != "bishop") AND (piece_type != "rook") 
-   ;    AND (piece_type != "knight") AND (piece_type != "queen") ) {
+    LogMain("try move")
+   ; if ( (piece_type != "bishop") ) {
    ;   TryMove()
    ; }
     switch piece_type {
@@ -132,28 +143,52 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
       case "king":
         target := MoveKing(spot)
     }
+    LogMain(piece_type)
+    sleep 500
 
     if target {
       MovePiece(spot, target)
       if ( (piece_type = "pawn") AND (target contains 8) ) {
-        Sleep, 100
-        MouseClick, Left    ;  Promotion  choose queen
+        sleep 100
+        mouseclick Left    ;  Promotion  choose queen
       }
-      sleep, 500
+      sleep 100
+
       Listen()
+
+      sleep 100
+      PollOppSide()
+      PollOppSide()
+      PollOppSide()
+      PollOppSide()
+      PollOppSide()
+      PollOppSide()
+      PollOppSide()
+      PollOppSide()
+      PollOppSide()
+      PollOppSide()
+      PollOppSide()
+      PollOppSide()
+      PollOppSide()
+
       sleep, 100
     }
   }
 }
 
 ChooseSquare() {
+  LogMain("ChooseSquare()")
   if ( RandomChoice(3) ) {
     my_spots := GetMySpots()
     length_my_spots := my_spots.length()
     Random, spot_num, 1, length_my_spots
     spot := my_spots[spot_num]
+    LogMain("ChooseSquare() " . spot . " my guy")
+    sleep 200
   } else {
     spot := RandomSquare()
+    LogMain("ChooseSquare() " . spot . " rand square")
+    sleep 200
   }
   return spot
 }
@@ -198,6 +233,7 @@ SublimeGo() {
 }
 
 ExitChessMonster() {
+  gui hide
   SublimeGo()
   ExitApp
 }
@@ -206,6 +242,7 @@ ExitChessMonster() {
 
 ^+z::Pause           ; ctrl + shift + z
 ;^+x::ExitApp            ; ctrl + shift + x
+^x::ExitChessMonster() ; ctrl + shift + x
 ^+x::ExitChessMonster() ; ctrl + shift + x
 ; ^+c::SublimeGo() ; ctrl + shift + x
 

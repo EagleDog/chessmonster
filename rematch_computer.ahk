@@ -22,6 +22,7 @@ Aaaaa() {
 
 
 RematchComputer() {
+  MoveGui2()
 
   rematch_button_spot_a := [940,860]
   rematch_button_color_a := 0x90be59
@@ -31,6 +32,9 @@ RematchComputer() {
   yes_button_spot :=  [1040, 790]
   yes_button_spot :=  [1020, 770]
   yes_button_spot_color := 0x98c65b
+
+  sleep 100
+  sleep 100
 
   sleep 50
   mousemove rematch_button_spot_a[1], rematch_button_spot_a[2]
@@ -44,6 +48,7 @@ RematchComputer() {
   mousemove rematch_button_spot_a[1], rematch_button_spot_a[2]
   click rematch_button_spot_a[1], rematch_button_spot_a[2]
 
+  MoveGui1()
 }
 
 
