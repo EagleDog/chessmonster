@@ -21,8 +21,11 @@ GoClick(spot) {
 MovePiece(spot, target) {
   ID1 := positions[spot].piece
   ClickDrag(spot, target)
+  sleep 50
   UpdatePosition(spot)
+  sleep 50
   UpdatePosition(target)
+  sleep 50
   ID2 := positions[spot].piece
   ;
   ;  current work: failed move detection
