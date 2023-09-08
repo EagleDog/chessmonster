@@ -1,10 +1,14 @@
 ;
-;     rematch_computer.ahk
+;     new_match.ahk
 ;
 ;  calls MovePiece(spot, target)
 ;
 ;
-
+; RematchComputer()
+; New3Min()
+;
+;
+;
 
 plus_sign_button_spot := [980, 860]
 plus_sign_button_color := 0x454441

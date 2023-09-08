@@ -30,7 +30,11 @@ PollOppSide() {
   spot := all_spots[rand_opp_spot]
   PollPosition(spot)
 }
-
+PollOpponent() {
+  loop 9 {
+    PollOppSide()
+  }
+}
 
 HowManyPieces() {
   both_spots := GetBothSpots()

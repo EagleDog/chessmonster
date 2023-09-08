@@ -8,6 +8,7 @@
 ;
 
 MovePawn(spot) {
+  LogMain("MovePawn('" . spot . "')")
   if ( RandomChoice(3) ) {  ; reduce pawn move frequency
     return
   }

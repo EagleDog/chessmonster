@@ -14,6 +14,7 @@
 
 ;MoveRook("c1")
 MoveRook(spot) {
+  LogMain("MoveRook('" . spot . "')")
   paths := FindRPaths(spot)
   ; OutputRPaths(paths)
   target := RookCapture(paths)

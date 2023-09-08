@@ -15,8 +15,8 @@
 #Include board_watcher.ahk
 #Include positions_watcher.ahk
 #Include positions_poller.ahk
-#Include rematch_computer.ahk
-#Include mouse_mover.ahk
+#Include new_match.ahk
+#Include move_maker.ahk
 
 #Include pawn_mover.ahk
 #Include knight_mover.ahk
@@ -77,45 +77,31 @@ GetStartingPositions()
 ;           MAIN LOOP           MAIN LOOP           MAIN LOOP
 ;
 ;
-MainLoop() {
+MainLoop() {                         ; main chessmonster loop
 LogMain0("MainLoop()")
 sleep, 200
-  ; main chessmonster loop
+
   Loop {
     spot := ChooseSquare()
     spot_color := UpdatePosition(spot)
-    MouseMove, board[spot].x, board[spot].y
+    ; MouseMove, board[spot].x, board[spot].y
+    spot := FindMyGuys(spot, spot_color)    ; return spot   ( color = my_color )
 
-    spot := FindMyGuys()    ; return spot   ( color = my_color )
-
-    piece_type := IDPiece(spot, spot_color)  ;       <<============
-    LogMain("try move" . piece_type . "")
-
+    piece_type := positions[spot].piece  ;       <<============
     UseSpcificPiece() ; return none
-
-    LogMain(piece_type . "    '" . spot . "'" )
-    sleep 500
     target := WhichPieceMove(spot, piece_type)
 
     if target {
-      LogMain("MovePiece: " . piece_type . " '" . spot . "'" )
-      MovePiece(spot, target)
-      ;
-      ;  current work: failed move detection
-      ;                in mouse_mover.ahk
-      ;
-      if ( (piece_type = "pawn") AND (target contains 8) ) {
-        sleep 100
-        mouseclick Left    ;  Promotion  choose queen
-      }
-      sleep 100
+      MovePiece(spot, target)   ; MovePiece()--move_maker.ahk
+      PromotePawn(piece_type, target)
+      sleep 200
       Listen()
-      sleep 100
+      sleep 200
       PollOpponent()
-      sleep 100
+      sleep 200
     }
   }
-}
+}             ;  current work: failed move detection in mouse_mover.ahk
 
 ;**********************************************************************************************
 ;
@@ -147,7 +133,7 @@ ResetMoves() {
   move_num := 0
 }
 
-FindMyGuys() {
+FindMyGuys(spot, spot_color) {
   while (spot_color != my_color) {   ; find my guys
     spot := ChooseSquare()
     spot_color := UpdatePosition(spot)
@@ -156,8 +142,8 @@ FindMyGuys() {
   return spot
 }
 UseSpcificPiece() {
-  LogMain("UseSpcificPiece()")
-  sleep 200
+  ; LogMain("UseSpcificPiece()")
+  ; sleep 200
   ; if ( (piece_type != "bishop") ) {
   ;   TryMove()
   ; }
@@ -180,9 +166,10 @@ WhichPieceMove(spot, piece_type) {
   }
   return target
 }
-PollOpponent() {
-  loop 9 {
-    PollOppSide()
+PromotePawn(piece_type, target) {
+  if ( (piece_type = "pawn") AND (target contains 8) ) {
+    sleep 100
+    mouseclick Left    ;  Promotion  choose queen
   }
 }
 
@@ -193,45 +180,36 @@ ChooseSquare() {
     spot := FailedChooseSquare()
   } else if ( RandomChoice(3) ) {
     spot := ChooseMySpots()
-    ; my_spots := GetMySpots()
-    ; length_my_spots := my_spots.length()
-    ; Random, spot_num, 1, length_my_spots
-    ; spot := my_spots[spot_num]
-    ; LogMain("ChooseSquare() " . spot . " my guy")
-    ; sleep 200
   } else {
     spot := RandomSquare()
     LogMain("ChooseSquare() " . spot . " rand square")
     sleep 200
   }
-
   return spot
-
 }
-
-
 
 
 MakeMove() {
 ;  if (move_num >= 11) {
   if (move_num <= 1) {
-    TryMove()
+;    TryMove()
   } else {
     MovePiece(moves[move_num].1, moves[move_num].2)
   }
 }
 
-TryMove() {
+TryMove(spot, piece_type) {
+  LogMain("try move" . piece_type . "")
   return spot
 }
 
 ChooseMySpots() {
+    LogMain("ChooseMySpots() " . spot)
+    sleep 100
     my_spots := GetMySpots()
     length_my_spots := my_spots.length()
     Random, spot_num, 1, length_my_spots
     spot := my_spots[spot_num]
-    LogMain("ChooseSquare() " . spot . " my guy")
-    sleep 200
     return spot
 }
 

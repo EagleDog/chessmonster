@@ -14,6 +14,7 @@
 
 ;MoveBishop("c1")
 MoveBishop(spot) {
+  LogMain("MoveBishop('" . spot . "')")
   paths := FindDPaths(spot)
   ; OutputDPath(paths[1])
   ; OutputDPath(paths[2])

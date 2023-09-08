@@ -11,40 +11,22 @@ global my_spots := []
 global opp_spots := []
 
 
+;------------------------------------------------------------------
+;                                                  UPDATE POSITION
 UpdatePosition(spot) {
+  ; LogMain("UpdatePosition()")
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
   p_abbr := GetAbbr(piece, color)
   positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
   OutputPositions()
   LogMain0(" " . p_abbr . "     " . spot . "     " . spot . "     " . p_abbr . "")
-  ; LogMain0("  '" . spot . "' " . piece . " " . color . " " . p_abbr . "")
+  MouseMove, board[spot].x, board[spot].y
   return color
 }
-
-GetPositions() {
-  LogMain("Getting positions.....")
-  ; gui_text := "Getting positions....."
-  ; GuiControl,, gui_output, % gui_text
-  piece := ""
-  color := ""
-  p_abbr := ""
-  Loop, 8 {       ; ranks (rows)
-    rank := A_Index
-    row := rank
-    Loop, 8 {     ; files (columns)
-      col := A_Index
-      file := Chr(96 + col)     ; a_index > a-h
-      spot := file . rank
-      color := SquareStatus(spot)
-      piece := IDPiece(spot, color)  ; <<==========   <<======
-      p_abbr := GetAbbr(piece, color)
-      positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
-    }
-  }
-  OutputPositions()
-}
-
+;
+;------------------------------------------------------------------
+;                                                 OUTPUT POSITIONS
 OutputPositions() {
   LogMain0("OutputPositions()")
   sleep 200
@@ -70,9 +52,35 @@ OutputPositions() {
 
   num_pieces_both := HowManyPieces()
   LogNumPieces(num_pieces_both)
-
 }
-
+;
+;------------------------------------------------------------------
+;                                                    GET POSITIONS
+GetPositions() {
+  LogMain("Getting positions.....")
+  ; gui_text := "Getting positions....."
+  ; GuiControl,, gui_output, % gui_text
+  piece := ""
+  color := ""
+  p_abbr := ""
+  Loop, 8 {       ; ranks (rows)
+    rank := A_Index
+    row := rank
+    Loop, 8 {     ; files (columns)
+      col := A_Index
+      file := Chr(96 + col)     ; a_index > a-h
+      spot := file . rank
+      color := SquareStatus(spot)
+      piece := IDPiece(spot, color)  ; <<==========   <<======
+      p_abbr := GetAbbr(piece, color)
+      positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
+    }
+  }
+  OutputPositions()
+}
+;
+;------------------------------------------------------------------
+;                                           GET STARTING POSITIONS
 GetStartingPositions() {
 LogMain0("GetStartingPositions()")
 sleep, 200

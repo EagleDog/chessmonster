@@ -1,30 +1,38 @@
 ;
 ;
-;   ______mouse_mover.ahk______
-;
-;     GoClick(spot)
-;     MovePiece(spot,target)
-;     ClickDrag(s,t)
-;     DriftMouse()
+;   ______move_maker.ahk______
 ;
 ;   MovePieceOld(s,t)
 ;
+;     ClickDrag(s,t)
+;     DriftMouse()
+;     MoveClick(x,y)
+;     GoClick(spot)
 ;
+;     MovePiece(spot,target)
+;
+;     FailedMove()
 ;
 
 global failed_moves := 0
 
+FailedMove() {
+  LogMain("" . failed_moves . " FailedMove()")
+  sleep, 200
+  failed_moves += 1
+  LogMain("" . failed_moves . " FailedMove()")
+  sleep, 200
+  if ( failed_moves >= 5 ) {
+    failed_moves := 0
+    LogMain("reset fails")
+    sleep, 200
+  }
 
-GoClick(spot) {
-  MouseMove, board[spot].x, board[spot].y
-  Click
-}
-MoveClick(x, y) {
-  MouseMove, x, y
-  Click
 }
 
 MovePiece(spot, target) {
+LogMain("MovePiece: " . piece_type . " '" . spot . "'" )
+sleep 200
   ID1 := positions[spot].piece
   ClickDrag(spot, target)
   sleep 50
@@ -48,21 +56,14 @@ MovePiece(spot, target) {
   }
 }
 
-FailedMove() {
-  LogMain("" . failed_moves . " FailedMove()")
-  sleep, 200
-  failed_moves += 1
-  LogMain("" . failed_moves . " FailedMove()")
-  sleep, 200
-  if ( failed_moves >= 5 ) {
-    failed_moves := 0
-    LogMain("reset fails")
-    sleep, 200
-  }
-
+GoClick(spot) {
+  MouseMove, board[spot].x, board[spot].y
+  Click
 }
-
-
+MoveClick(x, y) {
+  MouseMove, x, y
+  Click
+}
 
 ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
   MouseClickDrag, L, b[spot].x, b[spot].y, b[target].x, b[target].y, 2
