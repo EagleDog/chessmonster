@@ -1,7 +1,7 @@
 ;
 ;
 ;   ______move_maker.ahk______
-;
+;          formerly mouse_mover.ahk
 ;   MovePieceOld(s,t)
 ;
 ;     ClickDrag(s,t)
@@ -11,45 +11,24 @@
 ;
 ;     MovePiece(spot,target)
 ;
-;     FailedMove()
+;     fail
 ;
-
-global failed_moves := 0
-
-FailedMove() {
-  LogMain("" . failed_moves . " FailedMove()")
-  sleep, 200
-  failed_moves += 1
-  LogMain("" . failed_moves . " FailedMove()")
-  sleep, 200
-  if ( failed_moves >= 5 ) {
-    failed_moves := 0
-    LogMain("reset fails")
-    sleep, 200
-  }
-
-}
+global fail := false
 
 MovePiece(spot, target) {
-LogMain("MovePiece: " . piece_type . " '" . spot . "'" )
+LogMain("MovePiece: " . piece_type . " '" . spot . "'" . " to '" . target . "'" )
 sleep 200
   ID1 := positions[spot].piece
   ClickDrag(spot, target)
-  sleep 50
+  sleep 80
   UpdatePosition(spot)
   sleep 50
   UpdatePosition(target)
   sleep 50
   ID2 := positions[spot].piece
-  sleep 50
 
-  ;
-  ;  current work: failed move detection
-  ;
   if ( ID2 = ID1 ) {
-    LogMain("ID2: " . ID2 . "  ID1: " . ID1 . " failed move")
-    sleep 500
-    FailedMove()
+    fail := true
   } else {
     move_num += 1
     LogMoves("Move # " . move_num)

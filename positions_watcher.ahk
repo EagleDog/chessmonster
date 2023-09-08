@@ -20,7 +20,8 @@ UpdatePosition(spot) {
   p_abbr := GetAbbr(piece, color)
   positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
   OutputPositions()
-  LogMain0(" " . p_abbr . "     " . spot . "     " . spot . "     " . p_abbr . "")
+  LogMain0("                  " . spot . "  " . p_abbr . "")
+  ; LogMain0(" " . p_abbr . "     " . spot . "     " . spot . "     " . p_abbr . "")
   MouseMove, board[spot].x, board[spot].y
   return color
 }
@@ -28,7 +29,7 @@ UpdatePosition(spot) {
 ;------------------------------------------------------------------
 ;                                                 OUTPUT POSITIONS
 OutputPositions() {
-  LogMain0("OutputPositions()")
+;  LogMain0("OutputPositions()")
   sleep 200
   p_text := ""
   p_abbr := ""

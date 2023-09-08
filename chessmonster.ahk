@@ -81,7 +81,7 @@ MainLoop() {                         ; main chessmonster loop
 LogMain0("MainLoop()")
 sleep, 200
 
-  Loop {
+  loop {
     spot := ChooseSquare()
     spot_color := UpdatePosition(spot)
     ; MouseMove, board[spot].x, board[spot].y
@@ -89,16 +89,13 @@ sleep, 200
 
     piece_type := positions[spot].piece  ;       <<============
     UseSpcificPiece() ; return none
-    target := WhichPieceMove(spot, piece_type)
+    target := MoveWhichPiece(spot, piece_type)
 
     if target {
       MovePiece(spot, target)   ; MovePiece()--move_maker.ahk
       PromotePawn(piece_type, target)
-      sleep 200
       Listen()
-      sleep 200
       PollOpponent()
-      sleep 200
     }
   }
 }             ;  current work: failed move detection in mouse_mover.ahk
@@ -133,6 +130,20 @@ ResetMoves() {
   move_num := 0
 }
 
+MakeMove() {
+;  if (move_num >= 11) {
+  if (move_num <= 1) {
+;    TryMove()
+  } else {
+    MovePiece(moves[move_num].1, moves[move_num].2)
+  }
+}
+
+TryMove(spot, piece_type) {
+  LogMain("try move" . piece_type . " " . spot)
+  return spot
+}
+
 FindMyGuys(spot, spot_color) {
   while (spot_color != my_color) {   ; find my guys
     spot := ChooseSquare()
@@ -149,7 +160,7 @@ UseSpcificPiece() {
   ; }
   return none
 }
-WhichPieceMove(spot, piece_type) {
+MoveWhichPiece(spot, piece_type) {
   switch piece_type {
     case "pawn":
       target := MovePawn(spot)
@@ -175,10 +186,9 @@ PromotePawn(piece_type, target) {
 
 ChooseSquare() {
   LogMain("ChooseSquare()")
-  if ( failed_moves > 0 ) {   ; failed_moves from mouse_mover.ahk
-    LogMain("FailedChooseSquare()")
-    spot := FailedChooseSquare()
-  } else if ( RandomChoice(3) ) {
+  if fail {    ; fail from move_maker.ahk
+    spot := FailChoose()
+  } else if ( RandomChoice(2) ) {
     spot := ChooseMySpots()
   } else {
     spot := RandomSquare()
@@ -188,20 +198,17 @@ ChooseSquare() {
   return spot
 }
 
-
-MakeMove() {
-;  if (move_num >= 11) {
-  if (move_num <= 1) {
-;    TryMove()
+FailChoose() {
+  LogMain("FailChoose()")
+  if RandomChoice() {
+    spot := WhereIsMyKing()
   } else {
-    MovePiece(moves[move_num].1, moves[move_num].2)
+      spot := ChooseMySpots()
   }
-}
-
-TryMove(spot, piece_type) {
-  LogMain("try move" . piece_type . "")
+  fail := false
   return spot
 }
+
 
 ChooseMySpots() {
     LogMain("ChooseMySpots() " . spot)
@@ -213,20 +220,7 @@ ChooseMySpots() {
     return spot
 }
 
-FailedChooseSquare() {
-  LogMain("FailedChooseSquare()")
-  if RandomChoice() {
-    king_spot := WhereIsMyKing()
-    if ( king_spot ) {
-      spot := king_spot
-    } else {
-      spot := ChooseMySpots()
-    }
-  } else {
-    spot := ChooseMySpots()
-  }
-  return spot
-}
+
 
 RandomSquare() {
   random, col, 1, 8
@@ -236,8 +230,8 @@ RandomSquare() {
   return spot
 }
 
-RandomChoice(max=1) {
-  random, choice, 0, max
+RandomChoice(max=2) {
+  random, choice, 1, max
   if (choice = 1) {
     return true
   } else {

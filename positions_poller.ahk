@@ -50,7 +50,7 @@ PollPosition(spot) {
   p_abbr := GetAbbr(piece, color)
   positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
   OutputPositions()
-  LogMain0(" " . p_abbr . "     " . spot . "     " . spot . "     " . p_abbr . "")
+  LogMain0("                  " . spot . "  " . p_abbr . "")
 }
 
 PostPosition(spot, piece, color, p_abbr) {
