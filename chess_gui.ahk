@@ -33,7 +33,8 @@ LogPositions("press A for positions")
 LogNumPieces("white 16  black 16")
 LogMoves("Move # 0")
 
-ShakeGui()
+ZoomGui()
+; ShakeGui()
 
 CreateGui() {
   LogMain("CreateGui()")
@@ -91,24 +92,45 @@ MoveGui2() {
 }
 ShakeGui() {
   gui show, x851 y106 w340 h680, chessmonster info, NoActivate
-  sleep 10
+  sleep 5
   gui show, x840 y98 w340 h680, chessmonster info, NoActivate
-  sleep 10
+  sleep 5
   gui show, x851 y109 w340 h680, chessmonster info, NoActivate
-  sleep 10
+  sleep 5
   Gui, Show, x864 y97 w340 h680, chessmonster info, NoActivate
-  sleep 10
+  sleep 5
   Gui, Show, x838 y105 w340 h680, chessmonster info, NoActivate
-  sleep 10
+  sleep 5
   Gui, Show, x872 y102 w340 h680, chessmonster info, NoActivate
-  sleep 10
+  sleep 5
   Gui, Show, x842 y96 w340 h680, chessmonster info, NoActivate
-  sleep 10
+  sleep 5
   Gui, Show, x867 y108 w340 h680, chessmonster info, NoActivate
-  sleep 10
+  sleep 5
   gui show, x851 y106 w340 h680, chessmonster info, NoActivate
   sleep 50
 }
+ZoomGui() {
+  gui show, x910 y140 w260 h520, chessmonster info, NoActivate
+  sleep 10
+  gui show, x900 y135 w270 h540, chessmonster info, NoActivate
+  sleep 10
+  gui show, x890 y130 w280 h560, chessmonster info, NoActivate
+  sleep 10
+  gui show, x880 y125 w290 h580, chessmonster info, NoActivate
+  sleep 10
+  gui show, x875 y120 w300 h600, chessmonster info, NoActivate
+  sleep 10
+  gui show, x860 y115 w310 h620, chessmonster info, NoActivate
+  sleep 10
+  gui show, x855 y110 w320 h640, chessmonster info, NoActivate
+  sleep 20
+  gui show, x853 y108 w330 h660, chessmonster info, NoActivate
+  sleep 20
+  gui show, x851 y106 w340 h680, chessmonster info, NoActivate
+  sleep 20
+}
+
 
 
 GuiAddBorder(Color, Width, PosAndSize) {

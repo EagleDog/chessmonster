@@ -15,11 +15,6 @@ plus_sign_button_color := 0x454441
 big_green_button_spot := [380, 410]
 big_green_button_color := 0xa3d160
 
-Aaaaa() {
-  MovePiece("a2", "a3")
-}
-
-
 
 RematchComputer() {
   MoveGui2()
@@ -34,8 +29,6 @@ RematchComputer() {
   yes_button_spot_color := 0x98c65b
 
   sleep 100
-  sleep 100
-  sleep 50
 
   mousemove rematch_button_spot_a[1], rematch_button_spot_a[2]
   click rematch_button_spot_a[1], rematch_button_spot_a[2]
@@ -53,6 +46,20 @@ RematchComputer() {
   GetStartingPositions()
 }
 
+New3Min() {
+  new_3_spot_a := [965, 875]
+  new_3_spot_b := [965, 675]
+  new_3_spot_center := [470, 550]
+  new_3_spot_center_color := 0x494745
+
+  MoveGui2()
+  sleep 100
+  MoveClick(new_3_spot_center[1], new_3_spot_center[2])
+  ; MoveClick(new_3_spot_b[1], new_3_spot_b[2])
+  ; MoveClick(new_3_spot_a[1], new_3_spot_a[2])
+  sleep 200
+  MoveGui1()
+}
 
 
 ;

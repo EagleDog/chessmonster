@@ -19,6 +19,10 @@ GoClick(spot) {
   MouseMove, board[spot].x, board[spot].y
   Click
 }
+MoveClick(x, y) {
+  MouseMove, x, y
+  Click
+}
 
 MovePiece(spot, target) {
   ID1 := positions[spot].piece

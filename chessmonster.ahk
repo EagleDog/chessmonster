@@ -51,7 +51,7 @@ global move_num := 0
 ;
 ;
 ;  =====================================================================
-;    === BEGIN MAIN SEQUENCE ===================      MAIN LOOP      MAIN LOOP
+;    === BEGIN MAIN SEQUENCE ===================      MAIN SEQUENCE      MAIN SEQUENCE
 
 CreateGui()
 LogMain("CreateGUI()")
@@ -72,7 +72,7 @@ sleep, 400
 
 
 
-;   ===== END MAIN SEQUENCE ================    END MAIN LOOP
+;   ===== END MAIN SEQUENCE ================    END MAIN SEQUENCE
 ; ======================================================================
 ;
 ;
@@ -94,8 +94,8 @@ NewGame() {
   ActivateChess()
   move_num := 0
   GetMyColor()
-  GetStartingPositions()
   FlipBoard()
+  GetStartingPositions()
   Sleep, 500
   MakeMove()
 }
@@ -109,10 +109,15 @@ MakeMove() {
   }
 }
 
-         ; calls ChooseSquare(), SquareStatus(spot),
-TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
-  Loop {      ;  MovePawn(spot), MoveKnight(spot), MoveBishop(spot),
-    Sleep, 10   ; MoveRook(spot), MoveQueen(spot), MoveKing(spot)
+    ; TryMove() calls ChooseSquare(), SquareStatus(spot),
+              ;  IDPiece(spot), MovePiece(spot, target)
+              ;  MovePawn(spot), MoveKnight(spot), MoveBishop(spot),
+              ;  MoveRook(spot), MoveQueen(spot), MoveKing(spot)
+TryMove() {
+
+  Loop {
+
+    Sleep, 10
     spot := ChooseSquare()
     spot_color := UpdatePosition(spot)
     ; spot_color := SquareStatus(spot)
@@ -165,8 +170,6 @@ TryMove() {   ;  IDPiece(spot), TryMove(), MovePiece(spot, target)
       Listen()
 
       sleep 200
-      PollOppSide()
-      PollOppSide()
       PollOppSide()
       PollOppSide()
       PollOppSide()
@@ -262,6 +265,22 @@ MyColorBlack() {
   opp_color := "white"
 }
 
+global toggle := true
+ToggleLoop() {
+  toggle := !toggle
+}
+
+StartTLoop() {
+  loop
+  {
+      If not Toggle
+          break
+      tooltip %A_Index%
+  }
+  return
+}
+
+
 SublimeGo() {
   WinActivate, ahk_class PX_WINDOW_CLASS
 }
@@ -273,6 +292,8 @@ ExitChessMonster() {
 }
 
 ;======= KEYBOARD SHORTCUTS ===================
+
+
 
 ^+z::Pause           ; ctrl + shift + z
 ;^+x::ExitApp            ; ctrl + shift + x
@@ -287,6 +308,10 @@ r::RematchComputer()
 q::MoveGui1()
 e::MoveGui2()
 s::ShakeGui()
+
+8::ToggleLoop()
+9::StartTLoop()
+0::New3Min()
 ; 0::UpdatePosition("e5")
 ; 0::SqStatTest()
 
