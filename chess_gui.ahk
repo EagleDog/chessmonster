@@ -38,6 +38,7 @@ ZoomGui()
 
 CreateGui() {
   LogMain("CreateGui()")
+  sleep 200
 }
 
 LogMain0(main0_text) {
@@ -111,21 +112,21 @@ ShakeGui() {
   sleep 50
 }
 ZoomGui() {
-  gui show, x910 y140 w260 h520, chessmonster info, NoActivate
+  gui show, x980 y140 w255 h510, chessmonster info, NoActivate
   sleep 10
-  gui show, x900 y135 w270 h540, chessmonster info, NoActivate
+  gui show, x945 y135 w270 h540, chessmonster info, NoActivate
   sleep 10
-  gui show, x890 y130 w280 h560, chessmonster info, NoActivate
+  gui show, x910 y130 w280 h560, chessmonster info, NoActivate
   sleep 10
-  gui show, x880 y125 w290 h580, chessmonster info, NoActivate
+  gui show, x888 y125 w290 h580, chessmonster info, NoActivate
   sleep 10
   gui show, x875 y120 w300 h600, chessmonster info, NoActivate
   sleep 10
-  gui show, x860 y115 w310 h620, chessmonster info, NoActivate
+  gui show, x865 y115 w310 h620, chessmonster info, NoActivate
   sleep 10
-  gui show, x855 y110 w320 h640, chessmonster info, NoActivate
+  gui show, x860 y110 w320 h640, chessmonster info, NoActivate
   sleep 20
-  gui show, x853 y108 w330 h660, chessmonster info, NoActivate
+  gui show, x855 y108 w330 h660, chessmonster info, NoActivate
   sleep 20
   gui show, x851 y106 w340 h680, chessmonster info, NoActivate
   sleep 20

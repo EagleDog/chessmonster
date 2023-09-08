@@ -43,10 +43,11 @@ GetPositions() {
     }
   }
   OutputPositions()
-  LogMain(" ")
 }
 
 OutputPositions() {
+  LogMain0("OutputPositions()")
+  sleep 200
   p_text := ""
   p_abbr := ""
   text_rows := ["","","","","","","",""]
@@ -73,6 +74,8 @@ OutputPositions() {
 }
 
 GetStartingPositions() {
+LogMain0("GetStartingPositions()")
+sleep, 200
   GetMyColor()
   LogMain("Get Starting positions.....")
   white_row_abbrs := ["R", "N", "B", "Q", "K", "B", "N", "R"]

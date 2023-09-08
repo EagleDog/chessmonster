@@ -130,6 +130,8 @@ CheckColor(spot, the_color) {
 }
 
 GetMyColor() {
+LogMain0("GetMyColor()")
+sleep 200
   if SquareStatus("a1") = "white" {
     my_color := "white"
     opp_color := "black"

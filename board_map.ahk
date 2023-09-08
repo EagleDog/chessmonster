@@ -11,6 +11,8 @@ global sq_height := -88
 global all_spots := []
 
 CreateBoard() {             ; populate with x y coords 64 squares
+LogMain("CreateBoard()")
+sleep 200
   Loop, 8 {       ; Ranks (rows)
     rank := A_Index
     row := rank
@@ -31,6 +33,8 @@ CreateBoard() {             ; populate with x y coords 64 squares
 }
 
 FlipBoard() {
+  LogMain0("FlipBoard()")
+  sleep, 200
   b := board
   if (my_color = "black") {
     my_color := "black"

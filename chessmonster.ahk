@@ -3,6 +3,10 @@
 ;browser zoom: 80%
 ;board_scope := "147, 205  to  849, 908" ;(702 x 761 )
 ;square_size := "87 by 95"  ;87 x 87
+            ;  ChooseSquare(), SquareStatus(spot),
+            ;  IDPiece(spot), MovePiece(spot, target)
+            ;  MovePawn(spot), MoveKnight(spot), MoveBishop(spot),
+            ;  MoveRook(spot), MoveQueen(spot), MoveKing(spot)
 
 #Include chess_gui.ahk
 #Include VA.ahk
@@ -28,6 +32,7 @@ global rel_path := "" . A_ScriptDir . "\assets\"
 ; Exit
 ; Pause On
 
+global none := "none"
 global my_color := "white"
 global opp_color := "black"
 ;global target_status := "empty"
@@ -51,108 +56,46 @@ global move_num := 0
 ;
 ;
 ;  =====================================================================
-;    === BEGIN MAIN SEQUENCE ===================      MAIN SEQUENCE      MAIN SEQUENCE
+;    === BEGIN MAIN SEQUENCE ===================      MAIN SEQUENCE
 
 CreateGui()
-LogMain("CreateGUI()")
-LogMain("ActivateChess()")
 ActivateChess()
-sleep, 400
-LogMain("CreateBoard()")
 CreateBoard()
-sleep, 400
-LogMain("GetMyColor()")
 GetMyColor()
-sleep, 400
-LogMain("GetStartingPositions()")
 GetStartingPositions()
-sleep, 400
 
 ;CheckForGameEnd()
 
 
 
-;   ===== END MAIN SEQUENCE ================    END MAIN SEQUENCE
+;   ===== END MAIN SEQUENCE ================        END MAIN SEQUENCE
 ; ======================================================================
-;
-;
-;
-;
 
-;**********************************************************************************************
-;
-;    BeginFunctions()     BeginFunctions()      BeginFunctions()      BeginFunctions()
-;
-;**********************************************************************************************
-;
-ActivateChess() {
-  if WinExist("Play Chess") {
-    WinActivate, Play Chess
-  }
-}
-NewGame() {
-  ActivateChess()
-  move_num := 0
-  GetMyColor()
-  FlipBoard()
-  GetStartingPositions()
-  Sleep, 500
-  MakeMove()
-}
 
-MakeMove() {
-;  if (move_num >= 11) {
-  if (move_num <= 1) {
-    TryMove()
-  } else {
-    MovePiece(moves[move_num].1, moves[move_num].2)
-  }
-}
 
-    ; TryMove() calls ChooseSquare(), SquareStatus(spot),
-              ;  IDPiece(spot), MovePiece(spot, target)
-              ;  MovePawn(spot), MoveKnight(spot), MoveBishop(spot),
-              ;  MoveRook(spot), MoveQueen(spot), MoveKing(spot)
-TryMove() {
-
+;
+;           MAIN LOOP           MAIN LOOP           MAIN LOOP
+;
+;
+MainLoop() {
+LogMain0("MainLoop()")
+sleep, 200
+  ; main chessmonster loop
   Loop {
-
-    Sleep, 10
     spot := ChooseSquare()
     spot_color := UpdatePosition(spot)
-    ; spot_color := SquareStatus(spot)
-  
-    while (spot_color != my_color) {   ; find my guys
-      sleep 10
-      MouseMove, board[spot].x, board[spot].y
-      sleep 10
-      spot := ChooseSquare()
-      spot_color := UpdatePosition(spot)
-      sleep 10
-      MouseMove, board[spot].x, board[spot].y
-    }
-    piece_type := IDPiece(spot, spot_color)  ;       <<============
+    MouseMove, board[spot].x, board[spot].y
 
-    LogMain("try move")
-   ; if ( (piece_type != "bishop") ) {
-   ;   TryMove()
-   ; }
-    switch piece_type {
-      case "pawn":
-        target := MovePawn(spot)
-      case "knight":
-        target := MoveKnight(spot)
-      case "bishop":
-        target := MoveBishop(spot)
-      case "rook":
-        target := MoveRook(spot)
-      case "queen":
-        target := MoveQueen(spot)
-      case "king":
-        target := MoveKing(spot)
-    }
+    spot := FindMyGuys()    ; return spot   ( color = my_color )
+
+    piece_type := IDPiece(spot, spot_color)  ;       <<============
+    LogMain("try move" . piece_type . "")
+
+    UseSpcificPiece() ; return none
+
     LogMain(piece_type . "    '" . spot . "'" )
     sleep 500
+    target := WhichPieceMove(spot, piece_type)
 
     if target {
       LogMain("MovePiece: " . piece_type . " '" . spot . "'" )
@@ -166,21 +109,80 @@ TryMove() {
         mouseclick Left    ;  Promotion  choose queen
       }
       sleep 100
-
       Listen()
-
-      sleep 200
-      PollOppSide()
-      PollOppSide()
-      PollOppSide()
-      PollOppSide()
-      PollOppSide()
-      PollOppSide()
-      PollOppSide()
-      PollOppSide()
-      PollOppSide()
-      sleep 50
+      sleep 100
+      PollOpponent()
+      sleep 100
     }
+  }
+}
+
+;**********************************************************************************************
+;
+;    BeginFunctions()     BeginFunctions()      BeginFunctions()      BeginFunctions()
+;
+;**********************************************************************************************
+;
+
+ActivateChess() {
+  LogMain0("ActivateChess()")
+  sleep, 200
+  if WinExist("Play Chess") {
+    WinActivate, Play Chess
+  }
+}
+NewGame() {
+  ActivateChess()
+  ResetMoves()
+  GetMyColor()
+  FlipBoard()
+  GetStartingPositions()
+  MainLoop()
+  ; MakeMove()
+}
+
+ResetMoves() {
+  LogMain0("move_num := 0")
+  sleep, 200
+  move_num := 0
+}
+
+FindMyGuys() {
+  while (spot_color != my_color) {   ; find my guys
+    spot := ChooseSquare()
+    spot_color := UpdatePosition(spot)
+    MouseMove, board[spot].x, board[spot].y
+  }
+  return spot
+}
+UseSpcificPiece() {
+  LogMain("UseSpcificPiece()")
+  sleep 200
+  ; if ( (piece_type != "bishop") ) {
+  ;   TryMove()
+  ; }
+  return none
+}
+WhichPieceMove(spot, piece_type) {
+  switch piece_type {
+    case "pawn":
+      target := MovePawn(spot)
+    case "knight":
+      target := MoveKnight(spot)
+    case "bishop":
+      target := MoveBishop(spot)
+    case "rook":
+      target := MoveRook(spot)
+    case "queen":
+      target := MoveQueen(spot)
+    case "king":
+      target := MoveKing(spot)
+  }
+  return target
+}
+PollOpponent() {
+  loop 9 {
+    PollOppSide()
   }
 }
 
@@ -202,6 +204,24 @@ ChooseSquare() {
     LogMain("ChooseSquare() " . spot . " rand square")
     sleep 200
   }
+
+  return spot
+
+}
+
+
+
+
+MakeMove() {
+;  if (move_num >= 11) {
+  if (move_num <= 1) {
+    TryMove()
+  } else {
+    MovePiece(moves[move_num].1, moves[move_num].2)
+  }
+}
+
+TryMove() {
   return spot
 }
 
