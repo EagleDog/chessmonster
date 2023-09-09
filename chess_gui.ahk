@@ -155,7 +155,18 @@ ZoomGui() {
   gui show, x851 y106 w340 h680, chessmonster info, NoActivate
   sleep 20
 }
-
+ZoomGui2() {
+  gui show, x1080 y140 w255 h510, chessmonster info, NoActivate
+  sleep 10
+  gui show, x1010 y130 w280 h560, chessmonster info, NoActivate
+  sleep 10
+  gui show, x975 y120 w300 h600, chessmonster info, NoActivate
+  sleep 10
+  gui show, x960 y110 w320 h640, chessmonster info, NoActivate
+  sleep 20
+  gui show, x951 y106 w340 h680, chessmonster info, NoActivate
+  sleep 20
+}
 
 
 GuiAddBorder(Color, Width, PosAndSize) {

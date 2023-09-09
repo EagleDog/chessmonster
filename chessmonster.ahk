@@ -67,18 +67,18 @@ CreateBoard()
 GetMyColor()
 GetStartingPositions()
 
-PollOpponent()
-PollOpponent()
-PollOpponent()
-PollOpponent()
-PollOpponent()
-PollOpponent()
-PollOpponent()
-PollOpponent()
-PollOpponent()
-PollOpponent()
-PollOpponent()
-PollOpponent()
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
 
 ;CheckForGameEnd()
 
@@ -124,7 +124,7 @@ sleep, 200
     spot := FindMyGuys(spot, spot_color)    ; return spot   ( color = my_color )
 
     piece_type := positions[spot].piece  ;       <<============
-    UseSpcificPiece() ; return none
+    UseSpecificPiece() ; return none
     target := MoveWhichPiece(spot, piece_type)
 
     if target {
@@ -183,7 +183,7 @@ TryMove(spot, piece_type) {
   return spot
 }
 
-UseSpcificPiece() {
+UseSpecificPiece() {
   ; LogMain("UseSpcificPiece()")
   ; sleep 200
   ; if ( (piece_type != "bishop") ) {

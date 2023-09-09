@@ -44,15 +44,16 @@ PollOppSide() {
   return position
 }
 PollOpponent() {
-    position := PollOppSide()
   loop 9 {
-    last_spot := position[spot]
-    last_piece := position[piece]
+    position := PollOppSide()
+    last_spot := position.spot  ;"e5"
+    last_piece := position.piece ;"pawn"
+;    msgbox % last_piece
     WhichPoll(last_spot)
   }
 }
 
-LastPiece(spot) {
+LastPiece(spot) {   ; unused
   last_spot := last_poll
   last_position := GetPosition(spot)
   last_piece := last_position.piece
@@ -71,11 +72,14 @@ PollPosition(spot) {
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
   p_abbr := GetAbbr(piece, color)
-  positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
+  row := board[spot].row , rank := board[spot].rank
+  col := board[spot].col , file := board[spot].file
+  positions[spot] := { piece: piece, color: color, p_abbr: p_abbr, row: row, rank: rank, col: col, file: file }
   position := positions[spot] 
   OutputPositions()
   LogMain0("                  " . spot . "  " . p_abbr . "")
-  last_piece := position.piece
+  last_spot := spot
+  last_piece := piece
   return position
 }
 

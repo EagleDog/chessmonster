@@ -16,11 +16,14 @@ global opp_spots := []
 ;                                                  UPDATE POSITION
 UpdatePosition(spot) {
   ; LogMain("UpdatePosition()")
-  last_spot := spot
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
   p_abbr := GetAbbr(piece, color)
-  positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
+  row := board[spot].row , rank := board[spot].rank
+  col := board[spot].col , file := board[spot].file
+  last_spot := spot
+  last_piece := piece
+  positions[spot] := { piece: piece, color: color, p_abbr: p_abbr, row: row, rank: rank, col: col, file: file }
   OutputPositions()
   LogMain0("                  " . spot . "  " . p_abbr . "")
   ; LogMain0(" " . p_abbr . "     " . spot . "     " . spot . "     " . p_abbr . "")

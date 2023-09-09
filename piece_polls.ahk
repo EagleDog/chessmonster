@@ -14,29 +14,35 @@ DoNothing() {
 
 WhichPoll(last_spot) {
   prev_opp_pieces_spots := PrevOppPiecesSpots() ; array[]
-  last_spot := last_spot ;"e5" ;last_spot  ; global var e.g. "a6"
-  last_piece := last_piece  ; global var e.g. "empty"
+;  last_spot := last_spot ;"e5" ;last_spot  ; global var e.g. "a6"
+;  last_piece := last_piece  ; global var e.g. "empty"
+
+;  tooltip % last_spot . " last_spot"
+ 
+  ; tooltip % last_piece . " last_piece"
+
+
   switch last_piece {
     case "empty":
       DoNothing()
       return "empty"
     case "pawn":
-      CheckPawnPositions(last_spot) ,  return "pawn"
+      CheckPawnMoves(last_spot) ,  return "pawn"
     case "knight":
-      CheckKnightPositions(last_spot) ,  return "knight"
+      CheckKnightMoves(last_spot) ,  return "knight"
     case "bishop":
-      CheckBishopPositions(last_spot) ,  return "bishop"
+      CheckBishopMoves(last_spot) ,  return "bishop"
     case "rook":
-      CheckRookPositions(last_spot) ,  return "rook"
+      CheckRookMoves(last_spot) ,  return "rook"
     case "queen":
-      CheckQueenPositions(last_spot) ,  return "queen"
+      CheckQueenMoves(last_spot) ,  return "queen"
     case "king":
-      CheckKingPositions(last_spot) ,  return "king"
+      CheckKingMoves(last_spot) ,  return "king"
   }
 }
 
-CheckPawnPositions(spot) {
-  msgbox % spot . " " . last_spot . " :  last spot "
+CheckPawnMoves(spot) {
+;  msgbox % spot . " " . last_spot . last_piece . " :  last spot "
   back_one := [ 0, 1 ]
   back_two := [ 0, 2 ]
   back_diag_1 := [ 1, 1 ]
@@ -55,10 +61,11 @@ CheckPawnPositions(spot) {
       return
     }
     col += sources[n][1]
+;    msgbox % col
     rank += sources[n][2]
     file := FindFile(col)
     spot := file . rank
-    msgbox % spot . "     "
+;    msgbox % spot . "     "
   }
 }
 
@@ -70,12 +77,13 @@ CheckSpot(spot) {
 }
 
 PrevOppPiecesSpots() {
+  opp_pawns := []
   opp_knights := []  ; ["b8", "g8"]
   opp_bishops := []  ; ["c8", "f8"]
   opp_rooks := []
   opp_queens := []
   opp_kings := []
-  opp_pieces_spots := {}
+  prev_opp_pieces_spots := {}
   prev_positions := prev_positions ; global {} variable
 
   loop, 64 {
@@ -101,17 +109,17 @@ PrevOppPiecesSpots() {
   return prev_opp_pieces_spots ; {"opp_kinghts: ["c6", "e6"], "opp_bishops: ["",""], ... }
 }
 
-CheckOppPiecesPositions() {
-  pawn_checks := CheckPawnPositions("a7")
-  knight_checks := CheckKnightPositions("a7")
-  bishop_checks := CheckBishopPositions("a7")
-  rook_checks := CheckRookPositions("a7")
-  queen_checks := CheckQueenPositions("a7")
-  king_checks := CheckKingPositions("a7")
+CheckOppPiecesMoves() {
+  pawn_checks := CheckPawnMoves("a7")
+  knight_checks := CheckKnightMoves("a7")
+  bishop_checks := CheckBishopMoves("a7")
+  rook_checks := CheckRookMoves("a7")
+  queen_checks := CheckQueenMoves("a7")
+  king_checks := CheckKingMoves("a7")
   all_opp_checks := [pawn_checks,knight_checks,bishop_checks,rook_checks,queen_checks,king_checks]
 }
 
-CheckKnightPositions(spot) {
+CheckKnightMoves(spot) {
   jump_1 := [ 1, 2 ]
   jump_2 := [ 2, 1 ]
   jump_3 := [ 2, -1 ]
@@ -127,7 +135,7 @@ CheckKnightPositions(spot) {
   rank := position.rank
   n := 1
 }
-CheckBishopPositions(spot){
+CheckBishopMoves(spot){
   back_one := [ 0, 1 ]
   back_two := [ 0, 2 ]
   back_diag_1 := [ 1, 1 ]
@@ -140,7 +148,7 @@ CheckBishopPositions(spot){
   rank := position.rank
   n := 1
 }
-CheckRookPositions(spot){
+CheckRookMoves(spot){
   back_one := [ 0, 1 ]
   back_two := [ 0, 2 ]
   back_diag_1 := [ 1, 1 ]
@@ -151,7 +159,7 @@ CheckRookPositions(spot){
   rank := position.rank
   n := 1
 }
-CheckQueenPositions(spot){
+CheckQueenMoves(spot){
   back_one := [ 0, 1 ]
   back_two := [ 0, 2 ]
   back_diag_1 := [ 1, 1 ]
@@ -162,7 +170,7 @@ CheckQueenPositions(spot){
   rank := position.rank
   n := 1
 }
-CheckKingPositions(spot){
+CheckKingMoves(spot){
   back_one := [ 0, 1 ]
   back_two := [ 0, 2 ]
   back_diag_1 := [ 1, 1 ]
