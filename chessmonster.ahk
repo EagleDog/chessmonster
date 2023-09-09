@@ -15,8 +15,9 @@
 #Include board_watcher.ahk
 #Include positions_watcher.ahk
 #Include positions_poller.ahk
-#Include new_match.ahk
+#Include piece_polls.ahk
 #Include move_maker.ahk
+#Include new_match.ahk
 
 #Include pawn_mover.ahk
 #Include knight_mover.ahk
@@ -65,6 +66,19 @@ CreateGui()
 CreateBoard()
 GetMyColor()
 GetStartingPositions()
+
+PollOpponent()
+PollOpponent()
+PollOpponent()
+PollOpponent()
+PollOpponent()
+PollOpponent()
+PollOpponent()
+PollOpponent()
+PollOpponent()
+PollOpponent()
+PollOpponent()
+PollOpponent()
 
 ;CheckForGameEnd()
 
@@ -290,6 +304,12 @@ StartTLoop() {
 }
 
 
+PollOppTerritory() {
+  loop 9 {
+    PollOpponent()
+  }
+}
+
 SublimeGo() {
   WinActivate, ahk_class PX_WINDOW_CLASS
 }
@@ -328,7 +348,7 @@ a::GetPositions()
 w::MyColorWhite()
 b::MyColorBlack()
 
-
+o::PollOppTerritory()
 p::PauseMatch()
 
 z::SoundBeep, 400, 500  ; , [ Frequency, Duration]

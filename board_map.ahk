@@ -18,7 +18,8 @@ sleep 200
     row := rank
     Loop, 8 {     ; Files (columns)
       col := A_Index
-      file := Chr(96 + col)     ; a_index > a-h
+      file := FindFile(col)     ; a_index > a-h
+      ; file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
 
       x := (col - 1) * sq_width + x_start
@@ -40,6 +41,11 @@ FlipBoard() {
     my_color := "black"
   }
   b := board
+}
+
+FindFile(col) {
+  file := Chr(96 + col) ; col > a-h
+  return file
 }
 
 

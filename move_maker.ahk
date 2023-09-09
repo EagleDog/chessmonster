@@ -39,7 +39,7 @@ sleep 200
   }
 }
 
-SpotGo(spot) {
+GoSpot(spot) {
   MoveMouse(board[spot].x, board[spot].y)
   Click
   ; MouseMove, board[spot].x, board[spot].y

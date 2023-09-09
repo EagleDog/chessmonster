@@ -8,6 +8,7 @@
 ; OutputPositions()
 ; GetAbbr(piece)
 
+; global all_spots := [] pre-exists from board_map
 global opp_spots := [] ;"d4","e5","b3",...
 global my_spots := []  ; active spots
 global both_spots := []
@@ -39,21 +40,43 @@ PollOppSide() {
   LogMain("poll opp territory")
   random rand_opp_spot, 33, 64
   spot := all_spots[rand_opp_spot]
-  PollPosition(spot)
+  position := PollPosition(spot)
+  return position
 }
 PollOpponent() {
+    position := PollOppSide()
   loop 9 {
-    PollOppSide()
+    last_spot := position[spot]
+    last_piece := position[piece]
+    WhichPoll(last_spot)
   }
 }
 
+LastPiece(spot) {
+  last_spot := last_poll
+  last_position := GetPosition(spot)
+  last_piece := last_position.piece
+  return last_piece
+  ; position := positions[spot]
+  ; msgbox % position.spot
+}
+
+GetPosition(spot) {
+  position := positions[spot]
+  return position
+}
+
 PollPosition(spot) {
+  last_spot := spot
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
   p_abbr := GetAbbr(piece, color)
   positions[spot] := { piece: piece, color: color, p_abbr: p_abbr }
+  position := positions[spot] 
   OutputPositions()
   LogMain0("                  " . spot . "  " . p_abbr . "")
+  last_piece := position.piece
+  return position
 }
 
 PostPosition(spot, piece, color, p_abbr) {

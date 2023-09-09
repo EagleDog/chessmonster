@@ -148,7 +148,7 @@ GetMyColor() {
     spot := spots[n]
     color := UpdatePosition(spot)
   }
-  SpotGo(spot)
+  GoSpot(spot)
   return my_color
 }
 

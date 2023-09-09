@@ -6,6 +6,7 @@
 ;
 ;  piece_types := ["empty","pawn","knight","bishop","rook","queen","king"]
 ;
+global prev_positions := {}
 global positions := {}
 global my_spots := []
 global opp_spots := []
@@ -15,6 +16,7 @@ global opp_spots := []
 ;                                                  UPDATE POSITION
 UpdatePosition(spot) {
   ; LogMain("UpdatePosition()")
+  last_spot := spot
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
   p_abbr := GetAbbr(piece, color)
@@ -66,6 +68,7 @@ OutputPositions() {
 ;                                                    GET POSITIONS
 GetPositions() {
   LogMain("Getting positions.....")
+  prev_positions := positions
   ; gui_text := "Getting positions....."
   ; GuiControl,, gui_output, % gui_text
   piece := ""
