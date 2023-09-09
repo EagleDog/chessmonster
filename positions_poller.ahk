@@ -8,20 +8,31 @@
 ; OutputPositions()
 ; GetAbbr(piece)
 
-global my_spots := []
-global opp_spots := []
+global opp_spots := [] ;"d4","e5","b3",...
+global my_spots := []  ; active spots
+global both_spots := []
+; global num_pieces_opp := 16
+; global num_pieces_mine := 16
 
-global opp_side_squares := []
-CreateOppSideSquares()
+; global opp_side_squares := []
 
+; CreateOppSideSquares()
 
-CreateOppSideSquares() {
-  opp_side_squares := []
-  opp_side_sq_num := 33
-  loop 32 {
-    opp_side_squares.push(opp_side_sq_num)
-    opp_side_sq_num += 1
+; CreateOppSideSquares() {
+;   opp_side_sq_num := 33
+;   loop 32 {
+;     opp_side_squares.push(opp_side_sq_num)
+;     opp_side_sq_num += 1
+;   }
+; }
+
+FindMyGuys(spot, spot_color) {
+  while (spot_color != my_color) {   ; find my guys
+    spot := ChooseSquare()
+    spot_color := UpdatePosition(spot)
+    MouseMove, board[spot].x, board[spot].y
   }
+  return spot
 }
 
 PollOppSide() {
@@ -34,14 +45,6 @@ PollOpponent() {
   loop 9 {
     PollOppSide()
   }
-}
-
-HowManyPieces() {
-  both_spots := GetBothSpots()
-  num_pieces_mine := both_spots[1].length()
-  num_pieces_opp := both_spots[2].length()
-  num_pieces_both := my_color . " " . num_pieces_mine . "  " . opp_color . " " . num_pieces_opp
-  return num_pieces_both
 }
 
 PollPosition(spot) {
@@ -78,6 +81,14 @@ GetBothSpots() {
   return both_spots
 }
 
+HowManyPieces() {
+  both_spots := GetBothSpots()
+  num_pieces_mine := both_spots[1].length()
+  num_pieces_opp := both_spots[2].length()
+  num_pieces_both := [num_pieces_opp, num_pieces_mine]
+  return num_pieces_both
+}
+  ; num_pieces_both := my_color . " " . num_pieces_mine . "  " . opp_color . " " . num_pieces_opp
 WhereIsMyKing() {
   my_spots := GetMySpots()
   n := 1

@@ -18,23 +18,38 @@ gui add, Text, xp-40 yp-5 wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0
 gui +AlwaysOnTop +ToolWindow -SysMenu
 gui color, 0x888877     ; BACKGROUND COLOR  <-------
 
-gui add, Text, w280 h20 x20 y130 left Vmain0_field, % main0_text
-gui add, Text, w280 h20 x20 y150 center Vmain_field, % main_text
-gui add, Text, w280 h20 x20 y170 center Vtimer_field, % timer_text
+gui add, Text, w280 h20 x20 y110 left Vmain0_field, % main0_text
+gui add, Text, w280 h20 x20 y135 center Vmain_field, % main_text
+gui add, Text, w280 h20 x20 y160 center Vtimer_field, % timer_text
 gui add, Text, w280 h20 x20 y190 center Vvolume_field, % volume_text
-gui add, Text, w280 h200 x20 y260 center Vpositions_field, % positions_text
-gui add, Text, w280 h20 x20 y500 center Vnum_pieces_field, % num_pieces_text
-gui add, Text, w280 h20 x20 y560 center Vmoves_field, % moves_text
 
-LogMain0("    press 1 to start")
-LogMain("press r for rematch")
-LogTimer(".")
-LogPositions("press A for positions")
-LogNumPieces("white 16  black 16")
-LogMoves("Move # 0")
+gui add, Text, w280 h20 x20 y270 center Vopp_title_field, % opp_title_text
+gui add, Text, w280 h200 x20 y300 center Vpositions_field, % positions_text
+gui add, Text, w280 h20 x20 y530 center Vmy_title_field, % my_title_text
+
+gui add, Text, w280 h20 x20 y590 center Vmoves_field, % moves_text
+
+; gui add, Text, w280 h20 x20 y500 center Vnum_pieces_field, % num_pieces_text
+
 
 ZoomGui()
+RefreshGui()
 ; ShakeGui()
+
+
+RefreshGui() {
+  LogMain0("    press 1 to start")
+  LogMain("press r for rematch")
+  LogTimer("0:0.0000000")
+  LogVolume("0.0000")
+  LogOppTitle("black")
+  LogOppTitle("black")
+  LogPositions("press A for positions")
+  LogMyTitle("white")
+  ; LogNumPieces("white 16  black 16")
+  ; LogMoves("move_num == " . move_num)
+  LogMoves(0)
+}
 
 CreateGui() {
   LogMain("CreateGui()")
@@ -53,15 +68,24 @@ LogTimer(timer_text) {
 LogVolume(volume_text) {
   GuiControl,, volume_field, % "volume: " . volume_text
 }
+;
+LogOppTitle(opp_title_text) {
+  GuiControl,, opp_title_field, % opp_title_text
+}
 LogPositions(positions_text) {
   GuiControl,, positions_field, % positions_text
 }
-LogNumPieces(num_pieces_text) {
-  GuiControl,, num_pieces_field, % num_pieces_text
+LogMyTitle(my_title_text) {
+  GuiControl,, my_title_field, % my_title_text
 }
+;
 LogMoves(moves_text) {
-  GuiControl,, moves_field, % moves_text
+  GuiControl,, moves_field, % moves_text . "  move_num "
 }
+; LogNumPieces(num_pieces_text) {
+;   GuiControl,, num_pieces_field, % num_pieces_text
+; }
+
 
 MoveGui1() {
   gui show, x1151 y106 w340 h680, chessmonster info, NoActivate

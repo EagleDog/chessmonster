@@ -26,12 +26,14 @@ CheckForGameEnd() {
   y2 := y + 25
 ;  MsgBox, % img_path
   if ImageMatches(x1, y1, x2, y2, img_path) {
-    MouseMove, x, y
+    MoveMouse(x, y)
+    ; MouseMove, x, y
     Click, x, y
     Sleep, 1000
     NewGame()
   } else {
-    MouseMove, x, y
+    MoveMouse(x, y)
+    ; MouseMove, x, y
   }
 }
 
@@ -47,11 +49,16 @@ IDPiece(spot, spot_color) {       ;    <<==========
 ;  Sleep, 50
 ;  spot_color := p_color  ;SqStat(spot)
   if ((spot_color = "empty") OR (spot_color = "not sure")) {
-    MouseMove, x, y
+    MoveMouse(x, y)
+    ; MouseMove, x, y, 50
     return "empty"
   } else if (spot_color = "white") {
+    MoveMouse(x, y)
+    ; MouseMove, x, y, 50
     return WhichPiece(x1, y1, x2, y2, "white")  ;   <<=======
   } else {
+    MoveMouse(x, y)
+    ; MouseMove, x, y, 50
     return WhichPiece(x1, y1, x2, y2, "black")  ;   <<=======
   }
 ;  return WhichPiece(x1, y1, x2, y2)
@@ -87,7 +94,8 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
       piece_img := image_set[A_Index]
       img_path := "" rel_path . piece_img . ""
       if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
-        MouseMove, x1 + 20, y1 + 35
+        MoveMouse( x1 + 20, y1 + 35, 10 )
+        ; MouseMove, x1 + 20, y1 + 35, 80
 ;        MsgBox, %piece_name%
         return piece_name
       }
@@ -130,17 +138,33 @@ CheckColor(spot, the_color) {
 }
 
 GetMyColor() {
-LogMain0("GetMyColor()")
-sleep 200
-  if SquareStatus("a1") = "white" {
-    my_color := "white"
-    opp_color := "black"
-  } else {
-    my_color := "black"
-    opp_color := "white"
+  LogMain0("GetMyColor()")
+  sleep 200
+  spots := ["b1","c1","d1","e1","f1","g1","h1"]
+  spot := "a1"
+  color := UpdatePosition(spot)
+  while ( !BlackOrWhite(color) AND spots[A_Index]) {
+    n:= A_Index
+    spot := spots[n]
+    color := UpdatePosition(spot)
   }
+  SpotGo(spot)
+  return my_color
 }
 
+BlackOrWhite(color) {
+  if ( color == "white" ) {
+    my_color := "white"
+    opp_color := "black"
+    return true
+  } else if ( color == "black" ) {
+    my_color := "black"
+    opp_color := "white"
+    return true
+  } else {
+    return false
+  }
+}
 ImageMatches(x1, y1, x2, y2, img_path) {
   ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
   if (img_x) {

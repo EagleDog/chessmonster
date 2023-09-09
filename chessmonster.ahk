@@ -51,6 +51,8 @@ move10 := ["c4", "b3"] ; f bishop (light)
 global moves := [move1, move2, move3, move4, move5, move6, move7, move8, move9, move10]
 global move_num := 0
 
+global paused := false
+
 ;
 ;
 ;
@@ -58,8 +60,8 @@ global move_num := 0
 ;  =====================================================================
 ;    === BEGIN MAIN SEQUENCE ===================      MAIN SEQUENCE
 
-CreateGui()
 ActivateChess()
+CreateGui()
 CreateBoard()
 GetMyColor()
 GetStartingPositions()
@@ -72,19 +74,39 @@ GetStartingPositions()
 ; ======================================================================
 
 
+;
+;
+;        PAUSE LOOP
+;
+;
+PauseDisplay() {
+  LogMain0("           ready")
+  LogMain("1 new match")
+  LogTimer("2 continue")
+  LogVolume("r rematch")
+}
+PauseMatch() {
+  if paused {
+    GoLoop()
+  } else {
+    paused := true
+  }
+}
 
 ;
-;           MAIN LOOP           MAIN LOOP           MAIN LOOP
+;           GO LOOP           GO LOOP           GO LOOP
 ;
 ;
-MainLoop() {                         ; main chessmonster loop
-LogMain0("MainLoop()")
+GoLoop() {                   ; GoLoop() main chessmonster loop
+LogMain0("GoLoop()")
 sleep, 200
+  paused := false
 
   loop {
     spot := ChooseSquare()
+
     spot_color := UpdatePosition(spot)
-    ; MouseMove, board[spot].x, board[spot].y
+
     spot := FindMyGuys(spot, spot_color)    ; return spot   ( color = my_color )
 
     piece_type := positions[spot].piece  ;       <<============
@@ -97,8 +119,12 @@ sleep, 200
       Listen()
       PollOpponent()
     }
+    if (paused = true) {
+      PauseDisplay()
+      break
+    }
   }
-}             ;  current work: failed move detection in mouse_mover.ahk
+}
 
 ;**********************************************************************************************
 ;
@@ -120,20 +146,19 @@ NewGame() {
   GetMyColor()
   FlipBoard()
   GetStartingPositions()
-  MainLoop()
+  GoLoop()
   ; MakeMove()
 }
 
 ResetMoves() {
-  LogMain0("move_num := 0")
-  sleep, 200
   move_num := 0
+  LogMoves(move_num)
 }
 
 MakeMove() {
-;  if (move_num >= 11) {
+  ;  if (move_num >= 11) {
   if (move_num <= 1) {
-;    TryMove()
+  ;    TryMove()
   } else {
     MovePiece(moves[move_num].1, moves[move_num].2)
   }
@@ -144,14 +169,6 @@ TryMove(spot, piece_type) {
   return spot
 }
 
-FindMyGuys(spot, spot_color) {
-  while (spot_color != my_color) {   ; find my guys
-    spot := ChooseSquare()
-    spot_color := UpdatePosition(spot)
-    MouseMove, board[spot].x, board[spot].y
-  }
-  return spot
-}
 UseSpcificPiece() {
   ; LogMain("UseSpcificPiece()")
   ; sleep 200
@@ -187,6 +204,7 @@ PromotePawn(piece_type, target) {
 ChooseSquare() {
   LogMain("ChooseSquare()")
   if fail {    ; fail from move_maker.ahk
+    fail := false
     spot := FailChoose()
   } else if ( RandomChoice(2) ) {
     spot := ChooseMySpots()
@@ -205,7 +223,6 @@ FailChoose() {
   } else {
       spot := ChooseMySpots()
   }
-  fail := false
   return spot
 }
 
@@ -294,7 +311,7 @@ ExitChessMonster() {
 ; ^+c::SublimeGo() ; ctrl + shift + x
 
 1::NewGame()
-2::MakeMove()
+2::GoLoop()
 7::DriftMouse()
 r::RematchComputer()
 q::MoveGui1()
@@ -310,6 +327,9 @@ s::ShakeGui()
 a::GetPositions()
 w::MyColorWhite()
 b::MyColorBlack()
+
+
+p::PauseMatch()
 
 z::SoundBeep, 400, 500  ; , [ Frequency, Duration]
 

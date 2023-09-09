@@ -22,15 +22,15 @@ UpdatePosition(spot) {
   OutputPositions()
   LogMain0("                  " . spot . "  " . p_abbr . "")
   ; LogMain0(" " . p_abbr . "     " . spot . "     " . spot . "     " . p_abbr . "")
-  MouseMove, board[spot].x, board[spot].y
+;  MouseMove, board[spot].x, board[spot].y, 0
   return color
 }
 ;
 ;------------------------------------------------------------------
 ;                                                 OUTPUT POSITIONS
 OutputPositions() {
-;  LogMain0("OutputPositions()")
-  sleep 200
+  ; opp_title := "white"
+  ; LogOppTitle(opp_title)
   p_text := ""
   p_abbr := ""
   text_rows := ["","","","","","","",""]
@@ -52,7 +52,14 @@ OutputPositions() {
   LogPositions(p_text)
 
   num_pieces_both := HowManyPieces()
-  LogNumPieces(num_pieces_both)
+  num_pieces_opp := num_pieces_both[2]
+  num_pieces_mine := num_pieces_both[1]
+  LogOppTitle( opp_color . "  " . num_pieces_opp . " pieces" )
+  LogMyTitle( my_color . "  " . num_pieces_mine . " pieces" )
+  ; LogOppTitle( "black" )
+  ; LogMyTitle( "white" )
+
+  ; LogNumPieces(num_pieces_both)
 }
 ;
 ;------------------------------------------------------------------

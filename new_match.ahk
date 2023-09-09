@@ -47,7 +47,8 @@ RematchComputer() {
   sleep 600
 
   MoveGui1()
-  GetStartingPositions()
+  NewGame()
+  ; GetStartingPositions()
 }
 
 New3Min() {

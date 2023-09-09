@@ -15,6 +15,10 @@
 ;
 global fail := false
 
+MoveMouse(x, y, speed=0) {
+  mousemove x, y, speed
+}
+
 MovePiece(spot, target) {
 LogMain("MovePiece: " . piece_type . " '" . spot . "'" . " to '" . target . "'" )
 sleep 200
@@ -31,17 +35,19 @@ sleep 200
     fail := true
   } else {
     move_num += 1
-    LogMoves("Move # " . move_num)
+    LogMoves(move_num)
   }
 }
 
-GoClick(spot) {
-  MouseMove, board[spot].x, board[spot].y
+SpotGo(spot) {
+  MoveMouse(board[spot].x, board[spot].y)
   Click
+  ; MouseMove, board[spot].x, board[spot].y
 }
 MoveClick(x, y) {
-  MouseMove, x, y
+  MoveMouse(x, y)
   Click
+  ; MouseMove, x, y
 }
 
 ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
