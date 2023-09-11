@@ -115,6 +115,7 @@ GoLoop() {                   ; GoLoop() main chessmonster loop
 LogMain0("GoLoop()")
 sleep, 200
   paused := false
+  ActivateChess()
 
   loop {
     spot := ChooseSquare()

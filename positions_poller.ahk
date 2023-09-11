@@ -31,7 +31,8 @@ FindMyGuys(spot, spot_color) {
   while (spot_color != my_color) {   ; find my guys
     spot := ChooseSquare()
     spot_color := UpdatePosition(spot)
-    MouseMove, board[spot].x, board[spot].y
+    MoveMouse(board[spot].x, board[spot].y)
+;    MouseMove, board[spot].x, board[spot].y
   }
   return spot
 }

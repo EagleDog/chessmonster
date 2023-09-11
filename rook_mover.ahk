@@ -80,9 +80,8 @@ FindRPath1(spot) {         ; ROOK PATH 1 UP
     file := Chr(96 + col)
     spot := file . rank
     color := UpdatePosition(spot)
-    MouseMove, board[spot].x, board[spot].y
+    GoSpot(spot)
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-;    Sleep, 10
     if (color = my_color) {   ; collision same color
       return p1
     }
@@ -101,9 +100,8 @@ FindRPath2(spot) {         ; ROOK PATH 2 RIGHT
     file := Chr(96 + col)
     spot := file . rank
     color := UpdatePosition(spot)
-    MouseMove, board[spot].x, board[spot].y
+    GoSpot(spot)
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-;    Sleep, 10
     if (color = my_color) {   ; collision same color
       return p2
     }
@@ -122,9 +120,8 @@ FindRPath3(spot) {         ; ROOK PATH 3 DOWN
     file := Chr(96 + col)
     spot := file . rank
     color := UpdatePosition(spot)
-    MouseMove, board[spot].x, board[spot].y
+    GoSpot(spot)
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-;    Sleep, 10
     if (color = my_color) {   ; collision same color
       return p3
     }
@@ -143,9 +140,8 @@ FindRPath4(spot) {         ; ROOK PATH 4 LEFT
     file := Chr(96 + col)
     spot := file . rank
     color := UpdatePosition(spot)
-    MouseMove, board[spot].x, board[spot].y
+    GoSpot(spot)
     p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-    Sleep, 100
     if (color = my_color) {   ; collision same color
       return p4
     }

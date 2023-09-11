@@ -15,10 +15,6 @@
 ;
 global fail := false
 
-MoveMouse(x, y, speed=0) {
-  mousemove x, y, speed
-}
-
 MovePiece(spot, target) {
 LogMain("MovePiece: " . piece_type . " '" . spot . "'" . " to '" . target . "'" )
 sleep 200
@@ -39,7 +35,13 @@ sleep 200
   }
 }
 
+MoveMouse(x, y, speed=0) {
+  mousemove x, y, speed
+}
 GoSpot(spot) {
+  MoveMouse(board[spot].x, board[spot].y)
+}
+ClickSpot(spot) {
   MoveMouse(board[spot].x, board[spot].y)
   Click
   ; MouseMove, board[spot].x, board[spot].y

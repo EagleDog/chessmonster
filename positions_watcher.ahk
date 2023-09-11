@@ -27,7 +27,7 @@ UpdatePosition(spot) {
   OutputPositions()
   LogMain0("                  " . spot . "  " . p_abbr . "")
   ; LogMain0(" " . p_abbr . "     " . spot . "     " . spot . "     " . p_abbr . "")
-;  MouseMove, board[spot].x, board[spot].y, 0
+;  MoveMouse(board[spot].x, board[spot].y)
   return color
 }
 ;

@@ -30,7 +30,7 @@ Listen() {
     }
     Sleep, 100
     timer_count += 200/1000
-    if (timer_count > 0.7) {
+    if (timer_count > 5) {
       LogMain("timeout")
       LogVolume(0.000)
       CheckForGameEnd()

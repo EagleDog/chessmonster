@@ -27,13 +27,11 @@ CheckForGameEnd() {
 ;  MsgBox, % img_path
   if ImageMatches(x1, y1, x2, y2, img_path) {
     MoveMouse(x, y)
-    ; MouseMove, x, y
     Click, x, y
     Sleep, 1000
     NewGame()
   } else {
     MoveMouse(x, y)
-    ; MouseMove, x, y
   }
 }
 
@@ -50,15 +48,12 @@ IDPiece(spot, spot_color) {       ;    <<==========
 ;  spot_color := p_color  ;SqStat(spot)
   if ((spot_color = "empty") OR (spot_color = "not sure")) {
     MoveMouse(x, y)
-    ; MouseMove, x, y, 50
     return "empty"
   } else if (spot_color = "white") {
     MoveMouse(x, y)
-    ; MouseMove, x, y, 50
     return WhichPiece(x1, y1, x2, y2, "white")  ;   <<=======
   } else {
     MoveMouse(x, y)
-    ; MouseMove, x, y, 50
     return WhichPiece(x1, y1, x2, y2, "black")  ;   <<=======
   }
 ;  return WhichPiece(x1, y1, x2, y2)
@@ -94,8 +89,7 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
       piece_img := image_set[A_Index]
       img_path := "" rel_path . piece_img . ""
       if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
-        MoveMouse( x1 + 20, y1 + 35, 10 )
-        ; MouseMove, x1 + 20, y1 + 35, 80
+        MoveMouse( x1 + 20, y1 + 35) ;, 10 )
 ;        MsgBox, %piece_name%
         return piece_name
       }

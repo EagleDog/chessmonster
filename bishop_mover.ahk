@@ -85,9 +85,8 @@ FindDPath1(spot) {             ; DIAG PATH 1
     file := Chr(96 + col)
     spot := file . rank
     color := UpdatePosition(spot)
-    MouseMove, board[spot].x, board[spot].y
+    GoSpot(spot)
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-;    Sleep, 10
     if (color = my_color) {   ; COLLISION SAME COLOR
       return p1
     }
@@ -107,9 +106,8 @@ FindDPath2(spot) {             ; DIAG PATH 2
     file := Chr(96 + col)
     spot := file . rank
     color := UpdatePosition(spot)
-    MouseMove, board[spot].x, board[spot].y
+    GoSpot(spot)
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-;    Sleep, 10
     if (color = my_color) {     ; COLLISION SAME COLOR
       return p2
     }
@@ -130,9 +128,8 @@ FindDPath3(spot) {             ; DIAG PATH 3
     file := Chr(96 + col)
     spot := file . rank
     color := UpdatePosition(spot)
-    MouseMove, board[spot].x, board[spot].y
+    GoSpot(spot)
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-;    Sleep, 10
     if (color = my_color) {   ; COLLISION SAME COLOR
       return p3
     }
@@ -153,9 +150,8 @@ FindDPath4(spot) {             ; DIAG PATH 4
     file := Chr(96 + col)
     spot := file . rank
     color := UpdatePosition(spot)
-    MouseMove, board[spot].x, board[spot].y
+    GoSpot(spot)
     p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
-;    Sleep, 10
     if (color = my_color) {   ; COLLISION SAME COLOR
       return p4
     }
