@@ -12,6 +12,7 @@ global black := 0x525356
 global white := 0xF8F8F8
 global board_gr := 0x549977
 global board_wh := 0xCCEDE9
+global board_ylw := 0x44CCBB ;BBCC44
 
 CheckForGameEnd() {
 ;  three_spot := [400, 475]

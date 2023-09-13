@@ -107,7 +107,6 @@ sleep, 200
 
   loop {
     spot := ChooseSquare()
-
     spot_color := UpdatePosition(spot)
 
     spot := FindMyGuys(spot, spot_color)    ; return spot   ( color = my_color )
@@ -139,6 +138,7 @@ sleep, 200
 NewGame() {
   ActivateChess()
   ResetMoves()
+  ResetPositionsHistory()
   GetMyColor()
   FlipBoard()
   GetStartingPositions()
@@ -189,6 +189,17 @@ PromotePawn(piece_type, target) {
   }
 }
 
+FindMyGuys(spot, spot_color) {
+  while (spot_color != my_color) {   ; find my guys
+    spot := ChooseSquare()
+    spot_color := UpdatePosition(spot)
+    GoSpot(spot)
+;    MoveMouse(board[spot].x, board[spot].y)
+;    MouseMove, board[spot].x, board[spot].y
+  }
+  return spot
+}
+
 ChooseSquare() {
   LogMain("ChooseSquare()")
   if fail {    ; fail from move_maker.ahk
@@ -206,10 +217,10 @@ ChooseSquare() {
 
 FailChoose() {
   LogMain("FailChoose()")
-  if RandomChoice() {
-    spot := WhereIsMyKing()
-  } else {
+  if RandomChoice(3) {
     spot := ChooseMySpots()
+  } else {
+    spot := WhereIsMyKing()
   }
   return spot
 }
@@ -241,13 +252,6 @@ RandomChoice(max=2) {
   }
 }
 
-Output() {
-  MsgBox, % "a1:  x: " . board["a1"].x . "  y: " . board["a1"].y . ""
-  MsgBox, % "a2:  x: " . board["a2"].x . "  y: " . board["a2"].y . ""
-  MsgBox, % "b1:  x: " . board["b1"].x . "  y: " . board["b1"].y . ""
-  MsgBox, % "b2:  x: " . board["b2"].x . "  y: " . board["b2"].y . ""
-}
-
 MyColorWhite() {
   my_color := "white"
   opp_color := "black"
@@ -258,19 +262,8 @@ MyColorBlack() {
   opp_color := "white"
 }
 
-global toggle := true
-ToggleLoop() {
-  toggle := !toggle
-}
-
-StartTLoop() {
-  loop
-  {
-      If not Toggle
-          break
-      tooltip %A_Index%
-  }
-  return
+Chill() {
+  sleep 300
 }
 
 ActivateChess() {
@@ -309,9 +302,8 @@ q::MoveGui1()
 e::MoveGui2()
 s::ShakeGui()
 
-8::ToggleLoop()
-9::StartTLoop()
-0::New3Min()
+9::New3Min()
+0::GetPositionsHistory(5)
 ; 0::UpdatePosition("e5")
 ; 0::SqStatTest()
 

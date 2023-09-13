@@ -1,41 +1,20 @@
 ;positions_poller.ahk
-; HowManyPieces()
+; PollOppSide()
+; PollOpponent()
+; LastPiece(spot)
 ; GetMySpots()
 ; GetBothSpots()
 ; PollPosition(spot)
 ; PostPosition(spot, piece, color, p_abbr)
-
-; OutputPositions()
-; GetAbbr(piece)
+; HowManyPieces()
+; WhereIsMyKing()
 
 ; global all_spots := [] pre-exists from board_map
 global opp_spots := [] ;"d4","e5","b3",...
 global my_spots := []  ; active spots
-global both_spots := []
-; global num_pieces_opp := 16
-; global num_pieces_mine := 16
+global both_spots := [] ; all active spots both colors
 
-; global opp_side_squares := []
-
-; CreateOppSideSquares()
-
-; CreateOppSideSquares() {
-;   opp_side_sq_num := 33
-;   loop 32 {
-;     opp_side_squares.push(opp_side_sq_num)
-;     opp_side_sq_num += 1
-;   }
-; }
-
-FindMyGuys(spot, spot_color) {
-  while (spot_color != my_color) {   ; find my guys
-    spot := ChooseSquare()
-    spot_color := UpdatePosition(spot)
-    MoveMouse(board[spot].x, board[spot].y)
-;    MouseMove, board[spot].x, board[spot].y
-  }
-  return spot
-}
+global positions_history := []
 
 PollOppSide() {
   LogMain("poll opp territory")
@@ -85,6 +64,20 @@ PollPosition(spot) {
 }
 
 PostPosition(spot, piece, color, p_abbr) {
+  OutputPositions()
+}
+
+UpdatePositionsHistory() {
+  positions_history.push(positions)
+  msgbox % positions_history[move_num]["a1"].color
+}
+
+ResetPositionsHistory() {
+  positions_history := []
+}
+
+GetPositionsHistory(move_number=1) {
+  positions := positions_history[move_number]
   OutputPositions()
 }
 

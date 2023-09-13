@@ -143,7 +143,7 @@ GenericColumnsLoop(row, color, abbrs) {
     p_abbr := abbrs[row][col]
     p_abbr := AddAbbrBlack(p_abbr, color)
     piece := GetFullName(p_abbr)
-    positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr }
+    positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr, col: col, file: file, row: row, rank: rank }
   }
 }
 

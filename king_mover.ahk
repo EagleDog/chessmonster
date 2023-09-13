@@ -38,7 +38,8 @@ MoveKing(spot) {
   } else {
     target := KingMoveEmpty(moves)    ; KnigMoveEmpty(moves)   EMPTY
     if target {
-      MovePiece(spot, target)
+      return target
+;      MovePiece(spot, target)
     }
   }
 }

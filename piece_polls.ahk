@@ -71,8 +71,7 @@ CheckPawnMoves(spot) {
 
 CheckSpot(spot) {
   position := PollPosition(spot)
-  GoSpot(spot)
-  ; MoveMouse(position.x, position.y)
+;  GoSpot(spot)
   return position
 }
 

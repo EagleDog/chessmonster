@@ -23,7 +23,8 @@ MoveRook(spot) {
   } else {
     target := RMoveEmpty(paths)
     if target {
-      MovePiece(spot, target)
+      return target
+;      MovePiece(spot, target)
     }
   }
 }

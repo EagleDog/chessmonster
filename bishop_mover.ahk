@@ -26,7 +26,8 @@ MoveBishop(spot) {
   } else {
     target := DMoveEmpty(paths)
     if target {
-      MovePiece(spot, target)
+      return target
+;      MovePiece(spot, target)
     }
   }
 }
