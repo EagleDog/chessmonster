@@ -16,6 +16,7 @@
 #Include positions_watcher.ahk
 #Include positions_poller.ahk
 #Include piece_polls.ahk
+#Include opening_moves.ahk
 #Include move_maker.ahk
 #Include new_match.ahk
 
@@ -37,19 +38,6 @@ global none := "none"
 global my_color := "white"
 global opp_color := "black"
 ;global target_status := "empty"
-
-move1 := ["e2", "e4"] ; e pawn
-move2 := ["g1", "f3"] ; g Nnight
-move3 := ["f1", "c4"] ; f Bishop (light)
-move4 := ["d2", "d3"] ; d pawn
-move5 := ["b1", "c3"] ; b Nnight
-move6 := ["c1", "e3"] ; c Bishop (dark)
-move7 := ["e1", "h1"] ; O-O
-move8 := ["d1", "d2"] ; d Queen
-move9 := ["a2", "a3"] ; a pawn
-move10 := ["c4", "b3"] ; f bishop (light)
-
-global moves := [move1, move2, move3, move4, move5, move6, move7, move8, move9, move10]
 global move_num := 0
 
 global paused := false
@@ -148,13 +136,6 @@ sleep, 200
 ;**********************************************************************************************
 ;
 
-ActivateChess() {
-  LogMain0("ActivateChess()")
-  sleep, 200
-  if WinExist("Play Chess") {
-    WinActivate, Play Chess
-  }
-}
 NewGame() {
   ActivateChess()
   ResetMoves()
@@ -170,18 +151,10 @@ ResetMoves() {
   LogMoves(move_num)
 }
 
-MakeMove() {
-  ;  if (move_num >= 11) {
-  if (move_num <= 1) {
-  ;    TryMove()
-  } else {
-    MovePiece(moves[move_num].1, moves[move_num].2)
+PollOppTerritory() {
+  loop 9 {
+    PollOpponent()
   }
-}
-
-TryMove(spot, piece_type) {
-  LogMain("try move" . piece_type . " " . spot)
-  return spot
 }
 
 UseSpecificPiece() {
@@ -221,7 +194,7 @@ ChooseSquare() {
   if fail {    ; fail from move_maker.ahk
     fail := false
     spot := FailChoose()
-  } else if ( RandomChoice(2) ) {
+  } else if ( RandomChoice() ) {
     spot := ChooseMySpots()
   } else {
     spot := RandomSquare()
@@ -236,11 +209,10 @@ FailChoose() {
   if RandomChoice() {
     spot := WhereIsMyKing()
   } else {
-      spot := ChooseMySpots()
+    spot := ChooseMySpots()
   }
   return spot
 }
-
 
 ChooseMySpots() {
     LogMain("ChooseMySpots() " . spot)
@@ -251,8 +223,6 @@ ChooseMySpots() {
     spot := my_spots[spot_num]
     return spot
 }
-
-
 
 RandomSquare() {
   random, col, 1, 8
@@ -270,7 +240,6 @@ RandomChoice(max=2) {
     return false
   }
 }
-
 
 Output() {
   MsgBox, % "a1:  x: " . board["a1"].x . "  y: " . board["a1"].y . ""
@@ -304,10 +273,11 @@ StartTLoop() {
   return
 }
 
-
-PollOppTerritory() {
-  loop 9 {
-    PollOpponent()
+ActivateChess() {
+  LogMain0("ActivateChess()")
+  sleep, 200
+  if WinExist("Play Chess") {
+    WinActivate, Play Chess
   }
 }
 
