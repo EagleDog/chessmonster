@@ -97,7 +97,7 @@ GetPositions() {
 ;                                           GET STARTING POSITIONS
 GetStartingPositions() {
 LogMain0("GetStartingPositions()")
-sleep, 200
+;Chill()
   GetMyColor()
   LogMain("Get Starting positions.....")
   white_row_abbrs := ["R", "N", "B", "Q", "K", "B", "N", "R"]

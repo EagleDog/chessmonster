@@ -14,8 +14,6 @@ global opp_spots := [] ;"d4","e5","b3",...
 global my_spots := []  ; active spots
 global both_spots := [] ; all active spots both colors
 
-global positions_history := []
-
 PollOppSide() {
   LogMain("poll opp territory")
   random rand_opp_spot, 33, 64
@@ -64,20 +62,6 @@ PollPosition(spot) {
 }
 
 PostPosition(spot, piece, color, p_abbr) {
-  OutputPositions()
-}
-
-UpdatePositionsHistory() {
-  positions_history.push(positions)
-  msgbox % positions_history[move_num]["a1"].color
-}
-
-ResetPositionsHistory() {
-  positions_history := []
-}
-
-GetPositionsHistory(move_number=1) {
-  positions := positions_history[move_number]
   OutputPositions()
 }
 

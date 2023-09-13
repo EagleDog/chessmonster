@@ -15,6 +15,7 @@
 #Include board_watcher.ahk
 #Include positions_watcher.ahk
 #Include positions_poller.ahk
+#Include positions_history.ahk
 #Include piece_polls.ahk
 #Include opening_moves.ahk
 #Include move_maker.ahk
@@ -52,17 +53,9 @@ global paused := false
 ActivateChess()
 CreateGui()
 CreateBoard()
-GetMyColor()
-GetStartingPositions()
+;GetMyColor()
+;GetStartingPositions()
 
-; PollOpponent()
-; PollOpponent()
-; PollOpponent()
-; PollOpponent()
-; PollOpponent()
-; PollOpponent()
-; PollOpponent()
-; PollOpponent()
 ; PollOpponent()
 ; PollOpponent()
 ; PollOpponent()
@@ -89,7 +82,8 @@ PauseDisplay() {
 }
 PauseMatch() {
   if paused {
-    GoLoop()
+    paused := false
+;    GoLoop()
   } else {
     paused := true
   }
@@ -303,7 +297,7 @@ e::MoveGui2()
 s::ShakeGui()
 
 9::New3Min()
-0::GetPositionsHistory(5)
+;0::GetPositionsHistory(2)
 ; 0::UpdatePosition("e5")
 ; 0::SqStatTest()
 
