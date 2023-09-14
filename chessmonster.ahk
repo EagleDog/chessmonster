@@ -8,6 +8,7 @@
             ;  MovePawn(spot), MoveKnight(spot), MoveBishop(spot),
             ;  MoveRook(spot), MoveQueen(spot), MoveKing(spot)
 
+#Include debug.ahk
 #Include chess_gui.ahk
 #Include VA.ahk
 #Include listener.ahk
@@ -28,7 +29,8 @@
 #Include queen_mover.ahk
 #Include king_mover.ahk
 
-global rel_path := "" . A_ScriptDir . "\assets\"
+global rel_path := A_ScriptDir
+global assets_path := rel_path . "\assets\"
 ;global img_path := %rel_path%p_wh_wh.png
 ;global img_path := "" . rel_path . "p_wh_wh.png"
 
@@ -298,7 +300,8 @@ s::ShakeGui()
 
 9::New3Min()
 
-0::OutputSnapshot(1)
+0::DebugSnapshots()
+;0::OutputSnapshot(1)
 ;0::GetPositionsHistory(2)
 ; 0::UpdatePosition("e5")
 ; 0::SqStatTest()

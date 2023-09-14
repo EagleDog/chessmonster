@@ -62,6 +62,50 @@ OutputSnapshot(move_number) {
 }
 
 
+DebugSnapshots() {
+  n := 1
+  while (snapshots[n]) {
+    n := A_Index
+    snapshot := snapshots[n]
+    p_text := ""
+    p_abbr := ""
+    text_rows := ["","","","","","","",""]
+    Loop, 8 {
+      rank := A_Index
+      row := rank
+      Loop, 8 {
+        col := A_Index
+        file := Chr(96 + col)     ; a_index > a-h
+        spot := file . rank
+        p_abbr := snapshot[spot].p_abbr
+        p_text := % "" . p_text . p_abbr . " "
+      }
+      text_rows[A_index] := p_text
+      p_text := ""
+    }
+    p_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
+    num_pieces_opp := snapshot[num_pieces_opp]
+    num_pieces_mine := snapshot[num_pieces_mine]
+    Debug(p_text)
+    Debug( opp_color . "  " . num_pieces_opp . " pieces" )
+    Debug( my_color . "  " . num_pieces_mine . " pieces" )
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 GetPositionsHistory0(move_number=1) {

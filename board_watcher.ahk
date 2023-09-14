@@ -18,7 +18,7 @@ CheckForGameEnd() {
 ;  three_spot := [400, 475]
   three_spot := [400, 555]
   three_image := "three.png"
-  img_path := rel_path . three_image
+  img_path := assets_path . three_image
   x := three_spot[1]
   y := three_spot[2]
   x1 := x - 25
@@ -88,7 +88,7 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
     image_set := piece_images[A_Index]
     Loop, 2 {
       piece_img := image_set[A_Index]
-      img_path := "" rel_path . piece_img . ""
+      img_path := "" assets_path . piece_img . ""
       if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
         MoveMouse( x1 + 20, y1 + 35) ;, 10 )
 ;        MsgBox, %piece_name%
