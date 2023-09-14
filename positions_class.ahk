@@ -13,7 +13,8 @@ class PositionsSet {
 
   __New() {
   ;  positions := {}
-    empty_row_abbrs := [".", ".", ".", ".", ".", ".", ".", "."]
+    positions_set := MakeEmptyPositionsSet()
+    empty_row_abbrs := [".",".",".",".",".",".",".","."]
     e := empty_row_abbrs
     abbrs := [e,e,e,e,e,e,e,e]
     PopulateRows(abbrs)
@@ -24,14 +25,30 @@ class PositionsSet {
 
 }
 
-  PopulateRows(abbrs) {
-    loop, 8 {
-      row := A_Index
-      color := "empty"
-      GenericColumnsLoop(row, color, abbrs)
-    }  
-  }
+PopulateRows(abbrs) {
+  loop, 8 {
+    row := A_Index
+    color := "empty"
+    GenericColumnsLoop(row, color, abbrs)
+  }  
+}
 
+MakeEmptyPositionsSet() {
+  positions_set := {}
+  Loop, 8 {
+    rank := A_Index
+    row := rank
+    Loop, 8 {
+      col := A_Index
+      file := Chr(96 + col)     ; a_index > a-h
+      spot := file . rank
+      positions_set[spot] := {spot: spot, col: col, file: file, row: row, rank: rank, piece: "empty", color: "blank", p_abbr: "- " }
+    }
+
+    text_rows[A_index] := p_text
+    p_text := ""
+  }
+}
 
 0::positions_1 := new PositionsSet()
 

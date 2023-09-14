@@ -17,9 +17,7 @@ UpdatePositionsHistory() {
 }
 
 GetTempPositions() {
-  p_text := ""
-  p_abbr := ""
-  text_rows := ["","","","","","","",""]
+;  positions_set := new(PositionsSet)
   Loop, 8 {
     rank := A_Index
     row := rank
@@ -28,12 +26,12 @@ GetTempPositions() {
       file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
       p_abbr := positions[spot].p_abbr
-      p_text := % "" . p_text . p_abbr . " "
+      piece := 
     }
+
     text_rows[A_index] := p_text
     p_text := ""
   }
-  p_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
 
   LogPositions(p_text)
 
