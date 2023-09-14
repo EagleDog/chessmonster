@@ -34,8 +34,6 @@ UpdatePosition(spot) {
 ;------------------------------------------------------------------
 ;                                                 OUTPUT POSITIONS
 OutputPositions() {
-  ; opp_title := "white"
-  ; LogOppTitle(opp_title)
   p_text := ""
   p_abbr := ""
   text_rows := ["","","","","","","",""]
@@ -61,10 +59,9 @@ OutputPositions() {
   num_pieces_mine := num_pieces_both[1]
   LogOppTitle( opp_color . "  " . num_pieces_opp . " pieces" )
   LogMyTitle( my_color . "  " . num_pieces_mine . " pieces" )
-  ; LogOppTitle( "black" )
-  ; LogMyTitle( "white" )
 
-  ; LogNumPieces(num_pieces_both)
+  positions[num_pieces_opp] := num_pieces_opp
+  positions[num_pieces_mine] := num_pieces_mine
 }
 ;
 ;------------------------------------------------------------------
@@ -87,7 +84,7 @@ GetPositions() {
       color := SquareStatus(spot)
       piece := IDPiece(spot, color)  ; <<==========   <<======
       p_abbr := GetAbbr(piece, color)
-      positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr } ; , x: x, y: y, rank: rank, file: file, col: col }
+      positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
     }
   }
   OutputPositions()

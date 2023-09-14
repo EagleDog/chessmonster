@@ -32,7 +32,7 @@ sleep 200
   } else {
     move_num += 1
     LogMoves(move_num)
-    UpdatePositionsHistory()
+    UpdateSnapshots()
   }
 }
 

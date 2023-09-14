@@ -10,7 +10,6 @@
 
 
 class PositionsSet {
-
   __New() {
   ;  positions := {}
     positions_set := MakeEmptyPositionsSet()
@@ -21,8 +20,6 @@ class PositionsSet {
     OutputPositions()
     LogMain("new positions set")
   }
-
-
 }
 
 PopulateRows(abbrs) {
@@ -50,7 +47,20 @@ MakeEmptyPositionsSet() {
   }
 }
 
-0::positions_1 := new PositionsSet()
+
+class Place {
+  col := 1
+  file := "a"
+  row := 1
+  rank := 1
+  spot := ""
+  color := "white"
+  piece := "rook"
+  p_abbr := "R "
+}
+
+
+;0::positions_1 := new PositionsSet()
 
 
 

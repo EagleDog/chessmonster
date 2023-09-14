@@ -15,7 +15,7 @@
 #Include board_watcher.ahk
 #Include positions_watcher.ahk
 #Include positions_poller.ahk
-#Include positions_history.ahk
+#Include snapshots.ahk
 #Include piece_polls.ahk
 #Include opening_moves.ahk
 #Include move_maker.ahk
@@ -132,7 +132,7 @@ sleep, 200
 NewGame() {
   ActivateChess()
   ResetMoves()
-  ResetPositionsHistory()
+  ResetSnapshots()
   GetMyColor()
   FlipBoard()
   GetStartingPositions()
@@ -297,6 +297,8 @@ e::MoveGui2()
 s::ShakeGui()
 
 9::New3Min()
+
+0::OutputSnapshot(1)
 ;0::GetPositionsHistory(2)
 ; 0::UpdatePosition("e5")
 ; 0::SqStatTest()
