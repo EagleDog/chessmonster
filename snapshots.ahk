@@ -29,12 +29,12 @@ GetSnapshot() {
       snapshot[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
     }
   }
-  snapshot[num_pieces_opp] := positions[num_pieces_opp]
-  snapshot[num_pieces_mine] := positions[num_pieces_mine]
+  snapshot["num_pieces_opp"] := positions["num_pieces_opp"]
+  snapshot["num_pieces_mine"] := positions["num_pieces_mine"]
 }
 
 OutputSnapshot(move_number) {
-  snapshot := snapshots[move_num]
+  snapshot := snapshots[move_number]
   p_text := ""
   p_abbr := ""
   text_rows := ["","","","","","","",""]
@@ -54,11 +54,11 @@ OutputSnapshot(move_number) {
   p_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
 
   LogPositions(p_text)
-  num_pieces_opp := snapshot[num_pieces_opp]
-  num_pieces_mine := snapshot[num_pieces_mine]
+  num_pieces_opp := snapshot["num_pieces_opp"]
+  num_pieces_mine := snapshot["num_pieces_mine"]
   LogOppTitle( opp_color . "  " . num_pieces_opp . " pieces" )
   LogMyTitle( my_color . "  " . num_pieces_mine . " pieces" )
-
+  LogMoves(move_number)
 }
 
 
@@ -84,8 +84,9 @@ DebugSnapshots() {
       p_text := ""
     }
     p_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
-    num_pieces_opp := snapshot[num_pieces_opp]
-    num_pieces_mine := snapshot[num_pieces_mine]
+    num_pieces_opp := snapshot["num_pieces_opp"]
+    num_pieces_mine := snapshot["num_pieces_mine"]
+    Debug("move_num: " . n)
     Debug(p_text)
     Debug( opp_color . "  " . num_pieces_opp . " pieces" )
     Debug( my_color . "  " . num_pieces_mine . " pieces" )

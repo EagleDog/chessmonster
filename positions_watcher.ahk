@@ -26,7 +26,6 @@ UpdatePosition(spot) {
   positions[spot] := { piece: piece, color: color, p_abbr: p_abbr, row: row, rank: rank, col: col, file: file }
   OutputPositions()
   LogMain0("                  " . spot . "  " . p_abbr . "")
-  ; LogMain0(" " . p_abbr . "     " . spot . "     " . spot . "     " . p_abbr . "")
 ;  MoveMouse(board[spot].x, board[spot].y)
   return color
 }
@@ -55,13 +54,13 @@ OutputPositions() {
   LogPositions(p_text)
 
   num_pieces_both := HowManyPieces()
-  num_pieces_opp := num_pieces_both[2]
-  num_pieces_mine := num_pieces_both[1]
+  num_pieces_opp := num_pieces_both[1]
+  num_pieces_mine := num_pieces_both[2]
   LogOppTitle( opp_color . "  " . num_pieces_opp . " pieces" )
   LogMyTitle( my_color . "  " . num_pieces_mine . " pieces" )
 
-  positions[num_pieces_opp] := num_pieces_opp
-  positions[num_pieces_mine] := num_pieces_mine
+  positions["num_pieces_opp"] := num_pieces_opp
+  positions["num_pieces_mine"] := num_pieces_mine
 }
 ;
 ;------------------------------------------------------------------

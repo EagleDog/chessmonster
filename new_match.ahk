@@ -32,19 +32,19 @@ RematchComputer() {
   yes_button_spot :=  [1020, 770]
   yes_button_spot_color := 0x98c65b
 
-  sleep 100
+  sleep 50
 
   mousemove rematch_button_spot_a[1], rematch_button_spot_a[2]
   click rematch_button_spot_a[1], rematch_button_spot_a[2]
-  sleep 700
+  sleep 500
 
   mousemove yes_button_spot[1], yes_button_spot[2]
   click yes_button_spot[1], yes_button_spot[2]
-  sleep 900
+  sleep 400
 
   mousemove rematch_button_spot_a[1], rematch_button_spot_a[2]
   click rematch_button_spot_a[1], rematch_button_spot_a[2]
-  sleep 600
+  sleep 100
 
   MoveGui1()
   NewGame()

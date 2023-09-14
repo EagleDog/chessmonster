@@ -71,25 +71,25 @@ GetMySpots() {
 }
 
 GetBothSpots() {
-  my_spots := []    ; my_spots is global array ["a3","d5","e1",...]
   opp_spots := []
+  my_spots := []    ; my_spots is global array ["a3","d5","e1",...]
   loop, 64 {
     n := A_Index
     spot := all_spots[n]   ; all_spots is global array
-    if (positions[spot].color = my_color) {
-      my_spots.push(spot)
-    } else if (positions[spot].color = opp_color) {
+    if (positions[spot].color = opp_color) {
       opp_spots.push(spot)
+    } else if (positions[spot].color = my_color) {
+      my_spots.push(spot)
     }
   }
-  both_spots := [my_spots, opp_spots]
+  both_spots := [opp_spots, my_spots]
   return both_spots
 }
 
 HowManyPieces() {
   both_spots := GetBothSpots()
-  num_pieces_mine := both_spots[1].length()
-  num_pieces_opp := both_spots[2].length()
+  num_pieces_opp := both_spots[1].length()
+  num_pieces_mine := both_spots[2].length()
   num_pieces_both := [num_pieces_opp, num_pieces_mine]
   return num_pieces_both
 }

@@ -300,8 +300,9 @@ s::ShakeGui()
 
 9::New3Min()
 
-0::DebugSnapshots()
-;0::OutputSnapshot(1)
+d::DebugSnapshots()
+0::OutputSnapshot(1)
+
 ;0::GetPositionsHistory(2)
 ; 0::UpdatePosition("e5")
 ; 0::SqStatTest()
