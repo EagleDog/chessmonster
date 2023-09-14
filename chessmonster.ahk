@@ -55,8 +55,8 @@ global paused := false
 ActivateChess()
 CreateGui()
 CreateBoard()
-;GetMyColor()
-;GetStartingPositions()
+GetMyColor()
+GetStartingPositions()
 
 ; PollOpponent()
 ; PollOpponent()
@@ -190,8 +190,6 @@ FindMyGuys(spot, spot_color) {
     spot := ChooseSquare()
     spot_color := UpdatePosition(spot)
     GoSpot(spot)
-;    MoveMouse(board[spot].x, board[spot].y)
-;    MouseMove, board[spot].x, board[spot].y
   }
   return spot
 }
@@ -301,8 +299,9 @@ s::ShakeGui()
 9::New3Min()
 
 d::DebugSnapshots()
-0::OutputSnapshot(1)
+0::CheckQueenAntecedents("e5")
 
+;0::OutputSnapshot(1)
 ;0::GetPositionsHistory(2)
 ; 0::UpdatePosition("e5")
 ; 0::SqStatTest()

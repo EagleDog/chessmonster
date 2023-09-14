@@ -20,7 +20,7 @@ LogMain("MovePiece: " . piece_type . " '" . spot . "'" . " to '" . target . "'" 
 sleep 200
   ID1 := positions[spot].piece
   ClickDrag(spot, target)
-  sleep 80
+  sleep 150
   UpdatePosition(spot)
   sleep 50
   UpdatePosition(target)

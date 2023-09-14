@@ -18,16 +18,21 @@ PollOppSide() {
   LogMain("poll opp territory")
   random rand_opp_spot, 33, 64
   spot := all_spots[rand_opp_spot]
-  position := PollPosition(spot)
-  return position
+  piece_color := UpdatePosition(spot)
+  if ( piece_color = opp_color ) {
+    piece := positions[spot].piece
+    LogMain("check antecedents")
+    CheckAntecedents(spot, piece)
+  }
 }
 PollOpponent() {
   loop 9 {
-    position := PollOppSide()
-    last_spot := position.spot  ;"e5"
-    last_piece := position.piece ;"pawn"
+    PollOppSide()
+    ; position := PollOppSide()
+;    last_spot := position.spot  ;"e5"
+;    last_piece := position.piece ;"pawn"
 ;    msgbox % last_piece
-    WhichPoll(last_spot)
+;    WhichPoll(last_spot)
   }
 }
 

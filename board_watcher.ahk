@@ -134,7 +134,6 @@ CheckColor(spot, the_color) {
 
 GetMyColor() {
   LogMain0("GetMyColor()")
-  sleep 200
   spots := ["b1","c1","d1","e1","f1","g1","h1"]
   spot := "a1"
   color := UpdatePosition(spot)
