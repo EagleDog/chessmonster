@@ -99,7 +99,7 @@ CheckAntecedentSources(spot, sources) {
     spot := file . rank
     UpdatePosition(spot)
     GoSpot(spot)
-    Debug(spot)
+;    Debug(spot)
   }
 }
 

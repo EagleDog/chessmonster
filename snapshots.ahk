@@ -9,8 +9,14 @@ ResetSnapshots() {
 }
 
 UpdateSnapshots() {
-  GetSnapshot()
+  CreateSnapshot()
+;  GetSnapshot()
 ;  positions_history.push(positions)
+}
+
+CreateSnapshot() {
+  snapshots[move_num] := {}
+  snapshots[move_num] := positions.Clone()
 }
 
 GetSnapshot() {
