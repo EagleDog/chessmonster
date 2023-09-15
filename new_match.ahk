@@ -36,11 +36,11 @@ RematchComputer() {
 
   mousemove rematch_button_spot_a[1], rematch_button_spot_a[2]
   click rematch_button_spot_a[1], rematch_button_spot_a[2]
-  sleep 500
+  sleep 400
 
   mousemove yes_button_spot[1], yes_button_spot[2]
   click yes_button_spot[1], yes_button_spot[2]
-  sleep 500
+  sleep 600
 
   mousemove rematch_button_spot_a[1], rematch_button_spot_a[2]
   click rematch_button_spot_a[1], rematch_button_spot_a[2]

@@ -43,35 +43,6 @@ FindOppPieces() {  ; from prev snapshot
   return opp_pieces
 }
 
-; WhichPoll(spot) {
-;   prev_opp_pieces_spots := PrevOppPiecesSpots() ; array[]
-; ;  last_spot := last_spot ;"e5" ;last_spot  ; global var e.g. "a6"
-; ;  last_piece := last_piece  ; global var e.g. "empty"
-
-; ;  tooltip % last_spot . " last_spot"
- 
-;   ; tooltip % last_piece . " last_piece"
-
-
-;   switch last_piece {
-;     case "empty":
-;       DoNothing()
-;       return "empty"
-;     case "pawn":
-;       CheckPawnMoves(last_spot) ,  return "pawn"
-;     case "knight":
-;       CheckKnightMoves(last_spot) ,  return "knight"
-;     case "bishop":
-;       CheckBishopMoves(last_spot) ,  return "bishop"
-;     case "rook":
-;       CheckRookMoves(last_spot) ,  return "rook"
-;     case "queen":
-;       CheckQueenMoves(last_spot) ,  return "queen"
-;     case "king":
-;       CheckKingMoves(last_spot) ,  return "king"
-;   }
-; }
-
 SameSpotCheck(spot) {
   ; was piece here previous move?
   ; ... but ... what if it got missed?...
@@ -79,20 +50,40 @@ SameSpotCheck(spot) {
 
 CheckAntecedents(spot, piece) {
 ;  opp_pieces := FindOppPieces()
-  if ( ( piece == "pawn" ) and ( board[spot].rank < 7 ) ) {
-    CheckPawnAntecedents(spot) ;, opp_pieces["pawns"])
-  } else if ( piece == "knight" ) {
-    CheckKnightAntecedents(spot) ;, opp_pieces["knights"])
-  } else if ( piece == "bishop" ) {
-    CheckBishopAntecedents(spot) ;, opp_pieces["knights"])
-  } else if ( piece == "rook" ) {
-    CheckRookAntecedents(spot) ;, opp_pieces["knights"])
-  } else if ( piece == "queen" ) {
-    CheckQueenAntecedents(spot) ;, opp_pieces["knights"])
-  } else if ( piece == "king" ) {
-    CheckKingAntecedents(spot) ;, opp_pieces["knights"])
+;  first check for change in color, else...
+  switch piece {
+    case "empty":
+      DoNothing()
+    case "pawn":
+      if ( board[spot].rank < 7 ) {
+        CheckPawnAntecedents(spot)
+      }
+    case "knight":
+      CheckKnightAntecedents(spot)
+    case "bishop":
+      CheckBishopAntecedents(spot)
+    case "rook":
+      CheckRookAntecedents(spot)
+    case "queen":
+      CheckQueenAntecedents(spot)
+    case "king":
+      CheckKingAntecedents(spot)
   }
 }
+
+  ; if ( ( piece == "pawn" ) and ( board[spot].rank < 7 ) ) {
+  ;   CheckPawnAntecedents(spot) ;, opp_pieces["pawns"])
+  ; } else if ( piece == "knight" ) {
+  ;   CheckKnightAntecedents(spot) ;, opp_pieces["knights"])
+  ; } else if ( piece == "bishop" ) {
+  ;   CheckBishopAntecedents(spot) ;, opp_pieces["knights"])
+  ; } else if ( piece == "rook" ) {
+  ;   CheckRookAntecedents(spot) ;, opp_pieces["knights"])
+  ; } else if ( piece == "queen" ) {
+  ;   CheckQueenAntecedents(spot) ;, opp_pieces["knights"])
+  ; } else if ( piece == "king" ) {
+  ;   CheckKingAntecedents(spot) ;, opp_pieces["knights"])
+  ; }
 
 CheckAntecedentSources(spot, sources) {
   position := positions[spot]
