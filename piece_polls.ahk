@@ -17,9 +17,9 @@ FindOppPieces() {  ; from prev snapshot
   opp_pieces := {}
   pawns := [], knights := [], bishops := [], rooks := [], queens := [], kings := []
   loop 64 {
-    n := A_Index
     spot := all_spots[n]   ; all_spots is global array
     snapspot := snapshot[spot]
+    n := A_Index + 1
     if ( (snapspotspot.color == opp_color) and (snapspot.piece == "pawns") ) {
       pawns.push(spot)
     }
@@ -92,9 +92,9 @@ CheckAntecedentSources(spot, sources) {
   spot_rank := position.rank
   n := 1
   while sources[n] {
-    n := A_Index
     col := spot_col + sources[n][1]
     rank := spot_rank + sources[n][2]
+    n := A_Index + 1
     file := FindFile(col)
     spot := file . rank
     UpdatePosition(spot)

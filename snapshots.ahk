@@ -71,8 +71,8 @@ OutputSnapshot(move_number) {
 DebugSnapshots() {
   n := 1
   while (snapshots[n]) {
-    n := A_Index
     snapshot := snapshots[n]
+    n := A_Index + 1
     p_text := ""
     p_abbr := ""
     text_rows := ["","","","","","","",""]
