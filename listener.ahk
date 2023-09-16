@@ -8,6 +8,7 @@
 ;Return
  
 Listen() {
+  sleep 200
   LogMain("listening")
   peakValue := 0.01
   triggerVol := 0.00001
@@ -28,9 +29,9 @@ Listen() {
       LogMain(" sound detected ")
       return
     }
-    Sleep, 100
-    timer_count += 200/1000
-    if (timer_count > 5) {
+    sleep 100
+    timer_count += 100/1000
+    if (timer_count > 3) {
       LogMain("timeout")
       LogVolume(0.000)
       CheckForGameEnd()

@@ -1,11 +1,13 @@
 ;piece_polls.ahk
-; HowManyPieces()
-
+; DoNothing()
+; FindOppPieces()
+; Antecedents
+; Antecedents
+; Antecedent
 
 global last_spot := "a6"
 global last_piece := "empty"
 global prev_opp_pieces_spots := {}
-
 
 DoNothing() {
   nothing := "nothing"

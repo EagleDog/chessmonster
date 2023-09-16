@@ -19,11 +19,25 @@ zone_62 := CombineArrays(zone_6, zone_2)
 zone_135 := CombineArrays(zone_1, zone_3, zone_5)
 zone_1358 := CombineArrays(zone_1, zone_3, zone_5, zone_8)
 
-polling_zones := { zone_1: zone_1, zone_2: zone_2, zone_3: zone_3
+global zones := { zone_1: zone_1, zone_2: zone_2, zone_3: zone_3
                  , zone_4: zone_4, zone_5: zone_5, zone_6: zone_6
                  , zone_7: zone_7, zone_8: zone_8, zone_9: zone_9
                  , zone_12: zone_12, zone_13: zone_13, zone_24: zone_24
                  , zone_62: zone_62, zone_135: zone_135, zone_1358: zone_1358 }
+
+
+PollZone(zone) {
+  LogMain("PollZone()")
+  ; sleep 2000
+  n := 1
+  while zone[n] {
+    spot := zone[n]
+    UpdatePosition(spot)
+    n := A_Index + 1
+;    msgbox % spot
+  }
+
+}
 
 
 CombineArrays(array_1, array_2, array_3="", array_4="", array_5="", array_6="", array_7="") {
@@ -54,5 +68,6 @@ ReadArray(arr) {
   return array_contents
 }
 
-^+x::ExitApp
-0::msgbox % ReadArray(CombineArrays(zone_1, zone_2, zone_3))
+; ^+x::ExitApp
+; 0::msgbox % ReadArray(CombineArrays(zone_1, zone_2, zone_3))
+;9::PollZone(zone_1)

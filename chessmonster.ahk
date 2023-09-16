@@ -16,6 +16,7 @@
 #Include board_watcher.ahk
 #Include positions_watcher.ahk
 #Include positions_poller.ahk
+#Include polling_zones.ahk
 #Include snapshots.ahk
 #Include piece_polls.ahk
 #Include opening_moves.ahk
@@ -97,7 +98,7 @@ PauseMatch() {
 ;
 GoLoop() {                   ; GoLoop() main chessmonster loop
 LogMain0("GoLoop()")
-sleep, 200
+Chill()
   paused := false
   ActivateChess()
 
@@ -114,8 +115,9 @@ sleep, 200
     if target {
       MovePiece(spot, target)   ; MovePiece()--move_maker.ahk
       PromotePawn(piece_type, target)
-      Listen()
-      PollOpponent()
+;      Listen()
+      PollZone(zones["zone_1"])
+;      PollOpponent()
     }
     if (paused = true) {
       PauseDisplay()
@@ -259,7 +261,7 @@ MyColorBlack() {
 }
 
 Chill() {
-  sleep 300
+;  sleep 300
 }
 
 ActivateChess() {
@@ -298,7 +300,7 @@ q::MoveGui1()
 e::MoveGui2()
 s::ShakeGui()
 
-9::New3Min()
+;9::New3Min()
 
 d::DebugSnapshots()
 0::CheckQueenAntecedents("e5")
