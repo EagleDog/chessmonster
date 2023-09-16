@@ -103,18 +103,18 @@ SquareStatus(spot) {
     sq_contains := "white"
   } else if CheckColor(spot, black) {
     sq_contains := "black"
-  } else if CheckColor(spot, board_gr) {
-    sq_contains := "empty"
-    ; sq_contains := "board green"
-  } else if CheckColor(spot, board_wh) {
-    sq_contains := "empty"
-    ; sq_contains := "board light"
   } else {
-    sq_contains := "not sure"
+    sq_contains := "empty"
   }
-;  MsgBox, % sq_contains
   return sq_contains
 }
+  ; } else if CheckColor(spot, board_gr) {
+  ;   sq_contains := "empty" ; sq_contains := "board green"
+  ; } else if CheckColor(spot, board_wh) {
+  ;   sq_contains := "empty" ; sq_contains := "board light"
+  ; } else {
+  ;   sq_contains := "not sure"
+  ; }
 SqStat(spot) {
   return SquareStatus(spot)
 }

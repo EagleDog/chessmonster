@@ -5,9 +5,9 @@
 ; Antecedents
 ; Antecedent
 
-global last_spot := "a6"
-global last_piece := "empty"
-global prev_opp_pieces_spots := {}
+;global last_spot := "a6"
+;global last_piece := "empty"
+;global prev_opp_pieces_spots := {}
 
 DoNothing() {
   nothing := "nothing"
@@ -45,9 +45,26 @@ FindOppPieces() {  ; from prev snapshot
   return opp_pieces
 }
 
-SameSpotCheck(spot) {
+DidSquareChange(spot) {
   ; was piece here previous move?
   ; ... but ... what if it got missed?...
+  if ( move_num < 3 ) {
+    return
+  }
+  piece := positions[spot].piece
+  color := positions[spot].color
+  snapshot := snapshots[move_num]
+  prev_piece := snapshot[spot].piece
+  prev_color := snapshot[spot].color
+;  msgbox % prev_piece . prev_color
+;  msgbox % color . piece . " " . prev_piece . prev_color
+;  msgbox % prev_piece . prev_color . piece . color
+  if ( ( prev_piece == piece ) and ( prev_color == color ) ) {
+    return false
+  } else {
+    msgbox % "prev: "prev_color . prev_piece . " curr: " . color . piece
+    return true
+  }
 }
 
 CheckAntecedents(spot, piece) {

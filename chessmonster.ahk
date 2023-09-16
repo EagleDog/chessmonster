@@ -42,7 +42,7 @@ global none := "none"
 global my_color := "white"
 global opp_color := "black"
 ;global target_status := "empty"
-global move_num := 0
+global move_num := 1
 
 global paused := false
 
@@ -116,8 +116,8 @@ Chill()
       MovePiece(spot, target)   ; MovePiece()--move_maker.ahk
       PromotePawn(piece_type, target)
 ;      Listen()
-      PollZone(zones["zone_1"])
-;      PollOpponent()
+;      PollZone(zones["zone_1"])
+      PollOpponent()
     }
     if (paused = true) {
       PauseDisplay()
@@ -145,15 +145,11 @@ NewGame() {
 }
 
 ResetMoves() {
-  move_num := 0
+  move_num := 1
   LogMoves(move_num)
 }
 
-PollOppTerritory() {
-  loop 9 {
-    PollOpponent()
-  }
-}
+
 
 UseSpecificPiece() {
   ; LogMain("UseSpcificPiece()")
@@ -314,8 +310,11 @@ a::GetPositions()
 w::MyColorWhite()
 b::MyColorBlack()
 
-o::PollOppTerritory()
+;o::PollOppTerritory()
 p::PauseMatch()
+
+o::OutputSnapshot(move_num)
+
 
 z::SoundBeep, 400, 500  ; , [ Frequency, Duration]
 

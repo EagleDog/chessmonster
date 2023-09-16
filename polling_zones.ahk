@@ -1,11 +1,12 @@
 ;polling_zones.ahk
 ;
 ;
+global period := "early"
 
 zone_1 := ["d5","e5","d6","e6","c5","f5","c6","f6"]  ; opp_center
 zone_2 := ["a6","h6"]
 zone_3 := ["d4","e4","c4","f4"]  ; opp_front
-zone_4 := ["a5","h5","a7","h7","c8","f8","b8","g8"]
+zone_4 := ["a5","h5","a7","h7","c8","f8","b8","g8"] ; backfield manuevers
 zone_5 := ["d3","e3","c3","f3"]  ; opp_deep_front
 zone_6 := ["d5","e5","d4","e4"]  ; main_small_center
 zone_7 := ["b7","g7"]  ; snipers
@@ -17,24 +18,52 @@ zone_13 := CombineArrays(zone_1, zone_3)
 zone_24 := CombineArrays(zone_2, zone_4)
 zone_62 := CombineArrays(zone_6, zone_2)
 zone_135 := CombineArrays(zone_1, zone_3, zone_5)
+zone_235 := CombineArrays(zone_2, zone_3, zone_5)
 zone_1358 := CombineArrays(zone_1, zone_3, zone_5, zone_8)
 
-global zones := { zone_1: zone_1, zone_2: zone_2, zone_3: zone_3
+global zones := {  zone_1: zone_1, zone_2: zone_2, zone_3: zone_3
                  , zone_4: zone_4, zone_5: zone_5, zone_6: zone_6
                  , zone_7: zone_7, zone_8: zone_8, zone_9: zone_9
                  , zone_12: zone_12, zone_13: zone_13, zone_24: zone_24
-                 , zone_62: zone_62, zone_135: zone_135, zone_1358: zone_1358 }
+                 , zone_62: zone_62, zone_135: zone_135, zone_235: zone_235
+                 , zone_1358: zone_1358 }
 
+
+
+WhichPeriod() {
+  if ( move_num < 13 ) {
+    period := "early"
+  } else if ( move_num < 25 ) {
+    period := "midgame"
+    } else {
+    period := "endgame"
+  }
+}
+
+WhichPolls() {
+  if ( period == "early" ) {
+;    zone_1
+;    zone_2
+  } else if ( period == "midgame" ) {
+;    zone_3
+;    zone_7
+  } else {
+;    zone_135
+  }
+}
+
+PollZones(zones) {
+
+}
 
 PollZone(zone) {
-  LogMain("PollZone()")
-  ; sleep 2000
+;  LogMain("PollZone(" . zone . ")")
   n := 1
   while zone[n] {
     spot := zone[n]
     UpdatePosition(spot)
     n := A_Index + 1
-;    msgbox % spot
+;    sleep 200
   }
 
 }

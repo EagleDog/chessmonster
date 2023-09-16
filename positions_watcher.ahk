@@ -21,9 +21,14 @@ UpdatePosition(spot) {
   p_abbr := GetAbbr(piece, color)
   row := board[spot].row , rank := board[spot].rank
   col := board[spot].col , file := board[spot].file
-  last_spot := spot
-  last_piece := piece
+;  last_spot := spot
+;  last_piece := piece
   positions[spot] := { piece: piece, color: color, p_abbr: p_abbr, row: row, rank: rank, col: col, file: file }
+  GoSpot(spot)
+  DidSquareChange(spot)
+  ; if ( ( move_num > 2 ) and DidSquareChange(spot) ) {
+  ;   msgbox square changed
+  ; }
   OutputPositions()
   LogMain0("                  " . spot . "  " . p_abbr . "")
 ;  MoveMouse(board[spot].x, board[spot].y)

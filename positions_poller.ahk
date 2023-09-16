@@ -26,13 +26,21 @@ PollOppSide() {
   }
 }
 PollOpponent() {
-  loop 9 {
+  loop 3 {
     PollOppSide()
-    ; position := PollOppSide()
-;    last_spot := position.spot  ;"e5"
-;    last_piece := position.piece ;"pawn"
-;    msgbox % last_piece
-;    WhichPoll(last_spot)
+  }
+  LogMain("PollZone( zone_1 )")
+  PollZone(zones["zone_1"])
+  LogMain("PollZone( zone_235 )")
+  PollZone(zones["zone_235"])
+  LogMain("PollZone( zone_6 )")
+  PollZone(zones["zone_6"])
+  LogMain("PollZone( zone_4 )")
+  PollZone(zones["zone_4"])
+}
+PollOppTerritory() {
+  loop 3 {
+    PollOpponent()
   }
 }
 
@@ -59,11 +67,11 @@ PollPosition(spot) {
   col := board[spot].col , file := board[spot].file
   positions[spot] := { piece: piece, color: color, p_abbr: p_abbr, row: row, rank: rank, col: col, file: file }
   position := positions[spot] 
-  OutputPositions()
+;  OutputPositions()
   LogMain0("                  " . spot . "  " . p_abbr . "")
-  last_spot := spot
-  last_piece := piece
-  return position
+;  last_spot := spot
+;  last_piece := piece
+;  return position
 }
 
 PostPosition(spot, piece, color, p_abbr) {

@@ -15,11 +15,11 @@ UpdateSnapshots() {
 }
 
 CreateSnapshot() {
-  snapshots[move_num] := {}
+;  snapshots[move_num] := {}
   snapshots[move_num] := positions.Clone()
 }
 
-GetSnapshot() {
+GetSnapshot() {   ; deprecated by clone in CreateSnapshot()
   snapshots[move_num] := {}
   snapshot := snapshots[move_num]
   Loop, 8 {
@@ -101,23 +101,9 @@ DebugSnapshots() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GetPositionsHistory0(move_number=1) {
-  positions := positions_history[move_number]
-  OutputPositions()
-  msgbox % positions_history[move_number]["d3"].color
-}
+; GetPositionsHistory0(move_number=1) {
+;   positions := positions_history[move_number]
+;   OutputPositions()
+;   msgbox % positions_history[move_number]["d3"].color
+; }
 
