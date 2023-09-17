@@ -4,12 +4,13 @@
 ;          formerly mouse_mover.ahk
 ;   MovePieceOld(s,t)
 ;
-;     ClickDrag(s,t)
-;     DriftMouse()
-;     MoveClick(x,y)
-;     GoClick(spot)
-;
 ;     MovePiece(spot,target)
+;     MoveMouse(x,y,speed=0)
+;     GoSpot(spot)
+;     ClickSpot(spot)
+;     MoveClick(x,y)
+;     ClickDrag(spot,target)
+;     DriftMouse()
 ;
 ;     fail
 ;
