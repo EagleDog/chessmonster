@@ -18,19 +18,21 @@ UpdatePosition(spot) {
   ; LogMain("UpdatePosition()")
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
-  p_abbr := GetAbbr(piece, color)
+  abbr := GetAbbr(piece, color)
   row := board[spot].row , rank := board[spot].rank
   col := board[spot].col , file := board[spot].file
 ;  last_spot := spot
 ;  last_piece := piece
-  positions[spot] := { piece: piece, color: color, p_abbr: p_abbr, row: row, rank: rank, col: col, file: file }
-  GoSpot(spot)
-  DidSquareChange(spot)
+  positions[spot] := { piece: piece, color: color, abbr: abbr, row: row, rank: rank, col: col, file: file }
+ ; GoSpot(spot)
+  if DidSquareChange(spot) {
+    CheckAntecedents(spot)
+  }
   ; if ( ( move_num > 2 ) and DidSquareChange(spot) ) {
   ;   msgbox square changed
   ; }
   OutputPositions()
-  LogMain0("                  " . spot . "  " . p_abbr . "")
+  LogMain0("                  " . spot . "  " . abbr . "")
 ;  MoveMouse(board[spot].x, board[spot].y)
   return color
 }
@@ -39,7 +41,7 @@ UpdatePosition(spot) {
 ;                                                 OUTPUT POSITIONS
 OutputPositions() {
   p_text := ""
-  p_abbr := ""
+  abbr := ""
   text_rows := ["","","","","","","",""]
   Loop, 8 {
     rank := A_Index
@@ -48,8 +50,8 @@ OutputPositions() {
       col := A_Index
       file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
-      p_abbr := positions[spot].p_abbr
-      p_text := % "" . p_text . p_abbr . " "
+      abbr := positions[spot].abbr
+      p_text := % "" . p_text . abbr . " "
     }
     text_rows[A_index] := p_text
     p_text := ""
@@ -77,7 +79,7 @@ GetPositions() {
   ; GuiControl,, gui_output, % gui_text
   piece := ""
   color := ""
-  p_abbr := ""
+  abbr := ""
   Loop, 8 {       ; ranks (rows)
     rank := A_Index
     row := rank
@@ -87,8 +89,8 @@ GetPositions() {
       spot := file . rank
       color := SquareStatus(spot)
       piece := IDPiece(spot, color)  ; <<==========   <<======
-      p_abbr := GetAbbr(piece, color)
-      positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
+      abbr := GetAbbr(piece, color)
+      positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
     }
   }
   OutputPositions()
@@ -141,43 +143,43 @@ GenericColumnsLoop(row, color, abbrs) {
     row := row
     rank := row
     spot := file . rank
-    p_abbr := abbrs[row][col]
-    p_abbr := AddAbbrBlack(p_abbr, color)
-    piece := GetFullName(p_abbr)
-    positions[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr, col: col, file: file, row: row, rank: rank }
+    abbr := abbrs[row][col]
+    abbr := AddAbbrBlack(abbr, color)
+    piece := GetFullName(abbr)
+    positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
   }
 }
 
-AddAbbrBlack(p_abbr, color) {
+AddAbbrBlack(abbr, color) {
   if (color = "black") {
-    p_abbr := p_abbr . "*"
+    abbr := abbr . "*"
   } else {
-    p_abbr := p_abbr . " "
+    abbr := abbr . " "
   }
-  return p_abbr
+  return abbr
 }
 
 GetAbbr(piece, color) {
   switch piece {
     case "empty":
-      p_abbr := "."
+      abbr := "."
     case "pawn":
-      p_abbr := "p"
+      abbr := "p"
     case "knight":
-      p_abbr := "N"
+      abbr := "N"
     case "bishop":
-      p_abbr := "B"
+      abbr := "B"
     case "rook":
-      p_abbr := "R"
+      abbr := "R"
     case "queen":
-      p_abbr := "Q"
+      abbr := "Q"
     case "king":
-      p_abbr := "K"
+      abbr := "K"
     default:
-      p_abbr := "`"
+      abbr := "`"
   }
-  p_abbr := AddAbbrBlack(p_abbr, color)
-  return p_abbr
+  abbr := AddAbbrBlack(abbr, color)
+  return abbr
 }
 GetFullName(abbr) {
   abbr := SubStr(abbr, 1, 1)

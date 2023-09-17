@@ -28,8 +28,6 @@ global zones := {  zone_1: zone_1, zone_2: zone_2, zone_3: zone_3
                  , zone_62: zone_62, zone_135: zone_135, zone_235: zone_235
                  , zone_1358: zone_1358 }
 
-
-
 WhichPeriod() {
   if ( move_num < 13 ) {
     period := "early"

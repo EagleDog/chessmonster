@@ -1,9 +1,11 @@
 ;piece_polls.ahk
+;
 ; DoNothing()
 ; FindOppPieces()
+; DidSquareChange()
 ; Antecedents
 ; Antecedents
-; Antecedent
+; Antecedents
 
 ;global last_spot := "a6"
 ;global last_piece := "empty"
@@ -56,20 +58,22 @@ DidSquareChange(spot) {
   snapshot := snapshots[move_num]
   prev_piece := snapshot[spot].piece
   prev_color := snapshot[spot].color
-;  msgbox % prev_piece . prev_color
-;  msgbox % color . piece . " " . prev_piece . prev_color
-;  msgbox % prev_piece . prev_color . piece . color
+  prev_abbr := snapshot[spot].abbr
   if ( ( prev_piece == piece ) and ( prev_color == color ) ) {
     return false
   } else {
+    GoSpot(spot)
     msgbox % "prev: "prev_color . prev_piece . " curr: " . color . piece
+    snapshot[spot] := {piece: piece, color: color, abbr: abbr}
     return true
   }
 }
 
-CheckAntecedents(spot, piece) {
+CheckAntecedents(spot) {
 ;  opp_pieces := FindOppPieces()
 ;  first check for change in color, else...
+  LogMain("CheckAntecedents(" . spot . ")")
+  piece := positions[spot].piece
   switch piece {
     case "empty":
       DoNothing()

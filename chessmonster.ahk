@@ -186,7 +186,7 @@ PromotePawn(piece_type, target) {
 FindMyGuys(spot, spot_color) {
   while (spot_color != my_color) {   ; find my guys
     piece := positions[spot].piece
-    CheckAntecedents(spot, piece)
+;    CheckAntecedents(spot)
     spot := ChooseSquare()
     spot_color := UpdatePosition(spot)
     GoSpot(spot)

@@ -31,8 +31,8 @@ GetSnapshot() {   ; deprecated by clone in CreateSnapshot()
       spot := file . rank
       color := positions[spot].color
       piece := positions[spot].piece
-      p_abbr := positions[spot].p_abbr
-      snapshot[spot] := { spot: spot, piece: piece, color: color, p_abbr: p_abbr, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
+      abbr := positions[spot].abbr
+      snapshot[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
     }
   }
   snapshot["num_pieces_opp"] := positions["num_pieces_opp"]
@@ -42,7 +42,7 @@ GetSnapshot() {   ; deprecated by clone in CreateSnapshot()
 OutputSnapshot(move_number) {
   snapshot := snapshots[move_number]
   p_text := ""
-  p_abbr := ""
+  abbr := ""
   text_rows := ["","","","","","","",""]
   Loop, 8 {
     rank := A_Index
@@ -51,8 +51,8 @@ OutputSnapshot(move_number) {
       col := A_Index
       file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
-      p_abbr := snapshot[spot].p_abbr
-      p_text := % "" . p_text . p_abbr . " "
+      abbr := snapshot[spot].abbr
+      p_text := % "" . p_text . abbr . " "
     }
     text_rows[A_index] := p_text
     p_text := ""
@@ -74,7 +74,7 @@ DebugSnapshots() {
     snapshot := snapshots[n]
     n := A_Index + 1
     p_text := ""
-    p_abbr := ""
+    abbr := ""
     text_rows := ["","","","","","","",""]
     Loop, 8 {
       rank := A_Index
@@ -83,8 +83,8 @@ DebugSnapshots() {
         col := A_Index
         file := Chr(96 + col)     ; a_index > a-h
         spot := file . rank
-        p_abbr := snapshot[spot].p_abbr
-        p_text := % "" . p_text . p_abbr . " "
+        abbr := snapshot[spot].abbr
+        p_text := % "" . p_text . abbr . " "
       }
       text_rows[A_index] := p_text
       p_text := ""

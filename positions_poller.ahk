@@ -5,7 +5,7 @@
 ; GetMySpots()
 ; GetBothSpots()
 ; PollPosition(spot)
-; PostPosition(spot, piece, color, p_abbr)
+; PostPosition(spot, piece, color, abbr)
 ; HowManyPieces()
 ; WhereIsMyKing()
 
@@ -19,10 +19,10 @@ PollOppSide() {
   random rand_opp_spot, 33, 64
   spot := all_spots[rand_opp_spot]
   piece_color := UpdatePosition(spot)
-  if ( piece_color = opp_color ) {
+  if ( piece_color == opp_color ) {
     piece := positions[spot].piece
-    LogMain("check antecedents")
-    CheckAntecedents(spot, piece)
+;    LogMain("check antecedents")
+;    CheckAntecedents(spot, piece)
   }
 }
 PollOpponent() {
@@ -62,19 +62,19 @@ PollPosition(spot) {
   last_spot := spot
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
-  p_abbr := GetAbbr(piece, color)
+  abbr := GetAbbr(piece, color)
   row := board[spot].row , rank := board[spot].rank
   col := board[spot].col , file := board[spot].file
-  positions[spot] := { piece: piece, color: color, p_abbr: p_abbr, row: row, rank: rank, col: col, file: file }
+  positions[spot] := { piece: piece, color: color, abbr: abbr, row: row, rank: rank, col: col, file: file }
   position := positions[spot] 
 ;  OutputPositions()
-  LogMain0("                  " . spot . "  " . p_abbr . "")
+  LogMain0("                  " . spot . "  " . abbr . "")
 ;  last_spot := spot
 ;  last_piece := piece
 ;  return position
 }
 
-PostPosition(spot, piece, color, p_abbr) {
+PostPosition(spot, piece, color, abbr) {
   OutputPositions()
 }
 
