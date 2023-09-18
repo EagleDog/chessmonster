@@ -34,6 +34,7 @@ gui add, Text, w280 h20 x20 y590 center Vmoves_field, % moves_text
 
 ZoomGui()
 RefreshGui()
+MoveGui3()
 ; ShakeGui()
 
 
@@ -48,12 +49,12 @@ RefreshGui() {
   LogMyTitle("white")
   ; LogNumPieces("white 16  black 16")
   ; LogMoves("move_num == " . move_num)
-  LogMoves(0)
+  LogMoves(1)
 }
 
 CreateGui() {
   LogMain("CreateGui()")
-  sleep 200
+  sleep 50
 }
 
 LogMain0(main0_text) {
@@ -113,6 +114,20 @@ MoveGui2() {
   gui, show, x1220 y106 w340 h680, chessmonster info, NoActivate
   sleep 15
   LogMain("2 MoveGui2()")
+  ActivateChess()
+}
+MoveGui3() {
+  gui show, x1251 y106 w340 h680, chessmonster info, NoActivate
+  sleep 15
+  gui show, x1151 y106 w340 h680, chessmonster info, NoActivate
+  sleep 15
+  gui show, x1051 y106 w340 h680, chessmonster info, NoActivate
+  sleep 15
+  gui show, x1001 y106 w340 h680, chessmonster info, NoActivate
+  sleep 15
+  gui show, x951 y106 w340 h680, chessmonster info, NoActivate
+  sleep 15
+  LogMain("3 MoveGui3()")
   ActivateChess()
 }
 ShakeGui() {

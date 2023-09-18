@@ -31,9 +31,9 @@ sleep 200
   if ( ID2 = ID1 ) {
     fail := true
   } else {
+    UpdateSnapshots()
     move_num += 1
     LogMoves(move_num)
-    UpdateSnapshots()
   }
 }
 

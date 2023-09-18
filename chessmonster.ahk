@@ -149,15 +149,13 @@ ResetMoves() {
   LogMoves(move_num)
 }
 
-
-
-UseSpecificPiece() {
+UseSpecificPiece() { ; for testing piece movements
   ; LogMain("UseSpcificPiece()")
   ; sleep 200
   ; if ( (piece_type != "bishop") ) {
   ;   TryMove()
   ; }
-  return none
+  ; return none
 }
 MoveWhichPiece(spot, piece_type) {
   switch piece_type {
@@ -290,6 +288,7 @@ ExitChessMonster() {
 
 1::NewGame()
 2::GoLoop()
+3::MoveGui3()
 7::DriftMouse()
 r::RematchComputer()
 q::MoveGui1()
@@ -313,7 +312,7 @@ b::MyColorBlack()
 ;o::PollOppTerritory()
 p::PauseMatch()
 
-o::OutputSnapshot(move_num)
+o::OutputSnapshot(1)
 
 
 z::SoundBeep, 400, 500  ; , [ Frequency, Duration]

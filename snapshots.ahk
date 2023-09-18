@@ -41,7 +41,7 @@ GetSnapshot() {   ; deprecated by clone in CreateSnapshot()
 
 OutputSnapshot(move_number) {
   snapshot := snapshots[move_number]
-  p_text := ""
+  pos_text := ""
   abbr := ""
   text_rows := ["","","","","","","",""]
   Loop, 8 {
@@ -52,14 +52,14 @@ OutputSnapshot(move_number) {
       file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
       abbr := snapshot[spot].abbr
-      p_text := % "" . p_text . abbr . " "
+      pos_text := % "" . pos_text . abbr . " "
     }
-    text_rows[A_index] := p_text
-    p_text := ""
+    text_rows[A_index] := pos_text
+    pos_text := ""
   }
-  p_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
+  pos_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
 
-  LogPositions(p_text)
+  LogPositions(pos_text)
   num_pieces_opp := snapshot["num_pieces_opp"]
   num_pieces_mine := snapshot["num_pieces_mine"]
   LogOppTitle( opp_color . "  " . num_pieces_opp . " pieces" )
@@ -69,11 +69,15 @@ OutputSnapshot(move_number) {
 
 
 DebugSnapshots() {
+  ; Debug("test test test")
+  ; Debug(" piece: " . snapshots[2]["d4"].piece)
+  ; msgbox % " piece: " . snapshots[2]["d4"].piece
   n := 1
   while (snapshots[n]) {
     snapshot := snapshots[n]
-    n := A_Index + 1
-    p_text := ""
+    n := A_Index
+;    n := A_Index + 1
+    pos_text := ""
     abbr := ""
     text_rows := ["","","","","","","",""]
     Loop, 8 {
@@ -84,16 +88,16 @@ DebugSnapshots() {
         file := Chr(96 + col)     ; a_index > a-h
         spot := file . rank
         abbr := snapshot[spot].abbr
-        p_text := % "" . p_text . abbr . " "
+        pos_text := % "" . pos_text . abbr . " "
       }
-      text_rows[A_index] := p_text
-      p_text := ""
+      text_rows[A_index] := pos_text
+      pos_text := ""
     }
-    p_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
+    pos_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
     num_pieces_opp := snapshot["num_pieces_opp"]
     num_pieces_mine := snapshot["num_pieces_mine"]
     Debug("move_num: " . n)
-    Debug(p_text)
+    Debug(pos_text)
     Debug( opp_color . "  " . num_pieces_opp . " pieces" )
     Debug( my_color . "  " . num_pieces_mine . " pieces" )
   }
