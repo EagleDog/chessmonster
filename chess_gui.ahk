@@ -23,6 +23,8 @@ gui add, Text, w280 h20 x20 y135 center Vmain_field, % main_text
 gui add, Text, w280 h20 x20 y160 center Vtimer_field, % timer_text
 gui add, Text, w280 h20 x20 y190 center Vvolume_field, % volume_text
 
+gui add, Text, w280 h20 x20 y230 center Vdebug_field, % debug_text
+
 gui add, Text, w280 h20 x20 y270 center Vopp_title_field, % opp_title_text
 gui add, Text, w280 h200 x20 y300 center Vpositions_field, % positions_text
 gui add, Text, w280 h20 x20 y530 center Vmy_title_field, % my_title_text
@@ -68,6 +70,10 @@ LogTimer(timer_text) {
 }
 LogVolume(volume_text) {
   GuiControl,, volume_field, % "volume: " . volume_text
+}
+;
+LogDebug(debug_text) {
+  GuiControl,, debug_field, % debug_text
 }
 ;
 LogOppTitle(opp_title_text) {

@@ -14,19 +14,17 @@ global opp_spots := []
 
 ;------------------------------------------------------------------
 ;                                                  UPDATE POSITION
-UpdatePosition(spot) {
-  ; LogMain("UpdatePosition()")
+UpdatePosition(spot) {  ; LogMain("UpdatePosition()")
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
   abbr := GetAbbr(piece, color)
-  row := board[spot].row , rank := board[spot].rank
-  col := board[spot].col , file := board[spot].file
-;  last_spot := spot
-;  last_piece := piece
   positions[spot] := { piece: piece, color: color, abbr: abbr } ;, row: row, rank: rank, col: col, file: file }
- ; GoSpot(spot)
-  if ( DidSquareChange(spot) and ( color != my_color ) ) {
-    CheckAntecedents(spot)
+
+  if ( color != my_color ) {  ; Don't check my_spots
+     if DidSquareChange(spot) {
+      CheckAntecedents(spot)
+    }
+
   }
   ; if ( ( move_num > 2 ) and DidSquareChange(spot) ) {
   ;   msgbox square changed
@@ -65,6 +63,7 @@ OutputPositions() {
   num_pieces_mine := num_pieces_both[2]
   LogOppTitle( opp_color . "  " . num_pieces_opp . " pieces" )
   LogMyTitle( my_color . "  " . num_pieces_mine . " pieces" )
+  LogMoves(move_num)
 
   positions["num_pieces_opp"] := num_pieces_opp
   positions["num_pieces_mine"] := num_pieces_mine

@@ -9,8 +9,8 @@ ResetSnapshots() {
 }
 
 UpdateSnapshots() {
-  CreateSnapshot()
-;  GetSnapshot()
+;  CreateSnapshot()
+  GetSnapshot()
 ;  positions_history.push(positions)
 }
 
@@ -32,15 +32,15 @@ GetSnapshot() {   ; deprecated by clone in CreateSnapshot()
       color := positions[spot].color
       piece := positions[spot].piece
       abbr := positions[spot].abbr
-      snapshot[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
+      snapshot[spot] := { spot: spot, piece: piece, color: color, abbr: abbr } ;, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
     }
   }
   snapshot["num_pieces_opp"] := positions["num_pieces_opp"]
   snapshot["num_pieces_mine"] := positions["num_pieces_mine"]
 }
 
-OutputSnapshot(move_number) {
-  snapshot := snapshots[move_number]
+OutputSnapshot() {
+  snapshot := snapshots[move_num - 1]
   pos_text := ""
   abbr := ""
   text_rows := ["","","","","","","",""]

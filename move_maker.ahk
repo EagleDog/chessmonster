@@ -17,23 +17,30 @@
 global fail := false
 
 MovePiece(spot, target) {
-LogMain("MovePiece: " . piece_type . " '" . spot . "'" . " to '" . target . "'" )
-sleep 200
-  ID1 := positions[spot].piece
-  ClickDrag(spot, target)
-  sleep 150
-  UpdatePosition(spot)
-  sleep 50
-  UpdatePosition(target)
-  sleep 50
-  ID2 := positions[spot].piece
-
-  if ( ID2 = ID1 ) {
-    fail := true
-  } else {
-    UpdateSnapshots()
+LogMain("MovePiece:  '" spot "' to '" target "'" )
+Chill()
+  MoveAndFailCheck(spot, target)
+  if !fail {
+    Chill()
+    UpdateSnapshots()  ; <== UpdateSnapshots()
     move_num += 1
     LogMoves(move_num)
+;    sleep 500
+  }
+}
+
+MoveAndFailCheck(spot, target) {
+  ID1 := positions[spot].piece
+  sleep 50
+  ClickDrag(spot, target)  ; <==== click and drag
+  sleep 150
+  UpdatePosition(spot)  ; <== UpdatePosition(spot)
+  sleep 50
+  UpdatePosition(target)  ; <== UpdatePosition(spot)
+  sleep 50
+  ID2 := positions[spot].piece
+  if ( ID2 == ID1 ) {  ; <=== fail check
+    fail := true
   }
 }
 

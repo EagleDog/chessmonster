@@ -101,19 +101,19 @@ LogMain0("GoLoop()")
 Chill()
   paused := false
   ActivateChess()
-
   loop {
+;    UpdateSnapshots()
     spot := ChooseSquare()
     spot_color := UpdatePosition(spot)
 
     spot := FindMyGuys(spot, spot_color)    ; return spot   ( color = my_color )
 
     piece_type := positions[spot].piece  ;       <<============
-    UseSpecificPiece() ; return none
+    UseSpecificPiece() ; does nothing, for testing piece movements
     target := MoveWhichPiece(spot, piece_type)
 
     if target {
-      MovePiece(spot, target)   ; MovePiece()--move_maker.ahk
+      MovePiece(spot, target)  ; from move_maker.ahk
       PromotePawn(piece_type, target)
 ;      Listen()
 ;      PollZone(zones["zone_1"])
@@ -255,7 +255,7 @@ MyColorBlack() {
 }
 
 Chill() {
-;  sleep 300
+  sleep 100
 }
 
 ActivateChess() {
@@ -312,7 +312,7 @@ b::MyColorBlack()
 ;o::PollOppTerritory()
 p::PauseMatch()
 
-o::OutputSnapshot(1)
+o::OutputSnapshot()
 
 
 z::SoundBeep, 400, 500  ; , [ Frequency, Duration]

@@ -11,9 +11,40 @@
 ;global last_piece := "empty"
 ;global prev_opp_pieces_spots := {}
 
-CheckAntecedentSources(spot, antecedents) {
+DidSquareChange(spot) {
+  if ( move_num == 1 ) {
+    return
+  }
+  sleep 50
   position := positions[spot]
-  spot := position.spot
+  snapshot := snapshots[move_num - 1]
+  snap_spot := snapshot[spot]
+  piece := position.piece
+  color := position.color
+  abbr := position.abbr
+  prev_piece := snap_spot.piece
+  prev_color := snap_spot.color
+  prev_abbr := snap_spot.abbr
+  sleep 50
+  if ( ( prev_piece == piece ) and ( prev_color == color ) ) {
+    return false
+  } else {
+    MoveMouse(400,400)
+    GoSpot(spot)
+;    debug_info := "prev: " . prev_color . " " . prev_piece . "  curr: " . color . " " . piece
+;    LogDebug(debug_info)
+    LogDebug(prev_color " " prev_piece " " color " " piece)
+    sleep 50
+;    snapshot[move_num][spot] := { piece: piece, color: color, abbr: abbr } ; non-redundant
+    snap_spot := { piece: piece, color: color, abbr: abbr } ; non-redundant
+
+    return true
+  }
+}
+
+RunAntecedentsEngine(spot, antecedents) {
+  position := positions[spot]
+;  spot := position.spot
   spot_col := position.col
   spot_rank := position.rank
   n := 1
@@ -30,8 +61,7 @@ CheckAntecedentSources(spot, antecedents) {
 }
 
 CheckAntecedents(spot) {
-;  opp_pieces := FindOppPieces()
-;  first check for change in color, else...
+;  first check DidSquareChange(), else...
   LogMain("CheckAntecedents(" . spot . ")")
   piece := positions[spot].piece
   switch piece {
@@ -54,51 +84,6 @@ CheckAntecedents(spot) {
   }
 }
 
-; FindOppPieces() {  ; deprecated from prev snapshot
-;   snapshot := snapshots[move_num - 2]
-;   opp_pieces := {}
-;   pawns := [], knights := [], bishops := [], rooks := [], queens := [], kings := []
-;   loop 64 {
-;     spot := all_spots[n]   ; all_spots is global array
-;     snapspot := snapshot[spot]
-;     n := A_Index + 1
-;     if ( (snapspotspot.color == opp_color) and (snapspot.piece == "pawns") ) {
-;       pawns.push(spot)
-;     }
-;     if ( (snapspotspot.color == opp_color) and (snapspot.piece == "knight") ) {
-;       knights.push(spot)
-;     }
-;     if ( (snapspotspot.color == opp_color) and (snapspot.piece == "bishop") ) {
-;       bishops.push(spot)
-;     }
-;     if ( (snapspotspot.color == opp_color) and (snapspot.piece == "rook") ) {
-;       rooks.push(spot)
-;     }
-;     if ( (snapspotspot.color == opp_color) and (snapspot.piece == "queen") ) {
-;       queens.push(spot)
-;     }
-;     if ( (snapspotspot.color == opp_color) and (snapspot.piece == "king") ) {
-;       kings.push(spot)
-;     }
-;   }
-;   opp_pieces := { pawns: pawns, knights: knights, bishops: bishops, rooks: rooks, queens: queens, kings: kings }
-;   return opp_pieces
-; }
-
-  ; if ( ( piece == "pawn" ) and ( board[spot].rank < 7 ) ) {
-  ;   CheckPawnAntecedents(spot) ;, opp_pieces["pawns"])
-  ; } else if ( piece == "knight" ) {
-  ;   CheckKnightAntecedents(spot) ;, opp_pieces["knights"])
-  ; } else if ( piece == "bishop" ) {
-  ;   CheckBishopAntecedents(spot) ;, opp_pieces["knights"])
-  ; } else if ( piece == "rook" ) {
-  ;   CheckRookAntecedents(spot) ;, opp_pieces["knights"])
-  ; } else if ( piece == "queen" ) {
-  ;   CheckQueenAntecedents(spot) ;, opp_pieces["knights"])
-  ; } else if ( piece == "king" ) {
-  ;   CheckKingAntecedents(spot) ;, opp_pieces["knights"])
-  ; }
-
 CheckPawnAntecedents(spot) { ;, pawns)
   back_one := [ 0, 1 ]
   back_two := [ 0, 2 ]
@@ -108,7 +93,7 @@ CheckPawnAntecedents(spot) { ;, pawns)
   if (board[spot].rank == 5) {
     antecedents.push(back_two)
   }
-  CheckAntecedentSources(spot, antecedents)
+  RunAntecedentsEngine(spot, antecedents)
 }
 
 CheckKnightAntecedents(spot) { ;, knights)
@@ -121,7 +106,7 @@ CheckKnightAntecedents(spot) { ;, knights)
   jump_7 := [ -2, 1 ]
   jump_8 := [ -1, 2 ]
   antecedents := [ jump_1, jump_2, jump_3, jump_4, jump_5, jump_6, jump_7, jump_8 ]
-  CheckAntecedentSources(spot, antecedents)
+  RunAntecedentsEngine(spot, antecedents)
 }
 
 CheckBishopAntecedents(spot) {
@@ -134,7 +119,7 @@ CheckBishopAntecedents(spot) {
   down_left_1 := [ -1, 1 ]
   down_left_2 := [ -2, 2 ]
   antecedents :=  [ up_left_1, up_left_2, up_right_1, up_right_2, down_right_1, down_right_2, down_left_1, down_left_2 ]
-  CheckAntecedentSources(spot, antecedents)
+  RunAntecedentsEngine(spot, antecedents)
 }
 CheckRookAntecedents(spot) {
   left_1 := [ -1, 0 ]
@@ -146,7 +131,7 @@ CheckRookAntecedents(spot) {
   down_1 := [ 0, 1 ]
   down_2 := [ 0, 2 ]
   antecedents := [ left_1, left_2, up_1, up_2, right_1, right_2, down_1, down_2 ]
-  CheckAntecedentSources(spot, antecedents)
+  RunAntecedentsEngine(spot, antecedents)
 }
 CheckQueenAntecedents(spot) {
   up_left_1 := [ -1, -1 ]
@@ -166,7 +151,7 @@ CheckQueenAntecedents(spot) {
   down_1 := [ 0, 1 ]
   down_2 := [ 0, 2 ]
   antecedents :=  [up_left_1,up_left_2,up_right_1,up_right_2,down_right_1,down_right_2,down_left_1,down_left_2,left_1,left_2,up_1,up_2,right_1,right_2,down_1,down_2]
-  CheckAntecedentSources(spot, antecedents)
+  RunAntecedentsEngine(spot, antecedents)
 }
 CheckKingAntecedents(spot) {
   up_left_1 := [ -1, -1 ]
@@ -178,6 +163,6 @@ CheckKingAntecedents(spot) {
   right_1 := [ 1, 0 ]
   down_1 := [ 0, 1 ]
   antecedents :=  [ up_left_1, up_right_1, down_right_1, down_left_1, left_1, up_1, right_1, down_1 ]
-  CheckAntecedentSources(spot, antecedents)
+  RunAntecedentsEngine(spot, antecedents)
 }
 

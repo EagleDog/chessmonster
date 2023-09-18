@@ -93,6 +93,8 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
         MoveMouse( x1 + 20, y1 + 35) ;, 10 )
 ;        MsgBox, %piece_name%
         return piece_name
+      ; } else {
+      ;   return "empty"
       }
     }
   }
