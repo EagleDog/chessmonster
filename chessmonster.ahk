@@ -202,7 +202,7 @@ ChooseSquare() {
   } else {
     spot := RandomSquare()
     LogMain("ChooseSquare() " . spot . " rand square")
-    sleep 200
+    Chill()
   }
   return spot
 }

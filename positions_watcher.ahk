@@ -23,9 +23,9 @@ UpdatePosition(spot) {
   col := board[spot].col , file := board[spot].file
 ;  last_spot := spot
 ;  last_piece := piece
-  positions[spot] := { piece: piece, color: color, abbr: abbr, row: row, rank: rank, col: col, file: file }
+  positions[spot] := { piece: piece, color: color, abbr: abbr } ;, row: row, rank: rank, col: col, file: file }
  ; GoSpot(spot)
-  if DidSquareChange(spot) {
+  if ( DidSquareChange(spot) and ( color != my_color ) ) {
     CheckAntecedents(spot)
   }
   ; if ( ( move_num > 2 ) and DidSquareChange(spot) ) {

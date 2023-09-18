@@ -11,37 +11,6 @@
 ;global last_piece := "empty"
 ;global prev_opp_pieces_spots := {}
 
-DoNothing() {
-  nothing := "nothing"
-  return nothing
-}
-
-DidSquareChange(spot) {
-  ; was piece here previous move?
-  ; ... but ... what if it got missed?...
-  if ( move_num == 1 ) {
-    return
-  }
-  position := positions[spot]
-  snapshot := snapshots[move_num - 1]
-  snapspot := snapshot[spot]
-  piece := position.piece
-  color := position.color
-  abbr := position.abbr
-;  snapshot := snapshots[move_num]
-  prev_piece := snapshot[spot].piece
-  prev_color := snapshot[spot].color
-  prev_abbr := snapshot[spot].abbr
-  if ( ( prev_piece == piece ) and ( prev_color == color ) ) {
-    return false
-  } else {
-    GoSpot(spot)
-;    msgbox % "prev: "prev_color . prev_piece . " curr: " . color . piece
-    snapshot[spot] := {piece: piece, color: color, abbr: abbr}
-    return true
-  }
-}
-
 CheckAntecedentSources(spot, antecedents) {
   position := positions[spot]
   spot := position.spot

@@ -14,3 +14,7 @@ Debug(debug_text) {
   fileappend % debug_text, % bug_path
 }
 
+DoNothing() {
+  nothing := "nothing"
+  return nothing
+}
