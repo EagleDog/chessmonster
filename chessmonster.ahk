@@ -104,7 +104,8 @@ Chill()
   loop {
 ;    UpdateSnapshots()
     spot := ChooseSquare()
-    spot_color := UpdatePosition(spot)
+    spot_color := SquareStatus(spot)
+;    spot_color := UpdatePosition(spot)
 
     spot := FindMyGuys(spot, spot_color)    ; return spot   ( color = my_color )
 
@@ -184,9 +185,9 @@ PromotePawn(piece_type, target) {
 FindMyGuys(spot, spot_color) {
   while (spot_color != my_color) {   ; find my guys
     piece := positions[spot].piece
-;    CheckAntecedents(spot)
     spot := ChooseSquare()
     spot_color := UpdatePosition(spot)
+;    spot_color := UpdatePosition(spot)
     GoSpot(spot)
   }
   return spot

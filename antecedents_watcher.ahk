@@ -17,7 +17,7 @@ DidSquareChange(spot) {
   }
   sleep 50
   position := positions[spot]
-  snapshot := snapshots[move_num - 1]
+  snapshot := snapshots[move_num - 1] ;[move_num - 1]
   snap_spot := snapshot[spot]
   piece := position.piece
   color := position.color
@@ -25,20 +25,14 @@ DidSquareChange(spot) {
   prev_piece := snap_spot.piece
   prev_color := snap_spot.color
   prev_abbr := snap_spot.abbr
-  sleep 50
   if ( ( prev_piece == piece ) and ( prev_color == color ) ) {
     return false
   } else {
-    MoveMouse(400,400)
     GoSpot(spot)
-;    debug_info := "prev: " . prev_color . " " . prev_piece . "  curr: " . color . " " . piece
-;    LogDebug(debug_info)
-    LogDebug(prev_color " " prev_piece " " color " " piece)
-    sleep 50
-;    snapshot[move_num][spot] := { piece: piece, color: color, abbr: abbr } ; non-redundant
-    snap_spot := { piece: piece, color: color, abbr: abbr } ; non-redundant
-
     return true
+;    known problem: loops with null snap_spot. Why??
+;    snap_spot := { piece: piece, color: color, abbr: abbr } ; non-redundant
+;    LogDebug(prev_color " " prev_piece ", " color " " piece)
   }
 }
 
@@ -62,7 +56,7 @@ RunAntecedentsEngine(spot, antecedents) {
 
 CheckAntecedents(spot) {
 ;  first check DidSquareChange(), else...
-  LogMain("CheckAntecedents(" . spot . ")")
+  LogMain("CheckAntecedents( " . spot . " )")
   piece := positions[spot].piece
   switch piece {
     case "empty":

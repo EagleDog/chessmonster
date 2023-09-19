@@ -24,14 +24,9 @@ UpdatePosition(spot) {  ; LogMain("UpdatePosition()")
      if DidSquareChange(spot) {
       CheckAntecedents(spot)
     }
-
   }
-  ; if ( ( move_num > 2 ) and DidSquareChange(spot) ) {
-  ;   msgbox square changed
-  ; }
   OutputPositions()
   LogMain0("                  " . spot . "  " . abbr . "")
-;  MoveMouse(board[spot].x, board[spot].y)
   return color
 }
 ;

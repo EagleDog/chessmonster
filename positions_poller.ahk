@@ -44,15 +44,6 @@ PollOppTerritory() {
   }
 }
 
-; LastPiece(spot) {   ; unused
-;   last_spot := last_poll
-;   last_position := GetPosition(spot)
-;   last_piece := last_position.piece
-;   return last_piece
-;   ; position := positions[spot]
-;   ; msgbox % position.spot
-; }
-
 GetPosition(spot) {
   position := positions[spot]
   return position

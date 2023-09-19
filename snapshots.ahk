@@ -9,8 +9,8 @@ ResetSnapshots() {
 }
 
 UpdateSnapshots() {
-;  CreateSnapshot()
-  GetSnapshot()
+  CreateSnapshot()
+;  GetSnapshot()
 ;  positions_history.push(positions)
 }
 
@@ -102,12 +102,4 @@ DebugSnapshots() {
     Debug( my_color . "  " . num_pieces_mine . " pieces" )
   }
 }
-
-
-
-; GetPositionsHistory0(move_number=1) {
-;   positions := positions_history[move_number]
-;   OutputPositions()
-;   msgbox % positions_history[move_number]["d3"].color
-; }
 
