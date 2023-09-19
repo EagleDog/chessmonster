@@ -22,8 +22,8 @@ Chill()
   MoveAndFailCheck(spot, target)
   if !fail {
     Chill()
-    UpdateSnapshots()  ; <== UpdateSnapshots()
     move_num += 1
+    UpdateSnapshots()  ; <== UpdateSnapshots()
     LogMoves(move_num)
 ;    sleep 500
   }
@@ -40,6 +40,7 @@ MoveAndFailCheck(spot, target) {
   sleep 50
   ID2 := positions[spot].piece
   if ( ID2 == ID1 ) {  ; <=== fail check
+    msgbox FAIL
     fail := true
   }
 }

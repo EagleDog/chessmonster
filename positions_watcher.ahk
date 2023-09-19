@@ -15,16 +15,21 @@ global opp_spots := []
 ;------------------------------------------------------------------
 ;                                                  UPDATE POSITION
 UpdatePosition(spot) {  ; LogMain("UpdatePosition()")
+;  if DidSquareChange(spot) {}
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
   abbr := GetAbbr(piece, color)
-  positions[spot] := { piece: piece, color: color, abbr: abbr } ;, row: row, rank: rank, col: col, file: file }
-
-  if ( color != my_color ) {  ; Don't check my_spots
-     if DidSquareChange(spot) {
-      CheckAntecedents(spot)
-    }
-  }
+  position := positions[spot]
+  col := position.col
+  file := position.file
+  row := position.row
+  rank := position.rank
+  positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
+  ; if ( color != my_color ) {  ; Don't check my antecedents
+  ;    if DidSquareChange(spot) {
+  ;     CheckAntecedents(spot)   ; <<== WEIRD LOOP CAUSE
+  ;   }
+  ; }
   OutputPositions()
   LogMain0("                  " . spot . "  " . abbr . "")
   return color
@@ -62,6 +67,7 @@ OutputPositions() {
 
   positions["num_pieces_opp"] := num_pieces_opp
   positions["num_pieces_mine"] := num_pieces_mine
+  positions["move_number"] := move_num
 }
 ;
 ;------------------------------------------------------------------

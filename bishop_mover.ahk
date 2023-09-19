@@ -85,7 +85,7 @@ FindDPath1(spot) {             ; DIAG PATH 1
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; COLLISION SAME COLOR
@@ -106,7 +106,7 @@ FindDPath2(spot) {             ; DIAG PATH 2
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {     ; COLLISION SAME COLOR
@@ -128,7 +128,7 @@ FindDPath3(spot) {             ; DIAG PATH 3
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; COLLISION SAME COLOR
@@ -150,7 +150,7 @@ FindDPath4(spot) {             ; DIAG PATH 4
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; COLLISION SAME COLOR

@@ -25,7 +25,7 @@ sleep 200
       x := (col - 1) * sq_width + x_start
       y := (row - 1) * sq_height + y_start
       
-      board[spot] := { x: x, y: y, col: col, row: row, file: file, rank: rank, spot: spot }
+      board[spot] := { spot: spot, x: x, y: y, col: col, file: file, row: row, rank: rank }
       all_spots.push(spot)
     }
   }

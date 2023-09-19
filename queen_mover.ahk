@@ -88,7 +88,7 @@ FindQPath1(spot) {         ; PATH 1   STRAIGHT   UP
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; collision same color
@@ -108,7 +108,7 @@ FindQPath2(spot) {         ; PATH 2   STRAIGHT   RIGHT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; collision same color
@@ -128,7 +128,7 @@ FindQPath3(spot) {         ; PATH 3   STRAIGHT    DOWN
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; collision same color
@@ -148,7 +148,7 @@ FindQPath4(spot) {         ; PATH 4   STRAIGHT   LEFT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; collision same color
@@ -170,9 +170,9 @@ FindQPath5(spot) {             ; PATH 5  DIAG   UP/LEFT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
-    p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
+    p5[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; collision same color
       return p5
     }
@@ -191,9 +191,9 @@ FindQPath6(spot) {             ; PATH 6  DIAG  UP/RIGHT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
-    p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
+    p6[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 10
     if (color = my_color) {   ; collision same color
       return p6
@@ -213,9 +213,9 @@ FindQPath7(spot) {             ; PATH 7  DIAG   DOWN/RIGHT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
-    p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
+    p7[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 10
     if (color = my_color) {   ; collision same color
       return p7
@@ -235,9 +235,9 @@ FindQPath8(spot) {             ; PATH 8   DIAG  DOWN/LEFT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
-    p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
+    p8[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     Sleep, 10
     if (color = my_color) {   ; collision same color
       return p8

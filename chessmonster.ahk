@@ -46,36 +46,9 @@ global move_num := 1
 
 global paused := false
 
-;
-;
-;
-;
-;  =====================================================================
-;    === BEGIN MAIN SEQUENCE ===================      MAIN SEQUENCE
 
-ActivateChess()
-CreateGui()
-CreateBoard()
-GetMyColor()
-GetStartingPositions()
-
-; PollOpponent()
-; PollOpponent()
-; PollOpponent()
-; PollOpponent()
-
-;CheckForGameEnd()
-
-
-
-;   ===== END MAIN SEQUENCE ================        END MAIN SEQUENCE
-; ======================================================================
-
-
-;
 ;
 ;        PAUSE LOOP
-;
 ;
 PauseDisplay() {
   LogMain0("           ready")
@@ -93,6 +66,29 @@ PauseMatch() {
 }
 
 ;
+;
+;  =====================================================================
+;    ====== MAIN SEQUENCE ===================      MAIN SEQUENCE
+
+ActivateChess()
+CreateGui()
+CreateBoard()
+GetMyColor()
+GetStartingPositions()
+ResetSnapshots()
+
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
+; PollOpponent()
+
+;CheckForGameEnd()
+
+
+;   ===== END MAIN SEQUENCE ================        END MAIN SEQUENCE
+; ======================================================================
+
+;
 ;           GO LOOP           GO LOOP           GO LOOP
 ;
 ;
@@ -102,9 +98,9 @@ Chill()
   paused := false
   ActivateChess()
   loop {
-;    UpdateSnapshots()
+    UpdateSnapshots()  ; <== UpdateSnapshots()
     spot := ChooseSquare()
-    spot_color := SquareStatus(spot)
+    spot_color := SqStat(spot)
 ;    spot_color := UpdatePosition(spot)
 
     spot := FindMyGuys(spot, spot_color)    ; return spot   ( color = my_color )
@@ -118,7 +114,7 @@ Chill()
       PromotePawn(piece_type, target)
 ;      Listen()
 ;      PollZone(zones["zone_1"])
-      PollOpponent()
+      PollOpp()
     }
     if (paused = true) {
       PauseDisplay()
@@ -186,7 +182,7 @@ FindMyGuys(spot, spot_color) {
   while (spot_color != my_color) {   ; find my guys
     piece := positions[spot].piece
     spot := ChooseSquare()
-    spot_color := UpdatePosition(spot)
+    spot_color := SqStat(spot)
 ;    spot_color := UpdatePosition(spot)
     GoSpot(spot)
   }

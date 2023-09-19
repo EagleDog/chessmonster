@@ -6,6 +6,7 @@ global snapshots := []
 
 ResetSnapshots() {
   snapshots := []
+  UpdateSnapshots()
 }
 
 UpdateSnapshots() {
@@ -32,7 +33,7 @@ GetSnapshot() {   ; deprecated by clone in CreateSnapshot()
       color := positions[spot].color
       piece := positions[spot].piece
       abbr := positions[spot].abbr
-      snapshot[spot] := { spot: spot, piece: piece, color: color, abbr: abbr } ;, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
+      snapshot[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
     }
   }
   snapshot["num_pieces_opp"] := positions["num_pieces_opp"]
@@ -40,7 +41,7 @@ GetSnapshot() {   ; deprecated by clone in CreateSnapshot()
 }
 
 OutputSnapshot() {
-  snapshot := snapshots[move_num - 1]
+  snapshot := snapshots[move_num] ;[move_num - 1]
   pos_text := ""
   abbr := ""
   text_rows := ["","","","","","","",""]
@@ -62,9 +63,10 @@ OutputSnapshot() {
   LogPositions(pos_text)
   num_pieces_opp := snapshot["num_pieces_opp"]
   num_pieces_mine := snapshot["num_pieces_mine"]
+  snap_move_num := snapshot["move_number"]
   LogOppTitle( opp_color . "  " . num_pieces_opp . " pieces" )
   LogMyTitle( my_color . "  " . num_pieces_mine . " pieces" )
-  LogMoves(move_number)
+  LogMoves(snap_move_num)
 }
 
 

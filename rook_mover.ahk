@@ -80,7 +80,7 @@ FindRPath1(spot) {         ; ROOK PATH 1 UP
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p1[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; collision same color
@@ -100,7 +100,7 @@ FindRPath2(spot) {         ; ROOK PATH 2 RIGHT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p2[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; collision same color
@@ -120,7 +120,7 @@ FindRPath3(spot) {         ; ROOK PATH 3 DOWN
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p3[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; collision same color
@@ -140,7 +140,7 @@ FindRPath4(spot) {         ; ROOK PATH 4 LEFT
     rank := row
     file := Chr(96 + col)
     spot := file . rank
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
     GoSpot(spot)
     p4[n] := { col: col, row: row, file: file, rank: row, spot: spot, color: color }
     if (color = my_color) {   ; collision same color

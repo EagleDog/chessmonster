@@ -14,6 +14,14 @@ global opp_spots := [] ;"d4","e5","b3",...
 global my_spots := []  ; active spots
 global both_spots := [] ; all active spots both colors
 
+
+PollOpp() {
+  LogMain("PollZone( zone_12358 )")
+  PollZone(zones["zone_12358"])
+}
+
+
+
 PollOppSide() {
   LogMain("poll opp territory")
   random rand_opp_spot, 33, 64
@@ -56,7 +64,7 @@ PollPosition(spot) {
   abbr := GetAbbr(piece, color)
   row := board[spot].row , rank := board[spot].rank
   col := board[spot].col , file := board[spot].file
-  positions[spot] := { piece: piece, color: color, abbr: abbr, row: row, rank: rank, col: col, file: file }
+  positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
   position := positions[spot] 
 ;  OutputPositions()
   LogMain0("                  " . spot . "  " . abbr . "")

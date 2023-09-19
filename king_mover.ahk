@@ -17,7 +17,7 @@
 
 
 ; known problem: white king often evades detection, 
-;          especially on f file.
+;          especially on f file.  -- FIXED path typo --
 
 
 ; doing good. let's randomize move decisions........
@@ -31,10 +31,11 @@ MoveKing(spot) {
   diffs := FindKDiffs(spot)                       ;          DIFFS
   poss_moves := PossKMoves(spot, diffs) ; 8 moves possible     POSSKMOVES
   moves := KingMoves(poss_moves)    ; eliminate walls and collisions   KINGMOVES
-;  OutputKMoves(moves)
+  OutputKMoves(moves)
   target := KingCapture(moves)      ; KingCapture(moves)   CAPTURE
-  if (target AND RandomChoice()) {       ; randomize 1/2 chance take opp_piece
-    MovePiece(spot, target)
+  if ( target AND RandomChoice() ) {       ; randomize 1/2 chance take opp_piece
+    return target
+    ; MovePiece(spot, target)
   } else {
     target := KingMoveEmpty(moves)    ; KnigMoveEmpty(moves)   EMPTY
     if target {
@@ -60,8 +61,8 @@ FindKDiffs(spot) {               ; Find 8 King Diffs          DIFFS
 
 PossKMoves(spot, diffs) {       ; 8 Possible King Moves
   col := board[spot].col          ;   based on diffs
-  row := board[spot].row
   file := Chr(96 + col)
+  row := board[spot].row
   rank := row
   poss_moves := {}
 ;  MsgBox, % diffs[1][1]
@@ -69,28 +70,27 @@ PossKMoves(spot, diffs) {       ; 8 Possible King Moves
   Loop, 8 {
     n := A_Index
     m_col := col + diffs[n][1]     ; 1,1... 1,2... 2,1... 2,2... 3,1... 3,2...
-    m_file := Chr(96 + m_col)
+    m_file := FindFile(m_col)
+    ; m_file := Chr(96 + m_col)
     m_row := row + diffs[n][2]
     m_rank := m_row
     m_spot := m_file . m_rank
-    m_color := UpdatePosition(m_spot)
-    Sleep, 10
+    m_color := SqStat(m_spot)
     GoSpot(spot)
-    poss_moves[n] := { col: m_col, row: m_row, file: m_file, rank: m_rank, spot: m_spot, color: m_color }
-    Sleep, 10
+    poss_moves[n] := { spot: m_spot, color: m_color, col: m_col, file: m_file, row: m_row, rank: m_rank }
   }
   return poss_moves
 }
 
-KingMoves(poss_moves) {         ; eliminate collisions and out-of-bounds
+KingMoves(poss_moves) {         ; eliminate team collisions and out-of-bounds
   moves := poss_moves
   loop, 8 {
     n := A_Index
     this_move := moves[n]
-    if ( (this_move.color = my_color) OR (this_move.col < 1)
-        OR (this_move.row < 1) OR (this_move.col > 8) 
-        OR (this_move.row > 8) ) {
-      this_move := ""
+    if ( (this_move.color == my_color)
+        OR (this_move.col < 1) OR (this_move.row < 1)
+        OR (this_move.col > 8) OR (this_move.row > 8) ) {
+      this_move.color := "no move"
     }
   }
   return moves
@@ -101,7 +101,7 @@ KingCapture(moves) {    ; KING CAPTURE OPPONENT
   loop, 8 {
     n := A_Index
     if (moves[n]) {
-      if ( (moves[n].color = opp_color) AND (RandomChoice()) ) {    ; 1:2 odds randomized
+      if ( (moves[n].color == opp_color) AND (RandomChoice()) ) {    ; 1:2 odds randomized
         return moves[n].spot
       }
     }
@@ -112,7 +112,7 @@ KingMoveEmpty(moves) {    ; KING MOVE TO EMPTY SQUARE
   n := 1
   loop, 8 {
     n := A_Index
-    Random, n, 1, 8    ; begin random move effort randomization
+    Random, n, 1, 8    ; randomization effort
     if (moves[n]) {
       if (moves[n].color = "empty") {
         return moves[n].spot
@@ -123,14 +123,14 @@ KingMoveEmpty(moves) {    ; KING MOVE TO EMPTY SQUARE
 
 OutputKMoves(moves) {
   n := 1
-  spot_text := ""
-  move_text := ""
+  text1 := ""
+  text2 := ""
   loop, 8 {
     n := A_Index
-    spot_text := moves[n].spot . " " moves[n].color . " | "
-    move_text := move_text . spot_text
+    text1 := moves[n].spot . " " moves[n].color . " | "
+    text2 := text2 . text1
   }
-  MsgBox, % move_text
+  MsgBox, % text2
 }
 
 

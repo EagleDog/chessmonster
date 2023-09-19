@@ -138,11 +138,11 @@ GetMyColor() {
   LogMain0("GetMyColor()")
   spots := ["b1","c1","d1","e1","f1","g1","h1"]
   spot := "a1"
-  color := UpdatePosition(spot)
+  color := SqStat(spot)
   while ( !BlackOrWhite(color) AND spots[A_Index]) {
     n:= A_Index
     spot := spots[n]
-    color := UpdatePosition(spot)
+    color := SqStat(spot)
   }
   GoSpot(spot)
   return my_color

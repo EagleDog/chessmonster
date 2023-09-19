@@ -31,14 +31,14 @@ FindJumps(spot) {
   rank := board[spot].rank
   col := board[spot].col
   jumps := {}
-  jumps["j1"] := { col: col - 1, rank: rank + 2, file: Chr(96 + col - 1), spot: Chr(96 + col - 1) . rank + 2, color: UpdatePosition(Chr(96 + col - 1) . rank + 2) }
-  jumps["j2"] := { col: col + 1, rank: rank + 2, file: Chr(96 + col + 1), spot: Chr(96 + col + 1) . rank + 2, color: UpdatePosition(Chr(96 + col + 1) . rank + 2) }
-  jumps["j3"] := { col: col + 2, rank: rank + 1, file: Chr(96 + col + 2), spot: Chr(96 + col + 2) . rank + 1, color: UpdatePosition(Chr(96 + col + 2) . rank + 1) }
-  jumps["j4"] := { col: col + 2, rank: rank - 1, file: Chr(96 + col + 2), spot: Chr(96 + col + 2) . rank - 1, color: UpdatePosition(Chr(96 + col + 2) . rank - 1) }
-  jumps["j5"] := { col: col + 1, rank: rank - 2, file: Chr(96 + col + 1), spot: Chr(96 + col + 1) . rank - 2, color: UpdatePosition(Chr(96 + col + 1) . rank - 2) }
-  jumps["j6"] := { col: col - 1, rank: rank - 2, file: Chr(96 + col - 1), spot: Chr(96 + col - 1) . rank - 2, color: UpdatePosition(Chr(96 + col - 1) . rank - 2) }
-  jumps["j7"] := { col: col - 2, rank: rank - 1, file: Chr(96 + col - 2), spot: Chr(96 + col - 2) . rank - 1, color: UpdatePosition(Chr(96 + col - 2) . rank - 1) }
-  jumps["j8"] := { col: col - 2, rank: rank + 1, file: Chr(96 + col - 2), spot: Chr(96 + col - 2) . rank + 1, color: UpdatePosition(Chr(96 + col - 2) . rank + 1) }
+  jumps["j1"] := { col: col - 1, rank: rank + 2, file: Chr(96 + col - 1), spot: Chr(96 + col - 1) . rank + 2, color: SqStat(Chr(96 + col - 1) . rank + 2) }
+  jumps["j2"] := { col: col + 1, rank: rank + 2, file: Chr(96 + col + 1), spot: Chr(96 + col + 1) . rank + 2, color: SqStat(Chr(96 + col + 1) . rank + 2) }
+  jumps["j3"] := { col: col + 2, rank: rank + 1, file: Chr(96 + col + 2), spot: Chr(96 + col + 2) . rank + 1, color: SqStat(Chr(96 + col + 2) . rank + 1) }
+  jumps["j4"] := { col: col + 2, rank: rank - 1, file: Chr(96 + col + 2), spot: Chr(96 + col + 2) . rank - 1, color: SqStat(Chr(96 + col + 2) . rank - 1) }
+  jumps["j5"] := { col: col + 1, rank: rank - 2, file: Chr(96 + col + 1), spot: Chr(96 + col + 1) . rank - 2, color: SqStat(Chr(96 + col + 1) . rank - 2) }
+  jumps["j6"] := { col: col - 1, rank: rank - 2, file: Chr(96 + col - 1), spot: Chr(96 + col - 1) . rank - 2, color: SqStat(Chr(96 + col - 1) . rank - 2) }
+  jumps["j7"] := { col: col - 2, rank: rank - 1, file: Chr(96 + col - 2), spot: Chr(96 + col - 2) . rank - 1, color: SqStat(Chr(96 + col - 2) . rank - 1) }
+  jumps["j8"] := { col: col - 2, rank: rank + 1, file: Chr(96 + col - 2), spot: Chr(96 + col - 2) . rank + 1, color: SqStat(Chr(96 + col - 2) . rank + 1) }
   return jumps    ;{j1.col,j1.rank,j1.spot,j1.color,j2.col,j2.rank,j3.col,j3.rank}
 }
 

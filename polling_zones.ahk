@@ -20,13 +20,14 @@ zone_62 := CombineArrays(zone_6, zone_2)
 zone_135 := CombineArrays(zone_1, zone_3, zone_5)
 zone_235 := CombineArrays(zone_2, zone_3, zone_5)
 zone_1358 := CombineArrays(zone_1, zone_3, zone_5, zone_8)
+zone_12358 := CombineArrays(zone_1, zone_2, zone_3, zone_5, zone_8)
 
 global zones := {  zone_1: zone_1, zone_2: zone_2, zone_3: zone_3
                  , zone_4: zone_4, zone_5: zone_5, zone_6: zone_6
                  , zone_7: zone_7, zone_8: zone_8, zone_9: zone_9
                  , zone_12: zone_12, zone_13: zone_13, zone_24: zone_24
                  , zone_62: zone_62, zone_135: zone_135, zone_235: zone_235
-                 , zone_1358: zone_1358 }
+                 , zone_1358: zone_1358, zone_12358: zone_12358 }
 
 WhichPeriod() {
   if ( move_num < 13 ) {
@@ -59,7 +60,12 @@ PollZone(zone) {
   n := 1
   while zone[n] {
     spot := zone[n]
-    UpdatePosition(spot)
+    color := UpdatePosition(spot)
+    if ( color != my_color ) {
+      if DidSquareChange(spot) {
+        CheckAntecedents(spot)
+      }
+    }
     n := A_Index + 1
 ;    sleep 200
   }

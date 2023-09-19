@@ -15,42 +15,38 @@ DidSquareChange(spot) {
   if ( move_num == 1 ) {
     return
   }
-  sleep 50
   position := positions[spot]
-  snapshot := snapshots[move_num - 1] ;[move_num - 1]
+  snapshot := snapshots[move_num] ;[move_num - 1]
   snap_spot := snapshot[spot]
   piece := position.piece
   color := position.color
-  abbr := position.abbr
   prev_piece := snap_spot.piece
   prev_color := snap_spot.color
-  prev_abbr := snap_spot.abbr
   if ( ( prev_piece == piece ) and ( prev_color == color ) ) {
     return false
   } else {
     GoSpot(spot)
+;    msgbox Square changed.
+;    known problem: loops with null snap_spot. fixed: needed to update all properties.
+    snap_spot := { spot: spot, piece: piece, color: color, abbr: position.abbr, col: position.col, file: position.file, row: position.row, rank: position.rank } ; non-redundant
+    LogDebug(prev_color " " prev_piece ", " color " " piece)
     return true
-;    known problem: loops with null snap_spot. Why??
-;    snap_spot := { piece: piece, color: color, abbr: abbr } ; non-redundant
-;    LogDebug(prev_color " " prev_piece ", " color " " piece)
   }
 }
 
 RunAntecedentsEngine(spot, antecedents) {
   position := positions[spot]
-;  spot := position.spot
   spot_col := position.col
   spot_rank := position.rank
   n := 1
   while antecedents[n] {
     col := spot_col + antecedents[n][1]
     rank := spot_rank + antecedents[n][2]
-    n := A_Index + 1
     file := FindFile(col)
     spot := file . rank
-    UpdatePosition(spot)
+    UpdatePosition(spot) ; <<== WEIRD LOOP CAUSE
     GoSpot(spot)
-;    Debug(spot)
+    n := A_Index + 1
   }
 }
 
