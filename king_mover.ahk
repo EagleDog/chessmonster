@@ -31,7 +31,7 @@ MoveKing(spot) {
   diffs := FindKDiffs(spot)                       ;          DIFFS
   poss_moves := PossKMoves(spot, diffs) ; 8 moves possible     POSSKMOVES
   moves := KingMoves(poss_moves)    ; eliminate walls and collisions   KINGMOVES
-  OutputKMoves(moves)
+;  OutputKMoves(moves)
   target := KingCapture(moves)      ; KingCapture(moves)   CAPTURE
   if ( target AND RandomChoice() ) {       ; randomize 1/2 chance take opp_piece
     return target

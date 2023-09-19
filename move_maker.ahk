@@ -21,7 +21,7 @@ LogMain("MovePiece:  '" spot "' to '" target "'" )
 Chill()
   MoveAndFailCheck(spot, target)
   if !fail {
-    Chill()
+;    Chill()
     move_num += 1
     UpdateSnapshots()  ; <== UpdateSnapshots()
     LogMoves(move_num)

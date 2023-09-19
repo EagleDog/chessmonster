@@ -111,11 +111,13 @@ Chill()
 
     if target {
       MovePiece(spot, target)  ; from move_maker.ahk
-      PromotePawn(piece_type, target)
+      if !fail {
+        PromotePawn(piece_type, target)
+        PollOpp()
+      }
+    }
 ;      Listen()
 ;      PollZone(zones["zone_1"])
-      PollOpp()
-    }
     if (paused = true) {
       PauseDisplay()
       break
@@ -206,17 +208,17 @@ ChooseSquare() {
 
 FailChoose() {
   LogMain("FailChoose()")
-  if RandomChoice(3) {
+  if RandomChoice(3) {      ; 1:3 odds move my_spots
     spot := ChooseMySpots()
   } else {
-    spot := WhereIsMyKing()
+    spot := WhereIsMyKing() ; 2:3 odds move king
   }
   return spot
 }
 
 ChooseMySpots() {
-    LogMain("ChooseMySpots() " . spot)
-    sleep 100
+    LogMain( "ChooseMySpots()" )
+;    sleep 100
     my_spots := GetMySpots()
     length_my_spots := my_spots.length()
     Random, spot_num, 1, length_my_spots

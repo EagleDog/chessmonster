@@ -16,7 +16,7 @@ DidSquareChange(spot) {
     return
   }
   position := positions[spot]
-  snapshot := snapshots[move_num] ;[move_num - 1]
+  snapshot := snapshots[move_num]
   snap_spot := snapshot[spot]
   piece := position.piece
   color := position.color
@@ -26,7 +26,6 @@ DidSquareChange(spot) {
     return false
   } else {
     GoSpot(spot)
-;    msgbox Square changed.
 ;    known problem: loops with null snap_spot. fixed: needed to update all properties.
     snap_spot := { spot: spot, piece: piece, color: color, abbr: position.abbr, col: position.col, file: position.file, row: position.row, rank: position.rank } ; non-redundant
     LogDebug(prev_color " " prev_piece ", " color " " piece)
