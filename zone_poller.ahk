@@ -1,4 +1,4 @@
-;polling_zones.ahk
+;zone_poller.ahk
 ;
 ;
 global period := "early"

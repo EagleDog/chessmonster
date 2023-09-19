@@ -16,7 +16,7 @@
 #Include board_watcher.ahk
 #Include positions_watcher.ahk
 #Include positions_poller.ahk
-#Include polling_zones.ahk
+#Include zone_poller.ahk
 #Include snapshots.ahk
 #Include antecedents_watcher.ahk
 #Include opening_moves.ahk
