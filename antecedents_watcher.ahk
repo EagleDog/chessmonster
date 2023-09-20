@@ -7,10 +7,6 @@
 ; Antecedents
 ; Antecedents
 
-;global last_spot := "a6"
-;global last_piece := "empty"
-;global prev_opp_pieces_spots := {}
-
 DidSquareChange(spot) {
   if ( move_num == 1 ) {
     return

@@ -316,4 +316,3 @@ o::OutputSnapshot()
 
 z::SoundBeep, 400, 500  ; , [ Frequency, Duration]
 
-;9::OutputDebug, % "Output Debug Output Debug" . my_color . ""

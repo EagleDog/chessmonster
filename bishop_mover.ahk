@@ -161,7 +161,6 @@ FindDPath4(spot) {             ; DIAG PATH 4
 }
 
 
-
 OutputDPath(path) {
   n := 1
   spot_text := ""
@@ -174,6 +173,5 @@ OutputDPath(path) {
   }
   MsgBox, % path_text
 }
-
 
 

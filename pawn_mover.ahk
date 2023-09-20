@@ -104,4 +104,3 @@ FindDiags(spot) {
   return [diag_1_spot, diag_2_spot]
 }
 
-

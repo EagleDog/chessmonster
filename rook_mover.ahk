@@ -11,7 +11,6 @@
 ; STEP 4 - move to empty square
 
 
-
 ;MoveRook("c1")
 MoveRook(spot) {
   LogMain("MoveRook('" . spot . "')")

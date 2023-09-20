@@ -34,7 +34,7 @@ MoveAndFailCheck(spot, target) {
   ID1 := positions[spot].piece
   sleep 50
   ClickDrag(spot, target)  ; <==== click and drag
-  sleep 150
+  sleep 200
   UpdatePosition(spot)  ; <== UpdatePosition(spot)
   sleep 50
   UpdatePosition(target)  ; <== UpdatePosition(spot)
@@ -55,12 +55,11 @@ GoSpot(spot) {
 ClickSpot(spot) {
   MoveMouse(board[spot].x, board[spot].y)
   Click
-  ; MouseMove, board[spot].x, board[spot].y
 }
+
 MoveClick(x, y) {
   MoveMouse(x, y)
   Click
-  ; MouseMove, x, y
 }
 
 ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
