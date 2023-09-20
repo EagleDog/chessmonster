@@ -16,8 +16,8 @@ global both_spots := [] ; all active spots both colors
 
 
 PollOpp() {
-  LogMain("PollZone( zone_12358 )")
-  PollZone(zones["zone_12358"])
+  ; LogMain("PollZone( zone_1 )")
+  PollZones()
 }
 
 
@@ -57,25 +57,25 @@ GetPosition(spot) {
   return position
 }
 
-PollPosition(spot) {
-  last_spot := spot
-  color := SquareStatus(spot)
-  piece := IDPiece(spot, color)
-  abbr := GetAbbr(piece, color)
-  row := board[spot].row , rank := board[spot].rank
-  col := board[spot].col , file := board[spot].file
-  positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
-  position := positions[spot] 
-;  OutputPositions()
-  LogMain0("                  " . spot . "  " . abbr . "")
-;  last_spot := spot
-;  last_piece := piece
-;  return position
-}
+; PollPosition(spot) {  ; unused
+;   last_spot := spot
+;   color := SquareStatus(spot)
+;   piece := IDPiece(spot, color)
+;   abbr := GetAbbr(piece, color)
+;   row := board[spot].row , rank := board[spot].rank
+;   col := board[spot].col , file := board[spot].file
+;   positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
+;   position := positions[spot] 
+; ;  OutputPositions()
+;   LogMain0("                  " . spot . "  " . abbr . "")
+; ;  last_spot := spot
+; ;  last_piece := piece
+; ;  return position
+; }
 
-PostPosition(spot, piece, color, abbr) {
-  OutputPositions()
-}
+; PostPosition(spot, piece, color, abbr) {
+;   OutputPositions()
+; }
 
 GetMySpots() {
   GetBothSpots()

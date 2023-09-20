@@ -1,62 +1,63 @@
 ;zone_poller.ahk
 ;
 ;
-global period := "early"
+global period := "opening"
+global which_zone := 1
 
-zone_1 := ["d5","e5","d6","e6","c5","f5","c6","f6"]  ; opp_center
-zone_2 := ["a6","h6"]
-zone_3 := ["d4","e4","c4","f4"]  ; opp_front
-zone_4 := ["a5","h5","a7","h7","c8","f8","b8","g8"] ; backfield manuevers
-zone_5 := ["d3","e3","c3","f3"]  ; opp_deep_front
-zone_6 := ["d5","e5","d4","e4"]  ; main_small_center
-zone_7 := ["b7","g7"]  ; snipers
-zone_8 := ["a5","h5","a3","h3","a4","h4","a6","h6"] ; sidebars
-zone_9 := ["b5","g5","a8","h8","c7","f7","b6","g6","d8","e8","b4","g4"] ; neglected_squares
+;____zones____
+global z1 := ["c5","d5","e5","f5","c6","d6","e6","f6"]  ; opp_front
+global z2 := ["a5","b5","g5","h5","a6","b6","g6","h6"]  ; opp_sides
+global z3 := ["a7","b7","g7","h7","a8","b8","g8","h8"]  ; opp_corners
+global z4 := ["c7","d7","e7","f7","c8","d8","e8","f8"] ; opp_rear
+global z5 := ["c3","d3","e3","f3","c4","d4","e4","f4"]  ; my_front
+global z6 := ["a3","b3","g3","h3","a4","b4","g4","h4"]  ; my_sides
+global z7 := ["a1","b1","g1","h1","a2","b2","g2","h2"]  ; my_corners
+global z8 := ["c1","d1","e1","f1","c2","d2","e2","f2"] ; my_rear
 
-zone_12 := CombineArrays(zone_1, zone_2)
-zone_13 := CombineArrays(zone_1, zone_3)
-zone_24 := CombineArrays(zone_2, zone_4)
-zone_62 := CombineArrays(zone_6, zone_2)
-zone_135 := CombineArrays(zone_1, zone_3, zone_5)
-zone_235 := CombineArrays(zone_2, zone_3, zone_5)
-zone_1358 := CombineArrays(zone_1, zone_3, zone_5, zone_8)
-zone_12358 := CombineArrays(zone_1, zone_2, zone_3, zone_5, zone_8)
+global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
-global zones := {  zone_1: zone_1, zone_2: zone_2, zone_3: zone_3
-                 , zone_4: zone_4, zone_5: zone_5, zone_6: zone_6
-                 , zone_7: zone_7, zone_8: zone_8, zone_9: zone_9
-                 , zone_12: zone_12, zone_13: zone_13, zone_24: zone_24
-                 , zone_62: zone_62, zone_135: zone_135, zone_235: zone_235
-                 , zone_1358: zone_1358, zone_12358: zone_12358 }
-
-WhichPeriod() {
-  if ( move_num < 13 ) {
-    period := "early"
-  } else if ( move_num < 25 ) {
-    period := "midgame"
-    } else {
-    period := "endgame"
-  }
-}
-
-WhichPolls() {
-  if ( period == "early" ) {
-;    zone_1
-;    zone_2
-  } else if ( period == "midgame" ) {
-;    zone_3
-;    zone_7
+WhichZones() {
+  if ( move_num < 5 ) {
+    period := "opening"
+    zones := [ z1, z2 ]
+  } else if ( move_num < 9 ) {
+    period := "opening"
+    zones := [ z1, z2, z5, z1, z2, z6 ]
+  } else if ( move_num < 13 ) {
+    period := "early game"
+    zones := [ z1, z2, z5, z1, z2, z6 ]
+  } else if ( move_num < 17 ) {
+    period := "early game"
+    zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
+  } else if ( move_num < 23 ) {
+    period := "mid game"
+    zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
+  } else if ( move_num < 31 ) {
+    period := "mid game"
+    zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
+  } else if ( move_num < 37 ) {
+    period := "end game"
+    zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
   } else {
-;    zone_135
+    period := "end game"
+    zones := [ z1, z2, z5, z1, z6, z2, z3, z1, z4, z2, z7, z1, z2, z8 ]
   }
 }
 
-PollZones(zones) {
-
+PollZones() {
+  loop 3 {
+    zone := zones[which_zone]
+    PollZone(zone)
+    which_zone += 1
+    if ( which_zone > zones.count() ) {
+      LogDebug(zones.count())
+      which_zone := 1
+    }
+  }
 }
 
 PollZone(zone) {
-;  LogMain("PollZone(" . zone . ")")
+  LogTimer("PollZone(" . which_zone . ")")
   n := 1
   while zone[n] {
     spot := zone[n]
@@ -67,11 +68,8 @@ PollZone(zone) {
       }
     }
     n := A_Index + 1
-;    sleep 200
   }
-
 }
-
 
 CombineArrays(array_1, array_2, array_3="", array_4="", array_5="", array_6="", array_7="") {
   source_arrays := [array_1, array_2, array_3, array_4, array_5, array_6, array_7]
@@ -100,7 +98,3 @@ ReadArray(arr) {
   }
   return array_contents
 }
-
-; ^+x::ExitApp
-; 0::msgbox % ReadArray(CombineArrays(zone_1, zone_2, zone_3))
-;9::PollZone(zone_1)

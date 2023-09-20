@@ -24,8 +24,9 @@ Chill()
 ;    Chill()
     move_num += 1
     UpdateSnapshots()  ; <== UpdateSnapshots()
+    WhichZones()
+    LogVolume(period)
     LogMoves(move_num)
-;    sleep 500
   }
 }
 
