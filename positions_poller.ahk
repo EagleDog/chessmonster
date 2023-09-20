@@ -1,11 +1,9 @@
 ;positions_poller.ahk
+; PollOpp()
 ; PollOppSide()
 ; PollOpponent()
-; LastPiece(spot)
 ; GetMySpots()
 ; GetBothSpots()
-; PollPosition(spot)
-; PostPosition(spot, piece, color, abbr)
 ; HowManyPieces()
 ; WhereIsMyKing()
 
@@ -14,13 +12,9 @@ global opp_spots := [] ;"d4","e5","b3",...
 global my_spots := []  ; active spots
 global both_spots := [] ; all active spots both colors
 
-
 PollOpp() {
-  ; LogMain("PollZone( zone_1 )")
   PollZones()
 }
-
-
 
 PollOppSide() {
   LogMain("poll opp territory")
@@ -57,26 +51,6 @@ GetPosition(spot) {
   return position
 }
 
-; PollPosition(spot) {  ; unused
-;   last_spot := spot
-;   color := SquareStatus(spot)
-;   piece := IDPiece(spot, color)
-;   abbr := GetAbbr(piece, color)
-;   row := board[spot].row , rank := board[spot].rank
-;   col := board[spot].col , file := board[spot].file
-;   positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
-;   position := positions[spot] 
-; ;  OutputPositions()
-;   LogMain0("                  " . spot . "  " . abbr . "")
-; ;  last_spot := spot
-; ;  last_piece := piece
-; ;  return position
-; }
-
-; PostPosition(spot, piece, color, abbr) {
-;   OutputPositions()
-; }
-
 GetMySpots() {
   GetBothSpots()
   return my_spots
@@ -105,7 +79,7 @@ HowManyPieces() {
   num_pieces_both := [num_pieces_opp, num_pieces_mine]
   return num_pieces_both
 }
-  ; num_pieces_both := my_color . " " . num_pieces_mine . "  " . opp_color . " " . num_pieces_opp
+
 WhereIsMyKing() {
   my_spots := GetMySpots()
   n := 1
@@ -114,7 +88,6 @@ WhereIsMyKing() {
     spot := my_spots[n]
     spot_piece := positions[spot].piece
     if (spot_piece = "king") {
-;      MsgBox, % "king found" . spot
       return spot
     }
   }

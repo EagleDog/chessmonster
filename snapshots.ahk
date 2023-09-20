@@ -12,7 +12,6 @@ ResetSnapshots() {
 UpdateSnapshots() {
   CreateSnapshot()
 ;  GetSnapshot()
-;  positions_history.push(positions)
 }
 
 CreateSnapshot() {
@@ -71,9 +70,6 @@ OutputSnapshot() {
 
 
 DebugSnapshots() {
-  ; Debug("test test test")
-  ; Debug(" piece: " . snapshots[2]["d4"].piece)
-  ; msgbox % " piece: " . snapshots[2]["d4"].piece
   n := 1
   while (snapshots[n]) {
     snapshot := snapshots[n]
