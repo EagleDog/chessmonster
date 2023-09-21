@@ -8,6 +8,13 @@
             ;  MovePawn(spot), MoveKnight(spot), MoveBishop(spot),
             ;  MoveRook(spot), MoveQueen(spot), MoveKing(spot)
 
+; Exit
+; Pause On
+
+global rel_path := A_ScriptDir
+global assets_path := rel_path . "\assets\"
+
+
 #Include debug.ahk
 #Include chess_gui.ahk
 #Include VA.ahk
@@ -30,13 +37,6 @@
 #Include queen_mover.ahk
 #Include king_mover.ahk
 
-global rel_path := A_ScriptDir
-global assets_path := rel_path . "\assets\"
-;global img_path := %rel_path%p_wh_wh.png
-;global img_path := "" . rel_path . "p_wh_wh.png"
-
-; Exit
-; Pause On
 
 global none := "none"
 global my_color := "white"
@@ -251,10 +251,6 @@ MyColorWhite() {
 MyColorBlack() {
   my_color := "black"
   opp_color := "white"
-}
-
-Chill() {
-  sleep 100
 }
 
 ActivateChess() {

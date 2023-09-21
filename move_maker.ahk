@@ -1,5 +1,4 @@
 ;
-;
 ;   ______move_maker.ahk______
 ;          formerly mouse_mover.ahk
 ;   MovePieceOld(s,t)
@@ -21,7 +20,7 @@ LogMain("MovePiece:  '" spot "' to '" target "'" )
 Chill()
   MoveAndFailCheck(spot, target)
   if !fail {
-;    Chill()
+    Chill()
     move_num += 1
     UpdateSnapshots()  ; <== UpdateSnapshots()
     WhichZones()
@@ -41,11 +40,14 @@ MoveAndFailCheck(spot, target) {
   sleep 50
   ID2 := positions[spot].piece
   if ( ID2 == ID1 ) {  ; <=== fail check
-    msgbox FAIL
+;    msgbox FAIL
     fail := true
   }
 }
 
+Chill() {
+  sleep 50
+}
 MoveMouse(x, y, speed=0) {
   mousemove x, y, speed
 }
