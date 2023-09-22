@@ -4,7 +4,9 @@
 
 ;ExitApp
 
+stockfishwindow_id := "ahk_pid 9860"
 
+WinActivate, ahk_pid 9860
 
 CreateOuput() {
 ; Stdout("Hello there.")  ;output to new console
