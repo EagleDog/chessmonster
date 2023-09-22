@@ -14,28 +14,27 @@
 global rel_path := A_ScriptDir
 global assets_path := rel_path . "\assets\"
 
-
 #Include debug.ahk
-#Include chess_gui.ahk
-#Include VA.ahk
-#Include listener.ahk
-#Include board_map.ahk
-#Include board_watcher.ahk
-#Include positions_watcher.ahk
-#Include positions_poller.ahk
-#Include zone_poller.ahk
-#Include snapshots.ahk
-#Include antecedents_watcher.ahk
-#Include opening_moves.ahk
-#Include move_maker.ahk
-#Include new_match.ahk
+#Include interface\chess_gui.ahk
+#Include interface\VA.ahk
+#Include interface\listener.ahk
+#Include interface\board_map.ahk
+#Include interface\board_watcher.ahk
+#Include interface\positions_watcher.ahk
+#Include interface\positions_poller.ahk
+#Include interface\zone_poller.ahk
+#Include interface\snapshots.ahk
+#Include interface\antecedents_watcher.ahk
+#Include interface\opening_moves.ahk
+#Include interface\move_maker.ahk
+#Include interface\new_match.ahk
 
-#Include pawn_mover.ahk
-#Include knight_mover.ahk
-#Include bishop_mover.ahk
-#Include rook_mover.ahk
-#Include queen_mover.ahk
-#Include king_mover.ahk
+#Include interface\pawn_mover.ahk
+#Include interface\knight_mover.ahk
+#Include interface\bishop_mover.ahk
+#Include interface\rook_mover.ahk
+#Include interface\queen_mover.ahk
+#Include interface\king_mover.ahk
 
 
 global none := "none"
