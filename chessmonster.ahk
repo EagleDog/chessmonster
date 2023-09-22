@@ -14,6 +14,7 @@
 global rel_path := A_ScriptDir
 global assets_path := rel_path . "\assets\"
 
+; #Include engine\std_in_out.ahk
 #Include debug.ahk
 #Include interface\chess_gui.ahk
 #Include interface\VA.ahk
