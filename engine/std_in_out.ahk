@@ -6,25 +6,24 @@
 
 stockfishwindow_id := "ahk_pid 9860"
 
-WinActivate, ahk_pid 9860
+;WinActivate, ahk_pid 9860  ; activates Stockfish console window
 
-CreateOuput() {
-; Stdout("Hello there.")  ;output to new console
-; name := Stdin("so what's your name?")
-; Stdout("Hello again... " . name)  ;append to console
-; Sleep 2000
-; Stdout()  ;free console
-; Sleep 2000
-; Stdout("Back again")  ;output to new console
-; Sleep 2000
-; Stdout()
+;CreateOuput() {
+  Stdout("Hello there.")  ;output to new console
+  name := Stdin("so what's your name?")
+  Stdout("Hello again... " . name)  ;append to console
+  Sleep 2000
+  Stdout()  ;free console
+  Sleep 2000
+  Stdout("Back again")  ;output to new console
+  Sleep 2000
+  Stdout()
+;}
 
-}
+; Loop, 100
+;   Stdout(A_Index, false)  ;output to new console with scite check disabled for realtime performance.
 
-Loop, 100
-  Stdout(A_Index, false)  ;output to new console with scite check disabled for realtime performance.
-
-Stdout(output:="", sciteCheck := true){ ;output to console  - sciteCheck reduces Stdout/Stdin performance,so where performance is necessary disable it accordingly
+Stdout(output:="", sciteCheck := false){ ;output to console  - sciteCheck reduces Stdout/Stdin performance,so where performance is necessary disable it accordingly
   Global ___console___
   If (sciteCheck && ProcessExist("SciTE.exe") && GetScriptParentProcess() = "SciTE.exe"){ ;if script parent is scite,output to scite console & return
     FileAppend, %output%`n, *
@@ -33,7 +32,7 @@ Stdout(output:="", sciteCheck := true){ ;output to console  - sciteCheck reduces
   ( output ? ( !___console___? (DllCall("AttachConsole", "int", -1) || DllCall("AllocConsole")) & (___console___:= true) : "" ) & FileAppend(output . "`n","CONOUT$") : DllCall("FreeConsole") & (___console___:= false) & StdExit() )
 }
 
-Stdin(output:="", sciteCheck := true){  ;output to console & wait for input & return input
+Stdin(output:="", sciteCheck := true) {  ;output to console & wait for input & return input
   Global ___console___
   If (sciteCheck && ProcessExist("SciTE.exe") && GetScriptParentProcess() = "SciTE.exe"){ ;if script parent is scite,output to scite console & return
     FileAppend, %output%`n, *
@@ -43,31 +42,30 @@ Stdin(output:="", sciteCheck := true){  ;output to console & wait for input & re
   Return Stdin
 }
 
-StdExit(){
+StdExit() {
   If GetScriptParentProcess() = "cmd.exe"   ;couldn't get this: 'DllCall("GenerateConsoleCtrlEvent", CTRL_C_EVENT, 0)' to work so...
     ControlSend, , {Enter}, % "ahk_pid " . GetParentProcess(GetCurrentProcess())
 }
 
-FileAppend(str, file){
+FileAppend(str, file) {
   FileAppend, %str%, %file%
 }
 
-FileReadLine(file,lineNum){
+FileReadLine(file,lineNum) {
   FileReadLine, retVal, %file%, %lineNum%
   return retVal
 }
 
-ProcessExist(procName){
+ProcessExist(procName) {
   Process, Exist, % procName
   Return ErrorLevel
 }
 
-GetScriptParentProcess(){
+GetScriptParentProcess() {
   return GetProcessName(GetParentProcess(GetCurrentProcess()))
 }
 
-GetParentProcess(PID)
-{
+GetParentProcess(PID) {
   static function := DllCall("GetProcAddress", "ptr", DllCall("GetModuleHandle", "str", "kernel32.dll", "ptr"), "astr", "Process32Next" (A_IsUnicode ? "W" : ""), "ptr")
   if !(h := DllCall("CreateToolhelp32Snapshot", "uint", 2, "uint", 0))
     return
@@ -83,8 +81,7 @@ GetParentProcess(PID)
   return Numget(pEntry, 16+2*A_PtrSize, "uint")
 }
 
-GetProcessName(PID)
-{
+GetProcessName(PID) {
   static function := DllCall("GetProcAddress", "ptr", DllCall("GetModuleHandle", "str", "kernel32.dll", "ptr"), "astr", "Process32Next" (A_IsUnicode ? "W" : ""), "ptr")
   if !(h := DllCall("CreateToolhelp32Snapshot", "uint", 2, "uint", 0))
     return
@@ -100,8 +97,7 @@ GetProcessName(PID)
   return StrGet(&pEntry+28+2*A_PtrSize, A_IsUnicode ? "utf-16" : "utf-8")
 }
 
-GetCurrentProcess()
-{
+GetCurrentProcess() {
   return DllCall("GetCurrentProcessId")
 }
 
