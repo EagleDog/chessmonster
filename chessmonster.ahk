@@ -16,6 +16,7 @@ global assets_path := rel_path . "\assets\"
 
 ; #Include engine\std_in_out.ahk
 #Include debug.ahk
+;#Include engine\streamer.ahk
 #Include interface\chess_gui.ahk
 #Include interface\VA.ahk
 #Include interface\listener.ahk
