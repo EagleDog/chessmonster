@@ -1,9 +1,7 @@
 ;streamer.ahk
 ; input and output
 ;
-
-stockfish_commands := ["ucinewgame","isready","d","position startpos"
-                       ,"position fen","go movetime 1000", "stop", "flip"]
+;
 
 global stockfishPID := 999
 global fishlog := A_ScriptDir . "\fishlog.txt"
@@ -19,7 +17,7 @@ AttachStockfish() {
   winwaitactive ahk_exe stockfish.exe, , 0.2
   winget stockfishPID, PID, ahk_exe stockfish.exe
   dllcall("AttachConsole", "int", stockfishPID)
-  OutToFish("ucinewgame")
+;  OutToFish("ucinewgame")
 }
 
 FishlogRefresh() {
@@ -59,30 +57,6 @@ ExitSequence() {
   WinClose, ahk_exe stockfish.exe
   ExitApp
 }
-
-StartPos() {
-  OutToFish("position startpos")
-}
-IsReady() {
-  OutToFish("isready")
-}
-GoTime() {
-  OutToFish("go movetime 1000")
-}
-
-
-
-^1::AttachStockfish()
-z::StartPos()
-x::IsReady()
-c::GoTime()
-
-;2::OutToFish("isready")
-;3::InFromFish()
-
-^+x::ExitSequence()
-
-
 
 
 

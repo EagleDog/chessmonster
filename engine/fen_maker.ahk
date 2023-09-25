@@ -1,6 +1,8 @@
 ;fen_maker.ahk
 ;
-
+;   still needs whose turn, castling rights, en passant target,
+;   half-move clock for fifty move rule, full moves completed
+;
 
 global positions := {}
 global fishlog := A_ScriptDir . "\fishlog.txt"

@@ -6,7 +6,7 @@
 ;
 ;  piece_types := ["empty","pawn","knight","bishop","rook","queen","king"]
 ;
-global prev_positions := {}
+global prev_positions := {}  ; deprecated ???
 global positions := {}
 global my_spots := []
 global opp_spots := []
