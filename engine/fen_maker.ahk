@@ -16,7 +16,7 @@ FishlogRefresh() {
 }
 
 FenLog(output_text) {
-  fileappend % output_text, % fishlog
+  fileappend % output_text "`n", % fishlog
 }
 
 OutputPositions() {
@@ -122,16 +122,23 @@ OutputFen() {
       spot := file . rank
       abbr := positions[spot].abbr
 
-      abbr := EmptySquareCounter(abbr)
 
       abbr := GetFenAbbr(abbr)
+      abbr := EmptySquareCounter(abbr)
 
-      fen_text := % "" . fen_text . abbr . " "
+      fen_text := % "" . fen_text . abbr . ""
+    }
+    if ( empty_squares_num != 0 ) {
+      fen_text := fen_text . empty_squares_num
+    }
+    if ( A_index != 1 ) {
+      fen_text := fen_text . "/"
     }
     text_rows[A_index] := fen_text
+
     fen_text := ""
   }
-  fen_text := "`n" text_rows[8] "`n" text_rows[7] "`n" text_rows[6] "`n" text_rows[5] "`n" text_rows[4] "`n" text_rows[3] "`n" text_rows[2] "`n" text_rows[1] "`n"
+  fen_text := text_rows[8] text_rows[7] text_rows[6] text_rows[5] text_rows[4] text_rows[3] text_rows[2] text_rows[1]
 
   FenLog(fen_text)
 }
@@ -139,13 +146,17 @@ OutputFen() {
 
 
 EmptySquareCounter(abbr) {
-  if ( abbr == ". " ) {
+  if ( abbr == " " ) {
     empty_squares_num += 1
-    return empty_squares_num
+    return ""
+;    return empty_squares_num
   } else {
     empty_num := empty_squares_num
     empty_squares_num := 0
 ;    msgbox % abbr
+    if ( empty_num != 0 ) {
+      abbr := empty_num . abbr
+    }
     return abbr
   }
 }
@@ -156,21 +167,21 @@ GetFenAbbr(abbr) {
   ;   return abbr
   ; } else {
     switch abbr {
-      case "p ": fenabbr := "p"
-      case "N ": fenabbr := "k"
-      case "B ": fenabbr := "b"
-      case "R ": fenabbr := "r"
-      case "Q ": fenabbr := "q"
-      case "K ": fenabbr := "k"
+      case "p ": fenabbr := "P"
+      case "N ": fenabbr := "N"
+      case "B ": fenabbr := "B"
+      case "R ": fenabbr := "R"
+      case "Q ": fenabbr := "Q"
+      case "K ": fenabbr := "K"
 
-      case ". ": fenabbr := ""
+      case ". ": fenabbr := " "
 
-      case "p*": fenabbr := "P"
-      case "N*": fenabbr := "N"
-      case "B*": fenabbr := "B"
-      case "R*": fenabbr := "R"
-      case "Q*": fenabbr := "Q"
-      case "K*": fenabbr := "K"
+      case "p*": fenabbr := "p"
+      case "N*": fenabbr := "n"
+      case "B*": fenabbr := "b"
+      case "R*": fenabbr := "r"
+      case "Q*": fenabbr := "q"
+      case "K*": fenabbr := "k"
 
       case 1: fenabbr := "1"
       case 2: fenabbr := "2"
