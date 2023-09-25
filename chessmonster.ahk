@@ -13,6 +13,7 @@
 
 global rel_path := A_ScriptDir
 global assets_path := rel_path . "\assets\"
+global fishlog := rel_path . "\engine\fishlog.txt"
 
 ; #Include engine\std_in_out.ahk
 #Include debug.ahk
