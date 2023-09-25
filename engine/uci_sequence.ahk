@@ -1,13 +1,14 @@
 ;uci_sequence.ahk
 ;
-
-; STEP 1 -- ucinewgame 
-; STEP 2 -- position startpos
-; STEP 3 -- isready
-; STEP 4 -- go movetime 1000
+; 
+; STEP 0 -- launch stockfish console    DONE
+; STEP 1 -- ucinewgame                  DONE
+; STEP 2 -- position startpos           DONE
+; STEP 3 -- isready                     DONE
+; STEP 4 -- go movetime 1000            DONE
 ; STEP 5 -- stop
-; STEP 6 -- get bestmove (e.g. e2e3)
-; STEP 7 -- translate move to gui (e.g. MovePiece(e2,e3))
+; STEP 6 -- get bestmove (e.g. e2e3)    DONE
+; STEP 7 -- translate move to gui (e.g. MovePiece(e2,e3))   DONE
 ; STEP 8 -- get new fen from gui
 ; STEP 9 -- position fen rnbqk3/4pppp/8/8/...etc  (reflects move e2e3)
 ; STEP 10 -- is ready
@@ -18,13 +19,34 @@
 
 
 #include streamer.ahk
+global bestmove := ""
+global bestmoves := []
+global movetime := 500
+
 
 stockfish_commands := ["ucinewgame","isready","d","position startpos"
                        ,"position fen","go movetime 1000", "stop", "flip"]
 
+DispatchCommands() {
+  AttachStockfish()
+  NewGameUci()
+  StartPos()
+  SendIsReady()
+  GetIsReady()
+   bestmove := GetBestMove()
+   bestmoves := ParseBestMove(bestmove)
+  SendMoveToGUI(bestmoves)
+  GetFenFromGUI()
+  SendNewPosition()
 
+}
 
-
+GetIsReady() {
+  ready_response := ReceiveReady()
+  while ( ready_response != "readyok") {
+    ready_response := ReceiveReady()
+  }
+}
 
 AttachConsole() {
   AttachStockfish()
@@ -39,18 +61,18 @@ ReceiveResponse() {
   return response
 }
 
-NewGame() {      ; function name conflict
+NewGameUci() {      ; function name conflict
   SendCommand("ucinewgame")
 }
 
 StartPos() {
   SendCommand("position startpos")
 }
-IsReady() {
+SendIsReady() {
   SendCommand("isready")
 }
 GoTime() {
-  SendCommand("go movetime 1000")
+  SendCommand("go movetime " movetime)
 }
 StopThinking() {
   SendCommand("stop")
@@ -63,18 +85,35 @@ FlipBoard() {    ; function name conflict
 }
 
 ReceiveReady() {
-  response := ReceiveResponse()
-  FileAppend % response, *
+  ready_response := ReceiveResponse()
+  FileAppend % ready_response " ", *
+  return ready_response
 }
 GetBestMove() {
   response := ReceiveResponse()
-  bestmove := response
-  FileAppend % bestmove, *
+  bestmove := StrSplit(response, " ")[2]
+  FileAppend % bestmove " ", *
+  return bestmove
 }
-SendMoveToGUI() {
 
+ParseBestMove(bestmove) {
+  bestmoves := []
+  loop parse, bestmove
+  { 
+    if A_LoopField is Integer
+    {
+      num_pos := A_Index
+      bestmoves.push(SubStr(bestmove, num_pos - 1, 2))
+    }
+  }
+  return bestmoves
 }
-GetGUIPosition() {
+
+SendMoveToGUI(bestmoves) {
+;  MovePiece(bestmoves[1], bestmoves[2])
+  fileappend % "bestmove: " bestmoves[1] " " bestmoves[2] " ", *
+}
+GetFenFromGUI() {
 
 }
 SendNewPosition() {
@@ -82,15 +121,16 @@ SendNewPosition() {
 }
 
 1::AttachConsole()
-2::NewGame()
+2::NewGameUci()
 3::StartPos()
-4::IsReady()
+4::SendIsReady()
 5::ReceiveReady()
 
 6::GoTime()
 7::GetBestMove()
-8::SendMoveToGUI()
-9::GetGUIPosition()
+8::ParseBestMove(bestmove)
+9::SendMoveToGUI(bestmoves)
+;9::GetFenFromGUI()
 0::SendNewPosition()
 
 ;2::OutToFish("isready")
