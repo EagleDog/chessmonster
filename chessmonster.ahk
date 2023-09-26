@@ -23,7 +23,7 @@ global fishlog := rel_path . "\engine\fishlog.txt"
 
 #Include engine\fen_maker.ahk
 #Include engine\streamer.ahk
-#Include engine\uci_sequence.ahk
+#Include engine\uci_commander.ahk
 
 #Include interface\board_map.ahk
 #Include interface\board_watcher.ahk
