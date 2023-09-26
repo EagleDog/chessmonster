@@ -35,7 +35,7 @@ StartEngine() {
   ActivateChess()
 }
 
-RunUCICommands() {
+RunUCI() {
   ;ActivateStockfish()
   ; sleep 50
   ; NewGameUCI()
@@ -55,18 +55,30 @@ RunUCICommands() {
    bestmoves := ParseBestMove(bestmove)
   ActivateChess()
   SendMoveToGUI(bestmoves)
-
+  PollZones()
 ;   fen := GetFenFromGUI()
 ;  SendFenToUCI(fen)
 
 }
 
+GetReady() {
+  SendIsReady()
+  ready_response := GetIsReady()
+  while ( ready_response != "readyok") {
+    sleep 300
+    SendIsReady()
+    ready_response := GetIsReady()
+  }
+  ActivateChess()
+}
+
+SendIsReady() {
+  SendToUCI("isready")
+}
+
 GetIsReady() {
   ready_response := ReceiveFromUCI()
-  while ( ready_response != "readyok") {
-    sleep 100
-    ready_response := ReceiveFromUCI()
-  }
+  return ready_response
 }
 
 AttachConsole() {
@@ -82,16 +94,12 @@ ReceiveFromUCI() {
   return response
 }
 
-NewGameUCI() {      ; function name conflict
+NewGameUCI() {
   SendToUCI("ucinewgame")
 }
 
 StartPos() {
   SendToUCI("position startpos")
-}
-
-SendIsReady() {
-  SendToUCI("isready")
 }
 
 CalculateMove(movetime) {

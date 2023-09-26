@@ -20,11 +20,11 @@ DidSquareChange(spot) {
   prev_color := snap_spot.color
   if ( ( prev_piece == piece ) and ( prev_color == color ) ) {
     return false
-  } else {
-    GoSpot(spot)
-;    known problem: loops with null snap_spot. fixed: needed to update all properties.
-    snap_spot := { spot: spot, piece: piece, color: color, abbr: position.abbr, col: position.col, file: position.file, row: position.row, rank: position.rank } ; non-redundant
+  } else {        ; square changed
+;    GoSpot(spot)
+    snapshot[spot] := { spot: spot, piece: piece, color: color, abbr: position.abbr, col: position.col, file: position.file, row: position.row, rank: position.rank } ; non-redundant
     LogDebug(prev_color " " prev_piece ", " color " " piece)
+    Print(prev_color " " prev_piece ", " color " " piece)
     return true
   }
 }

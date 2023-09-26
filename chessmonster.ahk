@@ -11,10 +11,6 @@
 ; Exit
 ; Pause On
 
-global rel_path := A_ScriptDir
-global assets_path := rel_path . "\assets\"
-global fishlog := rel_path . "\engine\fishlog.txt"
-
 ; #Include engine\std_in_out.ahk
 #Include debug.ahk
 #Include interface\chess_gui.ahk
@@ -43,15 +39,19 @@ global fishlog := rel_path . "\engine\fishlog.txt"
 #Include interface\queen_mover.ahk
 #Include interface\king_mover.ahk
 
+global rel_path := A_ScriptDir
+global assets_path := rel_path . "\assets\"
+global fishlog := rel_path . "\engine\fishlog.txt"
 
 global none := "none"
 global my_color := "white"
 global opp_color := "black"
+global my_color_abbr := "w"
 ;global target_status := "empty"
-global move_num := 1
 
 global paused := false
 
+global move_num := 1
 
 ;
 ;        PAUSE LOOP
@@ -145,7 +145,7 @@ NewGame() {
   GetMyColor()
   FlipBoard()
   GetStartingPositions()
-  GoLoop()
+  ; GoLoop()
   ; MakeMove()
 }
 
@@ -289,12 +289,12 @@ ExitChessMonster() {
 
 1::StartEngine()
 2::PollZones()
-3::RunUCICommands()
+3::RunUCI()
+0::NewGameUCI()
 
-
-0::NewGame()
-9::GoLoop()
-8::MoveGui3()
+^1::NewGame()
+^2::GoLoop()
+^3::MoveGui3()
 m::DriftMouse()
 r::RematchComputer()
 q::MoveGui1()

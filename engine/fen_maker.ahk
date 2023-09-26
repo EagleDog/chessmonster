@@ -49,9 +49,10 @@ CreateFen() {
     fen_text := ""
   }
   fen_text := text_rows[8] text_rows[7] text_rows[6] text_rows[5] text_rows[4] text_rows[3] text_rows[2] text_rows[1]
-  ; fen_text2 := ""
-  ; StrPut(fen_text, fen_text_2, "CP0", 100)
-  ; fileappend % "fen_text_2: " fen_text_2, *
+  fen_index := " " my_color_abbr " - - 0 " . move_num
+;  fen_index := " " my_color_abbr " KQkq - 0 " . move_num
+  fen_text := fen_text . fen_index
+
   FenLog(fen_text)
   return fen_text
 }

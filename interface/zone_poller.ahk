@@ -16,10 +16,13 @@ global z8 := ["c1","d1","e1","f1","c2","d2","e2","f2"] ; my_rear
 
 global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
-PollZones() {
-  loop 3 {
+PollZones() { ; find last opp_move only
+  loop 8 {
     zone := zones[which_zone]
-    PollZone(zone)
+    opp_move := PollZone(zone)
+    if ( opp_move == true ) {
+      return
+    }
     which_zone += 1
     if ( which_zone > zones.count() ) {
       LogDebug(zones.count())
@@ -37,14 +40,29 @@ PollZone(zone) {
     if ( color != my_color ) {
       if DidSquareChange(spot) {
         CheckAntecedents(spot)
+        return true
       }
     }
     n := A_Index + 1
   }
 }
 
+SearchZones(zone) { ; search many positions
+  loop 8 {
+    zone := zones[which_zone]
+    PollZone(zone)
+    which_zone += 1
+    if ( which_zone > zones.count() ) {
+      LogDebug(zones.count())
+      which_zone := 1
+    }
+  }
+}
+
 WhichZones() {
-  if ( move_num < 5 ) {
+  if ( move_num < 50 ) {
+    zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
+  } else if ( move_num < 5 ) {
     period := "opening"
     zones := [ z1, z2 ]
   } else if ( move_num < 9 ) {

@@ -152,11 +152,13 @@ BlackOrWhite(color) {
   if ( color == "white" ) {
     my_color := "white"
     opp_color := "black"
+    my_color_abbr := "w"
     opening_moves := opening_moves_white
     return true
   } else if ( color == "black" ) {
     my_color := "black"
     opp_color := "white"
+    my_color_abbr := "b"
     opening_moves := opening_moves_black
     return true
   } else {
