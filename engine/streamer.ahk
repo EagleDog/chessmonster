@@ -20,13 +20,19 @@ AttachStockfish() {
 ;  OutToFish("ucinewgame")
 }
 
+ActivateStockfish() {
+  winactivate ahk_exe stockfish.exe
+  winwaitactive ahk_exe stockfish.exe, , 0.2
+}
+
 FishlogRefresh() {
   filedelete % fishlog
   fileappend fishlog `n , % fishlog
 }
 
 GetConsoleText() {
-  winactivate ahk_exe stockfish.exe
+  ActivateStockfish()
+  ;winactivate ahk_exe stockfish.exe
   Send,{Shift Down}{Up}{Shift Up}{Ctrl Down}{Ins}{Ctrl Up}
   return clipboard
 }
@@ -50,7 +56,11 @@ InFromFish() {
 }
 
 OutToFish(out_text) {
-  ControlSend, , %out_text% {Enter}, ahk_exe stockfish.exe
+;  ActivateStockfish()
+  clipboard := out_text
+  WinMenuSelectItem ahk_exe stockfish.exe,, 0&, Edit, Paste
+  ControlSend, , {Enter}, ahk_exe stockfish.exe
+
 }
 
 ExitStreamer() {
@@ -59,7 +69,12 @@ ExitStreamer() {
 }
 
 
+; 1::AttachStockfish()
+; 2::OutToFish("P1/P1P3P1R1")
 
+; ^+x::
+;   ExitStreamer()
+;   ExitApp
 
 
 

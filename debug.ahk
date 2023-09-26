@@ -18,3 +18,7 @@ DoNothing() {
   nothing := "nothing"
   return nothing
 }
+
+Print(outout_text) {
+  fileappend % output_text " ", *
+}

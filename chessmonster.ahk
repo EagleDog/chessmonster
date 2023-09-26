@@ -280,9 +280,6 @@ ExitChessMonster() {
 
 ;======= KEYBOARD SHORTCUTS ===================
 
-5::DispatchUciCommands()
-
-
 
 ^+z::Pause           ; ctrl + shift + z
 ;^+x::ExitApp            ; ctrl + shift + x
@@ -290,9 +287,14 @@ ExitChessMonster() {
 ^+x::ExitChessMonster() ; ctrl + shift + x
 ; ^+c::SublimeGo() ; ctrl + shift + x
 
-1::NewGame()
-2::GoLoop()
-3::MoveGui3()
+1::StartEngine()
+2::PollZones()
+3::RunUCICommands()
+
+
+0::NewGame()
+9::GoLoop()
+8::MoveGui3()
 m::DriftMouse()
 r::RematchComputer()
 q::MoveGui1()
@@ -319,5 +321,5 @@ p::PauseMatch()
 o::OutputSnapshot()
 
 
-z::SoundBeep, 400, 500  ; , [ Frequency, Duration]
+;z::SoundBeep, 400, 500  ; , [ Frequency, Duration]
 

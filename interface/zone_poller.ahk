@@ -16,6 +16,33 @@ global z8 := ["c1","d1","e1","f1","c2","d2","e2","f2"] ; my_rear
 
 global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
+PollZones() {
+  loop 3 {
+    zone := zones[which_zone]
+    PollZone(zone)
+    which_zone += 1
+    if ( which_zone > zones.count() ) {
+      LogDebug(zones.count())
+      which_zone := 1
+    }
+  }
+}
+
+PollZone(zone) {
+  LogTimer("PollZone(" . which_zone . ")")
+  n := 1
+  while zone[n] {
+    spot := zone[n]
+    color := UpdatePosition(spot)
+    if ( color != my_color ) {
+      if DidSquareChange(spot) {
+        CheckAntecedents(spot)
+      }
+    }
+    n := A_Index + 1
+  }
+}
+
 WhichZones() {
   if ( move_num < 5 ) {
     period := "opening"
@@ -41,33 +68,6 @@ WhichZones() {
   } else {
     period := "end game"
     zones := [ z1, z2, z5, z1, z6, z2, z3, z1, z4, z2, z7, z1, z2, z8 ]
-  }
-}
-
-PollZones() {
-  loop 3 {
-    zone := zones[which_zone]
-    PollZone(zone)
-    which_zone += 1
-    if ( which_zone > zones.count() ) {
-      LogDebug(zones.count())
-      which_zone := 1
-    }
-  }
-}
-
-PollZone(zone) {
-  LogTimer("PollZone(" . which_zone . ")")
-  n := 1
-  while zone[n] {
-    spot := zone[n]
-    color := UpdatePosition(spot)
-    if ( color != my_color ) {
-      if DidSquareChange(spot) {
-        CheckAntecedents(spot)
-      }
-    }
-    n := A_Index + 1
   }
 }
 

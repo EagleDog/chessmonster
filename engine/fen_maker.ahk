@@ -5,8 +5,7 @@
 ;
 
 ;global positions := {}
-;global fishlog := rel_path . "\fishlog.txt"
-global empty_squares_num := 0
+;global fishlog := rel_path . "\engine\fishlog.txt"
 
 ;FishlogRefresh()
 ;GetStartingPositions()
@@ -16,9 +15,87 @@ global empty_squares_num := 0
 ;   fileappend fishlog `n , % fishlog
 ; }
 
+global empty_squares_num := 0
+
 FenLog(output_text) {
   fileappend % output_text "`n", % fishlog
 }
+
+CreateFen() {
+  fen_text := ""
+  abbr := ""
+  text_rows := ["","","","","","","",""]
+  Loop, 8 {
+    rank := A_Index
+    row := rank
+    empty_squares_num := 0
+    Loop, 8 {
+      col := A_Index
+      file := Chr(96 + col)     ; => a-h
+      spot := file . rank
+      abbr := positions[spot].abbr
+      abbr := GetFenAbbr(abbr)   ; calls GetFenAbbr(abbr)
+      abbr := EmptySquareCounter(abbr)  ; calls EmptySquareCounter(abbr)
+      fen_text := % "" . fen_text . abbr . ""
+    }
+    if ( empty_squares_num != 0 ) {
+      fen_text := fen_text . empty_squares_num
+    }
+    if ( A_index != 1 ) {
+      fen_text := fen_text . "/"
+    }
+    text_rows[A_index] := fen_text
+
+    fen_text := ""
+  }
+  fen_text := text_rows[8] text_rows[7] text_rows[6] text_rows[5] text_rows[4] text_rows[3] text_rows[2] text_rows[1]
+  ; fen_text2 := ""
+  ; StrPut(fen_text, fen_text_2, "CP0", 100)
+  ; fileappend % "fen_text_2: " fen_text_2, *
+  FenLog(fen_text)
+  return fen_text
+}
+
+EmptySquareCounter(abbr) {
+  if ( abbr == " " ) {
+    empty_squares_num += 1
+    return ""
+;    return empty_squares_num
+  } else {
+    empty_num := empty_squares_num
+    empty_squares_num := 0
+;    msgbox % abbr
+    if ( empty_num != 0 ) {
+      abbr := empty_num . abbr
+    }
+    return abbr
+  }
+}
+
+GetFenAbbr(abbr) {
+  switch abbr {
+    case "p ": fenabbr := "P"
+    case "N ": fenabbr := "N"
+    case "B ": fenabbr := "B"
+    case "R ": fenabbr := "R"
+    case "Q ": fenabbr := "Q"
+    case "K ": fenabbr := "K"
+
+    case ". ": fenabbr := " "
+
+    case "p*": fenabbr := "p"
+    case "N*": fenabbr := "n"
+    case "B*": fenabbr := "b"
+    case "R*": fenabbr := "r"
+    case "Q*": fenabbr := "q"
+    case "K*": fenabbr := "k"
+
+    default: fenabbr := "-"
+  }
+return fenabbr
+}
+
+
 
 ; OutputPositions() {
 ;   pos_text := ""
@@ -100,80 +177,6 @@ FenLog(output_text) {
 ;     positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
 ;   }
 ; }
-
-OutputFen() {
-  fen_text := ""
-  abbr := ""
-  text_rows := ["","","","","","","",""]
-  Loop, 8 {
-    rank := A_Index
-    row := rank
-    empty_squares_num := 0
-    Loop, 8 {
-      col := A_Index
-      file := Chr(96 + col)     ; a_index > a-h
-      spot := file . rank
-      abbr := positions[spot].abbr
-
-      abbr := GetFenAbbr(abbr)
-
-      abbr := EmptySquareCounter(abbr)
-
-      fen_text := % "" . fen_text . abbr . ""
-    }
-    if ( empty_squares_num != 0 ) {
-      fen_text := fen_text . empty_squares_num
-    }
-    if ( A_index != 1 ) {
-      fen_text := fen_text . "/"
-    }
-    text_rows[A_index] := fen_text
-
-    fen_text := ""
-  }
-  fen_text := text_rows[8] text_rows[7] text_rows[6] text_rows[5] text_rows[4] text_rows[3] text_rows[2] text_rows[1]
-
-  FenLog(fen_text)
-}
-
-EmptySquareCounter(abbr) {
-  if ( abbr == " " ) {
-    empty_squares_num += 1
-    return ""
-;    return empty_squares_num
-  } else {
-    empty_num := empty_squares_num
-    empty_squares_num := 0
-;    msgbox % abbr
-    if ( empty_num != 0 ) {
-      abbr := empty_num . abbr
-    }
-    return abbr
-  }
-}
-
-GetFenAbbr(abbr) {
-  switch abbr {
-    case "p ": fenabbr := "P"
-    case "N ": fenabbr := "N"
-    case "B ": fenabbr := "B"
-    case "R ": fenabbr := "R"
-    case "Q ": fenabbr := "Q"
-    case "K ": fenabbr := "K"
-
-    case ". ": fenabbr := " "
-
-    case "p*": fenabbr := "p"
-    case "N*": fenabbr := "n"
-    case "B*": fenabbr := "b"
-    case "R*": fenabbr := "r"
-    case "Q*": fenabbr := "q"
-    case "K*": fenabbr := "k"
-
-    default: fenabbr := "-"
-  }
-return fenabbr
-}
 
 
 ; AddAbbrBlack(abbr, color) {

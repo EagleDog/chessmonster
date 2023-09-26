@@ -1,4 +1,4 @@
-;uci_sequence.ahk
+;uci_commander.ahk
 ;
 ; 
 ; STEP 0 -- launch stockfish console    DONE
@@ -27,31 +27,45 @@ global move_time := 500
 stockfish_commands := ["ucinewgame","isready","d","position startpos"
                        ,"position fen","go movetime 1000", "stop", "flip"]
 
-DispatchUciCommands() {
+StartEngine() {
   AttachStockfish()
-  sleep 100
-  NewGameUci()
-  sleep 100
-  StartPos()
-  sleep 100
+   sleep 50
+  NewGameUCI()
+   sleep 50
+  ActivateChess()
+}
+
+RunUCICommands() {
+  ;ActivateStockfish()
+  ; sleep 50
+  ; NewGameUCI()
+  ;  sleep 50
+  fen := GetFenFromGUI()
+   ; StartPos()
+   sleep 50
+  SendFenToUCI(fen)
+   sleep 50
   SendIsReady()
-  sleep 100
+   sleep 50
   GetIsReady()
-  sleep 100
-  CalculateMove(move_time)
+   sleep 50
+  CalculateMove(move_time)   ; go movetime 500
+   sleep % move_time
    bestmove := GetBestMove()
    bestmoves := ParseBestMove(bestmove)
   ActivateChess()
   SendMoveToGUI(bestmoves)
-  GetFenFromGUI()
-  SendNewPosition()
+
+;   fen := GetFenFromGUI()
+;  SendFenToUCI(fen)
 
 }
 
 GetIsReady() {
-  ready_response := ReceiveReady()
+  ready_response := ReceiveFromUCI()
   while ( ready_response != "readyok") {
-    ready_response := ReceiveReady()
+    sleep 100
+    ready_response := ReceiveFromUCI()
   }
 }
 
@@ -59,50 +73,50 @@ AttachConsole() {
   AttachStockfish()
 }
 
-SendCommand(command) {
+SendToUCI(command) {
   OutToFish(command)
 }
 
-ReceiveResponse() {
+ReceiveFromUCI() {
   response := InFromFish()
   return response
 }
 
-NewGameUci() {      ; function name conflict
-  SendCommand("ucinewgame")
+NewGameUCI() {      ; function name conflict
+  SendToUCI("ucinewgame")
 }
 
 StartPos() {
-  SendCommand("position startpos")
+  SendToUCI("position startpos")
 }
 
 SendIsReady() {
-  SendCommand("isready")
+  SendToUCI("isready")
 }
 
 CalculateMove(movetime) {
-  SendCommand("go movetime " movetime)
+  SendToUCI("go movetime " movetime)
 }
 
 StopThinking() {
-  SendCommand("stop")
+  SendToUCI("stop")
 }
 
 DisplayBoard() {
-  SendCommand("d")
+  SendToUCI("d")
 }
 
-FlipBoardUci() {    ; function name conflict
-  SendCommand("flip")
+FlipBoardUCI() {    ; function name conflict
+  SendToUCI("flip")
 }
 
 ReceiveReady() {
-  ready_response := ReceiveResponse()
+  ready_response := ReceiveFromUCI()
   FileAppend % ready_response " ", *
   return ready_response
 }
 GetBestMove() {
-  response := ReceiveResponse()
+  response := ReceiveFromUCI()
   bestmove := StrSplit(response, " ")[2]
   FileAppend % bestmove " ", *
   return bestmove
@@ -118,22 +132,25 @@ ParseBestMove(bestmove) {
       bestmoves.push(SubStr(bestmove, num_pos - 1, 2))
     }
   }
+  Print("bestmove: " bestmoves[1] " " bestmoves[2] " ")
   return bestmoves
 }
 
 SendMoveToGUI(bestmoves) {
-;  MovePiece(bestmoves[1], bestmoves[2])
-  fileappend % "bestmove: " bestmoves[1] " " bestmoves[2] " ", *
+  MovePiece(bestmoves[1], bestmoves[2])
+  fileappend % "move sent to gui", *
 }
 GetFenFromGUI() {
-
+  fen := CreateFen()
+  return fen
 }
-SendNewPosition() {
-
+SendFenToUCI(fen) {
+  SendToUCI("position fen " fen)
+  Print("position fen " fen)
 }
 
 ; 1::AttachConsole()
-; 2::NewGameUci()
+; 2::NewGameUCI()
 ; 3::StartPos()
 ; 4::SendIsReady()
 ; 5::ReceiveReady()
@@ -143,7 +160,7 @@ SendNewPosition() {
 ; 8::ParseBestMove(bestmove)
 ; 9::SendMoveToGUI(bestmoves)
 ; ;9::GetFenFromGUI()
-; 0::SendNewPosition()
+; 0::SendFenToUCI()
 
 ; ;2::OutToFish("isready")
 ; ;3::InFromFish()
