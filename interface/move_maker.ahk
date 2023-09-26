@@ -21,15 +21,16 @@ Chill()
   MoveAndFailCheck(spot, target)
   if !fail {
     Chill()
-    move_num += 1
+    IncreaseMoveNum()
+;    move_num += 1
     UpdateSnapshots()  ; <== UpdateSnapshots()
     WhichZones()
     LogVolume(period)
-    LogMoves(move_num)
+;    LogMoves(move_num)
   }
 }
 
-MoveAndFailCheck(spot, target) {
+MoveAndFailCheck(spot, target) { ; Pawn Promotion too!
   ID1 := positions[spot].piece
   sleep 50
   ClickDrag(spot, target)  ; <==== click and drag
@@ -43,6 +44,7 @@ MoveAndFailCheck(spot, target) {
 ;    msgbox FAIL
     fail := true
   }
+  PromotePawn(piece, target)
 }
 
 Chill() {
@@ -75,10 +77,27 @@ DriftMouse() {
   MouseMove, x - 40, y - 40, speed, Relative
 }
 
-MovePieceOld() {
-  MouseMove, board[spot].x, board[spot].y
-  Click, Down
-  MouseMove, board[target].x, board[target].y
-  Click, Up  
+ResetMoves() {
+  move_num := 1
+  LogMoves(move_num)
 }
+
+IncreaseMoveNum() {
+  move_num += 1
+  LogMoves(move_num)
+}
+
+DecreaseMoveNum() {
+  move_num -= 1
+  LogMoves(move_num)
+}
+
+
+
+; MovePieceOld() {
+;   MouseMove, board[spot].x, board[spot].y
+;   Click, Down
+;   MouseMove, board[target].x, board[target].y
+;   Click, Up  
+; }
 

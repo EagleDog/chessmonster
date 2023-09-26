@@ -17,6 +17,7 @@
 #Include interface\VA.ahk
 #Include interface\listener.ahk
 
+#Include engine\castle_rights.ahk
 #Include engine\fen_maker.ahk
 #Include engine\streamer.ahk
 #Include engine\uci_commander.ahk
@@ -137,21 +138,18 @@ Chill()
 ;
 ;**********************************************************************************************
 ;
+;                 NewGame()
 
 NewGame() {
   ActivateChess()
   ResetMoves()
+  ResetCastleRights()
   ResetSnapshots()
   GetMyColor()
   FlipBoard()
   GetStartingPositions()
   ; GoLoop()
   ; MakeMove()
-}
-
-ResetMoves() {
-  move_num := 1
-  LogMoves(move_num)
 }
 
 UseSpecificPiece() { ; for testing piece movements
@@ -181,7 +179,7 @@ MoveWhichPiece(spot, piece_type) {
 }
 PromotePawn(piece_type, target) {
   if ( (piece_type = "pawn") AND (target contains 8) ) {
-    sleep 100
+    sleep 150
     mouseclick Left    ;  Promotion  choose queen
   }
 }
@@ -316,10 +314,18 @@ w::MyColorWhite()
 b::MyColorBlack()
 
 ;o::PollOppTerritory()
+
 p::PauseMatch()
 
 o::OutputSnapshot()
 
-
 ;z::SoundBeep, 400, 500  ; , [ Frequency, Duration]
+
+Up::IncreaseMoveNum()
+Down::DecreaseMoveNum()
+
+w & k::CastleRights1()
+w & q::CastleRights2()
+b & k::CastleRights3()
+b & q::CastleRights4()
 

@@ -50,6 +50,7 @@ RunUCI() {
   GetIsReady()
    sleep 50
   CalculateMove(move_time)   ; go movetime 500
+  ; ActivateChess()
    sleep % move_time
    bestmove := GetBestMove()
    bestmoves := ParseBestMove(bestmove)

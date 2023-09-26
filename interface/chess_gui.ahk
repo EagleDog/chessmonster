@@ -25,18 +25,19 @@ gui add, Text, w280 h20 x20 y190 center Vvolume_field, % volume_text
 
 gui add, Text, w280 h20 x20 y230 center Vdebug_field, % debug_text
 
-gui add, Text, w280 h20 x20 y270 center Vopp_title_field, % opp_title_text
-gui add, Text, w280 h200 x20 y300 center Vpositions_field, % positions_text
-gui add, Text, w280 h20 x20 y530 center Vmy_title_field, % my_title_text
+gui add, Text, w280 h20 x20 y260 center Vopp_title_field, % opp_title_text
+gui add, Text, w280 h200 x20 y290 center Vpositions_field, % positions_text
+gui add, Text, w280 h20 x20 y510 center Vmy_title_field, % my_title_text
 
-gui add, Text, w280 h20 x20 y590 center Vmoves_field, % moves_text
+gui add, Text, w280 h20 x20 y550 center Vmoves_field, % moves_text
+gui add, Text, w280 h20 x20 y590 center Vcastle_field, % castle_text
 
 ; gui add, Text, w280 h20 x20 y500 center Vnum_pieces_field, % num_pieces_text
 
 
 ZoomGui()
 RefreshGui()
-MoveGui3()
+MoveGui1()
 ; ShakeGui()
 
 
@@ -52,6 +53,7 @@ RefreshGui() {
   ; LogNumPieces("white 16  black 16")
   ; LogMoves("move_num == " . move_num)
   LogMoves(1)
+  LogCastle("KQkq")
 }
 
 CreateGui() {
@@ -88,6 +90,9 @@ LogMyTitle(my_title_text) {
 ;
 LogMoves(moves_text) {
   GuiControl,, moves_field, % moves_text . "  move_num "
+}
+LogCastle(castle_text) {
+  GuiControl,, castle_field, % "castle rights: " castle_text
 }
 ; LogNumPieces(num_pieces_text) {
 ;   GuiControl,, num_pieces_field, % num_pieces_text

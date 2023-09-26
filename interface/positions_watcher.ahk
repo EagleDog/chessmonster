@@ -93,6 +93,7 @@ GetPositions() {
       positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
     }
   }
+  UpdateSnapshots()
   OutputPositions()
 }
 ;
