@@ -60,4 +60,27 @@ ResetCastleRights() {
   UpdateCastleRightsAll()
 }
 
-
+DidCastlersMove() {
+  ; check positions a1, e1, h1, a8, e8, h8 (d1/d8?)
+  if ( positions["a1"].piece != "rook" ) {
+    c_rights_2 := ""
+  }
+  if ( positions["h1"].piece != "rook" ) {
+    c_rights_1 := ""
+  }
+  if ( positions["e1"].piece != "king" ) {
+    c_rights_1 := ""
+    c_rights_2 := ""
+  }
+  if ( positions["a8"].piece != "rook" ) {
+    c_rights_4 := ""
+  }
+  if ( positions["h8"].piece != "rook" ) {
+    c_rights_3 := ""
+  }
+  if ( positions["e8"].piece != "king" ) {
+    c_rights_3 := ""
+    c_rights_4 := ""
+  }
+  UpdateCastleRightsAll()
+}

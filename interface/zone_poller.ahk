@@ -47,8 +47,8 @@ PollZone(zone) {
   }
 }
 
-SearchZones(zone) { ; search many positions
-  loop 8 {
+SearchZones(zone) { ; search many positions for
+  loop 8 {          ;   starting mid-game
     zone := zones[which_zone]
     PollZone(zone)
     which_zone += 1

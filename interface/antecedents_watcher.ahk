@@ -7,22 +7,25 @@
 ; Antecedents
 ; Antecedents
 
-DidSquareChange(spot) {
-  if ( move_num == 1 ) {
-    return
-  }
+DidSquareChange(spot) {  ; returns true or false
+  ; if ( move_num == 1 ) {
+  ;   return
+  ; }
   position := positions[spot]
   snapshot := snapshots[move_num]
   snap_spot := snapshot[spot]
   piece := position.piece
   color := position.color
+
   prev_piece := snap_spot.piece
   prev_color := snap_spot.color
+
   if ( ( prev_piece == piece ) and ( prev_color == color ) ) {
-    return false
-  } else {        ; square changed
-;    GoSpot(spot)
+    return false  ; square is same
+
+  } else {  ; square changed
     snapshot[spot] := { spot: spot, piece: piece, color: color, abbr: position.abbr, col: position.col, file: position.file, row: position.row, rank: position.rank } ; non-redundant
+
     LogDebug(prev_color " " prev_piece ", " color " " piece)
     Print(prev_color " " prev_piece ", " color " " piece)
     return true
@@ -39,7 +42,7 @@ RunAntecedentsEngine(spot, antecedents) {
     rank := spot_rank + antecedents[n][2]
     file := FindFile(col)
     spot := file . rank
-    UpdatePosition(spot) ; <<== WEIRD LOOP CAUSE
+    UpdatePosition(spot) ; ImageSearch not needed?
     GoSpot(spot)
     n := A_Index + 1
   }
@@ -51,11 +54,12 @@ CheckAntecedents(spot) {
   piece := positions[spot].piece
   switch piece {
     case "empty":
-      DoNothing()
+      CheckDescendents(spot)
+      ; DoNothing()
     case "pawn":
-      if ( board[spot].rank < 7 ) {
+;      if ( board[spot].rank < 7 ) {
         CheckPawnAntecedents(spot)
-      }
+;      }
     case "knight":
       CheckKnightAntecedents(spot)
     case "bishop":
@@ -150,4 +154,17 @@ CheckKingAntecedents(spot) {
   antecedents :=  [ up_left_1, up_right_1, down_right_1, down_left_1, left_1, up_1, right_1, down_1 ]
   RunAntecedentsEngine(spot, antecedents)
 }
+
+CheckDescendents(spot) {
+LogMain("CheckDescendents( " . spot . " )")
+
+  snapshot := snapshots[move_num - 1]
+  snap_spot := snapshot[spot]
+  prev_piece := snap_spot.piece
+
+  msgbox % prev_piece . " --prev_piece"
+
+}
+
+
 

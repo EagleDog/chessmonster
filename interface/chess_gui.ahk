@@ -71,7 +71,7 @@ LogTimer(timer_text) {
   GuiControl,, timer_field, % timer_text
 }
 LogVolume(volume_text) {
-  GuiControl,, volume_field, % "volume: " . volume_text
+  GuiControl,, volume_field, % volume_text
 }
 ;
 LogDebug(debug_text) {

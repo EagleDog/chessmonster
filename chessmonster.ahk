@@ -119,7 +119,7 @@ Chill()
     if target {
       MovePiece(spot, target)  ; from move_maker.ahk
       if !fail {
-        PromotePawn(piece_type, target)
+        PromotePawn(spot, piece_type, target)
         PollOpp()
       }
     }
@@ -144,10 +144,10 @@ NewGame() {
   ActivateChess()
   ResetMoves()
   ResetCastleRights()
-  ResetSnapshots()
   GetMyColor()
   FlipBoard()
   GetStartingPositions()
+  ResetSnapshots()
   ; GoLoop()
   ; MakeMove()
 }
@@ -177,10 +177,11 @@ MoveWhichPiece(spot, piece_type) {
   }
   return target
 }
-PromotePawn(piece_type, target) {
+PromotePawn(spot, piece_type, target) {
   if ( (piece_type = "pawn") AND (target contains 8) ) {
     sleep 150
     mouseclick Left    ;  Promotion  choose queen
+    UpdatePosition(spot)
   }
 }
 

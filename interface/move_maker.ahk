@@ -17,16 +17,14 @@ global fail := false
 
 MovePiece(spot, target) {
 LogMain("MovePiece:  '" spot "' to '" target "'" )
-Chill()
   MoveAndFailCheck(spot, target)
   if !fail {
-    Chill()
-    IncreaseMoveNum()
+    IncreaseMoveNum()   ; <== UpdateSnapshots() included
 ;    move_num += 1
-    UpdateSnapshots()  ; <== UpdateSnapshots()
+;    UpdateSnapshots()
+;    LogMoves(move_num)
     WhichZones()
     LogVolume(period)
-;    LogMoves(move_num)
   }
 }
 
@@ -44,7 +42,8 @@ MoveAndFailCheck(spot, target) { ; Pawn Promotion too!
 ;    msgbox FAIL
     fail := true
   }
-  PromotePawn(piece, target)
+  PromotePawn(spot, piece, target)   ; <== PromotePawn(spot,piece,target)
+  DidCastlersMove()    ; <== DidCastlersMove()
 }
 
 Chill() {
@@ -85,11 +84,13 @@ ResetMoves() {
 IncreaseMoveNum() {
   move_num += 1
   LogMoves(move_num)
+  UpdateSnapshots()
 }
 
 DecreaseMoveNum() {
   move_num -= 1
   LogMoves(move_num)
+  UpdateSnapshots()
 }
 
 

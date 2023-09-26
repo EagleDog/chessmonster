@@ -25,7 +25,7 @@ Listen() {
     LogTimer(timer_text)
     VA_IAudioMeterInformation_GetPeakValue(audioMeter, peakValue)
     if (peakValue > triggervol) {
-      LogVolume(peakValue)
+      LogVolume("volume: " . peakValue)
       LogMain(" sound detected ")
       return
     }

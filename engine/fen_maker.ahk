@@ -54,6 +54,7 @@ CreateFen() {
   fen_text := fen_text . fen_index
 
   FenLog(fen_text)
+  Print(fen_text)
   return fen_text
 }
 
