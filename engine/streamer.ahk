@@ -4,7 +4,7 @@
 ;
 
 global stockfishPID := 999
-global fishlog := A_ScriptDir . "\fishlog.txt"
+;global fishlog := rel_path . "\engine\fishlog.txt"
 
 FishlogRefresh()
 
@@ -53,9 +53,9 @@ OutToFish(out_text) {
   ControlSend, , %out_text% {Enter}, ahk_exe stockfish.exe
 }
 
-ExitSequence() {
+ExitStreamer() {
   WinClose, ahk_exe stockfish.exe
-  ExitApp
+;  ExitApp
 }
 
 

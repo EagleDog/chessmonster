@@ -17,10 +17,14 @@ global fishlog := rel_path . "\engine\fishlog.txt"
 
 ; #Include engine\std_in_out.ahk
 #Include debug.ahk
-;#Include engine\streamer.ahk
 #Include interface\chess_gui.ahk
 #Include interface\VA.ahk
 #Include interface\listener.ahk
+
+#Include engine\fen_maker.ahk
+#Include engine\streamer.ahk
+#Include engine\uci_sequence.ahk
+
 #Include interface\board_map.ahk
 #Include interface\board_watcher.ahk
 #Include interface\positions_watcher.ahk
@@ -270,10 +274,13 @@ SublimeGo() {
 ExitChessMonster() {
   gui hide
   SublimeGo()
+  ExitStreamer()
   ExitApp
 }
 
 ;======= KEYBOARD SHORTCUTS ===================
+
+5::DispatchUciCommands()
 
 
 
@@ -286,7 +293,7 @@ ExitChessMonster() {
 1::NewGame()
 2::GoLoop()
 3::MoveGui3()
-7::DriftMouse()
+m::DriftMouse()
 r::RematchComputer()
 q::MoveGui1()
 e::MoveGui2()
@@ -295,8 +302,8 @@ s::ShakeGui()
 ;9::New3Min()
 
 d::DebugSnapshots()
-0::CheckQueenAntecedents("e5")
 
+;0::CheckQueenAntecedents("e5")
 ;0::OutputSnapshot(1)
 ;0::GetPositionsHistory(2)
 ; 0::UpdatePosition("e5")

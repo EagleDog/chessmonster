@@ -18,23 +18,30 @@
 ; need to convert positions to FEN and vice versa (good progress so far)
 
 
-#include streamer.ahk
+;#include streamer.ahk
 global bestmove := ""
 global bestmoves := []
-global movetime := 500
+global move_time := 500
 
 
 stockfish_commands := ["ucinewgame","isready","d","position startpos"
                        ,"position fen","go movetime 1000", "stop", "flip"]
 
-DispatchCommands() {
+DispatchUciCommands() {
   AttachStockfish()
+  sleep 100
   NewGameUci()
+  sleep 100
   StartPos()
+  sleep 100
   SendIsReady()
+  sleep 100
   GetIsReady()
+  sleep 100
+  CalculateMove(move_time)
    bestmove := GetBestMove()
    bestmoves := ParseBestMove(bestmove)
+  ActivateChess()
   SendMoveToGUI(bestmoves)
   GetFenFromGUI()
   SendNewPosition()
@@ -68,19 +75,24 @@ NewGameUci() {      ; function name conflict
 StartPos() {
   SendCommand("position startpos")
 }
+
 SendIsReady() {
   SendCommand("isready")
 }
-GoTime() {
+
+CalculateMove(movetime) {
   SendCommand("go movetime " movetime)
 }
+
 StopThinking() {
   SendCommand("stop")
 }
+
 DisplayBoard() {
   SendCommand("d")
 }
-FlipBoard() {    ; function name conflict
+
+FlipBoardUci() {    ; function name conflict
   SendCommand("flip")
 }
 
@@ -120,23 +132,23 @@ SendNewPosition() {
 
 }
 
-1::AttachConsole()
-2::NewGameUci()
-3::StartPos()
-4::SendIsReady()
-5::ReceiveReady()
+; 1::AttachConsole()
+; 2::NewGameUci()
+; 3::StartPos()
+; 4::SendIsReady()
+; 5::ReceiveReady()
 
-6::GoTime()
-7::GetBestMove()
-8::ParseBestMove(bestmove)
-9::SendMoveToGUI(bestmoves)
-;9::GetFenFromGUI()
-0::SendNewPosition()
+; 6::CalculateMove(500)
+; 7::GetBestMove()
+; 8::ParseBestMove(bestmove)
+; 9::SendMoveToGUI(bestmoves)
+; ;9::GetFenFromGUI()
+; 0::SendNewPosition()
 
-;2::OutToFish("isready")
-;3::InFromFish()
+; ;2::OutToFish("isready")
+; ;3::InFromFish()
 
-^+x::ExitSequence()
+; ^+x::ExitStreamer()
 
 
 
