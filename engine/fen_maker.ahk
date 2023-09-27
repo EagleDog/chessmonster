@@ -31,7 +31,7 @@ CreateFen() {
     empty_squares_num := 0
     Loop, 8 {
       col := A_Index
-      file := Chr(96 + col)     ; => a-h
+      file := ColToFile(col)     ; => a-h
       spot := file . rank
       abbr := positions[spot].abbr
       abbr := GetFenAbbr(abbr)   ; calls GetFenAbbr(abbr)

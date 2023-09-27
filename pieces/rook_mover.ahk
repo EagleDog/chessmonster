@@ -77,7 +77,7 @@ FindRPath1(spot) {         ; ROOK PATH 1 UP
     n := A_Index
     row += 1
     rank := row
-    file := Chr(96 + col)
+    file := ColToFile(col)
     spot := file . rank
     color := SqStat(spot)
     GoSpot(spot)
@@ -97,7 +97,7 @@ FindRPath2(spot) {         ; ROOK PATH 2 RIGHT
     n := A_Index
     col += 1
     rank := row
-    file := Chr(96 + col)
+    file := ColToFile(col)
     spot := file . rank
     color := SqStat(spot)
     GoSpot(spot)
@@ -117,7 +117,7 @@ FindRPath3(spot) {         ; ROOK PATH 3 DOWN
     n := A_Index
     row -= 1
     rank := row
-    file := Chr(96 + col)
+    file := ColToFile(col)
     spot := file . rank
     color := SqStat(spot)
     GoSpot(spot)
@@ -137,7 +137,7 @@ FindRPath4(spot) {         ; ROOK PATH 4 LEFT
     n := A_Index
     col -= 1
     rank := row
-    file := Chr(96 + col)
+    file := ColToFile(col)
     spot := file . rank
     color := SqStat(spot)
     GoSpot(spot)

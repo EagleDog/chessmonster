@@ -68,15 +68,15 @@ OutputPositions() {
   positions["num_pieces_opp"] := num_pieces_opp
   positions["num_pieces_mine"] := num_pieces_mine
   positions["move_number"] := move_num
+
+  DidCastlersMove()    ; <== DidCastlersMove()
 }
 ;
 ;------------------------------------------------------------------
 ;                                                    GET POSITIONS
 GetPositions() {
   LogMain("Getting positions.....")
-  prev_positions := positions
-  ; gui_text := "Getting positions....."
-  ; GuiControl,, gui_output, % gui_text
+;  prev_positions := positions
   piece := ""
   color := ""
   abbr := ""
@@ -85,10 +85,13 @@ GetPositions() {
     row := rank
     Loop, 8 {     ; files (columns)
       col := A_Index
-      file := Chr(96 + col)     ; a_index > a-h
+      file := ColToFile(col)     ; a_index > a-h
       spot := file . rank
       color := SquareStatus(spot)
-      piece := IDPiece(spot, color)  ; <<==========   <<======
+      DidSquareChange(spot, color)       ; <== UpdatePosition(spot)
+      piece := positions[spot].piece
+;     BUG                 bug is here
+;      piece := IDPiece(spot, color)  ; <<========== ImageSearch() <<======
       abbr := GetAbbr(piece, color)
       positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
     }

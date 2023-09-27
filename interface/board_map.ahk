@@ -18,7 +18,7 @@ sleep 200
     row := rank
     Loop, 8 {     ; Files (columns)
       col := A_Index
-      file := FindFile(col)     ; a_index > a-h
+      file := ColToFile(col)     ; a_index > a-h
       ; file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
 
@@ -43,7 +43,7 @@ FlipBoard() {
   b := board
 }
 
-FindFile(col) {
+ColToFile(col) {
   file := Chr(96 + col) ; col > a-h
   return file
 }

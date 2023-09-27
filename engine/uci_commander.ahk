@@ -32,14 +32,19 @@ StartEngine() {
    sleep 50
   NewGameUCI()
    sleep 50
+  AdjustElo()
+   sleep 50
   ActivateChess()
 }
 
 RunUCI() {
-  ;ActivateStockfish()
-  ; sleep 50
-  ; NewGameUCI()
-  ;  sleep 50
+  if not WinExist("ahk_exe stockfish.exe") {
+    StartEngine()
+  }
+  SendIsReady()
+   sleep 50
+  GetIsReady()
+   sleep 50
   fen := GetFenFromGUI()
    ; StartPos()
    sleep 50
@@ -71,6 +76,13 @@ GetReady() {
     ready_response := GetIsReady()
   }
   ActivateChess()
+}
+
+AdjustElo() {
+;  SendToUCI("UCI Elo (1925)")
+  SendToUCI("setoption name UCI_LimitStrength value true")
+   sleep 50
+  SendToUCI("setoption name UCI_Elo value 400")
 }
 
 SendIsReady() {

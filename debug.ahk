@@ -19,6 +19,6 @@ DoNothing() {
   return nothing
 }
 
-Print(outout_text) {
-  fileappend % output_text " ", *
-}
+; Print(outout_text) {
+;   fileappend % output_text " ", *
+; }

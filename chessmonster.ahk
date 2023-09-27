@@ -249,14 +249,18 @@ RandomChoice(max=2) {
   }
 }
 
-MyColorWhite() {
+MyColorIsWhite() {
   my_color := "white"
   opp_color := "black"
 }
 
-MyColorBlack() {
+MyColorIsBlack() {
   my_color := "black"
   opp_color := "white"
+}
+
+Print(outout_text) {
+  fileappend % output_text " ", *
 }
 
 ActivateChess() {
@@ -291,6 +295,9 @@ ExitChessMonster() {
 2::PollZones()
 3::RunUCI()
 
+4::SearchSuccessors("d4", rook_patterns)
+; 4::SearchSuccessors("h8", rook_patterns)
+
 9::msgbox % move_num "--move_num"
 0::NewGameUCI()
 
@@ -314,8 +321,8 @@ d::DebugSnapshots()
 ; 0::SqStatTest()
 
 a::GetPositions()
-w::MyColorWhite()
-b::MyColorBlack()
+w::MyColorIsWhite()
+b::MyColorIsBlack()
 
 ;o::PollOppTerritory()
 

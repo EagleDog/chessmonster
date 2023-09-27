@@ -17,7 +17,7 @@ global z8 := ["c1","d1","e1","f1","c2","d2","e2","f2"] ; my_rear
 global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
 PollZones() { ; find last opp_move only
-  loop 8 {
+  loop 14 {
     zone := zones[which_zone]
     opp_move := PollZone(zone)
     if ( opp_move == true ) {
@@ -36,13 +36,17 @@ PollZone(zone) {
   n := 1
   while zone[n] {
     spot := zone[n]
-    color := UpdatePosition(spot)
-    if ( color != my_color ) {
-      if DidSquareChange(spot) {
+    color := SqStat(spot) ; <== SqSt() replaces UpdatePosition()
+    GoSpot(spot)
+;    if ( color != my_color ) {
+      if DidSquareChange(spot, color) {
+
+        prev_piece := snapshot[spot].piece
         CheckAntecedents(spot)
+;        CheckPredecessors(spot)
         return true
       }
-    }
+;    }
     n := A_Index + 1
   }
 }

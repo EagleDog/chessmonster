@@ -70,7 +70,7 @@ PossKMoves(spot, diffs) {       ; 8 Possible King Moves
   Loop, 8 {
     n := A_Index
     m_col := col + diffs[n][1]     ; 1,1... 1,2... 2,1... 2,2... 3,1... 3,2...
-    m_file := FindFile(m_col)
+    m_file := ColToFile(m_col)
     ; m_file := Chr(96 + m_col)
     m_row := row + diffs[n][2]
     m_rank := m_row

@@ -43,7 +43,7 @@ MoveAndFailCheck(spot, target) { ; Pawn Promotion too!
     fail := true
   }
   PromotePawn(spot, piece, target)   ; <== PromotePawn(spot,piece,target)
-  DidCastlersMove()    ; <== DidCastlersMove()
+;  DidCastlersMove()    ; <== DidCastlersMove()
 }
 
 Chill() {
