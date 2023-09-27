@@ -33,12 +33,13 @@
 #Include interface\move_maker.ahk
 #Include interface\new_match.ahk
 
-#Include interface\pawn_mover.ahk
-#Include interface\knight_mover.ahk
-#Include interface\bishop_mover.ahk
-#Include interface\rook_mover.ahk
-#Include interface\queen_mover.ahk
-#Include interface\king_mover.ahk
+#Include pieces\pawn_mover.ahk
+#Include pieces\knight_mover.ahk
+#Include pieces\bishop_mover.ahk
+#Include pieces\rook_mover.ahk
+#Include pieces\queen_mover.ahk
+#Include pieces\king_mover.ahk
+#Include pieces\piece_mover.ahk
 
 global rel_path := A_ScriptDir
 global assets_path := rel_path . "\assets\"
@@ -289,6 +290,8 @@ ExitChessMonster() {
 1::StartEngine()
 2::PollZones()
 3::RunUCI()
+
+9::msgbox % move_num "--move_num"
 0::NewGameUCI()
 
 ^1::NewGame()
