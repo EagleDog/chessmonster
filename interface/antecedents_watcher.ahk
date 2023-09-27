@@ -8,41 +8,24 @@
 ; Antecedents
 
 DidSquareChange(spot, color) {  ; returns true or false
-  ; if ( move_num == 1 ) {
-  ;   return
-  ; }
   snapshot := snapshots[move_num]
   snap_spot := snapshot[spot]
-
   prev_piece := snap_spot.piece
   prev_color := snap_spot.color
-
 ;  color := SqStat(spot)
-
 ;  color := position.color
- ;   msgbox % "no color change n  " color . prev_color
   if ( prev_color == color ) {  ; check color change first
     return false
   }
   UpdatePosition(spot)   ;  <== UpdatePosition(spot)
   position := positions[spot]
   piece := position.piece
-
-;  if ( ( prev_piece == piece ) and ( prev_color == color ) ) {
   if ( prev_piece == piece ) {
-;    msgbox % "same piece`n  " prev_piece " to "  piece
     return false  ; square is same
-  } else {  ; square changed, update snapshot (nonredundant)
-
-;    msgbox % "square changed `n  " prev_piece " to "  piece
-;    snapshot[spot] := { spot: spot, piece: piece, color: color, abbr: position.abbr, col: position.col, file: position.file, row: position.row, rank: position.rank } ; non-redundant
-
-    ; snapshot[spot] := positions[spot].Clone() ; non-redundant
-
+  } else {  ; square changed
     LogDebug(prev_color " " prev_piece ", " color " " piece)
     Debug(prev_color " " prev_piece ", " color " " piece)
-    Print(prev_color " " prev_piece ", " color " " piece)
-    fileappend % prev_color " " prev_piece ", " color " " piece " ", *
+;    fileappend % prev_color " " prev_piece ", " color " " piece " ", *
     return true
   }
 }
@@ -72,9 +55,12 @@ CheckAntecedents(spot) {
 ;      DoNothing()
     case "pawn": CheckPawnAntecedents(spot)
     case "knight": CheckKnightAntecedents(spot)
-    case "bishop": CheckBishopAntecedents(spot)
-    case "rook": CheckRookAntecedents(spot)
-    case "queen": CheckQueenAntecedents(spot)
+    case "bishop": SearchSuccessors(spot, bishop_patterns)
+    ; case "bishop": CheckBishopAntecedents(spot)
+    case "rook": SearchSuccessors(spot, rook_patterns)
+    ; case "rook": CheckRookAntecedents(spot)
+    case "queen": SearchSuccessors(spot, queen_patterns)
+    ; case "queen": CheckQueenAntecedents(spot)
     case "king": CheckKingAntecedents(spot)
   }
   snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
