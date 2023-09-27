@@ -23,7 +23,7 @@ DidSquareChange(spot) {  ; returns true or false
   if ( ( prev_piece == piece ) and ( prev_color == color ) ) {
     return false  ; square is same
 
-  } else {  ; square changed
+  } else {  ; square changed, update snapshot (nonredundant)
     snapshot[spot] := { spot: spot, piece: piece, color: color, abbr: position.abbr, col: position.col, file: position.file, row: position.row, rank: position.rank } ; non-redundant
 
     LogDebug(prev_color " " prev_piece ", " color " " piece)
@@ -73,7 +73,7 @@ CheckAntecedents(spot) {
   }
 }
 
-CheckPawnAntecedents(spot) { ;, pawns)
+CheckPawnAntecedents(spot) {   ; pawn
   back_one := [ 0, 1 ]
   back_two := [ 0, 2 ]
   back_diag_1 := [ 1, 1 ]
@@ -85,7 +85,7 @@ CheckPawnAntecedents(spot) { ;, pawns)
   RunAntecedentsEngine(spot, antecedents)
 }
 
-CheckKnightAntecedents(spot) { ;, knights)
+CheckKnightAntecedents(spot) {  ; knight
   jump_1 := [ 1, 2 ]
   jump_2 := [ 2, 1 ]
   jump_3 := [ 2, -1 ]
@@ -98,7 +98,7 @@ CheckKnightAntecedents(spot) { ;, knights)
   RunAntecedentsEngine(spot, antecedents)
 }
 
-CheckBishopAntecedents(spot) {
+CheckBishopAntecedents(spot) {  ; bishop
   up_left_1 := [ -1, -1 ]
   up_left_2 := [ -2, -2 ]
   up_right_1 := [ 1, -1 ]
@@ -110,7 +110,7 @@ CheckBishopAntecedents(spot) {
   antecedents :=  [ up_left_1, up_left_2, up_right_1, up_right_2, down_right_1, down_right_2, down_left_1, down_left_2 ]
   RunAntecedentsEngine(spot, antecedents)
 }
-CheckRookAntecedents(spot) {
+CheckRookAntecedents(spot) {  ; rook
   left_1 := [ -1, 0 ]
   left_2 := [ -2, 0 ]
   up_1 := [ 0, -1 ]
@@ -122,7 +122,7 @@ CheckRookAntecedents(spot) {
   antecedents := [ left_1, left_2, up_1, up_2, right_1, right_2, down_1, down_2 ]
   RunAntecedentsEngine(spot, antecedents)
 }
-CheckQueenAntecedents(spot) {
+CheckQueenAntecedents(spot) {  ; queen
   up_left_1 := [ -1, -1 ]
   up_left_2 := [ -2, -2 ]
   up_right_1 := [ 1, -1 ]
@@ -142,7 +142,7 @@ CheckQueenAntecedents(spot) {
   antecedents :=  [up_left_1,up_left_2,up_right_1,up_right_2,down_right_1,down_right_2,down_left_1,down_left_2,left_1,left_2,up_1,up_2,right_1,right_2,down_1,down_2]
   RunAntecedentsEngine(spot, antecedents)
 }
-CheckKingAntecedents(spot) {
+CheckKingAntecedents(spot) {  ; king
   up_left_1 := [ -1, -1 ]
   up_right_1 := [ 1, -1 ]
   down_right_1 := [ 1, 1 ]
