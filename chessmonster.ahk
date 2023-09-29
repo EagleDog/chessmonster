@@ -33,10 +33,11 @@ global fishlog := rel_path . "\engine\fishlog.txt"
 #Include interface\positions_poller.ahk
 #Include interface\zone_poller.ahk
 #Include interface\snapshots.ahk
-#Include interface\antecedents_watcher.ahk
 #Include interface\opening_moves.ahk
 #Include interface\move_maker.ahk
 #Include interface\new_match.ahk
+#Include interface\antecedents_watcher.ahk
+#Include pieces\descendents_watcher.ahk
 
 #Include pieces\pawn_mover.ahk
 #Include pieces\knight_mover.ahk
@@ -44,7 +45,6 @@ global fishlog := rel_path . "\engine\fishlog.txt"
 #Include pieces\rook_mover.ahk
 #Include pieces\queen_mover.ahk
 #Include pieces\king_mover.ahk
-#Include pieces\piece_mover.ahk
 
 global none := "none"
 global my_color := "white"
