@@ -2,7 +2,7 @@
 ; input and output
 ;
 ;
-
+global fishlog := rel_path . "\engine\fishlog.txt"
 global stockfishPID := 999
 ;global fishlog := rel_path . "\engine\fishlog.txt"
 

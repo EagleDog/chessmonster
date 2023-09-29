@@ -149,32 +149,26 @@ NewGame() {
   FlipBoard()
   GetStartingPositions()
   ResetSnapshots()
+  NewGameUCI()
+  StartGame()
   ; GoLoop()
   ; MakeMove()
 }
 
 UseSpecificPiece() { ; for testing piece movements
-  ; LogMain("UseSpcificPiece()")
-  ; sleep 200
   ; if ( (piece_type != "bishop") ) {
   ;   TryMove()
   ; }
-  ; return none
 }
+
 MoveWhichPiece(spot, piece_type) {
   switch piece_type {
-    case "pawn":
-      target := MovePawn(spot)
-    case "knight":
-      target := MoveKnight(spot)
-    case "bishop":
-      target := MoveBishop(spot)
-    case "rook":
-      target := MoveRook(spot)
-    case "queen":
-      target := MoveQueen(spot)
-    case "king":
-      target := MoveKing(spot)
+    case "pawn": target := MovePawn(spot)
+    case "knight": target := MoveKnight(spot)
+    case "bishop": target := MoveBishop(spot)
+    case "rook": target := MoveRook(spot)
+    case "queen": target := MoveQueen(spot)
+    case "king": target := MoveKing(spot)
   }
   return target
 }
@@ -282,6 +276,17 @@ ExitChessMonster() {
   ExitApp
 }
 
+StartGame() {
+  loop {
+    RunUCI()
+    PollOpp()
+    if ( paused == true ) {
+      break
+    }
+  }
+}
+
+
 ;======= KEYBOARD SHORTCUTS ===================
 
 
@@ -291,8 +296,8 @@ ExitChessMonster() {
 ^+x::ExitChessMonster() ; ctrl + shift + x
 ; ^+c::SublimeGo() ; ctrl + shift + x
 
-1::StartEngine()
-2::PollZones()
+1::StartGame()
+2::PollOpp()
 3::RunUCI()
 
 4::SearchSuccessors("d4", rook_patterns)
@@ -313,6 +318,8 @@ s::ShakeGui()
 ;9::New3Min()
 
 d::DebugSnapshots()
+^f::FishlogRefresh()
+f::FlipBoardUCI()
 
 ;0::CheckQueenAntecedents("e5")
 ;0::OutputSnapshot(1)

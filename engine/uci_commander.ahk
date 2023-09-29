@@ -46,30 +46,34 @@ RunUCI() {
   if not WinExist("ahk_exe stockfish.exe") {
     StartEngine()
   }
-  SendIsReady()
-   sleep 50
-  GetIsReady()
-   sleep 50
-  fen := GetFenFromGUI()
-   ; StartPos()
-   sleep 50
-  SendFenToUCI(fen)
-   sleep 50
-  SendIsReady()
-   sleep 50
-  GetIsReady()
-   sleep 50
-  CalculateMove(move_time)   ; go movetime 500
-  ; ActivateChess()
-   sleep % move_time
+  SendIsReady(), sleep 50
+  GetIsReady(), sleep 50
+  fen := GetFenFromGUI(), sleep 50  ; StartPos()
+  SendFenToUCI(fen), sleep 50
+  SendIsReady(), sleep 50
+  GetIsReady(), sleep 50
+  CalculateMove(move_time)   ; go movetime 500  ; ActivateChess()
+   sleep % move_time + 50
    bestmove := GetBestMove()
    bestmoves := ParseBestMove(bestmove)
   ActivateChess()
   SendMoveToGUI(bestmoves)
-  PollZones()
+;  PollZones()
 ;   fen := GetFenFromGUI()
 ;  SendFenToUCI(fen)
 
+}
+
+GetBestMove() {
+  response := ReceiveFromUCI()
+  bestmove := StrSplit(response, " ")[2]
+  FileAppend % bestmove " ", *
+  return bestmove
+}
+
+SendMoveToGUI(bestmoves) {        ; move piece
+  MovePiece(bestmoves[1], bestmoves[2])
+  fileappend % "move " bestmoves[1] " to " bestmoves[2] " sent to gui", *
 }
 
 GetReady() {
@@ -125,7 +129,7 @@ DisplayBoard() {
   SendToUCI("d")
 }
 
-FlipBoardUCI() {    ; function name conflict
+FlipBoardUCI() {
   SendToUCI("flip")
 }
 
@@ -133,12 +137,6 @@ ReceiveReady() {
   ready_response := ReceiveFromUCI()
   FileAppend % ready_response " ", *
   return ready_response
-}
-GetBestMove() {
-  response := ReceiveFromUCI()
-  bestmove := StrSplit(response, " ")[2]
-  FileAppend % bestmove " ", *
-  return bestmove
 }
 
 ParseBestMove(bestmove) {
@@ -155,10 +153,6 @@ ParseBestMove(bestmove) {
   return bestmoves
 }
 
-SendMoveToGUI(bestmoves) {
-  MovePiece(bestmoves[1], bestmoves[2])
-  fileappend % "move sent to gui", *
-}
 GetFenFromGUI() {
   fen := CreateFen()
   return fen

@@ -2,7 +2,7 @@
 ;
 ;
 global period := "opening"
-global which_zone := 1
+global which_zone := 4
 
 ;____zones____
 global z1 := ["c5","d5","e5","f5","c6","d6","e6","f6"] ; opp_front
@@ -16,20 +16,33 @@ global z8 := ["c1","d1","e1","f1","c2","d2","e2","f2"] ; my_rear
 
 global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
+PollOpp() {
+  if PollZones() {
+    RunUCI()
+  } else {
+    PollZones()
+  }
+}
+
 PollZones() { ; find last opp_move only
-  loop 14 {
+  opp_move := false
+  paused := false
+  loop 8 {
     zone := zones[which_zone]
     opp_move := PollZone(zone)
     if ( opp_move == true ) {
-                       ; <==== left off here bookmark 9/27/23
-      return
+      return true
     }
     which_zone += 1
     if ( which_zone > zones.count() ) {
       LogDebug(zones.count())
       which_zone := 1
     }
+    if (paused = true) {
+      break
+    }
   }
+  return false
 }
 
 PollZone(zone) {

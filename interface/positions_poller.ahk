@@ -12,9 +12,6 @@ global opp_spots := [] ;"d4","e5","b3",...
 global my_spots := []  ; active spots
 global both_spots := [] ; all active spots both colors
 
-PollOpp() {
-  PollZones()
-}
 
 PollOppSide() {
   LogMain("poll opp territory")

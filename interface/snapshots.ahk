@@ -11,32 +11,11 @@ ResetSnapshots() {
 
 UpdateSnapshots() {
   CreateSnapshot()
-;  GetSnapshot()
 }
 
 CreateSnapshot() {
   snapshots[move_num] := positions.Clone()
 }
-
-; GetSnapshot() {   ; deprecated by clone in CreateSnapshot()
-;   snapshots[move_num] := {}
-;   snapshot := snapshots[move_num]
-;   Loop, 8 {
-;     rank := A_Index
-;     row := rank
-;     Loop, 8 {
-;       col := A_Index
-;       file := Chr(96 + col)     ; a_index > a-h
-;       spot := file . rank
-;       color := positions[spot].color
-;       piece := positions[spot].piece
-;       abbr := positions[spot].abbr
-;       snapshot[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
-;     }
-;   }
-;   snapshot["num_pieces_opp"] := positions["num_pieces_opp"]
-;   snapshot["num_pieces_mine"] := positions["num_pieces_mine"]
-; }
 
 OutputSnapshot() {
   snapshot := snapshots[move_num] ;[move_num - 1]
@@ -99,4 +78,23 @@ DebugSnapshots() {
   }
 }
 
+; GetSnapshot() {   ; deprecated by clone in CreateSnapshot()
+;   snapshots[move_num] := {}
+;   snapshot := snapshots[move_num]
+;   Loop, 8 {
+;     rank := A_Index
+;     row := rank
+;     Loop, 8 {
+;       col := A_Index
+;       file := Chr(96 + col)     ; a_index > a-h
+;       spot := file . rank
+;       color := positions[spot].color
+;       piece := positions[spot].piece
+;       abbr := positions[spot].abbr
+;       snapshot[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
+;     }
+;   }
+;   snapshot["num_pieces_opp"] := positions["num_pieces_opp"]
+;   snapshot["num_pieces_mine"] := positions["num_pieces_mine"]
+; }
 
