@@ -34,8 +34,10 @@ MoveAndFailCheck(spot, target) { ; Pawn Promotion too!
   ClickDrag(spot, target)  ; <==== click and drag
   sleep 200
   UpdatePosition(spot)  ; <== UpdatePosition(spot)
+  snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
   sleep 50
   UpdatePosition(target)  ; <== UpdatePosition(spot)
+  snapshots[move_num][target] := positions[target].Clone() ; non-redundant
   sleep 50
   ID2 := positions[spot].piece
   if ( ID2 == ID1 ) {  ; <=== fail check

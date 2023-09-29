@@ -1,4 +1,4 @@
-;piece_mover.ahk
+;descnedents_watcher.ahk
 ;
 ;  STEP 1 -- rook, bishop, queen
 ;  STEP 2 -- antecedents

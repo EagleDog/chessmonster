@@ -37,7 +37,7 @@ global fishlog := rel_path . "\engine\fishlog.txt"
 #Include interface\move_maker.ahk
 #Include interface\new_match.ahk
 #Include interface\antecedents_watcher.ahk
-#Include pieces\descendents_watcher.ahk
+#Include interface\descendents_watcher.ahk
 
 #Include pieces\pawn_mover.ahk
 #Include pieces\knight_mover.ahk
