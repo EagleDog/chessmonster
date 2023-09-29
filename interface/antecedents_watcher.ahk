@@ -50,9 +50,9 @@ CheckAntecedents(spot) {
 ;  first check DidSquareChange(), else...
   LogMain("CheckAntecedents( " . spot . " )")
   piece := positions[spot].piece
+  hybrid_color := positions[spot].color
   switch piece {
-    case "empty": CheckDescendents(spot)
-;      DoNothing()
+    case "empty": hybrid_color := CheckDescendents(spot)
     case "pawn": CheckPawnAntecedents(spot)
     case "knight": CheckKnightAntecedents(spot)
     case "bishop": SearchSuccessors(spot, bishop_patterns)
@@ -64,7 +64,7 @@ CheckAntecedents(spot) {
     case "king": CheckKingAntecedents(spot)
   }
   snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
-;  msgbox snapshots
+  return hybrid_color
 }
 
 CheckPawnAntecedents(spot) {   ; pawn

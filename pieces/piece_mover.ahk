@@ -24,8 +24,10 @@ global queen_patterns := CombineArrays(rook_patterns, bishop_patterns)
 CheckDescendents(spot) { 
 LogMain("CheckDescendents( " . spot . " )")
   prev_piece := snapshots[move_num][spot].piece
+  prev_color := snapshots[move_num][spot].color
   move_patterns := AssignMovePatterns(spot, prev_piece)
   SearchSuccessors(spot, move_patterns)
+  return prev_color
 }
 
 AssignMovePatterns(spot, prev_piece) {
@@ -63,7 +65,7 @@ SearchSuccessors(spot, move_patterns) {
         snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
       }
       if ( color == opp_color ) {
-          break
+        break
       }
     }
     n := A_Index + 1

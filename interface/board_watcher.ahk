@@ -100,6 +100,43 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
   }
 }
 
+; ImgSize(img, ByRef width, ByRef height) { ; Get image's dimensions
+;  If FileExist(img) {
+;   GUI, Add, Picture, hwndpic, %img%
+;   ControlGetPos,,, width, height,, ahk_id %pic%
+;   Gui, Destroy
+;  } Else height := width := 0
+
+; }
+
+; GetImageDimension(_image) {
+;   DllCall("GDIplus\GdipGetImageDimension"
+;       , "UInt", _image
+;       , "Float*", w
+;       , "Float*", h)
+;   Return w "|" h
+; }
+
+; CheckPawnSize() {
+;   dimensions := GetImageDimension("C:\Users\Student\c\chess\chessmonster\assets\p_bl_wh.png")
+;   msgbox % dimensions
+; }
+
+;  imgSize("C:\Users\Student\c\chess\chessmonster\assets\p_bl_wh.png", imageWidth , imageHeight)
+;  MsgBox ,  width = %imageWidth% , height = %imageHeigh%
+
+
+
+ImageMatches(x1, y1, x2, y2, img_path) {
+  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
+  ; ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 *w38 *h-1 *TransBlack %img_path%
+  if (img_x) {
+    return true
+  } else {
+    return false
+  }
+}
+
 SquareStatus(spot) {
   if CheckColor(spot, white) {
     sq_contains := "white"
@@ -165,15 +202,6 @@ BlackOrWhite(color) {
     return false
   }
 }
-ImageMatches(x1, y1, x2, y2, img_path) {
-  ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
-  if (img_x) {
-    return true
-  } else {
-    return false
-  }
-}
-
 
 GetColor(spot) {
   x := board[spot].x

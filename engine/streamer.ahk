@@ -63,6 +63,17 @@ OutToFish(out_text) {
 
 }
 
+MoveStockfish() {
+  WinMove, ahk_exe stockfish.exe, , 1280, 107, 1200, 750
+  ; WinMove, ahk_exe stockfish.exe, , 1280, 150, 800, 700
+}
+MoveFish2() {
+  WinMove, ahk_exe stockfish.exe, , 900, 200
+}
+MoveFish3() {
+  WinMove, ahk_exe stockfish.exe, , 800, 300
+}
+
 ExitStreamer() {
   WinClose, ahk_exe stockfish.exe
 ;  ExitApp

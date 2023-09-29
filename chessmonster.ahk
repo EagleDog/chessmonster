@@ -12,9 +12,14 @@
 ; Pause On
 
 ; #Include engine\std_in_out.ahk
+
+global rel_path := A_ScriptDir
+global assets_path := rel_path . "\assets\"
+global fishlog := rel_path . "\engine\fishlog.txt"
+
 #Include debug.ahk
 #Include interface\chess_gui.ahk
-#Include interface\VA.ahk
+#Include library\VA.ahk
 #Include interface\listener.ahk
 
 #Include engine\castle_rights.ahk
@@ -40,10 +45,6 @@
 #Include pieces\queen_mover.ahk
 #Include pieces\king_mover.ahk
 #Include pieces\piece_mover.ahk
-
-global rel_path := A_ScriptDir
-global assets_path := rel_path . "\assets\"
-global fishlog := rel_path . "\engine\fishlog.txt"
 
 global none := "none"
 global my_color := "white"
@@ -172,13 +173,6 @@ MoveWhichPiece(spot, piece_type) {
   }
   return target
 }
-PromotePawn(spot, piece_type, target) {
-  if ( (piece_type = "pawn") AND (target contains 8) ) {
-    sleep 150
-    mouseclick Left    ;  Promotion  choose queen
-    UpdatePosition(spot)
-  }
-}
 
 FindMyGuys(spot, spot_color) {
   while (spot_color != my_color) {   ; find my guys
@@ -278,11 +272,14 @@ ExitChessMonster() {
 
 StartGame() {
   loop {
-    RunUCI()
-    PollOpp()
     if ( paused == true ) {
+      paused := false
       break
     }
+    RunUCI()
+    sleep 500
+    PollOpp()
+    sleep 500
   }
 }
 
@@ -296,12 +293,15 @@ StartGame() {
 ^+x::ExitChessMonster() ; ctrl + shift + x
 ; ^+c::SublimeGo() ; ctrl + shift + x
 
-1::StartGame()
-2::PollOpp()
+1::StartEngine()
+2::StartGame()
+;2::PollOpp()
 3::RunUCI()
 
 4::SearchSuccessors("d4", rook_patterns)
 ; 4::SearchSuccessors("h8", rook_patterns)
+
+;5::CheckPawnSize()
 
 9::msgbox % move_num "--move_num"
 0::NewGameUCI()
@@ -309,6 +309,11 @@ StartGame() {
 ^1::NewGame()
 ^2::GoLoop()
 ^3::MoveGui3()
+
+^+1::MoveStockfish()
+^+2::MoveFish2()
+^+3::MoveFish3()
+
 m::DriftMouse()
 r::RematchComputer()
 q::MoveGui1()

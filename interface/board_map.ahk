@@ -7,8 +7,14 @@ global x_start := 194
 global y_start := 875
 global sq_width := 87
 global sq_height := -88
+global scale := 1
 
 global all_spots := []
+
+global display_size := "HP" ; default is "HP"
+                            ; "laptop" is 1920 x 1080 ("recommended")
+
+;AdjustDisplaySize()
 
 CreateBoard() {             ; populate with x y coords 64 squares
 LogMain("CreateBoard()")
@@ -19,7 +25,6 @@ sleep 200
     Loop, 8 {     ; Files (columns)
       col := A_Index
       file := ColToFile(col)     ; a_index > a-h
-      ; file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
 
       x := (col - 1) * sq_width + x_start
@@ -34,10 +39,9 @@ sleep 200
 }
 
 FlipBoard() {
-  LogMain0("FlipBoard()")
-  sleep, 200
+  LogMain0("FlipBoard()"), sleep, 50
   b := board
-  if (my_color = "black") {
+  if (my_color == "black") {
     my_color := "black"
   }
   b := board
@@ -46,6 +50,20 @@ FlipBoard() {
 ColToFile(col) {
   file := Chr(96 + col) ; col > a-h
   return file
+}
+
+AdjustDisplaySize() {
+  if ( display_size == "laptop" ) { ; laptop 1920 x 1080
+    assets_path := assets_path . "\assets2\"
+    x_start := 146 + 46
+    y_start := 938 - 46
+    sq_width := 92
+    sq_height := -92
+
+    scale := 1.15
+    new_width := 41
+
+  }
 }
 
 

@@ -17,7 +17,8 @@ global z8 := ["c1","d1","e1","f1","c2","d2","e2","f2"] ; my_rear
 global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
 PollOpp() {
-  if PollZones() {
+  opp_move := PollZones()
+  if opp_move {
     RunUCI()
   } else {
     PollZones()
@@ -26,11 +27,11 @@ PollOpp() {
 
 PollZones() { ; find last opp_move only
   opp_move := false
-  paused := false
   loop 8 {
     zone := zones[which_zone]
     opp_move := PollZone(zone)
     if ( opp_move == true ) {
+      opp_move := false
       return true
     }
     which_zone += 1
@@ -38,7 +39,7 @@ PollZones() { ; find last opp_move only
       LogDebug(zones.count())
       which_zone := 1
     }
-    if (paused = true) {
+    if (paused == true) {
       break
     }
   }
@@ -54,9 +55,12 @@ PollZone(zone) {
     GoSpot(spot)
 ;    if ( color != my_color ) {
       if DidSquareChange(spot, color) {
-;        prev_piece := snapshot[spot].piece
-        CheckAntecedents(spot) ; checks descendents too
-        return true
+        hybrid_color := CheckAntecedents(spot) ; checks descendents too
+        LogVolume(hybrid_color . " " opp_move)
+        if ( hybrid_color == opp_color ) {
+          msgbox true
+          return true
+        }
       }
 ;    }
     n := A_Index + 1

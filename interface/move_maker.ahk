@@ -24,7 +24,7 @@ LogMain("MovePiece:  '" spot "' to '" target "'" )
 ;    UpdateSnapshots()
 ;    LogMoves(move_num)
     WhichZones()
-    LogVolume(period)
+;    LogVolume(period)
   }
 }
 
@@ -39,11 +39,20 @@ MoveAndFailCheck(spot, target) { ; Pawn Promotion too!
   sleep 50
   ID2 := positions[spot].piece
   if ( ID2 == ID1 ) {  ; <=== fail check
-;    msgbox FAIL
+    msgbox FAIL
     fail := true
   }
   PromotePawn(spot, piece, target)   ; <== PromotePawn(spot,piece,target)
 ;  DidCastlersMove()    ; <== DidCastlersMove()
+}
+
+PromotePawn(spot, piece_type, target) {
+  if ( (piece_type = "pawn") AND (target contains 8) ) {
+    sleep 250
+    mouseclick Left    ;  Promotion  choose queen
+    sleep 150
+    UpdatePosition(spot)
+  }
 }
 
 Chill() {
@@ -66,7 +75,7 @@ MoveClick(x, y) {
 }
 
 ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
-  MouseClickDrag, L, b[spot].x, b[spot].y, b[target].x, b[target].y, 2
+  MouseClickDrag, L, b[spot].x, b[spot].y, b[target].x, b[target].y, 3
 }
 
 DriftMouse() {
