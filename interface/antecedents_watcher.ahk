@@ -7,12 +7,12 @@
 ; Antecedents
 ; Antecedents
 
-DidSquareChange(spot, color) {  ; returns true or false
+DidSquareChange(spot) {  ; returns true or false
   snapshot := snapshots[move_num]
   snap_spot := snapshot[spot]
   prev_piece := snap_spot.piece
   prev_color := snap_spot.color
-;  color := SqStat(spot)
+  color := SqStat(spot)
 ;  color := position.color
   if ( prev_color == color ) {  ; check color change first
     return false

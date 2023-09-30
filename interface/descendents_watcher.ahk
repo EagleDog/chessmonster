@@ -65,7 +65,7 @@ SearchSuccessors(spot, move_patterns) {
       spot := file . rank
       GoSpot(spot)
       color := SqStat(spot)
-      if DidSquareChange(spot, color) {
+      if DidSquareChange(spot) {
         snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
       }
       if ( color == opp_color ) {

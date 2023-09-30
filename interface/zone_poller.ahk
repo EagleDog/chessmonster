@@ -55,10 +55,10 @@ PollZone(zone) {
   n := 1
   while zone[n] {
     spot := zone[n]
-    color := SqStat(spot) ; <== SqSt() replaces UpdatePosition()
+;    color := SqStat(spot) ; <== SqSt() replaces UpdatePosition()
     GoSpot(spot)
 ;    if ( color != my_color ) {
-      if DidSquareChange(spot, color) {
+      if DidSquareChange(spot) {
         hybrid_color := CheckAntecedents(spot) ; checks descendents too
         LogVolume(hybrid_color . " " opp_move)
         if ( hybrid_color == opp_color ) {
