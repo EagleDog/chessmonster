@@ -41,8 +41,7 @@ CheckAntecedents(spot) {
     case "king": CheckKingAntecedents(spot)
   }
   snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
-Chill()
-  msgbox % spot "  return h_color: " hybrid_color
+;  msgbox % spot "  return h_color: " hybrid_color
   return hybrid_color
 }
 

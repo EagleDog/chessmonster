@@ -16,32 +16,35 @@ global z8 := ["c1","d1","e1","f1","c2","d2","e2","f2"] ; my_rear
 
 global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
+
 PollOpp() {
-  opp_move := PollZones()
-  if opp_move {
-;  if ( opp_move == true ) {
-    msgbox PollOpp() opp_move true
-    Chill()
-    msgbox run UCI
-    RunUCI()
-  } else {
-    msgbox OPP MOVE FALSE
-    PollZones()
+  loop {
+    opp_move := PollZones()
+    if opp_move {
+      RunUCI()
+    }
+    if (paused == true) {
+      break
+    }
   }
+
+  ; } else {
+  ;   ; BUG IS RIGHT HERE.
+  ;   ; BUG IS RIGHT HERE.
+  ;   PollZones()
+  ; }
+
 }
 
 PollZones() { ; looks for opp_move
-  opp_move := false
+;  opp_move := false
   loop 8 {
     zone := zones[which_zone]
     opp_move := PollZone(zone)
     if ( opp_move == true ) {
-      opp_move := false
-;      msgbox PollZones() opp_move true
-      return true
+      return opp_move
     }
     which_zone += 1
-;    msgbox POLL ZONES
     if ( which_zone > zones.count() ) {
       LogDebug(zones.count())
       which_zone := 1
@@ -50,10 +53,9 @@ PollZones() { ; looks for opp_move
       break
     }
   }
-;  return false
 }
 
-PollZone(zone) {
+PollZone(zone) { ; returns true if opp has moved (theoretically)
   LogTimer("PollZone(" . which_zone . ")")
   n := 1
   while zone[n] {
@@ -62,27 +64,14 @@ PollZone(zone) {
     GoSpot(spot)
     if DidSquareChange(spot, color) {
       hybrid_color := CheckAntecedents(spot) ; descendents too
-      msgbox % "HYBRID_COLOR: " hybrid_color
-      if ( hybrid_color == opp_color ) {
-;        msgbox % "PollZone() h_color: " hybrid_color
-        return true
+      if ( hybrid_color = opp_color ) {
+        opp_move := true
+        return opp_move
       } else {
         msgbox % spot " " "color:" color "`nh_color: " hybrid_color "`nopp_color: " opp_color
       }
     }
     n := A_Index + 1
-  }
-}
-
-SearchZones(zone) { ; search many positions for
-  loop 8 {          ;   starting mid-game
-    zone := zones[which_zone]
-    PollZone(zone)
-    which_zone += 1
-    if ( which_zone > zones.count() ) {
-      LogDebug(zones.count())
-      which_zone := 1
-    }
   }
 }
 
