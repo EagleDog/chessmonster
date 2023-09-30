@@ -132,7 +132,7 @@ NewGame() {
   GetStartingPositions()
   ResetSnapshots()
   NewGameUCI()
-  StartGame()
+;  StartGame()
   ; GoLoop()
   ; MakeMove()
 }
@@ -265,14 +265,15 @@ StartGame() {
 ; ^+c::SublimeGo() ; ctrl + shift + x
 
 1::StartGame()
-2::PollOpp()
+;2::StartGame()
+5::PollOpp()
 ;2::PollOpp()
 3::RunUCI()
 
 4::SearchSuccessors("d4", rook_patterns)
 ; 4::SearchSuccessors("h8", rook_patterns)
 
-5::GetMyColor()
+;5::GetMyColor()
 
 ;5::CheckPawnSize()
 

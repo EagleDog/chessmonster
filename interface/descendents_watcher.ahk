@@ -23,9 +23,9 @@ global queen_patterns := CombineArrays(rook_patterns, bishop_patterns)
 
 CheckDescendents(spot) { 
 LogMain("CheckDescendents( " spot " )")
-msgbox % "CheckDescendents " spot
   prev_piece := snapshots[move_num][spot].piece
   prev_color := snapshots[move_num][spot].color
+msgbox % "CheckDescendents " spot " " prev_color " " prev_piece
   move_patterns := AssignMovePatterns(spot, prev_piece)
   SearchSuccessors(spot, move_patterns)
   return prev_color
@@ -35,7 +35,8 @@ AssignMovePatterns(spot, prev_piece) {
   msgbox % "AssignMovePatterns prev_piece: " prev_piece
   switch prev_piece {
     case "empty": DoNothing()
-    case "pawn": CheckPawnDescendents(spot)
+    case "pawn": CheckPawnSuccessors(spot)
+    ; case "pawn": CheckPawnDescendents(spot)
     case "knight": CheckKnightAntecedents(spot)
     case "bishop": move_patterns := bishop_patterns
     case "rook": move_patterns := rook_patterns

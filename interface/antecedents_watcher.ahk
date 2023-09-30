@@ -36,9 +36,7 @@ CheckAntecedents(spot) {
   hybrid_color := positions[spot].color
   switch piece {
     case "empty": hybrid_color := CheckDescendents(spot)
-    case "pawn":
-      CheckPawnAntecedents(spot)
-      CheckPawnDescendents(spot)
+    case "pawn": CheckPawnSuccessors(spot)
     case "knight": CheckKnightAntecedents(spot)
     case "bishop": SearchSuccessors(spot, bishop_patterns)
     case "rook": SearchSuccessors(spot, rook_patterns)
@@ -48,6 +46,11 @@ CheckAntecedents(spot) {
   snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
   msgbox % spot "  return h_color: " hybrid_color
   return hybrid_color
+}
+
+CheckPawnSuccessors(spot) {
+  CheckPawnAntecedents(spot)
+  CheckPawnDescendents(spot)
 }
 
 RunAntecedentsEngine(spot, antecedents) {
