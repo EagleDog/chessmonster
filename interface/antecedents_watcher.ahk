@@ -40,6 +40,7 @@ RunAntecedentsEngine(spot, antecedents) {
     rank := spot_rank + antecedents[n][2]
     file := ColToFile(col)
     spot := file . rank
+
     UpdatePosition(spot) ; ImageSearch not needed on all squares?
     GoSpot(spot)
     n := A_Index + 1
@@ -51,7 +52,6 @@ CheckAntecedents(spot) {
   LogMain("CheckAntecedents( " . spot . " )")
   piece := positions[spot].piece
   hybrid_color := positions[spot].color
-  msgbox % "check antecedents " spot " " piece hybrid_color
   switch piece {
     case "empty": hybrid_color := CheckDescendents(spot)
     case "pawn": CheckPawnAntecedents(spot)

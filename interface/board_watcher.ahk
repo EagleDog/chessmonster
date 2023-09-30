@@ -135,6 +135,7 @@ GetMyColor() {
     msgbox my color is black
     MyColorIsBlack()
   } else {
+    msgbox my color is white
     MyColorIsWhite()
   }
 }

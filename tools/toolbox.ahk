@@ -9,6 +9,22 @@ FlipBoard() {
   }
 }
 
+PauseDisplay() {
+  LogMain0("           ready")
+  LogMain("1 new match")
+  LogTimer("2 continue")
+  LogVolume("r rematch")
+}
+
+PauseMatch() {
+  if paused {
+    paused := false
+;    GoLoop()
+  } else {
+    paused := true
+  }
+}
+
 ColToFile(col) {
   file := Chr(96 + col) ; col > a-h
   return file

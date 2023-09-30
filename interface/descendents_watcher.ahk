@@ -67,7 +67,6 @@ SearchSuccessors(spot, move_patterns) {
       color := SqStat(spot)
       if DidSquareChange(spot, color) {
         snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
-;        msgbox % "square changed " spot " " color
       }
       if ( color == opp_color ) {
         break

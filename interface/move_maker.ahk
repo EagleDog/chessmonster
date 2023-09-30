@@ -26,6 +26,7 @@ Chill()
 ;    LogMoves(move_num)
     WhichZones()
 ;    LogVolume(period)
+  UpdateSnapshots()
   }
 }
 

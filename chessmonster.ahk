@@ -58,32 +58,12 @@ global paused := false
 global move_num := 1
 
 ;
-;        PAUSE LOOP
-;
-PauseDisplay() {
-  LogMain0("           ready")
-  LogMain("1 new match")
-  LogTimer("2 continue")
-  LogVolume("r rematch")
-}
-PauseMatch() {
-  if paused {
-    paused := false
-;    GoLoop()
-  } else {
-    paused := true
-  }
-}
-
-;
-;
 ;  =====================================================================
 ;    ====== MAIN SEQUENCE ===================      MAIN SEQUENCE
 
 ActivateChess()
 CreateGui()
 CreateBoard()
-GetMyColor()
 GetStartingPositions()
 ResetSnapshots()
 
@@ -258,12 +238,13 @@ ExitChessMonster() {
 }
 
 StartGame() {
-  if ( ( my_color == "black" )
-      and ( move_num == 1 ) ) {
-    PollOpp()
-  } else {
-    RunUCI()
-  }
+  ; if ( ( my_color == "black" )
+  ;     and ( move_num == 1 ) ) {
+  ;   PollOpp()
+  ; } else {
+  ;   RunUCI()
+  ; }
+  RunUCI()
   loop {
     if ( paused == true ) {
       paused := false

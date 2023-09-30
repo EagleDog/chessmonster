@@ -17,10 +17,10 @@ global z8 := ["c1","d1","e1","f1","c2","d2","e2","f2"] ; my_rear
 global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
 PollOpp() {
-;  msgbox % "PollOpp "
-;  opp_move := PollZones()
-;  msgbox % "opp_move " opp_move
-  if PollZones() {
+  msgbox % "PollOpp"
+  opp_move := PollZones()
+  if ( opp_move == true ) {
+;  if PollZones() {
     RunUCI()
   } else {
     PollZones()
@@ -28,7 +28,7 @@ PollOpp() {
 }
 
 PollZones() { ; find last opp_move only
-;  msgbox poll zones
+  msgbox poll zones
   opp_move := false
   loop 8 {
     zone := zones[which_zone]
