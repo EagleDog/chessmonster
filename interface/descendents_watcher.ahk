@@ -26,6 +26,7 @@ LogMain("CheckDescendents( " spot " )")
   prev_piece := snapshots[move_num][spot].piece
   prev_color := snapshots[move_num][spot].color
   piece := positions[spot].piece
+Chill()
   ; msgbox % "CheckDescendents " spot " " prev_color " " prev_piece
   move_patterns := AssignMovePatterns(spot, prev_piece)
   SearchSuccessors(spot, move_patterns)
@@ -34,11 +35,11 @@ LogMain("CheckDescendents( " spot " )")
 }
 
 AssignMovePatterns(spot, prev_piece) {
+Chill()
   ; msgbox % "AssignMovePatterns prev_piece: " prev_piece
   switch prev_piece {
     case "empty": DoNothing()
     case "pawn": CheckPawnSuccessors(spot)
-    ; case "pawn": CheckPawnDescendents(spot)
     case "knight": CheckKnightAntecedents(spot)
     case "bishop": move_patterns := bishop_patterns
     case "rook": move_patterns := rook_patterns
@@ -49,7 +50,7 @@ AssignMovePatterns(spot, prev_piece) {
 }
 
 SearchSuccessors(spot, move_patterns) {
-  Chill()
+Chill()
   position := positions[spot]
   spot_col := position.col
   spot_row := position.row
@@ -69,6 +70,7 @@ SearchSuccessors(spot, move_patterns) {
       color := SqStat(spot)
       if DidSquareChange(spot, color) {
         snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
+Chill()
       }
       if ( color == opp_color ) {
         break
@@ -83,10 +85,15 @@ CheckPawnDescendents(spot) {   ; pawn
   forward_two := [ 0, -2 ]
   forward_diag_1 := [ 1, -1 ]
   forward_diag_2 := [ -1, -1 ]
-  descendents := [ forward_one, forward_diag_1, forward_diag_2 ]
-  if (board[spot].rank == 7) {
-    descendents.push(forward_two)
-  }
+  descendents := [ forward_one, forward_two, forward_diag_1, forward_diag_2 ]
+  ; if (board[spot].rank == 7) {
+  ;   descendents.push(forward_two)
+  ; }
   RunAntecedentsEngine(spot, descendents)
+}
+
+CheckPawnSuccessors(spot) {
+  CheckPawnAntecedents(spot)
+  CheckPawnDescendents(spot)
 }
 

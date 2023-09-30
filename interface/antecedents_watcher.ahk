@@ -41,13 +41,9 @@ CheckAntecedents(spot) {
     case "king": CheckKingAntecedents(spot)
   }
   snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
-  ; msgbox % spot "  return h_color: " hybrid_color
+Chill()
+  msgbox % spot "  return h_color: " hybrid_color
   return hybrid_color
-}
-
-CheckPawnSuccessors(spot) {
-  CheckPawnAntecedents(spot)
-  CheckPawnDescendents(spot)
 }
 
 RunAntecedentsEngine(spot, antecedents) {
@@ -72,10 +68,10 @@ CheckPawnAntecedents(spot) {   ; pawn
   back_two := [ 0, 2 ]
   back_diag_1 := [ 1, 1 ]
   back_diag_2 := [ -1, 1 ]
-  antecedents := [ back_one, back_diag_1, back_diag_2 ]
-  if (board[spot].rank == 5) {
-    antecedents.push(back_two)
-  }
+  antecedents := [ back_one, back_two, back_diag_1, back_diag_2 ]
+  ; if (board[spot].rank == 5) {
+  ;   antecedents.push(back_two)
+  ; }
   RunAntecedentsEngine(spot, antecedents)
 }
 

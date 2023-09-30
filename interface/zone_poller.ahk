@@ -18,10 +18,14 @@ global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
 PollOpp() {
   opp_move := PollZones()
-  if ( opp_move == true ) {
-    ; msgbox run UCI
+  if opp_move {
+;  if ( opp_move == true ) {
+    msgbox PollOpp() opp_move true
+    Chill()
+    msgbox run UCI
     RunUCI()
   } else {
+    msgbox OPP MOVE FALSE
     PollZones()
   }
 }
@@ -33,9 +37,11 @@ PollZones() { ; looks for opp_move
     opp_move := PollZone(zone)
     if ( opp_move == true ) {
       opp_move := false
+;      msgbox PollZones() opp_move true
       return true
     }
     which_zone += 1
+;    msgbox POLL ZONES
     if ( which_zone > zones.count() ) {
       LogDebug(zones.count())
       which_zone := 1
@@ -44,7 +50,7 @@ PollZones() { ; looks for opp_move
       break
     }
   }
-  return false
+;  return false
 }
 
 PollZone(zone) {
@@ -56,8 +62,12 @@ PollZone(zone) {
     GoSpot(spot)
     if DidSquareChange(spot, color) {
       hybrid_color := CheckAntecedents(spot) ; descendents too
+      msgbox % "HYBRID_COLOR: " hybrid_color
       if ( hybrid_color == opp_color ) {
+;        msgbox % "PollZone() h_color: " hybrid_color
         return true
+      } else {
+        msgbox % spot " " "color:" color "`nh_color: " hybrid_color "`nopp_color: " opp_color
       }
     }
     n := A_Index + 1
