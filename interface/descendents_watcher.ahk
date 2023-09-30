@@ -25,9 +25,11 @@ CheckDescendents(spot) {
 LogMain("CheckDescendents( " spot " )")
   prev_piece := snapshots[move_num][spot].piece
   prev_color := snapshots[move_num][spot].color
-msgbox % "CheckDescendents " spot " " prev_color " " prev_piece
+  piece := positions[spot].piece
+   msgbox % "CheckDescendents " spot " " prev_color " " prev_piece
   move_patterns := AssignMovePatterns(spot, prev_piece)
   SearchSuccessors(spot, move_patterns)
+  CheckOppCastling(spot, piece, prev_piece)
   return prev_color
 }
 

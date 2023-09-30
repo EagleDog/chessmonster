@@ -58,14 +58,15 @@ PollZone(zone) {
     spot := zone[n]
     color := SqStat(spot)
     GoSpot(spot)
-      if DidSquareChange(spot, color) {
-        hybrid_color := CheckAntecedents(spot) ; checks descendents too
-        LogVolume(hybrid_color . " " opp_move)
-        if ( hybrid_color == opp_color ) {
+    if DidSquareChange(spot, color) {
+
+      hybrid_color := CheckAntecedents(spot) ; checks descendents too
+      if ( hybrid_color == opp_color ) {
 ;          msgbox % " hybrid change true " hybrid_color
-          return true
-        }
+;        CheckOppCastling(spot)
+        return true
       }
+    }
     n := A_Index + 1
   }
 }

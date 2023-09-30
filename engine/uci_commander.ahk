@@ -19,8 +19,8 @@
 
 
 ;#include streamer.ahk
-global bestmove := ""
-global bestmoves := []
+;global bestmove := ""
+;global bestmoves := []
 global move_time := 500
 
 
@@ -56,6 +56,7 @@ RunUCI() {
    bestmoves := ParseBestMove(bestmove)
   ActivateChess()
   SendMoveToGUI(bestmoves)
+  CheckMyCastling(bestmove)
 ;  PollZones()
 ;   fen := GetFenFromGUI()
 ;  SendFenToUCI(fen)
