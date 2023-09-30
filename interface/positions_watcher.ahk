@@ -118,17 +118,20 @@ LogMain0("GetStartingPositions()")
   if (my_color = "white") {
     abbrs := [wh, p, e, e, e, e, p, wh]
   } else {
-    abbrs := [bl, p, e, e, e, e, p, bl]
+    abbrs := [wh, p, e, e, e, e, p, wh]
+    ; abbrs := [bl, p, e, e, e, e, p, bl]
   }
 
   loop, 2 {     ; bottom 2 rows
     row := A_Index
-    color := my_color
+    color := "white"
+    ; color := my_color
     GenericColumnsLoop(row, color, abbrs)
   }
   loop, 2 {     ; top 2 rows
     row := A_Index + 6
-    color := opp_color
+    color := "black"
+    ; color := opp_color
     GenericColumnsLoop(row, color, abbrs)
   }
   loop, 4 {     ; empty rows

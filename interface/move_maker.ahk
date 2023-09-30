@@ -59,9 +59,6 @@ PromotePawn(spot, piece_type, target) {
   }
 }
 
-Chill() {
-  sleep 500
-}
 MoveMouse(x, y, speed=0) {
   mousemove x, y, speed
 }

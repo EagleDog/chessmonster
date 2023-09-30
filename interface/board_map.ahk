@@ -38,20 +38,6 @@ sleep 200
   b := board
 }
 
-FlipBoard() {
-  LogMain0("FlipBoard()"), sleep, 50
-  b := board
-  if (my_color == "black") {
-    my_color := "black"
-  }
-  b := board
-}
-
-ColToFile(col) {
-  file := Chr(96 + col) ; col > a-h
-  return file
-}
-
 AdjustDisplaySize() {
   if ( display_size == "laptop" ) { ; laptop 1920 x 1080
     assets_path := assets_path . "\assets2\"

@@ -126,6 +126,30 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
 ;  MsgBox ,  width = %imageWidth% , height = %imageHeigh%
 
 
+GetMyColor() {
+  LogVolume("GetMyColor()")
+  x1 := 190, y1 := 130
+  x2 := 240, y2 := 160
+  img_path := assets_path "eag.png"
+  if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
+    msgbox my color is black
+    MyColorIsBlack()
+  } else {
+    MyColorIsWhite()
+  }
+}
+
+MyColorIsBlack() {
+  my_color := "black"
+  opp_color := "white"
+  my_color_abbr := "b"
+}
+
+MyColorIsWhite() {
+  my_color := "white"
+  opp_color := "black"
+  my_color_abbr := "w"
+}
 
 ImageMatches(x1, y1, x2, y2, img_path) {
   ImageSearch, img_x, img_y, x1, y1, x2, y2, *100 %img_path%
@@ -171,7 +195,9 @@ CheckColor(spot, the_color) {
   } 
 }
 
-GetMyColor() {
+
+
+GetMyColorOld() {
   LogMain0("GetMyColor()")
   spots := ["b1","c1","d1","e1","f1","g1","h1"]
   spot := "a1"

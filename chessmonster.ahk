@@ -18,8 +18,9 @@ global assets_path := rel_path . "\assets\"
 global fishlog := rel_path . "\engine\fishlog.txt"
 
 #Include tools\debug.ahk
-#Include interface\chess_gui.ahk
 #Include tools\VA.ahk
+#Include tools\toolbox.ahk
+#Include interface\chess_gui.ahk
 #Include interface\listener.ahk
 
 #Include engine\castle_rights.ahk
@@ -237,20 +238,6 @@ RandomChoice(max=2) {
   }
 }
 
-MyColorIsWhite() {
-  my_color := "white"
-  opp_color := "black"
-}
-
-MyColorIsBlack() {
-  my_color := "black"
-  opp_color := "white"
-}
-
-Print(outout_text) {
-  fileappend % output_text " ", *
-}
-
 ActivateChess() {
   LogMain0("ActivateChess()")
   sleep, 200
@@ -303,6 +290,8 @@ StartGame() {
 
 4::SearchSuccessors("d4", rook_patterns)
 ; 4::SearchSuccessors("h8", rook_patterns)
+
+5::GetMyColor()
 
 ;5::CheckPawnSize()
 
