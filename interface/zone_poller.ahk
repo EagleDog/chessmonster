@@ -17,25 +17,21 @@ global z8 := ["c1","d1","e1","f1","c2","d2","e2","f2"] ; my_rear
 global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
 PollOpp() {
-  msgbox % "PollOpp"
   opp_move := PollZones()
   if ( opp_move == true ) {
-;  if PollZones() {
-    msgbox run UCI
+    ; msgbox run UCI
     RunUCI()
   } else {
     PollZones()
   }
 }
 
-PollZones() { ; find last opp_move only
-  msgbox poll zones
+PollZones() { ; looks for opp_move
   opp_move := false
   loop 8 {
     zone := zones[which_zone]
     opp_move := PollZone(zone)
     if ( opp_move == true ) {
-      msgbox opp_move true
       opp_move := false
       return true
     }
@@ -59,11 +55,8 @@ PollZone(zone) {
     color := SqStat(spot)
     GoSpot(spot)
     if DidSquareChange(spot, color) {
-
-      hybrid_color := CheckAntecedents(spot) ; checks descendents too
+      hybrid_color := CheckAntecedents(spot) ; descendents too
       if ( hybrid_color == opp_color ) {
-;          msgbox % " hybrid change true " hybrid_color
-;        CheckOppCastling(spot)
         return true
       }
     }

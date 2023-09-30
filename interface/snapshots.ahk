@@ -27,7 +27,7 @@ OutputSnapshot() {
     row := rank
     Loop, 8 {
       col := A_Index
-      file := Chr(96 + col)     ; a_index > a-h
+      file := ColToFile(col)  ; a-h
       spot := file . rank
       abbr := snapshot[spot].abbr
       pos_text := % "" . pos_text . abbr . " "
@@ -51,7 +51,6 @@ DebugSnapshots() {
   while (snapshots[n]) {
     snapshot := snapshots[n]
     n := A_Index
-;    n := A_Index + 1
     pos_text := ""
     abbr := ""
     text_rows := ["","","","","","","",""]
@@ -60,7 +59,7 @@ DebugSnapshots() {
       row := rank
       Loop, 8 {
         col := A_Index
-        file := Chr(96 + col)     ; a_index > a-h
+        file := ColToFile(col)  ; a-h
         spot := file . rank
         abbr := snapshot[spot].abbr
         pos_text := % "" . pos_text . abbr . " "

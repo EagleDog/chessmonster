@@ -284,10 +284,6 @@ StartGame() {
 ^2::GoLoop()
 ^3::MoveGui3()
 
-^+1::MoveStockfish()
-^+2::MoveFish2()
-^+3::MoveFish3()
-
 m::DriftMouse()
 r::RematchComputer()
 q::MoveGui1()

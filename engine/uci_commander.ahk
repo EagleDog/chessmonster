@@ -15,14 +15,7 @@
 ; STEP 11 -- go movetime 1000
 ; ... etc.
 
-; need to convert positions to FEN and vice versa (good progress so far)
-
-
-;#include streamer.ahk
-;global bestmove := ""
-;global bestmoves := []
 global move_time := 500
-
 
 stockfish_commands := ["ucinewgame","isready","d","position startpos"
                        ,"position fen","go movetime 1000", "stop", "flip"]
@@ -32,7 +25,6 @@ StartEngine() {
   MoveStockfish(), sleep 50
   NewGameUCI(), sleep 50
   AdjustElo(), sleep 50
-  ; ActivateChess()
 }
 
 AdjustElo() {
@@ -57,10 +49,6 @@ RunUCI() {
   ActivateChess()
   SendMoveToGUI(bestmoves)
   CheckMyCastling(bestmove)
-;  PollZones()
-;   fen := GetFenFromGUI()
-;  SendFenToUCI(fen)
-
 }
 
 GetBestMove() {

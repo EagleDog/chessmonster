@@ -12,8 +12,7 @@ DidSquareChange(spot, color) {  ; returns true or false
   snap_spot := snapshot[spot]
   prev_piece := snap_spot.piece
   prev_color := snap_spot.color
-;  color := SqStat(spot)
-  if ( prev_color == color ) {  ; check color change first
+  if ( prev_color == color ) {
     return false
   }
   UpdatePosition(spot)   ;  <== UpdatePosition(spot)
@@ -24,13 +23,11 @@ DidSquareChange(spot, color) {  ; returns true or false
   } else {  ; square changed
     LogDebug(prev_color " " prev_piece ", " color " " piece)
     Debug(prev_color " " prev_piece ", " color " " piece)
-;    fileappend % prev_color " " prev_piece ", " color " " piece " ", *
     return true
   }
 }
 
 CheckAntecedents(spot) {
-;  first check DidSquareChange(), then...
   LogMain("CheckAntecedents( " . spot . " )")
   piece := positions[spot].piece
   hybrid_color := positions[spot].color
@@ -44,7 +41,7 @@ CheckAntecedents(spot) {
     case "king": CheckKingAntecedents(spot)
   }
   snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
-  msgbox % spot "  return h_color: " hybrid_color
+  ; msgbox % spot "  return h_color: " hybrid_color
   return hybrid_color
 }
 

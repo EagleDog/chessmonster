@@ -8,7 +8,7 @@ global c_rights_3 := "k"
 global c_rights_4 := "q"
 global c_rights_all := "KQkq"
 
-CheckMyCastling(bestmove) { ; also check if piece is king
+CheckMyCastling(bestmove) { ; also check if piece is king?
   if ( ( bestmove == "e8g8" )
   or   ( bestmove == "e8b8" ) ) {
     SearchCastleZoneBlack()

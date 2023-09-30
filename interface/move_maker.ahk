@@ -1,7 +1,5 @@
 ;
 ;   ______move_maker.ahk______
-;          formerly mouse_mover.ahk
-;   MovePieceOld(s,t)
 ;
 ;     MovePiece(spot,target)
 ;     MoveMouse(x,y,speed=0)
@@ -11,14 +9,13 @@
 ;     ClickDrag(spot,target)
 ;     DriftMouse()
 ;
-;     fail
-;
+
 global fail := false
 
 MovePiece(spot, target) {
 LogMain("MovePiece:  '" spot "' to '" target "'" )
 Chill()
-  MoveAndFailCheck(spot, target)
+  fail := MoveAndFailCheck(spot, target)
   if !fail {
     IncreaseMoveNum()   ; <== UpdateSnapshots() included
 ;    move_num += 1
@@ -30,25 +27,26 @@ Chill()
   }
 }
 
-MoveAndFailCheck(spot, target) { ; Pawn Promotion too!
-  ID1 := positions[spot].piece
+MoveAndFailCheck(old_spot, target) { ; Pawn Promotion too!
+  ID2 := positions[old_spot].piece
   sleep 50
-  ClickDrag(spot, target)  ; <==== click and drag
+  ClickDrag(old_spot, target)  ; <==== click and drag
   sleep 200
-  UpdatePosition(spot)  ; <== UpdatePosition(spot)
-  snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
+  UpdatePosition(old_spot)  ; <== UpdatePosition(spot)
+  snapshots[move_num][old_spot] := positions[old_spot].Clone() ; non-redundant
   sleep 50
   UpdatePosition(target)  ; <== UpdatePosition(spot)
   snapshots[move_num][target] := positions[target].Clone() ; non-redundant
   sleep 50
-  ID2 := positions[spot].piece
-;  msgbox % target " ID1: " ID1 "  " spot " ID2: " ID2
+  ID1 := positions[old_spot].piece  ; msgbox % target " ID2: " ID2 "  " spot " ID1: " ID1
   if ( ID2 == ID1 ) {  ; <=== fail check
     msgbox FAIL
     fail := true
+  } else {
+    PromotePawn(spot, piece, target)   ; <== PromotePawn(spot,piece,target)
+    fail := false
   }
-  PromotePawn(spot, piece, target)   ; <== PromotePawn(spot,piece,target)
-;  DidCastlersMove()    ; <== DidCastlersMove()
+  return fail
 }
 
 PromotePawn(spot, piece_type, target) {
@@ -103,13 +101,4 @@ DecreaseMoveNum() {
   LogMoves(move_num)
   UpdateSnapshots()
 }
-
-
-
-; MovePieceOld() {
-;   MouseMove, board[spot].x, board[spot].y
-;   Click, Down
-;   MouseMove, board[target].x, board[target].y
-;   Click, Up  
-; }
 

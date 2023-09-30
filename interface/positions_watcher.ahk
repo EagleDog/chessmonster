@@ -72,11 +72,10 @@ OutputPositions() {
   DidCastlersMove()    ; <== DidCastlersMove()
 }
 ;
-;------------------------------------------------------------------
-;                                                    GET POSITIONS
+;-------------------------------------------------------
+;                                          GET POSITIONS
 GetPositions() {
   LogMain("Getting positions.....")
-;  prev_positions := positions
   piece := ""
   color := ""
   abbr := ""
@@ -85,15 +84,12 @@ GetPositions() {
     row := rank
     Loop, 8 {     ; files (columns)
       col := A_Index
-      file := ColToFile(col)     ; a_index > a-h
+      file := ColToFile(col)  ; a-h
       spot := file . rank
       color := SqStat(spot)
       GoSpot(spot)
       DidSquareChange(spot, color)       ; <== UpdatePosition(spot)
-      ; UpdatePosition(spot)       ; <== UpdatePosition(spot)
       piece := positions[spot].piece
-;     BUG                 bug is here
-;      piece := IDPiece(spot, color)  ; <<========== ImageSearch() <<======
       abbr := GetAbbr(piece, color)
       positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank } ; , x: x, y: y
     }
@@ -106,7 +102,6 @@ GetPositions() {
 ;                                           GET STARTING POSITIONS
 GetStartingPositions() {
 LogMain0("GetStartingPositions()")
-;Chill()
   GetMyColor()
   LogMain("Get Starting positions.....")
   white_row_abbrs := ["R", "N", "B", "Q", "K", "B", "N", "R"]
@@ -212,5 +207,4 @@ GetFullName(abbr) {
   }
   return fullname
 }
-
 

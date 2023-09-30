@@ -31,7 +31,7 @@ ColToFile(col) {
 }
 
 Chill() {
-  sleep 10
+;  sleep 500
 }
 
 Print(outout_text) {

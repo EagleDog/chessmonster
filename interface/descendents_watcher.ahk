@@ -26,7 +26,7 @@ LogMain("CheckDescendents( " spot " )")
   prev_piece := snapshots[move_num][spot].piece
   prev_color := snapshots[move_num][spot].color
   piece := positions[spot].piece
-   msgbox % "CheckDescendents " spot " " prev_color " " prev_piece
+  ; msgbox % "CheckDescendents " spot " " prev_color " " prev_piece
   move_patterns := AssignMovePatterns(spot, prev_piece)
   SearchSuccessors(spot, move_patterns)
   CheckOppCastling(spot, piece, prev_piece)
@@ -34,7 +34,7 @@ LogMain("CheckDescendents( " spot " )")
 }
 
 AssignMovePatterns(spot, prev_piece) {
-  msgbox % "AssignMovePatterns prev_piece: " prev_piece
+  ; msgbox % "AssignMovePatterns prev_piece: " prev_piece
   switch prev_piece {
     case "empty": DoNothing()
     case "pawn": CheckPawnSuccessors(spot)
@@ -50,7 +50,6 @@ AssignMovePatterns(spot, prev_piece) {
 
 SearchSuccessors(spot, move_patterns) {
   Chill()
-;  msgbox % "search successors " spot
   position := positions[spot]
   spot_col := position.col
   spot_row := position.row
@@ -90,3 +89,4 @@ CheckPawnDescendents(spot) {   ; pawn
   }
   RunAntecedentsEngine(spot, descendents)
 }
+

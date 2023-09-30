@@ -13,8 +13,8 @@ global all_spots := []
 
 global display_size := "HP" ; default is "HP"
                             ; "laptop" is 1920 x 1080 ("recommended")
-
 ;AdjustDisplaySize()
+
 
 CreateBoard() {             ; populate with x y coords 64 squares
 LogMain("CreateBoard()")
@@ -51,5 +51,4 @@ AdjustDisplaySize() {
 
   }
 }
-
 
