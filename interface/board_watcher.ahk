@@ -132,10 +132,8 @@ GetMyColor() {
   x2 := 240, y2 := 160
   img_path := assets_path "eag.png"
   if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
-    msgbox my color is black
     MyColorIsBlack()
   } else {
-    msgbox my color is white
     MyColorIsWhite()
   }
 }

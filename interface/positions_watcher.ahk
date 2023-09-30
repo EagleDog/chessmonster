@@ -87,9 +87,10 @@ GetPositions() {
       col := A_Index
       file := ColToFile(col)     ; a_index > a-h
       spot := file . rank
-      color := SquareStatus(spot)
+      color := SqStat(spot)
       GoSpot(spot)
-      DidSquareChange(spot)       ; <== UpdatePosition(spot)
+      DidSquareChange(spot, color)       ; <== UpdatePosition(spot)
+      ; UpdatePosition(spot)       ; <== UpdatePosition(spot)
       piece := positions[spot].piece
 ;     BUG                 bug is here
 ;      piece := IDPiece(spot, color)  ; <<========== ImageSearch() <<======

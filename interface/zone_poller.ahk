@@ -21,6 +21,7 @@ PollOpp() {
   opp_move := PollZones()
   if ( opp_move == true ) {
 ;  if PollZones() {
+    msgbox run UCI
     RunUCI()
   } else {
     PollZones()
@@ -55,10 +56,9 @@ PollZone(zone) {
   n := 1
   while zone[n] {
     spot := zone[n]
-;    color := SqStat(spot) ; <== SqSt() replaces UpdatePosition()
+    color := SqStat(spot)
     GoSpot(spot)
-;    if ( color != my_color ) {
-      if DidSquareChange(spot) {
+      if DidSquareChange(spot, color) {
         hybrid_color := CheckAntecedents(spot) ; checks descendents too
         LogVolume(hybrid_color . " " opp_move)
         if ( hybrid_color == opp_color ) {
@@ -66,7 +66,6 @@ PollZone(zone) {
           return true
         }
       }
-;    }
     n := A_Index + 1
   }
 }

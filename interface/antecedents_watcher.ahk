@@ -7,13 +7,12 @@
 ; Antecedents
 ; Antecedents
 
-DidSquareChange(spot) {  ; returns true or false
+DidSquareChange(spot, color) {  ; returns true or false
   snapshot := snapshots[move_num]
   snap_spot := snapshot[spot]
   prev_piece := snap_spot.piece
   prev_color := snap_spot.color
-  color := SqStat(spot)
-;  color := position.color
+;  color := SqStat(spot)
   if ( prev_color == color ) {  ; check color change first
     return false
   }
@@ -28,6 +27,27 @@ DidSquareChange(spot) {  ; returns true or false
 ;    fileappend % prev_color " " prev_piece ", " color " " piece " ", *
     return true
   }
+}
+
+CheckAntecedents(spot) {
+;  first check DidSquareChange(), then...
+  LogMain("CheckAntecedents( " . spot . " )")
+  piece := positions[spot].piece
+  hybrid_color := positions[spot].color
+  switch piece {
+    case "empty": hybrid_color := CheckDescendents(spot)
+    case "pawn":
+      CheckPawnAntecedents(spot)
+      CheckPawnDescendents(spot)
+    case "knight": CheckKnightAntecedents(spot)
+    case "bishop": SearchSuccessors(spot, bishop_patterns)
+    case "rook": SearchSuccessors(spot, rook_patterns)
+    case "queen": SearchSuccessors(spot, queen_patterns)
+    case "king": CheckKingAntecedents(spot)
+  }
+  snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
+  msgbox % spot "  return h_color: " hybrid_color
+  return hybrid_color
 }
 
 RunAntecedentsEngine(spot, antecedents) {
@@ -45,28 +65,6 @@ RunAntecedentsEngine(spot, antecedents) {
     GoSpot(spot)
     n := A_Index + 1
   }
-}
-
-CheckAntecedents(spot) {
-;  first check DidSquareChange(), else...
-  LogMain("CheckAntecedents( " . spot . " )")
-  piece := positions[spot].piece
-  hybrid_color := positions[spot].color
-  switch piece {
-    case "empty": hybrid_color := CheckDescendents(spot)
-    case "pawn": CheckPawnAntecedents(spot)
-    case "knight": CheckKnightAntecedents(spot)
-    case "bishop": SearchSuccessors(spot, bishop_patterns)
-    ; case "bishop": CheckBishopAntecedents(spot)
-    case "rook": SearchSuccessors(spot, rook_patterns)
-    ; case "rook": CheckRookAntecedents(spot)
-    case "queen": SearchSuccessors(spot, queen_patterns)
-    ; case "queen": CheckQueenAntecedents(spot)
-    case "king": CheckKingAntecedents(spot)
-  }
-  snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
-  msgbox % spot "  return h_color: " hybrid_color
-  return hybrid_color
 }
 
 CheckPawnAntecedents(spot) {   ; pawn
