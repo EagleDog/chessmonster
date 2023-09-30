@@ -17,9 +17,9 @@ global rel_path := A_ScriptDir
 global assets_path := rel_path . "\assets\"
 global fishlog := rel_path . "\engine\fishlog.txt"
 
-#Include debug.ahk
+#Include tools\debug.ahk
 #Include interface\chess_gui.ahk
-#Include library\VA.ahk
+#Include tools\VA.ahk
 #Include interface\listener.ahk
 
 #Include engine\castle_rights.ahk
@@ -271,15 +271,18 @@ ExitChessMonster() {
 }
 
 StartGame() {
+  if ( ( my_color == "black" )
+      and ( move_num == 1 ) ) {
+    PollOpp()
+  } else {
+    RunUCI()
+  }
   loop {
     if ( paused == true ) {
       paused := false
       break
     }
-    RunUCI()
-    sleep 500
     PollOpp()
-    sleep 500
   }
 }
 
@@ -293,8 +296,8 @@ StartGame() {
 ^+x::ExitChessMonster() ; ctrl + shift + x
 ; ^+c::SublimeGo() ; ctrl + shift + x
 
-1::StartEngine()
-2::StartGame()
+1::StartGame()
+2::PollOpp()
 ;2::PollOpp()
 3::RunUCI()
 

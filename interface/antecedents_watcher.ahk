@@ -51,6 +51,7 @@ CheckAntecedents(spot) {
   LogMain("CheckAntecedents( " . spot . " )")
   piece := positions[spot].piece
   hybrid_color := positions[spot].color
+  msgbox % "check antecedents " spot " " piece hybrid_color
   switch piece {
     case "empty": hybrid_color := CheckDescendents(spot)
     case "pawn": CheckPawnAntecedents(spot)
@@ -64,6 +65,7 @@ CheckAntecedents(spot) {
     case "king": CheckKingAntecedents(spot)
   }
   snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
+  msgbox % spot "  return h_color: " hybrid_color
   return hybrid_color
 }
 

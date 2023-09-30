@@ -17,6 +17,7 @@ global fail := false
 
 MovePiece(spot, target) {
 LogMain("MovePiece:  '" spot "' to '" target "'" )
+Chill()
   MoveAndFailCheck(spot, target)
   if !fail {
     IncreaseMoveNum()   ; <== UpdateSnapshots() included
@@ -40,6 +41,7 @@ MoveAndFailCheck(spot, target) { ; Pawn Promotion too!
   snapshots[move_num][target] := positions[target].Clone() ; non-redundant
   sleep 50
   ID2 := positions[spot].piece
+;  msgbox % target " ID1: " ID1 "  " spot " ID2: " ID2
   if ( ID2 == ID1 ) {  ; <=== fail check
     msgbox FAIL
     fail := true
@@ -58,7 +60,7 @@ PromotePawn(spot, piece_type, target) {
 }
 
 Chill() {
-  sleep 50
+  sleep 500
 }
 MoveMouse(x, y, speed=0) {
   mousemove x, y, speed

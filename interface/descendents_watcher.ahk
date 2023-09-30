@@ -22,7 +22,8 @@ global bishop_patterns := [up_left, up_right, down_right, down_left]
 global queen_patterns := CombineArrays(rook_patterns, bishop_patterns)
 
 CheckDescendents(spot) { 
-LogMain("CheckDescendents( " . spot . " )")
+LogMain("CheckDescendents( " spot " )")
+msgbox % "CheckDescendents " spot
   prev_piece := snapshots[move_num][spot].piece
   prev_color := snapshots[move_num][spot].color
   move_patterns := AssignMovePatterns(spot, prev_piece)
@@ -31,6 +32,7 @@ LogMain("CheckDescendents( " . spot . " )")
 }
 
 AssignMovePatterns(spot, prev_piece) {
+  msgbox % "AssignMovePatterns prev_piece: " prev_piece
   switch prev_piece {
     case "empty": DoNothing()
     case "pawn": CheckPawnDescendents(spot)
@@ -44,6 +46,8 @@ AssignMovePatterns(spot, prev_piece) {
 }
 
 SearchSuccessors(spot, move_patterns) {
+  Chill()
+;  msgbox % "search successors " spot
   position := positions[spot]
   spot_col := position.col
   spot_row := position.row
@@ -63,6 +67,7 @@ SearchSuccessors(spot, move_patterns) {
       color := SqStat(spot)
       if DidSquareChange(spot, color) {
         snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
+;        msgbox % "square changed " spot " " color
       }
       if ( color == opp_color ) {
         break
