@@ -73,7 +73,13 @@ HowManyPieces() {
   both_spots := GetBothSpots()
   num_pieces_opp := both_spots[1].length()
   num_pieces_mine := both_spots[2].length()
-  num_pieces_both := [num_pieces_opp, num_pieces_mine]
+  ; num_pieces_both := [num_pieces_opp, num_pieces_mine]
+  if ( my_color == "white" ) {
+    num_pieces_both := [num_pieces_opp, num_pieces_mine]
+  } else {
+    num_pieces_both := [num_pieces_mine, num_pieces_opp]
+  }
+
   return num_pieces_both
 }
 

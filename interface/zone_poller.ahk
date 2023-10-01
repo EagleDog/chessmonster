@@ -18,35 +18,40 @@ global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
 
 PollOpp() {
+  paused := false
+  n := 0
   loop {
+    n += 1
     opp_move := PollZones()
     if opp_move {
+      n := 0
       RunUCI()
     }
-    if (paused == true) {
-      break
+    if ( n >= 4 ) {
+      n := 0
+      RunUCI()
+    }
+    if ( paused == true ) {
+      return
     }
   }
-
-  ; } else {
-  ;   ; BUG IS RIGHT HERE.
-  ;   ; BUG IS RIGHT HERE.
-  ;   PollZones()
-  ; }
-
 }
 
 PollZones() { ; looks for opp_move
-;  opp_move := false
   loop 8 {
+    DidGameEnd()
     zone := zones[which_zone]
     opp_move := PollZone(zone)
-    if ( opp_move == true ) {
-      return opp_move
+    if opp_move {
+      return true
     }
+    ; opp_move := PollZone(zone)
+    ; if ( opp_move == true ) {
+    ;   return opp_move
+    ; }
     which_zone += 1
+    LogDebug(zones.count())
     if ( which_zone > zones.count() ) {
-      LogDebug(zones.count())
       which_zone := 1
     }
     if (paused == true) {
@@ -68,7 +73,7 @@ PollZone(zone) { ; returns true if opp has moved (theoretically)
         opp_move := true
         return opp_move
       } else {
-        msgbox % spot " " "color:" color "`nh_color: " hybrid_color "`nopp_color: " opp_color
+        ; msgbox % spot " " "color:" color "`nh_color: " hybrid_color "`nopp_color: " opp_color
       }
     }
     n := A_Index + 1

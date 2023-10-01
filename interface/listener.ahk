@@ -34,7 +34,7 @@ Listen() {
     if (timer_count > 3) {
       LogMain("timeout")
       LogVolume(0.000)
-      CheckForGameEnd()
+;      CheckForGameEnd(old)
       return
     }
   }

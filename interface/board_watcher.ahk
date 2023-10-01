@@ -14,28 +14,6 @@ global board_gr := 0x549977
 global board_wh := 0xCCEDE9
 global board_ylw := 0x44CCBB ;BBCC44
 
-CheckForGameEnd() {
-;  three_spot := [400, 475]
-  three_spot := [400, 555]
-  three_image := "three.png"
-  img_path := assets_path . three_image
-  x := three_spot[1]
-  y := three_spot[2]
-  x1 := x - 25
-  y1 := y - 25
-  x2 := x + 25
-  y2 := y + 25
-;  MsgBox, % img_path
-  if ImageMatches(x1, y1, x2, y2, img_path) {
-    MoveMouse(x, y)
-    Click, x, y
-    Sleep, 1000
-    NewGame()
-  } else {
-    MoveMouse(x, y)
-  }
-}
-
 IDPiece(spot, spot_color) {       ;    <<==========
   x := board[spot].x
   y := board[spot].y - 30

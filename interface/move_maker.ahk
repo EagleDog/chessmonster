@@ -14,7 +14,7 @@ global fail := false
 
 MovePiece(spot, target) {
 LogMain("MovePiece:  '" spot "' to '" target "'" )
-Chill()
+;Chill()
   fail := MoveAndFailCheck(spot, target)
   if !fail {
     IncreaseMoveNum()   ; <== UpdateSnapshots() included
@@ -23,7 +23,8 @@ Chill()
 ;    LogMoves(move_num)
     WhichZones()
 ;    LogVolume(period)
-  UpdateSnapshots()
+  } else {
+    UpdateSnapshots()
   }
 }
 
@@ -40,13 +41,17 @@ MoveAndFailCheck(old_spot, target) { ; Pawn Promotion too!
   sleep 50
   ID1 := positions[old_spot].piece  ; msgbox % target " ID2: " ID2 "  " spot " ID1: " ID1
   if ( ID2 == ID1 ) {  ; <=== fail check
-    msgbox FAIL
+    MsgBox, , % "FAIL", % "FAIL", % 1.5
     fail := true
   } else {
     PromotePawn(spot, piece, target)   ; <== PromotePawn(spot,piece,target)
     fail := false
   }
   return fail
+}
+
+ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
+  MouseClickDrag, L, b[spot].x, b[spot].y, b[target].x, b[target].y + 8, 2
 }
 
 PromotePawn(spot, piece_type, target) {
@@ -72,10 +77,6 @@ ClickSpot(spot) {
 MoveClick(x, y) {
   MoveMouse(x, y)
   Click
-}
-
-ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
-  MouseClickDrag, L, b[spot].x, b[spot].y, b[target].x, b[target].y, 3
 }
 
 DriftMouse() {

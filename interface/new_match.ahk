@@ -1,23 +1,32 @@
-;
-;     new_match.ahk
-;
-;  calls MovePiece(spot, target)
-;
-;
-; RematchComputer()
-; New3Min()
-;
+;new_match.ahk
 ;
 ;
 
-plus_sign_button_spot := [980, 860]
-plus_sign_button_color := 0x454441
+RematchSequence() {
+  if true {
+    sleep 500
+    RematchComputer()
+  }
+}
 
+DidGameEnd() {
+  if FindVS() {
+    RematchSequence()
+  }
+}
 
+FindVS() {
+  vs_path := assets_path "vs.png"
+  x1 := 480, y1 := 290
+  x2 := 520, y2 := 400
+  ; x1 := 480, y1 := 290
+  ; x2 := 520, y2 := 300
+    ; msgbox % vs_path " " ImageMatches(x1, y1, x2, y2, vs_path)
+  if ImageMatches(x1, y1, x2, y2, vs_path) {
+    return true
+  }
+}
 
-
-big_green_button_spot := [380, 410]
-big_green_button_color := 0xa3d160
 
 
 RematchComputer() {
@@ -48,8 +57,15 @@ RematchComputer() {
 
   MoveGui1()
   NewGame()
-  ; GetStartingPositions()
 }
+
+
+;
+;
+;
+;  old stuff below
+;
+
 
 New3Min() {
   new_3_spot_a := [965, 875]
@@ -67,8 +83,37 @@ New3Min() {
 }
 
 
+plus_sign_button_spot := [980, 860]
+plus_sign_button_color := 0x454441
+
+big_green_button_spot := [380, 410]
+big_green_button_color := 0xa3d160
+
+
+CheckForGameEnd(old) {
+;  three_spot := [400, 475]
+  three_spot := [400, 555]
+  three_image := "three.png"
+  img_path := assets_path . three_image
+  x := three_spot[1]
+  y := three_spot[2]
+  x1 := x - 25
+  y1 := y - 25
+  x2 := x + 25
+  y2 := y + 25
+;  MsgBox, % img_path
+  if ImageMatches(x1, y1, x2, y2, img_path) {
+    MoveMouse(x, y)
+    Click, x, y
+    Sleep, 1000
+    NewGame()
+  } else {
+    MoveMouse(x, y)
+  }
+}
+
 ;
-; __mouse_mover__
+; __mouse_mover__  for testing
 ;
 ; GoClick(spot) {
 ;   MouseMove, board[spot].x, board[spot].y

@@ -69,6 +69,8 @@ OutputPositions() {
   positions["num_pieces_mine"] := num_pieces_mine
   positions["move_number"] := move_num
 
+  UpdateSnapshots()
+
   DidCastlersMove()    ; <== DidCastlersMove()
 }
 ;
