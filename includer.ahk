@@ -11,6 +11,7 @@
 #Include engine\fen_maker.ahk
 #Include engine\streamer.ahk
 #Include engine\uci_commander.ahk
+#Include engine\uci_support.ahk
 #Include engine\autoplay.ahk
 
 #Include interface\board_map.ahk

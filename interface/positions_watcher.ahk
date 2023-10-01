@@ -76,7 +76,7 @@ OutputPositions() {
 ;
 ;-------------------------------------------------------
 ;                                          GET POSITIONS
-GetPositions() {
+GetPositions(speed="fast") {
   LogMain("Getting positions.....")
   piece := ""
   color := ""
@@ -90,7 +90,11 @@ GetPositions() {
       spot := file . rank
       color := SqStat(spot)
       GoSpot(spot)
-      DidSquareChange(spot, color)       ; <== UpdatePosition(spot)
+      if ( speed == "fast" ) {
+        DidSquareChange(spot, color)       ; <== UpdatePosition(spot)
+      } else {
+        UpdatePosition(spot)
+      }
       piece := positions[spot].piece
       abbr := GetAbbr(piece, color)
       positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank } ; , x: x, y: y

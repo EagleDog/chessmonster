@@ -15,7 +15,7 @@
 ; STEP 11 -- go movetime 1000
 ; ... etc.
 
-global move_time := 500
+;global move_time := 500
 
 stockfish_commands := ["ucinewgame","isready","d","position startpos"
                        ,"position fen","go movetime 1000", "stop", "flip"]
@@ -36,12 +36,15 @@ RunUCI() {
   if not WinExist("ahk_exe stockfish.exe") {
     StartEngine()
   }
-  SendIsReady(), sleep 50
-  GetIsReady(), sleep 50
-  fen := GetFenFromGUI(), sleep 50  ; StartPos()
-  SendFenToUCI(fen), sleep 50
-  SendIsReady(), sleep 50
-  GetIsReady(), sleep 50
+  GetReady()
+  ; SendIsReady(), sleep 50
+  ; GetIsReady(), sleep 50
+  fen := GetFenFromGUI()  ; StartPos()
+  SendFenToUCI(fen)
+  GetReady()
+  ; SendIsReady(), sleep 50
+  ; GetIsReady(), sleep 50
+   move_time := RandMoveTime()
   CalculateMove(move_time)   ; go movetime 500  ; ActivateChess()
    sleep % move_time + 50
    bestmove := GetBestMove()
@@ -71,7 +74,6 @@ GetReady() {
     SendIsReady()
     ready_response := GetIsReady()
   }
-  ActivateChess()
 }
 
 SendIsReady() {
@@ -112,18 +114,8 @@ StopThinking() {
   SendToUCI("stop")
 }
 
-DisplayBoard() {
+DisplayBoardUCI() {
   SendToUCI("d")
-}
-
-FlipBoardUCI() {
-  SendToUCI("flip")
-}
-
-ReceiveReady() {
-  ready_response := ReceiveFromUCI()
-  FileAppend % ready_response " ", *
-  return ready_response
 }
 
 ParseBestMove(bestmove) {
@@ -144,6 +136,7 @@ GetFenFromGUI() {
   fen := CreateFen()
   return fen
 }
+
 SendFenToUCI(fen) {
   SendToUCI("position fen " fen)
   Print("position fen " fen)

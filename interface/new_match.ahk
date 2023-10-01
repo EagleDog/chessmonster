@@ -53,6 +53,7 @@ RematchComputer() {
   ButtonA()     ; move click A
   sleep 50
   MoveGui1()
+  Beep()
   NewGame()
 }
 

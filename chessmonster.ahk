@@ -82,6 +82,10 @@ StartGame() {
   PollOpp()
 }
 
+Beep() {
+  SoundBeep, 448, 600 ; [ Freq, Duration]
+}
+
 
 ;======= KEYBOARD SHORTCUTS ===================
 
@@ -123,26 +127,20 @@ s::ShakeGui()
 ;9::New3Min()
 
 d::DebugSnapshots()
-^f::FishlogRefresh()
-f::FlipBoardUCI()
 
 ;0::CheckQueenAntecedents("e5")
 ;0::OutputSnapshot(1)
 ;0::GetPositionsHistory(2)
-; 0::UpdatePosition("e5")
-; 0::SqStatTest()
 
-a::GetPositions()
+a::GetPositions("fast")
+^a::GetPositions("slow")
+^+a::GetPositions("slow")
 w::MyColorIsWhite()
 b::MyColorIsBlack()
-
-;o::PollOppTerritory()
 
 p::PauseMatch()
 
 o::OutputSnapshot()
-
-;z::SoundBeep, 400, 500  ; , [ Frequency, Duration]
 
 Up::IncreaseMoveNum()
 Down::DecreaseMoveNum()
@@ -152,3 +150,4 @@ w & q::CastleRights2()
 b & k::CastleRights3()
 b & q::CastleRights4()
 
+z::Beep()
