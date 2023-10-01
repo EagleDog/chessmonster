@@ -79,7 +79,7 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
 }
 
 GetMyColor() {
-  LogVolume("GetMyColor()")
+  LogField4("GetMyColor()")
   x1 := 190, y1 := 130
   x2 := 240, y2 := 160
   img_path := assets_path "eag.png"
@@ -88,7 +88,7 @@ GetMyColor() {
   } else {
     MyColorIsWhite()
   }
-  LogVolume("my_color: " my_color)
+  LogField4("my_color: " my_color)
 }
 
 MyColorIsBlack() {
@@ -141,7 +141,7 @@ CheckColor(spot, the_color) {
 }
 
 GetMyColorOld() {
-  LogMain0("GetMyColor()")
+  LogField1("GetMyColor()")
   spots := ["b1","c1","d1","e1","f1","g1","h1"]
   spot := "a1"
   color := SqStat(spot)

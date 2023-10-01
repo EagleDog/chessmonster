@@ -8,7 +8,7 @@
 
 
 MoveKnight(spot) {
-  LogMain("MoveKnight('" . spot . "')")
+  LogCenter("MoveKnight('" . spot . "')")
   jumps := {}
   jumps := FindJumps(spot)   ;{j1.col,j1.rank,j1.spot,j1.color,j2.col,j2.rank,j3.col,j3.rank}
   jbounds := []

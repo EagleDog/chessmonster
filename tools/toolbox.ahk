@@ -15,7 +15,7 @@ Move_MsgBox(P) {
 }
 
 FlipBoard() {
-  LogMain0("FlipBoard()"), sleep, 50
+  LogField1("FlipBoard()"), sleep, 50
   if (my_color == "black") {
     my_color := "black"
   }
@@ -30,10 +30,10 @@ PauseMatch() {
 }
 
 PauseDisplay() {
-  LogMain0("           ready")
-  LogMain("1 new match")
-  LogTimer("2 continue")
-  LogVolume("r rematch")
+  LogField1("           ready")
+  LogField2("1 new match")
+  LogField3("2 continue")
+  LogField4("r rematch")
 }
 
 ColToFile(col) {

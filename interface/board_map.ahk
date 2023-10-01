@@ -17,7 +17,7 @@ global display_size := "HP" ; default is "HP"
 
 
 CreateBoard() {             ; populate with x y coords 64 squares
-LogMain("CreateBoard()")
+LogField2("CreateBoard()")
 sleep 200
   Loop, 8 {       ; Ranks (rows)
     rank := A_Index

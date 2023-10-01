@@ -13,7 +13,7 @@
 ;           GO LOOP           GO LOOP           GO LOOP
 ;
 GoLoop() {                   ; GoLoop() main chessmonster loop
-LogMain0("GoLoop()")
+LogField1("GoLoop()")
 Chill()
   paused := false
   ActivateChess()
@@ -77,7 +77,7 @@ FindMyGuys(spot, spot_color) {
 }
 
 ChooseSquare() {
-  LogMain("ChooseSquare()")
+  LogField2("ChooseSquare()")
   if fail {    ; fail from move_maker.ahk
     fail := false
     spot := FailChoose()
@@ -85,14 +85,14 @@ ChooseSquare() {
     spot := ChooseMySpots()
   } else {
     spot := RandomSquare()
-    LogMain("ChooseSquare() " . spot . " rand square")
+    LogField2("ChooseSquare() " . spot . " rand square")
     Chill()
   }
   return spot
 }
 
 FailChoose() {
-  LogMain("FailChoose()")
+  LogField2("FailChoose()")
   if RandomChoice(3) {      ; 1:3 odds move my_spots
     spot := ChooseMySpots()
   } else {
@@ -102,7 +102,7 @@ FailChoose() {
 }
 
 ChooseMySpots() {
-    LogMain( "ChooseMySpots()" )
+    LogField2( "ChooseMySpots()" )
 ;    sleep 100
     my_spots := GetMySpots()
     length_my_spots := my_spots.length()

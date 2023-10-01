@@ -21,14 +21,12 @@ DidSquareChange(spot, color) {  ; returns true or false
   if ( prev_piece == piece ) {
     return false  ; square is same
   } else {  ; square changed
-    LogDebug(prev_color " " prev_piece ", " color " " piece)
-    Debug(prev_color " " prev_piece ", " color " " piece)
     return true
   }
 }
 
 CheckAntecedents(spot) {
-  LogMain("CheckAntecedents( " . spot . " )")
+  LogField1("CheckAntecedents( " . spot . " )")
   piece := positions[spot].piece
   hybrid_color := positions[spot].color
   switch piece {

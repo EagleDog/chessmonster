@@ -18,12 +18,12 @@ gui add, Text, xp-40 yp-5 wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0
 gui +AlwaysOnTop +ToolWindow -SysMenu
 gui color, 0x888877     ; BACKGROUND COLOR  <-------
 
-gui add, Text, w280 h20 x20 y110 left Vmain0_field, % main0_text
-gui add, Text, w280 h20 x20 y135 center Vmain_field, % main_text
-gui add, Text, w280 h20 x20 y160 center Vtimer_field, % timer_text
-gui add, Text, w280 h20 x20 y190 center Vvolume_field, % volume_text
+gui add, Text, w280 h20 x20 y110 left Vfield_1, % field_1_text
+gui add, Text, w280 h20 x20 y135 center Vfield_2, % field_2_text
+gui add, Text, w280 h20 x20 y160 center Vfield_3, % field_3_text
+gui add, Text, w280 h20 x20 y190 center V_field_4, % field_4_text
 
-gui add, Text, w280 h20 x20 y230 center Vdebug_field, % debug_text
+gui add, Text, w280 h20 x20 y230 center Vcenter_field, % center_text
 
 gui add, Text, w280 h20 x20 y260 center Vopp_title_field, % opp_title_text
 gui add, Text, w280 h200 x20 y290 center Vpositions_field, % positions_text
@@ -42,11 +42,10 @@ MoveGui1()
 
 
 RefreshGui() {
-  LogMain0("    press 1 to start")
-  LogMain("press r for rematch")
-  LogTimer("0:0.0000000")
-  LogVolume("0.0000")
-  LogOppTitle("black")
+  LogField1("    press 1 to start")
+  LogField2("press r for rematch")
+  LogField3("0:0.0000000")
+  LogField4("0.0000")
   LogOppTitle("black")
   LogPositions("press A for positions")
   LogMyTitle("white")
@@ -57,25 +56,29 @@ RefreshGui() {
 }
 
 CreateGui() {
-  LogMain("CreateGui()")
+  LogField1("CreateGui()")
   sleep 50
 }
 
-LogMain0(main0_text) {
-  GuiControl,, main0_field, % main0_text
+LogField1(field_1_text) {
+; LogMain0(field_1_text) {
+  GuiControl,, field_1, % field_1_text
 }
-LogMain(main_text) {
-  GuiControl,, main_field, % main_text
+LogField2(field_2_text) {
+; LogMain(main_text) {
+  GuiControl,, field_2, % field_2_text
 }
-LogTimer(timer_text) {
-  GuiControl,, timer_field, % timer_text
+LogField3(field_3_text) {
+; LogTimer(field_3_text) {
+  GuiControl,, field_3, % field_3_text
 }
-LogVolume(volume_text) {
-  GuiControl,, volume_field, % volume_text
+LogField4(field_4_text) {
+; LogVolume(field_4_text) {
+  GuiControl,, field_4, % field_4_text
 }
 ;
-LogDebug(debug_text) {
-  GuiControl,, debug_field, % debug_text
+LogCenter(center_text) {
+  GuiControl,, center_field, % center_text
 }
 ;
 LogOppTitle(opp_title_text) {
@@ -110,7 +113,7 @@ MoveGui1() {
   sleep 15
   gui show, x851 y106 w340 h680, chessmonster info, NoActivate
   sleep 15
-  LogMain("1 MoveGui1()")
+  LogField2("1 MoveGui1()")
   ActivateChess()
 }
 MoveGui2() {
@@ -124,7 +127,7 @@ MoveGui2() {
   sleep 15
   gui, show, x1220 y106 w340 h680, chessmonster info, NoActivate
   sleep 15
-  LogMain("2 MoveGui2()")
+  LogField2("2 MoveGui2()")
   ActivateChess()
 }
 MoveGui3() {
@@ -138,7 +141,7 @@ MoveGui3() {
   sleep 15
   gui show, x951 y106 w340 h680, chessmonster info, NoActivate
   sleep 15
-  LogMain("3 MoveGui3()")
+  LogField2("3 MoveGui3()")
   ActivateChess()
 }
 ShakeGui() {

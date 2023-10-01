@@ -31,7 +31,7 @@ UpdatePosition(spot) {  ; LogMain("UpdatePosition()")
   ;   }
   ; }
   OutputPositions()
-  LogMain0("                  " . spot . "  " . abbr . "")
+  LogField1("                  " . spot . "  " . abbr . "")
   return color
 }
 ;
@@ -77,7 +77,7 @@ OutputPositions() {
 ;-------------------------------------------------------
 ;                                          GET POSITIONS
 GetPositions(speed="fast") {
-  LogMain("Getting positions.....")
+  LogField1("Getting positions.....")
   piece := ""
   color := ""
   abbr := ""
@@ -107,9 +107,8 @@ GetPositions(speed="fast") {
 ;------------------------------------------------------------------
 ;                                           GET STARTING POSITIONS
 GetStartingPositions() {
-LogMain0("GetStartingPositions()")
+LogField1("get starting positions...")
   GetMyColor()
-  LogMain("Get Starting positions.....")
   white_row_abbrs := ["R", "N", "B", "Q", "K", "B", "N", "R"]
   pawn_row_abbrs := ["p", "p", "p", "p", "p", "p", "p", "p"]
   empty_row_abbrs := [".", ".", ".", ".", ".", ".", ".", "."]
@@ -143,7 +142,7 @@ LogMain0("GetStartingPositions()")
     GenericColumnsLoop(row, color, abbrs)
   }
   OutputPositions()
-  LogMain("Begin Match")
+  LogField2("Begin Match")
 }
 
 GenericColumnsLoop(row, color, abbrs) {

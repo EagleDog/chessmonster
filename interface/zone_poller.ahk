@@ -50,7 +50,6 @@ PollZones() { ; looks for opp_move
     ;   return opp_move
     ; }
     which_zone += 1
-    LogDebug(zones.count())
     if ( which_zone > zones.count() ) {
       which_zone := 1
     }
@@ -61,7 +60,7 @@ PollZones() { ; looks for opp_move
 }
 
 PollZone(zone) { ; returns true if opp has moved (theoretically)
-  LogTimer("PollZone(" . which_zone . ")")
+  LogField1("PollZone(" . which_zone . ")")
   n := 1
   while zone[n] {
     spot := zone[n]

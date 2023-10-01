@@ -14,13 +14,13 @@ global both_spots := [] ; all active spots both colors
 
 
 PollOppSide() {
-  LogMain("poll opp territory")
+  LogField1("poll opp territory")
   random rand_opp_spot, 33, 64
   spot := all_spots[rand_opp_spot]
   piece_color := UpdatePosition(spot)
 ;  if ( piece_color == opp_color ) {
 ;    piece := positions[spot].piece
-;    LogMain("check antecedents")
+;    LogField1("check antecedents")
 ;    CheckAntecedents(spot, piece)
 ;  }
 }
@@ -28,13 +28,13 @@ PollOpponent() {
   loop 3 {
     PollOppSide()
   }
-  LogMain("PollZone( zone_1 )")
+  LogField1("PollZone( zone_1 )")
   PollZone(zones["zone_1"])
-  LogMain("PollZone( zone_235 )")
+  LogField1("PollZone( zone_235 )")
   PollZone(zones["zone_235"])
-  LogMain("PollZone( zone_6 )")
+  LogField1("PollZone( zone_6 )")
   PollZone(zones["zone_6"])
-  LogMain("PollZone( zone_4 )")
+  LogField1("PollZone( zone_4 )")
   PollZone(zones["zone_4"])
 }
 PollOppTerritory() {

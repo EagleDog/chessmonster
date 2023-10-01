@@ -13,7 +13,7 @@
 global fail := false
 
 MovePiece(spot, target) {
-LogMain("MovePiece:  '" spot "' to '" target "'" )
+LogField1("MovePiece:  '" spot "' to '" target "'" )
 ;Chill()
   fail := MoveAndFailCheck(spot, target)
   if !fail {
@@ -22,7 +22,7 @@ LogMain("MovePiece:  '" spot "' to '" target "'" )
 ;    UpdateSnapshots()
 ;    LogMoves(move_num)
     WhichZones()
-;    LogVolume(period)
+;    LogField4(period)
   } else {
     UpdateSnapshots()
   }

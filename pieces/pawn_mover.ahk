@@ -8,7 +8,7 @@
 ;
 
 MovePawn(spot) {
-  LogMain("MovePawn('" . spot . "')")
+  LogCenter("MovePawn('" . spot . "')")
   if ( RandomChoice(3) ) {  ; reduce pawn move frequency
     return
   }

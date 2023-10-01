@@ -42,6 +42,6 @@ MakeMove() {
 }
 
 TryMove(spot, piece_type) {
-  LogMain("try move" . piece_type . " " . spot)
+  LogField1("try move" . piece_type . " " . spot)
   return spot
 }

@@ -15,7 +15,7 @@
 ; STEP 4 - move to empty square
 
 MoveQueen(spot) {
-  LogMain("MoveQueen('" . spot . "')")
+  LogCenter("MoveQueen('" . spot . "')")
   paths := FindQPaths(spot)
 ;  OutputQPaths(paths)
   target := QueenCapture(paths)
