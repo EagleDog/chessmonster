@@ -4,8 +4,8 @@
 #Include tools\debug.ahk
 #Include tools\VA.ahk
 #Include tools\toolbox.ahk
-#Include interface\chess_gui.ahk
-#Include interface\listener.ahk
+#Include tools\chess_gui.ahk
+#Include tools\listener.ahk
 
 #Include engine\castling.ahk
 #Include engine\fen_maker.ahk
