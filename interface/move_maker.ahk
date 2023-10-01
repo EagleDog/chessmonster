@@ -75,7 +75,7 @@ ClickSpot(spot) {
 }
 
 MoveClick(x, y) {
-  MoveMouse(x, y)
+  mousemove x, y
   Click
 }
 

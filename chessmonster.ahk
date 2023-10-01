@@ -60,10 +60,9 @@ NewGame() {
 
 
 ActivateChess() {
-  LogMain0("ActivateChess()")
-  sleep, 200
-  if WinExist("Play Chess") {
-    WinActivate, Play Chess
+  SetTitleMatchMode, 2
+  if WinExist("Chess Online") {
+    WinActivate, Chess Online
   }
 }
 
@@ -94,6 +93,7 @@ StartGame() {
 ; ^+c::SublimeGo() ; ctrl + shift + x
 
 1::StartGame()
+;1::CheckBackField()
 ;1::DidGameEnd()
 ;2::StartGame()
 5::PollOpp()
