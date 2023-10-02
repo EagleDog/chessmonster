@@ -18,7 +18,9 @@ CheckMyCastling(bestmove) { ; also check if piece is king?
   }
 }
 
-CheckOppCastling(spot, piece, prev_piece) {
+CheckOppCastling(spot) {
+  piece := positions[spot].piece
+  prev_piece := snapshots[move_num][spot].piece
   if opp_color == "black" {
     if ( ( spot == "a8" ) and ( prev_piece == "rook" ) )
     or ( ( spot == "b8" ) and ( piece == "king" ) )

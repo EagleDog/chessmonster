@@ -45,7 +45,7 @@ NewGame() {
   ResetMoves()
   ResetCastleRights()
 ;  FlipBoard()
-  GetStartingPositions(), sleep 300
+  GetStartingPositions()
   GetPositions()
   ResetSnapshots()
   NewGameUCI()
@@ -78,6 +78,7 @@ ExitChessMonster() {
 }
 
 StartGame() {
+  GetPositions()
   RunUCI()
   PollOpp()
 }

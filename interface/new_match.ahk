@@ -41,7 +41,8 @@ FindVS() {
 
 RematchComputer() {
   MoveGui2()
-  sleep 50
+  ClickEmpty()
+  sleep 10000
   ButtonA()     ; move click A
   sleep 800
   EscKey()      ; press Esc
@@ -52,7 +53,10 @@ RematchComputer() {
   sleep 800
   ButtonA()     ; move click A
   sleep 50
-  MoveGui1()
+  ClickEmpty()  ; click empty space (hide remaining browser dialogs)
+  sleep 50
+
+  MoveGui2()
   Beep()
   NewGame()
 }
@@ -71,6 +75,10 @@ YesButton() {
   MoveClick(yes_x, yes_y)
 }
 
+ClickEmpty() {
+  x := 880, y := 700
+  MoveClick(x, y)
+}
 
 ;
 ;

@@ -13,7 +13,7 @@
 global fail := false
 
 MovePiece(spot, target) {
-LogField1("MovePiece:  '" spot "' to '" target "'" )
+LogCenter("MovePiece:  '" spot "' to '" target "'" )
 ;Chill()
   fail := MoveAndFailCheck(spot, target)
   if !fail {
@@ -66,7 +66,7 @@ PromotePawn(spot, piece, target) {
 }
 
 MoveMouse(x, y, speed=0) {
-  mousemove x, y, speed
+;  mousemove x, y, speed
 }
 GoSpot(spot) {
   MoveMouse(board[spot].x, board[spot].y)

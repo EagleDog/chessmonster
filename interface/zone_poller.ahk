@@ -27,7 +27,7 @@ PollOpp() {
       n := 0
       RunUCI()
     }
-    if ( n >= 4 ) {
+    if ( n >= 2 ) {
       n := 0
       RunUCI()
     }
@@ -60,7 +60,7 @@ PollZones() { ; looks for opp_move
 }
 
 PollZone(zone) { ; returns true if opp has moved (theoretically)
-  LogField1("PollZone(" . which_zone . ")")
+  LogField4("PollZone(" . which_zone . ")")
   n := 1
   while zone[n] {
     spot := zone[n]

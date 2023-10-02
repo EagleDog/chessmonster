@@ -26,7 +26,7 @@ DidSquareChange(spot, color) {  ; returns true or false
 }
 
 CheckAntecedents(spot) {
-  LogField1("CheckAntecedents( " . spot . " )")
+  LogField2("CheckAntecedents( " . spot . " )")
   piece := positions[spot].piece
   hybrid_color := positions[spot].color
   switch piece {

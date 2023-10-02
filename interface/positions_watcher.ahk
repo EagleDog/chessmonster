@@ -80,7 +80,7 @@ OutputPositions() {
 ;-------------------------------------------------------
 ;                                          GET POSITIONS
 GetPositions(speed="fast") {
-  LogField1("Getting positions.....")
+  LogCenter("Getting positions.....")
   piece := ""
   color := ""
   abbr := ""
@@ -110,7 +110,7 @@ GetPositions(speed="fast") {
 ;------------------------------------------------------------------
 ;                                           GET STARTING POSITIONS
 GetStartingPositions() {
-LogField2("get starting positions...")
+LogField4("get starting positions...")
   GetMyColor()
   white_row_abbrs := ["R", "N", "B", "Q", "K", "B", "N", "R"]
   pawn_row_abbrs := ["p", "p", "p", "p", "p", "p", "p", "p"]
@@ -145,7 +145,7 @@ LogField2("get starting positions...")
     GenericColumnsLoop(row, color, abbrs)
   }
   OutputPositions()
-  LogField2("Begin Match")
+  LogCenter("Begin Match")
 }
 
 GenericColumnsLoop(row, color, abbrs) {

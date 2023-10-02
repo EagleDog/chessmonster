@@ -22,13 +22,13 @@ global bishop_patterns := [up_left, up_right, down_right, down_left]
 global queen_patterns := CombineArrays(rook_patterns, bishop_patterns)
 
 CheckDescendents(spot) { 
-LogField1("CheckDescendents( " spot " )")
+LogField3("CheckDescendents( " spot " )")
   prev_piece := snapshots[move_num][spot].piece
   prev_color := snapshots[move_num][spot].color
   piece := positions[spot].piece
   move_patterns := AssignMovePatterns(spot, prev_piece)
   SearchSuccessors(spot, move_patterns)
-  CheckOppCastling(spot, piece, prev_piece)
+  ; CheckOppCastling(spot, piece, prev_piece)
   return prev_color
 }
 

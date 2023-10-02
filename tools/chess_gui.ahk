@@ -21,17 +21,17 @@ gui color, 0x888877     ; BACKGROUND COLOR  <-------
 gui add, Text, w280 h20 x20 y110 left Vfield_1, % field_1_text
 gui add, Text, w280 h20 x20 y135 center Vfield_2, % field_2_text
 gui add, Text, w280 h20 x20 y160 center Vfield_3, % field_3_text
-gui add, Text, w280 h20 x20 y190 center V_field_4, % field_4_text
+gui add, Text, w280 h20 x20 y190 center Vfield_4, % field_4_text
 
 gui add, Text, w280 h20 x20 y230 center Vcenter_field, % center_text
 
 gui add, Text, w280 h20 x20 y260 center Vblack_title_field, % black_title_text
-gui add, Text, w280 h200 x20 y290 center Vpositions_field, % positions_text
+gui add, Text, w280 h200 x30 y290 right Vpositions_field, % positions_text
 gui add, Text, w280 h20 x20 y510 center Vwhite_title_field, % white_title_text
 
 gui add, Text, w280 h20 x20 y550 center Vmoves_field, % moves_text
 gui add, Text, w280 h20 x20 y590 center Vcastle_field, % castle_text
-gui add, Text, w280 h20 x40 y620 center Vmy_color_field, % my_color_text
+gui add, Text, w280 h40 x34 y620 center Vmy_color_field, % my_color_text
 
 ; gui add, Text, w280 h20 x20 y500 center Vnum_pieces_field, % num_pieces_text
 
@@ -39,6 +39,7 @@ gui add, Text, w280 h20 x40 y620 center Vmy_color_field, % my_color_text
 ZoomGui()
 RefreshGui()
 MoveGui1()
+MoveGui2()
 ; ShakeGui()
 
 
@@ -47,9 +48,8 @@ RefreshGui() {
   LogField2("R for rematch")
   LogField3("A for positions")
   LogField4("1 to start")
-  LogCenter("center")
+  LogCenter("press 1 to start")
   LogBlackTitle("black")
-  LogBlackTitle("asdfasdf")
   LogPositions("positions")
   LogWhiteTitle("white")
   ; LogNumPieces("white 16  black 16")
@@ -60,7 +60,7 @@ RefreshGui() {
 }
 
 CreateGui() {
-  LogField1("CreateGui()")
+  LogField1("initialize")
   sleep 50
 }
 
@@ -86,23 +86,23 @@ LogCenter(center_text) {
 }
 ;
 LogBlackTitle(black_title_text) {
-  GuiControl,, % "black  " black_title_field " pieces", % black_title_text
+  GuiControl,, black_title_field, % "black  " black_title_text  " pieces"
 }
 LogPositions(positions_text) {
   GuiControl,, positions_field, % positions_text
 }
 LogWhiteTitle(white_title_text) {
-  GuiControl,, % "white  " white_title_field " pieces", % white_title_text
+  GuiControl,, white_title_field, % "white  " white_title_text " pieces"
 }
 ;
 LogMoves(moves_text) {
   GuiControl,, moves_field, % moves_text . "  move_num "
 }
 LogCastle(castle_text) {
-  GuiControl,, castle_field, % "castle rights: " castle_text
+  GuiControl,, castle_field, % "  castle rights: " castle_text
 }
 LogMyColor(my_color_text) {
-  GuiControl,, my_color_field, % "my color: `n" my_color_text
+  GuiControl,, my_color_field, % my_color_text
 }
 ; LogNumPieces(num_pieces_text) {
 ;   GuiControl,, num_pieces_field, % num_pieces_text
@@ -132,7 +132,7 @@ MoveGui2() {
   sleep 15
   gui, show, x1170 y106 w340 h680, chessmonster info, NoActivate
   sleep 15
-  gui, show, x1220 y106 w340 h680, chessmonster info, NoActivate
+  gui, show, x1251 y106 w340 h680, chessmonster info, NoActivate
   sleep 15
   LogField2("2 MoveGui2()")
   ActivateChess()

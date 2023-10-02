@@ -14,7 +14,7 @@ global both_spots := [] ; all active spots both colors
 
 
 PollOppSide() {
-  LogField1("poll opp territory")
+  LogField4("poll opp territory")
   random rand_opp_spot, 33, 64
   spot := all_spots[rand_opp_spot]
   piece_color := UpdatePosition(spot)
@@ -77,6 +77,7 @@ HowManyPieces() {
   both_spots := GetBothSpots()
   num_pieces_black := both_spots[1].length()
   num_pieces_white := both_spots[2].length()
+  num_pieces_both := [num_pieces_black, num_pieces_white]
   ; num_pieces_both := [num_pieces_opp, num_pieces_mine]
   ; if ( my_color == "white" ) {
   ;   num_pieces_both := [num_pieces_opp, num_pieces_mine]
