@@ -70,6 +70,7 @@ PollZone(zone) { ; returns true if opp has moved (theoretically)
       hybrid_color := CheckAntecedents(spot) ; descendents too
       if ( hybrid_color = opp_color ) {
         opp_move := true
+        CheckOppCastling(spot)
         return opp_move
       } else {
         ; msgbox % spot " " "color:" color "`nh_color: " hybrid_color "`nopp_color: " opp_color
