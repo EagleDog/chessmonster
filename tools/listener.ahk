@@ -26,15 +26,15 @@ Listen() {
     LogField3(timer_text)
     VA_IAudioMeterInformation_GetPeakValue(audioMeter, peakValue)
     if (peakValue > triggervol) {
-      LogField4("volume: " . peakValue)
-      LogField2(" sound detected ")
+;      LogField4("volume: " . peakValue)
+;      LogField2(" sound detected ")
       return
     }
     sleep 100
     timer_count += 100/1000
     if (timer_count > 3) {
-      LogField2("timeout")
-      LogField4(0.000)
+;      LogField2("timeout")
+;      LogField4(0.000)
 ;      CheckForGameEnd(old)
       return
     }

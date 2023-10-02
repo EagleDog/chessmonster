@@ -38,11 +38,11 @@ OutputSnapshot() {
   pos_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
 
   LogPositions(pos_text)
-  num_pieces_opp := snapshot["num_pieces_opp"]
-  num_pieces_mine := snapshot["num_pieces_mine"]
+  num_pieces_black := snapshot["num_pieces_black"]
+  num_pieces_white := snapshot["num_pieces_white"]
   snap_move_num := snapshot["move_number"]
-  LogOppTitle( opp_color . "  " . num_pieces_opp . " pieces" )
-  LogMyTitle( my_color . "  " . num_pieces_mine . " pieces" )
+  LogBlackTitle(num_pieces_black)
+  LogWhiteTitle(num_pieces_white)
   LogMoves(snap_move_num)
 }
 
@@ -68,12 +68,12 @@ DebugSnapshots() {
       pos_text := ""
     }
     pos_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
-    num_pieces_opp := snapshot["num_pieces_opp"]
-    num_pieces_mine := snapshot["num_pieces_mine"]
+    num_pieces_opp := snapshot["num_pieces_black"]
+    num_pieces_mine := snapshot["num_pieces_white"]
     Debug("move_num: " . n)
     Debug(pos_text)
-    Debug( opp_color . "  " . num_pieces_opp . " pieces" )
-    Debug( my_color . "  " . num_pieces_mine . " pieces" )
+    Debug( "black" . "  " . num_pieces_black . " pieces" )
+    Debug( "white" . "  " . num_pieces_white . " pieces" )
   }
 }
 

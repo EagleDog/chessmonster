@@ -59,14 +59,17 @@ OutputPositions() {
   LogPositions(pos_text)
 
   num_pieces_both := HowManyPieces()
-  num_pieces_opp := num_pieces_both[1]
-  num_pieces_mine := num_pieces_both[2]
-  LogOppTitle( opp_color . "  " . num_pieces_opp . " pieces" )
-  LogMyTitle( my_color . "  " . num_pieces_mine . " pieces" )
+  num_pieces_black := num_pieces_both[1]
+  num_pieces_white := num_pieces_both[2]
+
+; fix num_pieces titles here GUI work
+
+  LogBlackTitle( num_pieces_black )
+  LogWhiteTitle( num_pieces_white )
   LogMoves(move_num)
 
-  positions["num_pieces_opp"] := num_pieces_opp
-  positions["num_pieces_mine"] := num_pieces_mine
+  positions["num_pieces_black"] := num_pieces_black
+  positions["num_pieces_white"] := num_pieces_white
   positions["move_number"] := move_num
 
   UpdateSnapshots()
@@ -107,7 +110,7 @@ GetPositions(speed="fast") {
 ;------------------------------------------------------------------
 ;                                           GET STARTING POSITIONS
 GetStartingPositions() {
-LogField1("get starting positions...")
+LogField2("get starting positions...")
   GetMyColor()
   white_row_abbrs := ["R", "N", "B", "Q", "K", "B", "N", "R"]
   pawn_row_abbrs := ["p", "p", "p", "p", "p", "p", "p", "p"]

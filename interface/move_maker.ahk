@@ -30,13 +30,14 @@ LogField1("MovePiece:  '" spot "' to '" target "'" )
 
 MoveAndFailCheck(old_spot, target) { ; Pawn Promotion too!
   ID2 := positions[old_spot].piece
+  piece := ID2
   sleep 50
   ClickDrag(old_spot, target)  ; <==== click and drag
   sleep 200
-  UpdatePosition(old_spot)  ; <== UpdatePosition(spot)
+  UpdatePosition(old_spot)  ; <== UpdatePosition(old_spot)
   snapshots[move_num][old_spot] := positions[old_spot].Clone() ; non-redundant
   sleep 50
-  UpdatePosition(target)  ; <== UpdatePosition(spot)
+  UpdatePosition(target)  ; <== UpdatePosition(target)
   snapshots[move_num][target] := positions[target].Clone() ; non-redundant
   sleep 50
   ID1 := positions[old_spot].piece  ; msgbox % target " ID2: " ID2 "  " spot " ID1: " ID1
@@ -54,11 +55,12 @@ ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
   MouseClickDrag, L, b[spot].x, b[spot].y, b[target].x, b[target].y + 8, 2
 }
 
-PromotePawn(spot, piece_type, target) {
-  if ( (piece_type = "pawn") AND (target contains 8) ) {
-    sleep 250
+PromotePawn(spot, piece, target) {
+  if ( (my_color == "white") and (piece == "pawn") and (target contains 8) ) 
+  or ( (my_color == "black") and (piece == "pawn") and (target contains 1) ) {
+    GoSpot(spot), sleep 50
     mouseclick Left    ;  Promotion  choose queen
-    sleep 150
+    sleep 50
     UpdatePosition(spot)
   }
 }

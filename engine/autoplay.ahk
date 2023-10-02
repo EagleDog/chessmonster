@@ -103,7 +103,6 @@ FailChoose() {
 
 ChooseMySpots() {
     LogField2( "ChooseMySpots()" )
-;    sleep 100
     my_spots := GetMySpots()
     length_my_spots := my_spots.length()
     Random, spot_num, 1, length_my_spots

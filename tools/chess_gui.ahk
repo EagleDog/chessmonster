@@ -25,12 +25,13 @@ gui add, Text, w280 h20 x20 y190 center V_field_4, % field_4_text
 
 gui add, Text, w280 h20 x20 y230 center Vcenter_field, % center_text
 
-gui add, Text, w280 h20 x20 y260 center Vopp_title_field, % opp_title_text
+gui add, Text, w280 h20 x20 y260 center Vblack_title_field, % black_title_text
 gui add, Text, w280 h200 x20 y290 center Vpositions_field, % positions_text
-gui add, Text, w280 h20 x20 y510 center Vmy_title_field, % my_title_text
+gui add, Text, w280 h20 x20 y510 center Vwhite_title_field, % white_title_text
 
 gui add, Text, w280 h20 x20 y550 center Vmoves_field, % moves_text
 gui add, Text, w280 h20 x20 y590 center Vcastle_field, % castle_text
+gui add, Text, w280 h20 x40 y620 center Vmy_color_field, % my_color_text
 
 ; gui add, Text, w280 h20 x20 y500 center Vnum_pieces_field, % num_pieces_text
 
@@ -43,16 +44,19 @@ MoveGui1()
 
 RefreshGui() {
   LogField1("    press 1 to start")
-  LogField2("press r for rematch")
-  LogField3("0:0.0000000")
-  LogField4("0.0000")
-  LogOppTitle("black")
-  LogPositions("press A for positions")
-  LogMyTitle("white")
+  LogField2("R for rematch")
+  LogField3("A for positions")
+  LogField4("1 to start")
+  LogCenter("center")
+  LogBlackTitle("black")
+  LogBlackTitle("asdfasdf")
+  LogPositions("positions")
+  LogWhiteTitle("white")
   ; LogNumPieces("white 16  black 16")
   ; LogMoves("move_num == " . move_num)
   LogMoves(1)
   LogCastle("KQkq")
+  LogMyColor("WHITE")
 }
 
 CreateGui() {
@@ -81,14 +85,14 @@ LogCenter(center_text) {
   GuiControl,, center_field, % center_text
 }
 ;
-LogOppTitle(opp_title_text) {
-  GuiControl,, opp_title_field, % opp_title_text
+LogBlackTitle(black_title_text) {
+  GuiControl,, % "black  " black_title_field " pieces", % black_title_text
 }
 LogPositions(positions_text) {
   GuiControl,, positions_field, % positions_text
 }
-LogMyTitle(my_title_text) {
-  GuiControl,, my_title_field, % my_title_text
+LogWhiteTitle(white_title_text) {
+  GuiControl,, % "white  " white_title_field " pieces", % white_title_text
 }
 ;
 LogMoves(moves_text) {
@@ -96,6 +100,9 @@ LogMoves(moves_text) {
 }
 LogCastle(castle_text) {
   GuiControl,, castle_field, % "castle rights: " castle_text
+}
+LogMyColor(my_color_text) {
+  GuiControl,, my_color_field, % "my color: `n" my_color_text
 }
 ; LogNumPieces(num_pieces_text) {
 ;   GuiControl,, num_pieces_field, % num_pieces_text
