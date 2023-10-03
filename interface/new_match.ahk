@@ -80,6 +80,17 @@ ClickEmpty() {
   MoveClick(x, y)
 }
 
+
+
+
+
+
+
+
+;
+;
+;
+;
 ;
 ;
 ;

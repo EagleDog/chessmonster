@@ -41,6 +41,7 @@ ResetSnapshots()
 
 NewGame() {
   ActivateChess()
+  ScrollUp()
   GetMyColor()
   ResetMoves()
   ResetCastleRights()
@@ -74,6 +75,7 @@ ExitChessMonster() {
   gui hide
   SublimeGo()
   ExitStreamer()
+  ShowCursor()
   ExitApp
 }
 
@@ -108,7 +110,7 @@ Beep() {
 4::SearchSuccessors("d4", rook_patterns)
 ; 4::SearchSuccessors("h8", rook_patterns)
 
-;5::GetMyColor()
+c::GetMyColor()
 
 ;5::CheckPawnSize()
 
@@ -145,10 +147,5 @@ o::OutputSnapshot()
 
 Up::IncreaseMoveNum()
 Down::DecreaseMoveNum()
-
-w & k::CastleRights1()
-w & q::CastleRights2()
-b & k::CastleRights3()
-b & q::CastleRights4()
 
 z::Beep()

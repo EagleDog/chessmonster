@@ -81,6 +81,7 @@ OutputPositions() {
 ;                                          GET POSITIONS
 GetPositions(speed="fast") {
   LogCenter("Getting positions.....")
+  GetMyColor()
   piece := ""
   color := ""
   abbr := ""
@@ -111,6 +112,7 @@ GetPositions(speed="fast") {
 ;                                           GET STARTING POSITIONS
 GetStartingPositions() {
 LogField4("get starting positions...")
+  ClickEmpty()
   GetMyColor()
   white_row_abbrs := ["R", "N", "B", "Q", "K", "B", "N", "R"]
   pawn_row_abbrs := ["p", "p", "p", "p", "p", "p", "p", "p"]

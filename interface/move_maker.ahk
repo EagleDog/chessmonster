@@ -52,8 +52,15 @@ MoveAndFailCheck(old_spot, target) { ; Pawn Promotion too!
 }
 
 ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
-  MouseClickDrag, L, b[spot].x, b[spot].y, b[target].x, b[target].y + 8, 2
+  ShowCursor()
+  x1 := board[spot].x, y1 := board[spot].y
+  x2 := board[target].x, y2 := board[target].y
+  mousemove x1, y1, 0
+  MouseClickDrag, L, x1, y1, x2, y2 + 8, 2
+  HideCursor()
 }
+
+
 
 PromotePawn(spot, piece, target) {
   if ( (my_color == "white") and (piece == "pawn") and (target contains 8) ) 
