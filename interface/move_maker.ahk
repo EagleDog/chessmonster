@@ -13,7 +13,7 @@
 global fail := false
 
 MovePiece(spot, target) {
-LogCenter("MovePiece:  '" spot "' to '" target "'" )
+LogField5("move  '" spot "' to '" target "'" )
 ;Chill()
   fail := MoveAndFailCheck(spot, target)
   if !fail {
@@ -52,12 +52,12 @@ MoveAndFailCheck(old_spot, target) { ; Pawn Promotion too!
 }
 
 ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
-  ShowCursor()
+;  ShowCursor()
   x1 := board[spot].x, y1 := board[spot].y
   x2 := board[target].x, y2 := board[target].y
   mousemove x1, y1, 0
   MouseClickDrag, L, x1, y1, x2, y2 + 8, 2
-  HideCursor()
+;  HideCursor()
 }
 
 

@@ -31,7 +31,9 @@ UpdatePosition(spot) {  ; LogMain("UpdatePosition()")
   ;   }
   ; }
   OutputPositions()
-  LogField1("                  " . spot . "  " . abbr . "")
+  if ( ( row < 9 ) and ( col < 9 ) and ( row > 0 ) and ( col > 0 ) ) {
+    LogField1( spot "  " abbr )
+  }
   return color
 }
 ;
@@ -80,7 +82,7 @@ OutputPositions() {
 ;-------------------------------------------------------
 ;                                          GET POSITIONS
 GetPositions(speed="fast") {
-  LogCenter("Getting positions.....")
+  LogField5("get positions.....")
   GetMyColor()
   piece := ""
   color := ""
@@ -105,6 +107,7 @@ GetPositions(speed="fast") {
     }
   }
   UpdateSnapshots()
+  LogField5("positions updated")
   OutputPositions()
 }
 ;
@@ -135,19 +138,20 @@ LogField4("get starting positions...")
     ; color := my_color
     GenericColumnsLoop(row, color, abbrs)
   }
+  loop, 4 {     ; empty rows
+    row := A_Index + 2
+    color := "empty"
+    GenericColumnsLoop(row, color, abbrs)
+  }
   loop, 2 {     ; top 2 rows
     row := A_Index + 6
     color := "black"
     ; color := opp_color
     GenericColumnsLoop(row, color, abbrs)
   }
-  loop, 4 {     ; empty rows
-    row := A_Index + 2
-    color := "empty"
-    GenericColumnsLoop(row, color, abbrs)
-  }
   OutputPositions()
-  LogCenter("Begin Match")
+  LogField2("ready")
+  LogField4("1 to start")
 }
 
 GenericColumnsLoop(row, color, abbrs) {
@@ -161,6 +165,7 @@ GenericColumnsLoop(row, color, abbrs) {
     abbr := AddAbbrBlack(abbr, color)
     piece := GetFullName(abbr)
     positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
+    LogField2(spot " " color " " piece)    
   }
 }
 

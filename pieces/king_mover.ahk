@@ -25,7 +25,7 @@
 
 
 MoveKing(spot) {
-  LogCenter("MoveKing('" . spot . "')")
+  LogField4("move king '" spot "'")
   ; check for castle option
   castle := false                                 ;         CASTLE
   diffs := FindKDiffs(spot)                       ;          DIFFS

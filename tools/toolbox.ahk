@@ -14,18 +14,23 @@ Move_MsgBox(P) {
   }
 }
 
+ClearLogFields() {
+  LogField1("")
+  LogField2("")
+  LogField3("")
+  LogField4("")
+  LogField5("")
+}
+
 
 HideCursor(){
-   MouseGetPos, , , hwnd
-   Gui Cursor:+Owner%hwnd%
-;   BlockInput MouseMove
-   DllCall("ShowCursor", Int, 0)
+  mousemove 1500, 900, 0
 }
 
-ShowCursor() {
-   BlockInput MouseMoveOff
-   DllCall("ShowCursor", Int, 1)
-}
+; ShowCursor() {
+;    ; BlockInput MouseMoveOff
+;    ; DllCall("ShowCursor", Int, 1)
+; }
 
 FlipBoard() {
   LogField1("FlipBoard()"), sleep, 50

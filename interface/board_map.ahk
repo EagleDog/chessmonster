@@ -17,7 +17,7 @@ global display_size := "HP" ; default is "HP"
 
 
 CreateBoard() {             ; populate with x y coords 64 squares
-LogField2("CreateBoard()")
+LogField2("a1 white rook")
 sleep 200
   Loop, 8 {       ; Ranks (rows)
     rank := A_Index

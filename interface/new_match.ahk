@@ -39,10 +39,11 @@ FindVS() {
   }
 }
 
-RematchComputer() {
+RematchComputer(timeout=10000) {
+  ClearLogFields()
   MoveGui2()
   ClickEmpty()
-  sleep 10000
+  sleep % timeout
   ButtonA()     ; move click A
   sleep 800
   EscKey()      ; press Esc
@@ -81,12 +82,8 @@ ClickEmpty() {
 }
 
 
-
-
-
-
-
-
+;
+;
 ;
 ;
 ;
@@ -96,8 +93,7 @@ ClickEmpty() {
 ;
 ;  old stuff below
 ;
-
-
+;
 New3Min() {
   new_3_spot_a := [965, 875]
   new_3_spot_b := [965, 675]

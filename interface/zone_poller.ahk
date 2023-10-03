@@ -60,7 +60,7 @@ PollZones() { ; looks for opp_move
 }
 
 PollZone(zone) { ; returns true if opp has moved (theoretically)
-  LogField4("PollZone(" . which_zone . ")")
+  LogField3("PollZone(" . which_zone . ")")
   n := 1
   while zone[n] {
     spot := zone[n]

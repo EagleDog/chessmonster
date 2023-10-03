@@ -87,8 +87,8 @@ GetMyColor() {
   } else {
     MyColorIsWhite()
   }
-  LogField4("my color is " my_color)
   StringUpper my_color_text, my_color
+  LogField1(my_color_text "  my color  " my_color_text " ")
   LogMyColor(my_color_text "  my color  " my_color_text)
 }
 
@@ -114,6 +114,7 @@ ImageMatches(x1, y1, x2, y2, img_path) {
 }
 
 SquareStatus(spot) {
+  ; LogField1(spot)
   if CheckColor(spot, white) {
     sq_contains := "white"
   } else if CheckColor(spot, black) {

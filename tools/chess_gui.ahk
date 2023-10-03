@@ -18,16 +18,16 @@ gui add, Text, xp-40 yp-5 wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0
 gui +AlwaysOnTop +ToolWindow -SysMenu
 gui color, 0x888877     ; BACKGROUND COLOR  <-------
 
-gui add, Text, w280 h20 x20 y110 left Vfield_1, % field_1_text
+gui add, Text, w280 h20 x20 y110 right Vfield_1, % field_1_text
 gui add, Text, w280 h20 x20 y135 center Vfield_2, % field_2_text
-gui add, Text, w280 h20 x20 y160 center Vfield_3, % field_3_text
-gui add, Text, w280 h20 x20 y190 center Vfield_4, % field_4_text
 
-gui add, Text, w280 h20 x20 y230 center Vcenter_field, % center_text
+gui add, Text, w280 h20 x20 y165 center Vfield_3, % field_3_text
+gui add, Text, w280 h20 x20 y192 center Vfield_4, % field_4_text
+gui add, Text, w280 h20 x20 y219 center Vfield_5, % field_5_text
 
-gui add, Text, w280 h20 x20 y260 center Vblack_title_field, % black_title_text
+gui add, Text, w280 h20 x20 y270 center Vblack_title_field, % black_title_text
 gui add, Text, w280 h200 x30 y290 right Vpositions_field, % positions_text
-gui add, Text, w280 h20 x20 y510 center Vwhite_title_field, % white_title_text
+gui add, Text, w280 h20 x20 y500 center Vwhite_title_field, % white_title_text
 
 gui add, Text, w280 h20 x20 y550 center Vmoves_field, % moves_text
 gui add, Text, w280 h20 x20 y590 center Vcastle_field, % castle_text
@@ -44,11 +44,11 @@ MoveGui2()
 
 
 RefreshGui() {
-  LogField1("    press 1 to start")
-  LogField2("R for rematch")
+  LogField1("initialize")
+  LogField2("a1 white rook")
   LogField3("A for positions")
   LogField4("1 to start")
-  LogCenter("press 1 to start")
+  LogField5("R for rematch")
   LogBlackTitle("black")
   LogPositions("positions")
   LogWhiteTitle("white")
@@ -65,24 +65,19 @@ CreateGui() {
 }
 
 LogField1(field_1_text) {
-; LogMain0(field_1_text) {
-  GuiControl,, field_1, % field_1_text
+  GuiControl,, field_1, % field_1_text " "
 }
 LogField2(field_2_text) {
-; LogMain(main_text) {
   GuiControl,, field_2, % field_2_text
 }
 LogField3(field_3_text) {
-; LogTimer(field_3_text) {
   GuiControl,, field_3, % field_3_text
 }
 LogField4(field_4_text) {
-; LogVolume(field_4_text) {
   GuiControl,, field_4, % field_4_text
 }
-;
-LogCenter(center_text) {
-  GuiControl,, center_field, % center_text
+LogField5(field_5_text) {
+  GuiControl,, field_5, % field_5_text
 }
 ;
 LogBlackTitle(black_title_text) {
@@ -104,10 +99,6 @@ LogCastle(castle_text) {
 LogMyColor(my_color_text) {
   GuiControl,, my_color_field, % my_color_text
 }
-; LogNumPieces(num_pieces_text) {
-;   GuiControl,, num_pieces_field, % num_pieces_text
-; }
-
 
 MoveGui1() {
   gui show, x1151 y106 w340 h680, chessmonster info, NoActivate

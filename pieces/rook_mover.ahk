@@ -13,7 +13,7 @@
 
 ;MoveRook("c1")
 MoveRook(spot) {
-  LogCenter("MoveRook('" . spot . "')")
+  LogField4("move rook '" spot "'")
   paths := FindRPaths(spot)
   ; OutputRPaths(paths)
   target := RookCapture(paths)

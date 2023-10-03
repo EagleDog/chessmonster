@@ -75,11 +75,12 @@ ExitChessMonster() {
   gui hide
   SublimeGo()
   ExitStreamer()
-  ShowCursor()
+;  ShowCursor()
   ExitApp
 }
 
 StartGame() {
+  ClearLogFields()
   GetPositions()
   RunUCI()
   PollOpp()
@@ -122,7 +123,7 @@ c::GetMyColor()
 ^3::MoveGui3()
 
 m::DriftMouse()
-r::RematchComputer()
+r::RematchComputer(10)
 q::MoveGui1()
 e::MoveGui2()
 s::ShakeGui()
