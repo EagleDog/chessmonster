@@ -45,7 +45,6 @@ NewGame() {
   GetMyColor()
   ResetMoves()
   ResetCastleRights()
-;  FlipBoard()
   GetStartingPositions()
   GetPositions()
   ResetSnapshots()
@@ -81,7 +80,8 @@ ExitChessMonster() {
 
 StartGame() {
   ClearLogFields()
-  GetPositions()
+  StartEngine()
+  ; GetPositions()
   RunUCI()
   PollOpp()
 }

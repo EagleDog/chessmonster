@@ -25,6 +25,7 @@ PollOpp() {
     opp_move := PollZones()
     if opp_move {
       n := 0
+      sleep 500
       RunUCI()
     }
     if ( n >= 2 ) {
@@ -79,6 +80,29 @@ PollZone(zone) { ; returns true if opp has moved (theoretically)
     n := A_Index + 1
   }
 }
+
+PollPieces() {
+  GetBothSpots()
+  if ( my_color == "black" ) {
+    opp_spots := white_spots
+  } else {
+    opp_spots := black_spots
+  }
+  n := 1
+  while ( opp_spots[n] ) {
+    spot := opp_spots[n]
+    PollPiece(spot)
+    n := n + 1
+  }
+}
+
+PollPiece(spot) {
+  CheckAntecedents(spot)
+
+  ; # bookmark: I was working here   <=====
+
+}
+
 
 WhichZones() {
   if ( move_num < 50 ) {

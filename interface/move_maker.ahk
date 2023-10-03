@@ -58,8 +58,8 @@ redtest(){
   y1 := 410
   x2 := x1 + 3
   y2 := y1 - 3
-  if ( CheckCoordColor(x1, y1, x2, y2, red1)
-  or CheckCoordColor(x1, y1, x2, y2, red2) ) {
+  if ( CheckColorCoords(x1, y1, x2, y2, red1)
+  or CheckColorCoords(x1, y1, x2, y2, red2) ) {
     msgbox red
   }
 }
@@ -72,11 +72,11 @@ UndoPreMove(spot, target) {
   y1 := board[spot].y - 38
   x2 := x1 + 3
   y2 := y1 - 3
-  red_check_1 := CheckCoordColor(x1, y1, x2, y2, red1)
-  red_check_2 := CheckCoordColor(x1, y1, x2, y2, red2)
+  red_check_1 := CheckColorCoords(x1, y1, x2, y2, red1)
+  red_check_2 := CheckColorCoords(x1, y1, x2, y2, red2)
   ; msgbox % x1 ", " y1 "  red1: " red_check_1 "  red2: " red_check_2
-  if ( CheckCoordColor(x1, y1, x2, y2, red1)
-  or CheckCoordColor(x1, y1, x2, y2, red2) ) {
+  if ( CheckColorCoords(x1, y1, x2, y2, red1)
+  or CheckColorCoords(x1, y1, x2, y2, red2) ) {
     sleep 10
     mouseclick right
     DidSquareChange(spot, positions[spot].color)

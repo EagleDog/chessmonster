@@ -4,7 +4,7 @@
 
 TimeoutRandomized() {
   if RandomChoice(4) {
-    timeout := 1000
+    timeout := 2000
   } else {
     random timeout, 5000, 15000
   }
@@ -12,6 +12,7 @@ TimeoutRandomized() {
 }
 
 RematchSequence(timeout=10000) {
+  refreshed := false
   sleep 1000
   gui hide
   ClickEmpty()
@@ -19,22 +20,31 @@ RematchSequence(timeout=10000) {
   if ( timeout == 10000) {
     timeout := TimeoutRandomized()
   }
+  if CheckRefresh() {
+    send {f5}
+    refreshed := true
+    sleep 1000
+  }  
   if FindPlayers() {
     gui show
-    RematchLive(timeout)
+    RematchLive(timeout, refreshed)
   } else {
     gui show
     RematchComputer(timeout)
   }
 }
 
-RematchLive(timeout=10000) {
+RematchLive(timeout=10000, refreshed=false) {
   ClearLogFields()
   MoveGui2()
   ClickEmpty()
   ShowTimeoutTimer(timeout)
   ; sleep % timeout
-  ButtonB()     ; move click B
+  if refreshed {
+    ButtonA()
+  } else {
+    ButtonB()     ; move click B
+  }
   sleep 100
   MoveGui2()
   Beep()
@@ -87,10 +97,12 @@ CheckBackfield() {
 ;  x1:= 320, y1 := 285, x2 := 323, y2 := 288
   x1:= 325, y1 := 820, x2 := 328, y2 := 823
   ; x1:= 330, y1 := 460, x2 := 333, y2 := 463
-  PixelSearch, found_x, found_y, x1, y1, x2, y2, backfield_color, 30, Fast
-  if found_x {
-    return true
-  }
+  matches := CheckColorCoords(x1, y1, x2, y2, backfield_color)
+;  PixelSearch, found_x, found_y, x1, y1, x2, y2, backfield_color, 30, Fast
+  ; if found_x {
+  ;   return true
+  ; }
+  return matches
 }
 
 FindVS() {
@@ -110,6 +122,16 @@ FindPlayers() {
     return true
   }
 }
+
+CheckRefresh() {
+  x1 := 1265, y1 := 175
+  x2 := x1 + 6, y2 := y1 + 6
+  refresh_blue := 0xD18C00
+  ; refresh_blue := 0x008CD1
+  matches := CheckColorCoords(x1, y1, x2, y2, refresh_blue)
+  return matches
+}
+
 
 EscKey() {
   send {esc}

@@ -21,15 +21,16 @@ stockfish_commands := ["ucinewgame","isready","d","position startpos"
                        ,"position fen","go movetime 1000", "stop", "flip"]
 
 StartEngine() {
-  AttachStockfish(), sleep 50
-  MoveStockfish(), sleep 50
-  NewGameUCI(), sleep 50
-  AdjustElo(), sleep 50
+  AttachStockfish()
+  MoveStockfish()
+  NewGameUCI()
+  AdjustElo()
+  ActivateChess()
 }
 
 AdjustElo() {
   SendToUCI("setoption name UCI_LimitStrength value true")
-  SendToUCI("setoption name UCI_Elo value 320")
+  SendToUCI("setoption name UCI_Elo value 300")
 }
 
 RunUCI() {
@@ -37,13 +38,9 @@ RunUCI() {
     StartEngine()
   }
   GetReady()
-  ; SendIsReady(), sleep 50
-  ; GetIsReady(), sleep 50
-  fen := GetFenFromGUI()  ; StartPos()
+  fen := GetFenFromGUI()
   SendFenToUCI(fen)
   GetReady()
-  ; SendIsReady(), sleep 50
-  ; GetIsReady(), sleep 50
    move_time := RandMoveTime()
   CalculateMove(move_time)   ; go movetime 500  ; ActivateChess()
    sleep % move_time + 50

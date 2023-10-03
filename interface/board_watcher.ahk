@@ -140,11 +140,11 @@ CheckColor(spot, the_color) {
   y1 := board[spot].y - 3
   x2 := board[spot].x + 3
   y2 := board[spot].y + 3
-  changed := CheckCoordColor(x1, y1, x2, y2, the_color)
+  changed := CheckColorCoords(x1, y1, x2, y2, the_color)
   return changed
 }
 
-CheckCoordColor(x1, y1, x2, y2, the_color) {
+CheckColorCoords(x1, y1, x2, y2, the_color) {
   PixelSearch, found_x, found_y , x1, y1, x2, y2, the_color, 30, Fast
   if found_x {
     return true
