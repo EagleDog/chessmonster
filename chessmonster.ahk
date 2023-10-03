@@ -111,6 +111,9 @@ Beep() {
 4::SearchSuccessors("d4", rook_patterns)
 ; 4::SearchSuccessors("h8", rook_patterns)
 
+8::UndoPremove("a1", "b1")
+
+
 c::GetMyColor()
 
 ;5::CheckPawnSize()
@@ -122,8 +125,9 @@ c::GetMyColor()
 ^2::GoLoop()
 ^3::MoveGui3()
 
+r::RematchSequence(10)
+
 m::DriftMouse()
-r::RematchComputer(10)
 q::MoveGui1()
 e::MoveGui2()
 s::ShakeGui()

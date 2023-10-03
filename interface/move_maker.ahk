@@ -18,9 +18,6 @@ LogField5("move  '" spot "' to '" target "'" )
   fail := MoveAndFailCheck(spot, target)
   if !fail {
     IncreaseMoveNum()   ; <== UpdateSnapshots() included
-;    move_num += 1
-;    UpdateSnapshots()
-;    LogMoves(move_num)
     WhichZones()
 ;    LogField4(period)
   } else {
@@ -45,10 +42,52 @@ MoveAndFailCheck(old_spot, target) { ; Pawn Promotion too!
     MsgBox, , % "FAIL", % "FAIL", % 1.5
     fail := true
   } else {
-    PromotePawn(spot, piece, target)   ; <== PromotePawn(spot,piece,target)
+    PromotePawn(old_spot, piece, target)   ; <== PromotePawn(spot,piece,target)
     fail := false
+    UndoPreMove(old_spot, target)
   }
   return fail
+}
+
+redtest(){
+  red1 := 0x4361B5
+  red2 := 0x7F8BEE
+  ; red1 := 0xB56143
+  ; red2 := 0xEE8B7F
+  x1 := 440
+  y1 := 410
+  x2 := x1 + 3
+  y2 := y1 - 3
+  if ( CheckCoordColor(x1, y1, x2, y2, red1)
+  or CheckCoordColor(x1, y1, x2, y2, red2) ) {
+    msgbox red
+  }
+}
+
+
+UndoPreMove(spot, target) {
+  red1 := 0x4361B5
+  red2 := 0x7F8BEE
+  x1 := board[spot].x + 38
+  y1 := board[spot].y - 38
+  x2 := x1 + 3
+  y2 := y1 - 3
+  red_check_1 := CheckCoordColor(x1, y1, x2, y2, red1)
+  red_check_2 := CheckCoordColor(x1, y1, x2, y2, red2)
+  ; msgbox % x1 ", " y1 "  red1: " red_check_1 "  red2: " red_check_2
+  if ( CheckCoordColor(x1, y1, x2, y2, red1)
+  or CheckCoordColor(x1, y1, x2, y2, red2) ) {
+    sleep 10
+    mouseclick right
+    DidSquareChange(spot, positions[spot].color)
+    DidSquareChange(target, positions[target].color)
+  }
+  ; sleep 10
+  ; mouseclick right
+  ; sleep 10
+  ; mouseclick right
+  ; DidSquareChange(spot, positions[spot].color)
+  ; DidSquareChange(target, positions[target].color)
 }
 
 ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100

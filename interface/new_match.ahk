@@ -2,48 +2,51 @@
 ;
 ;
 
-RematchSequence() {
-  if true {
-    sleep 500
-    RematchComputer()
+TimeoutRandomized() {
+  if RandomChoice(4) {
+    timeout := 1000
+  } else {
+    random timeout, 5000, 15000
+  }
+  return timeout
+}
+
+RematchSequence(timeout=10000) {
+  sleep 1000
+  gui hide
+  ClickEmpty()
+  sleep 100
+  if ( timeout == 10000) {
+    timeout := TimeoutRandomized()
+  }
+  if FindPlayers() {
+    gui show
+    RematchLive(timeout)
+  } else {
+    gui show
+    RematchComputer(timeout)
   }
 }
 
-DidGameEnd() {
-  if CheckBackfield() {
-  ; if FindVS() {
-    RematchSequence()
-  }
-}
-
-CheckBackfield() {
-  backfield_color := 0x212425
-  ; back_fieldcolor := 0x262421
-  x1:= 320, y1 := 285, x2 := 323, y2 := 288
-  ; x1:= 330, y1 := 460, x2 := 333, y2 := 463
-  PixelSearch, found_x, found_y, x1, y1, x2, y2, backfield_color, 30, Fast
-  if found_x {
-    return true
-  }
-}
-
-FindVS() {
-  vs_path := assets_path "vs.png"
-  x1 := 480, y1 := 240
-  x2 := 520, y2 := 410
-  ; x1 := 480, y1 := 290
-  ; x2 := 520, y2 := 300
-    ; msgbox % vs_path " " ImageMatches(x1, y1, x2, y2, vs_path)
-  if ImageMatches(x1, y1, x2, y2, vs_path) {
-    return true
-  }
+RematchLive(timeout=10000) {
+  ClearLogFields()
+  MoveGui2()
+  ClickEmpty()
+  ShowTimeoutTimer(timeout)
+  ; sleep % timeout
+  ButtonB()     ; move click B
+  sleep 100
+  MoveGui2()
+  Beep()
+  NewGame()
 }
 
 RematchComputer(timeout=10000) {
   ClearLogFields()
   MoveGui2()
   ClickEmpty()
-  sleep % timeout
+  ShowTimeoutTimer(timeout)
+  ; sleep % timeout
   ButtonA()     ; move click A
   sleep 800
   EscKey()      ; press Esc
@@ -56,10 +59,56 @@ RematchComputer(timeout=10000) {
   sleep 50
   ClickEmpty()  ; click empty space (hide remaining browser dialogs)
   sleep 50
-
   MoveGui2()
   Beep()
   NewGame()
+}
+
+ShowTimeoutTimer(timeout) {
+  while ( timeout > 0 ) {
+    LogField4("intermission ")
+    LogField5(Floor(timeout/1000))
+    sleep, 1000
+    timeout := timeout - 1000
+  }
+}
+
+DidGameEnd() {
+  if CheckBackfield() {
+  ; if FindVS() {
+    RematchSequence()
+  }
+}
+
+CheckBackfield() {
+  backfield_color := 0x212426
+  ; back_fieldcolor := 0x262421
+  ; back_fieldcolor := 0x3C3A38
+;  x1:= 320, y1 := 285, x2 := 323, y2 := 288
+  x1:= 325, y1 := 820, x2 := 328, y2 := 823
+  ; x1:= 330, y1 := 460, x2 := 333, y2 := 463
+  PixelSearch, found_x, found_y, x1, y1, x2, y2, backfield_color, 30, Fast
+  if found_x {
+    return true
+  }
+}
+
+FindVS() {
+  vs_path := assets_path "vs.png"
+  x1 := 480, y1 := 240
+  x2 := 520, y2 := 410
+  if ImageMatches(x1, y1, x2, y2, vs_path) {
+    return true
+  }
+}
+
+FindPlayers() {
+  players_path := assets_path "players.png"
+  x1 := 1265, y1 := 175
+  x2 := 1365, y2 := 220
+  if ImageMatches(x1, y1, x2, y2, players_path) {
+    return true
+  }
 }
 
 EscKey() {
@@ -71,10 +120,16 @@ ButtonA() {
   MoveClick(button_a_x, button_a_y)
 }
 
+ButtonB() {
+  button_b_x := 950, button_b_y := 680
+  MoveClick(button_b_x, button_b_y)
+}
+
 YesButton() {
   yes_x := 1020, yes_y := 770
   MoveClick(yes_x, yes_y)
 }
+
 
 ClickEmpty() {
   x := 880, y := 700
@@ -94,6 +149,7 @@ ClickEmpty() {
 ;  old stuff below
 ;
 ;
+
 New3Min() {
   new_3_spot_a := [965, 875]
   new_3_spot_b := [965, 675]

@@ -5,10 +5,6 @@
 
 
 
-
-
-
-
 ;
 ;           GO LOOP           GO LOOP           GO LOOP
 ;
@@ -118,11 +114,3 @@ RandomSquare() {
   return spot
 }
 
-RandomChoice(max=2) {
-  random, choice, 1, max
-  if (choice = 1) {
-    return true
-  } else {
-    return false
-  }
-}

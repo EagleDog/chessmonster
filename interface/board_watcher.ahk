@@ -80,13 +80,17 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
 
 GetMyColor() {
   x1 := 190, y1 := 130
-  x2 := 240, y2 := 160
+  x2 := 260, y2 := 160
   img_path := assets_path "eag.png"
   if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
     MyColorIsBlack()
   } else {
     MyColorIsWhite()
   }
+  LogColor()
+}
+
+LogColor() {
   StringUpper my_color_text, my_color
   LogField1(my_color_text "  my color  " my_color_text " ")
   LogMyColor(my_color_text "  my color  " my_color_text)
@@ -96,12 +100,14 @@ MyColorIsBlack() {
   my_color := "black"
   opp_color := "white"
   my_color_abbr := "b"
+  LogColor()
 }
 
 MyColorIsWhite() {
   my_color := "white"
   opp_color := "black"
   my_color_abbr := "w"
+  LogColor()
 }
 
 ImageMatches(x1, y1, x2, y2, img_path) {
@@ -134,6 +140,11 @@ CheckColor(spot, the_color) {
   y1 := board[spot].y - 3
   x2 := board[spot].x + 3
   y2 := board[spot].y + 3
+  changed := CheckCoordColor(x1, y1, x2, y2, the_color)
+  return changed
+}
+
+CheckCoordColor(x1, y1, x2, y2, the_color) {
   PixelSearch, found_x, found_y , x1, y1, x2, y2, the_color, 30, Fast
   if found_x {
     return true

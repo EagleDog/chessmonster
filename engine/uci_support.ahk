@@ -3,7 +3,7 @@
 ;
 
 RandMoveTime(){
-  random rand_move_time, 200, 400
+  random rand_move_time, 200, 1000
   return rand_move_time
 }
 

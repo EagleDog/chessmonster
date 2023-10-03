@@ -28,8 +28,8 @@ StartEngine() {
 }
 
 AdjustElo() {
-  ; SendToUCI("setoption name UCI_LimitStrength value true")
-  ; SendToUCI("setoption name UCI_Elo value 2300")
+  SendToUCI("setoption name UCI_LimitStrength value true")
+  SendToUCI("setoption name UCI_Elo value 320")
 }
 
 RunUCI() {
