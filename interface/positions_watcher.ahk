@@ -15,7 +15,6 @@ global opp_spots := []
 ;------------------------------------------------------------------
 ;                                                  UPDATE POSITION
 UpdatePosition(spot) {  ; LogMain("UpdatePosition()")
-;  if DidSquareChange(spot) {}
   color := SquareStatus(spot)
   piece := IDPiece(spot, color)
   abbr := GetAbbr(piece, color)
@@ -25,11 +24,6 @@ UpdatePosition(spot) {  ; LogMain("UpdatePosition()")
   row := position.row
   rank := position.rank
   positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
-  ; if ( color != my_color ) {  ; Don't check my antecedents
-  ;    if DidSquareChange(spot) {
-  ;     CheckAntecedents(spot)   ; <<== WEIRD LOOP CAUSE
-  ;   }
-  ; }
   OutputPositions()
   if ( ( row < 9 ) and ( col < 9 ) and ( row > 0 ) and ( col > 0 ) ) {
     LogField1( spot "  " abbr )
@@ -64,8 +58,6 @@ OutputPositions() {
   num_pieces_black := num_pieces_both[1]
   num_pieces_white := num_pieces_both[2]
 
-; fix num_pieces titles here GUI work
-
   LogBlackTitle( num_pieces_black )
   LogWhiteTitle( num_pieces_white )
   LogMoves(move_num)
@@ -74,9 +66,9 @@ OutputPositions() {
   positions["num_pieces_white"] := num_pieces_white
   positions["move_number"] := move_num
 
-  UpdateSnapshots()
+;  UpdateSnapshots()
 
-  DidCastlersMove()    ; <== DidCastlersMove()
+  DidCastlersMove()
 }
 ;
 ;-------------------------------------------------------

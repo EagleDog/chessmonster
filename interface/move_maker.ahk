@@ -39,7 +39,7 @@ MoveAndFailCheck(old_spot, target) { ; Pawn Promotion too!
   sleep 50
   ID1 := positions[old_spot].piece  ; msgbox % target " ID2: " ID2 "  " spot " ID1: " ID1
   if ( ID2 == ID1 ) {  ; <=== fail check
-    MsgBox, , % "FAIL", % "FAIL", % 1.5
+    MsgBox, , % "FAIL", % "FAIL", % 0.5
     fail := true
   } else {
     PromotePawn(old_spot, piece, target)   ; <== PromotePawn(spot,piece,target)
@@ -112,7 +112,7 @@ PromotePawn(spot, piece, target) {
 }
 
 MoveMouse(x, y, speed=0) {
-;  mousemove x, y, speed
+  mousemove x, y, speed
 }
 GoSpot(spot) {
   MoveMouse(board[spot].x, board[spot].y)

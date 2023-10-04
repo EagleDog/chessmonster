@@ -30,7 +30,9 @@ CheckAntecedents(spot) {
   piece := positions[spot].piece
   hybrid_color := positions[spot].color
   switch piece {
-    case "empty": hybrid_color := CheckDescendents(spot)
+    case "empty":
+      hybrid_color := CheckDescendents(spot)
+;      msgbox empty square
     case "pawn": CheckPawnSuccessors(spot)
     case "knight": CheckKnightAntecedents(spot)
     case "bishop": SearchSuccessors(spot, bishop_patterns)

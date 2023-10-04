@@ -22,13 +22,17 @@ PollOpp() {
   n := 0
   loop {
     n += 1
-    opp_move := PollZones()
+    opp_move := PollPieces()
+    ; if !opp_move {
+    ;   opp_move := PollZones()
+    ; }
     if opp_move {
       n := 0
       sleep 500
       RunUCI()
     }
-    if ( n >= 2 ) {
+    if ( n >= 10 ) {
+    PollZones()
       n := 0
       RunUCI()
     }
@@ -38,18 +42,47 @@ PollOpp() {
   }
 }
 
+PollPieces() {
+  DidGameEnd()
+  GetBothSpots()
+  if ( my_color == "black" ) {
+    opp_spots := white_spots
+  } else {
+    opp_spots := black_spots
+  }
+  n := 1
+  while ( opp_spots[n] ) {
+    spot := opp_spots[n]
+    opp_move := PollPiece(spot)
+    n := n + 1
+    if opp_move {
+      return true
+    }
+  }
+}
+
+PollPiece(spot) {
+  GoSpot(spot)
+  color := SqStat(spot)
+  if DidSquareChange(spot, color) {
+;    msgbox, , square changed, change , 1 ;% "hybrid color: " hybrid_color
+    hybrid_color := CheckAntecedents(spot) ; descendents too
+    if ( hybrid_color = opp_color ) {
+      opp_move := true
+      CheckOppCastling(spot)
+      return opp_move
+    }
+  }
+}
+
 PollZones() { ; looks for opp_move
   loop 8 {
     DidGameEnd()
     zone := zones[which_zone]
-    opp_move := PollZone(zone)
-    if opp_move {
+    ; opp_move := PollZone(zone)
+    if PollZone(zone) {
       return true
     }
-    ; opp_move := PollZone(zone)
-    ; if ( opp_move == true ) {
-    ;   return opp_move
-    ; }
     which_zone += 1
     if ( which_zone > zones.count() ) {
       which_zone := 1
@@ -73,36 +106,11 @@ PollZone(zone) { ; returns true if opp has moved (theoretically)
         opp_move := true
         CheckOppCastling(spot)
         return opp_move
-      } else {
-        ; msgbox % spot " " "color:" color "`nh_color: " hybrid_color "`nopp_color: " opp_color
       }
     }
     n := A_Index + 1
   }
 }
-
-PollPieces() {
-  GetBothSpots()
-  if ( my_color == "black" ) {
-    opp_spots := white_spots
-  } else {
-    opp_spots := black_spots
-  }
-  n := 1
-  while ( opp_spots[n] ) {
-    spot := opp_spots[n]
-    PollPiece(spot)
-    n := n + 1
-  }
-}
-
-PollPiece(spot) {
-  CheckAntecedents(spot)
-
-  ; # bookmark: I was working here   <=====
-
-}
-
 
 WhichZones() {
   if ( move_num < 50 ) {

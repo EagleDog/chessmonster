@@ -25,6 +25,7 @@ CheckDescendents(spot) {
 LogField2("CheckDescendents( " spot " )")
   prev_piece := snapshots[move_num][spot].piece
   prev_color := snapshots[move_num][spot].color
+  ; msgbox % "prev piece: " prev_piece "  prev color: " prev_color "`n move num: " move_num
   piece := positions[spot].piece
   move_patterns := AssignMovePatterns(spot, prev_piece)
   SearchSuccessors(spot, move_patterns)
@@ -55,9 +56,13 @@ SearchSuccessors(spot, move_patterns) {
   while move_patterns[n] {
     row := spot_row
     col := spot_col
-    while ( ( row < 9 ) and ( col < 9 ) and ( row > 0 ) and ( col > 0 ) ) {
-      row := row + move_patterns[n][2]
+    while ( ( col < 9 ) and ( row < 9 ) and ( col > 0 ) and ( row > 0 ) ) {
       col := col + move_patterns[n][1]
+      row := row + move_patterns[n][2]
+      if OutOfBoundsCheck(col, row) {
+;        msgbox out of bounds
+        break
+      }
       file := ColToFile(col)
       rank := row
       spot := file . rank
@@ -71,6 +76,12 @@ SearchSuccessors(spot, move_patterns) {
       }
     }
     n := A_Index + 1
+  }
+}
+
+OutOfBoundsCheck(col, row) {
+  if ( ( col > 9 ) or ( row > 9 ) or ( col < 0 ) or ( row < 0 ) ) {
+    return true
   }
 }
 

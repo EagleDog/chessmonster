@@ -22,22 +22,22 @@ global paused := false
 
 global move_num := 1
 
+MainSequence()
 
 ;
 ;    ====== MAIN SEQUENCE ===================
 
-ActivateChess()
-CreateGui()
-CreateBoard()
-GetStartingPositions()
-ResetSnapshots()
-
-;DidGameEnd()
+MainSequence() {
+  ActivateChess()
+  ; CreateGui()
+  CreateBoard()
+  GetStartingPositions()
+  ResetSnapshots()
+  ; DidGameEnd()
+}
 
 ;
-;   ===== END MAIN SEQUENCE =================
-
-
+;   ======= NEW GAME ========================
 
 NewGame() {
   ActivateChess()
@@ -46,7 +46,9 @@ NewGame() {
   ResetMoves()
   ResetCastleRights()
   GetStartingPositions()
-  GetPositions()
+  if ( my_color == "black" ) {
+    PollOpp()
+  }
   ResetSnapshots()
   NewGameUCI()
   StartGame()
