@@ -21,6 +21,7 @@ PollOpp() {
   paused := false
   n := 0
   loop {
+  sleep 1500
     n += 1
     opp_move := PollZones()
     ; opp_move := PollPieces()
@@ -29,7 +30,7 @@ PollOpp() {
     ; }
     if opp_move {
       n := 0
-;      sleep 500
+      sleep 300
       RunUCI()
     }
     if ( n >= 3 ) {
@@ -71,7 +72,7 @@ PollPiece(spot) {
     hybrid_color := CheckAntecedents(spot) ; descendents too
     if ( hybrid_color = opp_color ) {
       opp_move := true
-      CheckOppCastling(spot)
+      ; CheckOppCastling(spot)
       return opp_move
     }
   }

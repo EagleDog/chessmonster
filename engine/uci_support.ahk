@@ -8,7 +8,7 @@ AdjustElo() {
 }
 
 RandMoveTime(){
-  random rand_move_time, 200, 1800
+  random rand_move_time, 200, 800
   return rand_move_time
 }
 

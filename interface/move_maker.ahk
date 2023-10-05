@@ -74,9 +74,9 @@ UndoPreMove(spot, target) {
   ; msgbox % x1 ", " y1 "  red1: " red_check_1 "  red2: " red_check_2
   if ( CheckColorCoords(x1, y1, x2, y2, red1)
   or CheckColorCoords(x1, y1, x2, y2, red2) ) {
-    sleep 50
+    sleep 200
     mouseclick right
-    sleep 50
+    sleep 200
     DidSquareChange(spot, positions[spot].color)
     DidSquareChange(target, positions[target].color)
   }

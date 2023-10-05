@@ -50,7 +50,7 @@ NewGame() {
   ResetSnapshots()
   NewGameUCI()
   ClearLogFields()
-  sleep 500
+  sleep 1000
   GetMyColor()
   FailSafe()
   StartGame()

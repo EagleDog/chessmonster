@@ -40,6 +40,7 @@ CheckAntecedents(spot) {
     case "queen": SearchSuccessors(spot, queen_patterns)
     case "king": CheckKingAntecedents(spot)
   }
+  CheckOppCastling(spot)
   snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
 ;  msgbox % spot "  return h_color: " hybrid_color
   return hybrid_color
