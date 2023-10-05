@@ -78,11 +78,34 @@ WhichPiece(x1, y1, x2, y2, piece_color="white") {
   }
 }
 
+ColorTest() {
+  x1 := 180, y1 := 110
+  x2 := 280, y2 := 180
+  ; x3 := 180, y3 := 900
+  ; x4 := 280, y4 := 970
+  eag_path := assets_path "eag.png"
+  eag2_path := assets_path "eag2.png"
+  if ( ImageMatches(x1, y1, x2, y2, eag_path)
+  or   ImageMatches(x1, y1, x2, y2, eag2_path) ) {
+    msgbox found eag
+    MyColorIsBlack()
+  } else {
+    msgbox not found
+    ; Beep()
+    MyColorIsWhite()
+  }
+  LogColor()
+}
+
 GetMyColor() {
-  x1 := 190, y1 := 130
-  x2 := 260, y2 := 160
-  img_path := assets_path "eag.png"
-  if ( ImageMatches(x1, y1, x2, y2, img_path) ) {
+  ActivateChess()
+  sleep 50
+  x1 := 180, y1 := 110
+  x2 := 280, y2 := 180
+  eag_path := assets_path "eag.png"
+  eag2_path := assets_path "eag2.png"
+  if ( ImageMatches(x1, y1, x2, y2, eag_path)
+  or   ImageMatches(x1, y1, x2, y2, eag2_path) ) {
     MyColorIsBlack()
   } else {
     MyColorIsWhite()

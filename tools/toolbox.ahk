@@ -53,6 +53,11 @@ Chill() {
   sleep 100
 }
 
+Beep() {
+  SoundBeep, 448, 600 ; [ Freq, Duration]
+  sleep 500
+}
+
 Print(outout_text) {
   fileappend % output_text " ", *
 }

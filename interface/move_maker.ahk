@@ -52,8 +52,6 @@ MoveAndFailCheck(old_spot, target) { ; Pawn Promotion too!
 redtest(){
   red1 := 0x4361B5
   red2 := 0x7F8BEE
-  ; red1 := 0xB56143
-  ; red2 := 0xEE8B7F
   x1 := 440
   y1 := 410
   x2 := x1 + 3
@@ -63,7 +61,6 @@ redtest(){
     msgbox red
   }
 }
-
 
 UndoPreMove(spot, target) {
   red1 := 0x4361B5
@@ -77,17 +74,12 @@ UndoPreMove(spot, target) {
   ; msgbox % x1 ", " y1 "  red1: " red_check_1 "  red2: " red_check_2
   if ( CheckColorCoords(x1, y1, x2, y2, red1)
   or CheckColorCoords(x1, y1, x2, y2, red2) ) {
-    sleep 10
+    sleep 50
     mouseclick right
+    sleep 50
     DidSquareChange(spot, positions[spot].color)
     DidSquareChange(target, positions[target].color)
   }
-  ; sleep 10
-  ; mouseclick right
-  ; sleep 10
-  ; mouseclick right
-  ; DidSquareChange(spot, positions[spot].color)
-  ; DidSquareChange(target, positions[target].color)
 }
 
 ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
@@ -95,7 +87,7 @@ ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
   x1 := board[spot].x, y1 := board[spot].y
   x2 := board[target].x, y2 := board[target].y
   mousemove x1, y1, 0
-  MouseClickDrag, L, x1, y1, x2, y2 + 8, 2
+  MouseClickDrag, L, x1, y1, x2, y2 + 5, 3
 ;  HideCursor()
 }
 
@@ -112,7 +104,7 @@ PromotePawn(spot, piece, target) {
 }
 
 MoveMouse(x, y, speed=0) {
-  mousemove x, y, speed
+;  mousemove x, y, speed
 }
 GoSpot(spot) {
   MoveMouse(board[spot].x, board[spot].y)

@@ -6,7 +6,7 @@ TimeoutRandomized() {
   if RandomChoice(4) {
     timeout := 2000
   } else {
-    random timeout, 5000, 15000
+    random timeout, 3000, 8000
   }
   return timeout
 }
@@ -39,16 +39,26 @@ RematchLive(timeout=10000, refreshed=false) {
   MoveGui2()
   ClickEmpty()
   ShowTimeoutTimer(timeout)
-  ; sleep % timeout
+  ; Beep()
+  sleep 500
   if refreshed {
     ButtonA()
   } else {
     ButtonB()     ; move click B
   }
   sleep 100
-  MoveGui2()
-  Beep()
+  ; MoveGui2()
   NewGame()
+}
+
+FailSafe() {
+  sleep 500
+    MovePiece("e2", "e4")
+    MovePiece("d7", "d6")
+  ; if ( my_color == "white") {
+  ;   MovePiece("e2", "e4")
+  ; }
+  GetMyColor()
 }
 
 RematchComputer(timeout=10000) {
@@ -65,12 +75,12 @@ RematchComputer(timeout=10000) {
   sleep 400
   YesButton()   ; move click Yes
   sleep 800
+  Beep()
   ButtonA()     ; move click A
   sleep 50
   ClickEmpty()  ; click empty space (hide remaining browser dialogs)
   sleep 50
   MoveGui2()
-  Beep()
   NewGame()
 }
 

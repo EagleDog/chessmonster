@@ -28,11 +28,6 @@ StartEngine() {
   ActivateChess()
 }
 
-AdjustElo() {
-  SendToUCI("setoption name UCI_LimitStrength value true")
-  SendToUCI("setoption name UCI_Elo value 300")
-}
-
 RunUCI() {
   if not WinExist("ahk_exe stockfish.exe") {
     StartEngine()
@@ -43,10 +38,11 @@ RunUCI() {
   GetReady()
    move_time := RandMoveTime()
   CalculateMove(move_time)   ; go movetime 500  ; ActivateChess()
-   sleep % move_time + 50
+   sleep % move_time + 1800
    bestmove := GetBestMove()
    bestmoves := ParseBestMove(bestmove)
   ActivateChess()
+  DidGameEnd()
   SendMoveToGUI(bestmoves)
   CheckMyCastling(bestmove)
 }

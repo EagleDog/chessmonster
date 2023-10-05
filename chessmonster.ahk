@@ -31,6 +31,7 @@ MainSequence() {
   ActivateChess()
   ; CreateGui()
   CreateBoard()
+  StartEngine()
   GetStartingPositions()
   ResetSnapshots()
   ; DidGameEnd()
@@ -40,26 +41,30 @@ MainSequence() {
 ;   ======= NEW GAME ========================
 
 NewGame() {
-  ActivateChess()
-  ScrollUp()
+;  ActivateChess()
+;  ScrollUp()
   GetMyColor()
   ResetMoves()
   ResetCastleRights()
   GetStartingPositions()
+  ResetSnapshots()
+  NewGameUCI()
+  ClearLogFields()
+  sleep 500
+  GetMyColor()
+  FailSafe()
+  StartGame()
+}
+
+StartGame() {
+  GetMyColor()
   if ( my_color == "black" ) {
     PollOpp()
   }
-  ResetSnapshots()
-  NewGameUCI()
-  StartGame()
-;  StartGame()
-  ; GoLoop()
-  ; MakeMove()
+  ; GetPositions()
+  RunUCI()
+  PollOpp()
 }
-;
-;
-;--------------------------------------------
-
 
 ActivateChess() {
   SetTitleMatchMode, 2
@@ -78,18 +83,6 @@ ExitChessMonster() {
   ExitStreamer()
 ;  ShowCursor()
   ExitApp
-}
-
-StartGame() {
-  ClearLogFields()
-  StartEngine()
-  ; GetPositions()
-  RunUCI()
-  PollOpp()
-}
-
-Beep() {
-  SoundBeep, 448, 600 ; [ Freq, Duration]
 }
 
 
@@ -116,7 +109,9 @@ Beep() {
 8::UndoPremove("a1", "b1")
 
 
-c::GetMyColor()
+c::ColorTest()
+
+
 
 ;5::CheckPawnSize()
 

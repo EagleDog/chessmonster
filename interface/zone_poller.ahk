@@ -22,17 +22,19 @@ PollOpp() {
   n := 0
   loop {
     n += 1
-    opp_move := PollPieces()
+    opp_move := PollZones()
+    ; opp_move := PollPieces()
     ; if !opp_move {
     ;   opp_move := PollZones()
     ; }
     if opp_move {
       n := 0
-      sleep 500
+;      sleep 500
       RunUCI()
     }
-    if ( n >= 10 ) {
-    PollZones()
+    if ( n >= 3 ) {
+      PollPieces()
+    ; PollZones()
       n := 0
       RunUCI()
     }
