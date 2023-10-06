@@ -30,9 +30,7 @@ CheckAntecedents(spot) {
   piece := positions[spot].piece
   hybrid_color := positions[spot].color
   switch piece {
-    case "empty":
-      hybrid_color := CheckDescendents(spot)
-;      msgbox empty square
+    case "empty": hybrid_color := CheckDescendents(spot)
     case "pawn": CheckPawnSuccessors(spot)
     case "knight": CheckKnightAntecedents(spot)
     case "bishop": SearchSuccessors(spot, bishop_patterns)
@@ -42,7 +40,6 @@ CheckAntecedents(spot) {
   }
   CheckOppCastling(spot)
   snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
-;  msgbox % spot "  return h_color: " hybrid_color
   return hybrid_color
 }
 
@@ -56,8 +53,9 @@ RunAntecedentsEngine(spot, antecedents) {
     rank := spot_rank + antecedents[n][2]
     file := ColToFile(col)
     spot := file . rank
-
-    UpdatePosition(spot) ; ImageSearch not needed on all squares?
+    color := SqStat(spot)
+    DidSquareChange(spot, color)
+;    UpdatePosition(spot) ; ImageSearch not needed on all squares?
     GoSpot(spot)
     n := A_Index + 1
   }

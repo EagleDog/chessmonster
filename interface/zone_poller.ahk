@@ -30,12 +30,14 @@ PollOpp() {
     ; }
     if opp_move {
       n := 0
+      msgbox, , opp move, opp move, 1
       RunUCI()
     }
-    if ( n >= 3 ) {
+    if ( n >= 4 ) {
+      n := 0
+      msgbox, , loop ended, loop ended, 1
       PollPieces()
     ; PollZones()
-      n := 0
       RunUCI()
     }
     if ( paused == true ) {
@@ -106,7 +108,7 @@ PollZone(zone) { ; returns true if opp has moved (theoretically)
       hybrid_color := CheckAntecedents(spot) ; descendents too
       if ( hybrid_color = opp_color ) {
         opp_move := true
-        CheckOppCastling(spot)
+        ; CheckOppCastling(spot)
         return opp_move
       }
     }

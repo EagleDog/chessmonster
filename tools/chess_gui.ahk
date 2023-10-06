@@ -94,7 +94,7 @@ LogMoves(moves_text) {
   GuiControl,, moves_field, % moves_text . "  move_num "
 }
 LogCastle(castle_text) {
-  GuiControl,, castle_field, % "  castle rights: " castle_text
+  GuiControl,, castle_field, % "fen info: " castle_text
 }
 LogMyColor(my_color_text) {
   GuiControl,, my_color_field, % my_color_text

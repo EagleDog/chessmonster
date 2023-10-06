@@ -86,7 +86,7 @@ OutOfBoundsCheck(col, row) {
 }
 
 CheckPawnDescendents(spot) {   ; pawn
-  en_passant := EnPassantEligibility(spot)
+  ; en_passant := CheckEnPassantEligibility(spot)
   forward_one := [ 0, -1 ]
   forward_two := [ 0, -2 ]
   forward_diag_1 := [ 1, -1 ]
@@ -99,6 +99,7 @@ CheckPawnDescendents(spot) {   ; pawn
 }
 
 CheckPawnSuccessors(spot) {
+  en_passant := CheckOppEnPassant(spot)
   CheckPawnAntecedents(spot)
   CheckPawnDescendents(spot)
 }

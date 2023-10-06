@@ -5,7 +5,6 @@
 ;
 
 global empty_squares_num := 0
-global half_moves := 0
 
 FenLog(output_text) {
   fileappend % output_text "`n", % fishlog

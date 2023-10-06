@@ -19,8 +19,8 @@ global paused := false
 
 global move_num := 1
 
-global elo := 320
-global move_delay := 1500
+global elo := 2000
+global move_delay := 300
 
 #Include includer.ahk
 
@@ -54,11 +54,12 @@ NewGame() {
   ClearLogFields()
   sleep 1000
   GetMyColor()
-  FailSafe()
+  ; FailSafe()
   StartGame()
 }
 
 StartGame() {
+  ClearLogFields()
   GetMyColor()
   if ( my_color == "black" ) {
     PollOpp()

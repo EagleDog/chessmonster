@@ -44,6 +44,7 @@ RunUCI() {
   ActivateChess()
   DidGameEnd()
   SendMoveToGUI(bestmoves)
+  CheckMyEnPassant(bestmove)
   CheckMyCastling(bestmove)
 }
 
