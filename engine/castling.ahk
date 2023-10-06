@@ -1,5 +1,6 @@
 ;castling.ahk
 ;
+; includes en passant and half-move counter
 ;
 
 global c_rights_1 := "K"
@@ -7,6 +8,31 @@ global c_rights_2 := "Q"
 global c_rights_3 := "k"
 global c_rights_4 := "q"
 global c_rights_all := "KQkq"
+
+global en_passant := "-"
+
+EnPassantEligibility(spot) {
+  file := SubStr(spot, 1, 1)
+  row := SubStr(spot, 1, 2)
+  piece := positions[spot].piece
+  if ( piece == "pawn") {
+    if ( ( row == 4 ) or ( row == 5 ) ) {
+      if ( row == 4 ) {
+        ant_row := 2
+      } else {
+        ant_row := 7
+      }
+    }
+    ant_spot := file . ant_row
+    ant_piece := snapshots[move_num][ant_spot].piece
+    if ( ant_piece == "pawn" ) {
+      msgbox % "en passant eligible: " spot
+      return spot
+    } else {
+      return "-"
+    }
+  }
+}
 
 CheckMyCastling(bestmove) { ; also check if piece is king?
   if ( ( bestmove == "e8g8" )
