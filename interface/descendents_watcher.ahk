@@ -25,11 +25,9 @@ CheckDescendents(spot) {
 LogField2("CheckDescendents( " spot " )")
   prev_piece := snapshots[move_num][spot].piece
   prev_color := snapshots[move_num][spot].color
-  ; msgbox % "prev piece: " prev_piece "  prev color: " prev_color "`n move num: " move_num
   piece := positions[spot].piece
   move_patterns := AssignMovePatterns(spot, prev_piece)
   SearchSuccessors(spot, move_patterns)
-  ; CheckOppCastling(spot, piece, prev_piece)
   return prev_color
 }
 
@@ -60,7 +58,6 @@ SearchSuccessors(spot, move_patterns) {
       col := col + move_patterns[n][1]
       row := row + move_patterns[n][2]
       if OutOfBoundsCheck(col, row) {
-;        msgbox out of bounds
         break
       }
       file := ColToFile(col)
@@ -69,6 +66,8 @@ SearchSuccessors(spot, move_patterns) {
       GoSpot(spot)
       color := SqStat(spot)
       if DidSquareChange(spot, color) {
+; ____CHECK CREDENTIALS____
+        creds.assoc_spot := spot
         snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
       }
       if ( color == opp_color ) {
@@ -80,7 +79,7 @@ SearchSuccessors(spot, move_patterns) {
 }
 
 OutOfBoundsCheck(col, row) {
-  if ( ( col > 9 ) or ( row > 9 ) or ( col < 0 ) or ( row < 0 ) ) {
+  if ( ( col >= 9 ) or ( row >= 9 ) or ( col <= 0 ) or ( row <= 0 ) ) {
     return true
   }
 }

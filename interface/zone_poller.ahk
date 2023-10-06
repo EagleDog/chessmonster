@@ -30,7 +30,15 @@ PollOpp() {
     ; }
     if opp_move {
       n := 0
-      msgbox, , opp move, opp move, 1
+      msgbox, , CREDENTIALS, % ""
+          . "spot:       " creds["spot"]
+          . "`npiece:      " creds["piece"]
+          . "`ncolor:      " creds["color"]
+          . "`nprev_piece: " creds["prev_piece"]
+          . "`nprev_color: " creds["prev_color"]
+          . "`nassoc_spot: " creds["assoc_spot"]
+          . "" , 8
+
       RunUCI()
     }
     if ( n >= 4 ) {
@@ -43,6 +51,44 @@ PollOpp() {
     if ( paused == true ) {
       return
     }
+  }
+}
+
+
+PollZones() { ; looks for opp_move
+  loop 8 {
+    DidGameEnd()
+    zone := zones[which_zone]
+    ; opp_move := PollZone(zone)
+    if PollZone(zone) {
+      return true
+    }
+    which_zone += 1
+    if ( which_zone > zones.count() ) {
+      which_zone := 1
+    }
+    if (paused == true) {
+      break
+    }
+  }
+}
+
+PollZone(zone) { ; returns true if opp has moved (theoretically)
+  LogField3("PollZone(" . which_zone . ")")
+  n := 1
+  while zone[n] {
+    spot := zone[n]
+    color := SqStat(spot)
+    creds.spot := spot
+    GoSpot(spot)
+    if DidSquareChange(spot, color) {
+      hybrid_color := CheckAntecedents(spot) ; descendents too
+      if ( hybrid_color == opp_color ) {
+        opp_move := true
+        return opp_move
+      }
+    }
+    n := A_Index + 1
   }
 }
 
@@ -76,43 +122,6 @@ PollPiece(spot) {
       ; CheckOppCastling(spot)
       return opp_move
     }
-  }
-}
-
-PollZones() { ; looks for opp_move
-  loop 8 {
-    DidGameEnd()
-    zone := zones[which_zone]
-    ; opp_move := PollZone(zone)
-    if PollZone(zone) {
-      return true
-    }
-    which_zone += 1
-    if ( which_zone > zones.count() ) {
-      which_zone := 1
-    }
-    if (paused == true) {
-      break
-    }
-  }
-}
-
-PollZone(zone) { ; returns true if opp has moved (theoretically)
-  LogField3("PollZone(" . which_zone . ")")
-  n := 1
-  while zone[n] {
-    spot := zone[n]
-    color := SqStat(spot)
-    GoSpot(spot)
-    if DidSquareChange(spot, color) {
-      hybrid_color := CheckAntecedents(spot) ; descendents too
-      if ( hybrid_color = opp_color ) {
-        opp_move := true
-        ; CheckOppCastling(spot)
-        return opp_move
-      }
-    }
-    n := A_Index + 1
   }
 }
 

@@ -99,7 +99,7 @@ CheckOppCastling(spot) {  ; need to check empties as well
   piece := positions[spot].piece
   prev_piece := snapshots[move_num][spot].piece
   if ( opp_color == "black" ) {
-    msgbox, , castling BLACK, % "spot: " spot "`npiece: " piece "`nprev_piece: " prev_piece, 4
+    ; msgbox, , castling BLACK, % "spot: " spot "`npiece: " piece "`nprev_piece: " prev_piece, 4
     if ( ( spot == "a8" ) and ( prev_piece == "rook" ) )
     or ( ( spot == "c8" ) and ( piece == "king" ) )
     or ( ( spot == "d8" ) and ( piece == "rook" ) )
@@ -110,7 +110,7 @@ CheckOppCastling(spot) {  ; need to check empties as well
       SearchCastleZoneBlack()
     }
   } else {
-    msgbox, , castling WHITE, % "spot: " spot "`npiece: " piece "`nprev_piece: " prev_piece, 4
+    ; msgbox, , castling WHITE, % "spot: " spot "`npiece: " piece "`nprev_piece: " prev_piece, 4
     if ( ( spot == "a1" ) and ( prev_piece == "rook" ) )
     or ( ( spot == "c1" ) and ( piece == "king" ) )
     or ( ( spot == "d1" ) and ( piece == "rook" ) )
@@ -142,42 +142,6 @@ SearchCastleZone(castle_zone) {
     GoSpot(spot)
     n := A_Index + 1
   }  
-}
-
-CastleRights1() {  ; white king
-  if ( c_rights_1 == "K" ) {
-    c_rights_1 := ""
-  } else {
-    c_rights_1 := "K"
-  }
-  UpdateCastleRightsAll()
-}
-
-CastleRights2() {  ; white queen
-  if ( c_rights_2 == "Q" ) {
-    c_rights_2 := ""
-  } else {
-    c_rights_2 := "Q"
-  }
-  UpdateCastleRightsAll()
-}
-
-CastleRights3() {  ; black king
-  if ( c_rights_3 == "k" ) {
-    c_rights_3 := ""
-  } else {
-    c_rights_3 := "k"
-  }
-  UpdateCastleRightsAll()
-}
-
-CastleRights4() {  ; black queen
-  if ( c_rights_4 == "q" ) {
-    c_rights_4 := ""
-  } else {
-    c_rights_4 := "q"
-  }
-  UpdateCastleRightsAll()
 }
 
 UpdateCastleRightsAll() {
@@ -220,3 +184,40 @@ DidCastlersMove() {
   }
   UpdateCastleRightsAll()
 }
+
+
+; CastleRights1() {  ; white king
+;   if ( c_rights_1 == "K" ) {
+;     c_rights_1 := ""
+;   } else {
+;     c_rights_1 := "K"
+;   }
+;   UpdateCastleRightsAll()
+; }
+
+; CastleRights2() {  ; white queen
+;   if ( c_rights_2 == "Q" ) {
+;     c_rights_2 := ""
+;   } else {
+;     c_rights_2 := "Q"
+;   }
+;   UpdateCastleRightsAll()
+; }
+
+; CastleRights3() {  ; black king
+;   if ( c_rights_3 == "k" ) {
+;     c_rights_3 := ""
+;   } else {
+;     c_rights_3 := "k"
+;   }
+;   UpdateCastleRightsAll()
+; }
+
+; CastleRights4() {  ; black queen
+;   if ( c_rights_4 == "q" ) {
+;     c_rights_4 := ""
+;   } else {
+;     c_rights_4 := "q"
+;   }
+;   UpdateCastleRightsAll()
+; }
