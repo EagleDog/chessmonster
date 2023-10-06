@@ -4,7 +4,7 @@
 
 AdjustElo() {
   SendToUCI("setoption name UCI_LimitStrength value true")
-  SendToUCI("setoption name UCI_Elo value 310")
+  SendToUCI("setoption name UCI_Elo value " elo)
 }
 
 RandMoveTime(){

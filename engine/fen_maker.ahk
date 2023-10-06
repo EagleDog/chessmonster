@@ -5,6 +5,7 @@
 ;
 
 global empty_squares_num := 0
+global half_moves := 0
 
 FenLog(output_text) {
   fileappend % output_text "`n", % fishlog
@@ -38,8 +39,8 @@ CreateFen() {
     fen_text := ""
   }
   fen_text := text_rows[8] text_rows[7] text_rows[6] text_rows[5] text_rows[4] text_rows[3] text_rows[2] text_rows[1]
-  fen_index := " " my_color_abbr " " c_rights_all " " en_passant "  0 " . move_num
-  ; fen_index := " " my_color_abbr " " c_rights_all " - 0 " . move_num
+  ; fen_index := " " my_color_abbr " " c_rights_all " " en_passant "  0 " . move_num
+  fen_index := " " my_color_abbr " " c_rights_all " - 0 " . move_num
   ; fen_index := " " my_color_abbr " KQkq - 0 " . move_num
   fen_text := fen_text . fen_index
 

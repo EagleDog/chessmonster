@@ -21,7 +21,7 @@ PollOpp() {
   paused := false
   n := 0
   loop {
-  sleep 1500
+  sleep % move_delay
     n += 1
     opp_move := PollZones()
     ; opp_move := PollPieces()
@@ -30,7 +30,6 @@ PollOpp() {
     ; }
     if opp_move {
       n := 0
-      sleep 300
       RunUCI()
     }
     if ( n >= 3 ) {

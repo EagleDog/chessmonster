@@ -11,9 +11,6 @@ global rel_path := A_ScriptDir
 global assets_path := rel_path "\assets\"
 global fishlog := rel_path "\engine\fishlog.txt"
 
-#Include includer.ahk
-
-;global none := "none"
 global my_color := "white"
 global opp_color := "black"
 global my_color_abbr := "w"
@@ -21,6 +18,11 @@ global my_color_abbr := "w"
 global paused := false
 
 global move_num := 1
+
+global elo := 320
+global move_delay := 1500
+
+#Include includer.ahk
 
 MainSequence()
 
