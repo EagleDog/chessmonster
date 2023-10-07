@@ -8,17 +8,17 @@
 ;     MoveClick(x,y)
 ;     ClickDrag(spot,target)
 ;     DriftMouse()
+;     PromotePawn(old_spot, piece, target)
 ;
 
 global fail := false
 
 MovePiece(spot, target) {
-LogField5("move  '" spot "' to '" target "'" )
+LogField5("move  " spot " to " target)
 ;Chill()
   fail := MoveAndFailCheck(spot, target)
   if !fail {
     IncreaseMoveNum()   ; <== UpdateSnapshots() included
-    WhichZones()
 ;    LogField4(period)
   } else {
     UpdateSnapshots()
@@ -87,19 +87,24 @@ ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
   x1 := board[spot].x, y1 := board[spot].y
   x2 := board[target].x, y2 := board[target].y
   mousemove x1, y1, 0
-  MouseClickDrag, L, x1, y1, x2, y2 + 5, 3
+  click x1 y1 left down
+;  mouseclick left, x1, y1, , , D
+  mousemove x2, y2, 3
+  sleep 50
+  click x2 y2 left up
+
+;  MouseClickDrag, L, x1, y1, x2, y2 + 5, 3
 ;  HideCursor()
 }
 
-
-
-PromotePawn(spot, piece, target) {
+PromotePawn(old_spot, piece, target) {
   if ( (my_color == "white") and (piece == "pawn") and (target contains 8) ) 
   or ( (my_color == "black") and (piece == "pawn") and (target contains 1) ) {
-    GoSpot(spot), sleep 50
+    GoSpot(target), sleep 50
     mouseclick Left    ;  Promotion  choose queen
     sleep 50
-    UpdatePosition(spot)
+    UpdatePosition(old_spot)
+    UpdatePosition(target)
   }
 }
 

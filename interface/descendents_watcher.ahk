@@ -57,21 +57,21 @@ SearchSuccessors(spot, move_patterns) {
     while ( ( col < 9 ) and ( row < 9 ) and ( col > 0 ) and ( row > 0 ) ) {
       col := col + move_patterns[n][1]
       row := row + move_patterns[n][2]
-      if OutOfBoundsCheck(col, row) {
-        break
-      }
-      file := ColToFile(col)
-      rank := row
-      spot := file . rank
-      GoSpot(spot)
-      color := SqStat(spot)
-      if DidSquareChange(spot, color) {
-; ____CHECK CREDENTIALS____
-        creds.assoc_spot := spot
-        snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
-      }
-      if ( color == opp_color ) {
-        break
+      if ( !OutOfBoundsCheck(col, row) ) {
+        ; break ; <== bug??
+        file := ColToFile(col)
+        rank := row
+        spot := file . rank
+        GoSpot(spot)
+        color := SqStat(spot)
+  ; ____CHECK CREDENTIALS____
+        if DidSquareChange(spot, color) {
+          creds.assoc_spot := spot
+          snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
+        }
+        if ( color == opp_color ) {
+          break
+        }
       }
     }
     n := A_Index + 1

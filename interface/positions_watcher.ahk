@@ -25,9 +25,9 @@ UpdatePosition(spot) {  ; LogMain("UpdatePosition()")
   rank := position.rank
   positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
   OutputPositions()
-  if ( ( row < 9 ) and ( col < 9 ) and ( row > 0 ) and ( col > 0 ) ) {
+;  if ( ( row < 9 ) and ( col < 9 ) and ( row > 0 ) and ( col > 0 ) ) {
     LogField1( spot "  " abbr )
-  }
+;  }
   return color
 }
 ;

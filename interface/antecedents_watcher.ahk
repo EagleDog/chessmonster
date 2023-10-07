@@ -10,7 +10,7 @@ global creds := { spot: " "
                 , piece: " "
                 , prev_piece: " "
                 , assoc_spot: " "
-                , assoc_prev: " " }
+                , prev_assoc: " " }
 
 DidSquareChange(spot, color) {  ; returns true or false
   snapshot := snapshots[move_num]
@@ -19,13 +19,22 @@ DidSquareChange(spot, color) {  ; returns true or false
   prev_color := snap_spot.color
   if ( prev_color == color ) {
     return false
-  }
-  UpdatePosition(spot)   ;  <== UpdatePosition(spot)
-  position := positions[spot]
-  piece := position.piece
-  if ( prev_piece == piece ) {
-    return false  ; square is same
-  } else {  ; square changed
+  } else {
+    UpdatePosition(spot)   ;  <== UpdatePosition(spot)
+    position := positions[spot]
+    piece := position.piece
+
+    creds.color := color
+    creds.piece := piece
+    creds.prev_color := prev_color
+    creds.prev_piece := prev_piece
+
+  ;______possible problem area below_______
+    ; if ( prev_piece == piece ) {
+    ;   return false  ; square is same
+    ; } else {  ; square changed
+    ;   return true
+    ; }
     return true
   }
 }
@@ -45,6 +54,7 @@ CheckAntecedents(spot) {
   }
   CheckOppCastling(spot)
   snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
+  creds.h_color := hybrid_color
   return hybrid_color
 }
 
@@ -58,19 +68,18 @@ RunAntecedentsEngine(spot, antecedents) {
     col := spot_col + antecedents[n][1]
     rank := spot_rank + antecedents[n][2]
     n := A_Index + 1
-    if ( OutofBoundsCheck(col, rank) ) {
-      break
+    if ( !OutofBoundsCheck(col, rank) ) {
+      ; break ; <== is this the bug???
+      file := ColToFile(col)
+      spot := file . rank
+      color := SqStat(spot)
+      ; ____CHECK CREDENTIALS____
+      if ( DidSquareChange(spot, color) ) {
+        creds.assoc_spot := spot
+        creds.assoc_color := color
+      }
+      GoSpot(spot)
     }
-    file := ColToFile(col)
-    spot := file . rank
-    color := SqStat(spot)
-    if ( DidSquareChange(spot, color) ) {
-; ____CHECK CREDENTIALS____
-      creds.assoc_spot := spot
-      creds.assoc_color := color
-    }
-
-    GoSpot(spot)
   }
 }
 

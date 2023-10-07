@@ -19,8 +19,8 @@ global paused := false
 
 global move_num := 1
 
-global elo := 2000
-global move_delay := 300
+global elo := 3500
+global move_delay := 0
 
 #Include includer.ahk
 
@@ -58,10 +58,10 @@ NewGame() {
   StartGame()
 }
 
-StartGame() {
+StartGame(fast=false) {
   ClearLogFields()
   GetMyColor()
-  if ( my_color == "black" ) {
+  if ( ( my_color == "black" ) and ( fast == false) ) {
     PollOpp()
   }
   ; GetPositions()
@@ -98,7 +98,9 @@ ExitChessMonster() {
 ^+x::ExitChessMonster() ; ctrl + shift + x
 ; ^+c::SublimeGo() ; ctrl + shift + x
 
-1::StartGame()
+1::StartGame(false)
+^1::StartGame(true)
+^+1::StartGame(true)
 ;1::CheckBackField()
 ;1::DidGameEnd()
 ;2::StartGame()
@@ -113,7 +115,7 @@ ExitChessMonster() {
 
 
 c::ColorTest()
-
+g::msgbox % SqStat("e2")
 
 
 ;5::CheckPawnSize()
@@ -121,7 +123,7 @@ c::ColorTest()
 9::msgbox % move_num "--move_num"
 0::NewGameUCI()
 
-^1::NewGame()
+;^1::NewGame()
 ^2::GoLoop()
 ^3::MoveGui3()
 

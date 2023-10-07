@@ -1,7 +1,7 @@
 ;zone_poller.ahk
 ;
 ;
-global period := "opening"
+;global period := "opening"
 global which_zone := 4
 
 ;____zones____
@@ -31,13 +31,15 @@ PollOpp() {
     if opp_move {
       n := 0
       msgbox, , CREDENTIALS, % ""
-          . "spot:       " creds["spot"]
-          . "`npiece:      " creds["piece"]
-          . "`ncolor:      " creds["color"]
-          . "`nprev_piece: " creds["prev_piece"]
-          . "`nprev_color: " creds["prev_color"]
-          . "`nassoc_spot: " creds["assoc_spot"]
-          . "" , 8
+          .      "spot:           " creds["spot"]
+          . "`n" "assoc_spot:  " creds["assoc_spot"]
+          . "`n" "color:       " creds["color"]
+          . "`n" "piece:       " creds["piece"]
+          . "`n" "h_color:     " creds["h_color"]
+          . "`n" "prev_color:  " creds["prev_color"]
+          . "`n" "prev_piece:  " creds["prev_piece"]
+          . "`n" "prev_assoc:  " creds["prev_assoc"]
+          . "", 1
 
       RunUCI()
     }
@@ -45,7 +47,6 @@ PollOpp() {
       n := 0
       msgbox, , loop ended, loop ended, 1
       PollPieces()
-    ; PollZones()
       RunUCI()
     }
     if ( paused == true ) {
@@ -53,7 +54,6 @@ PollOpp() {
     }
   }
 }
-
 
 PollZones() { ; looks for opp_move
   loop 8 {
@@ -74,18 +74,18 @@ PollZones() { ; looks for opp_move
 }
 
 PollZone(zone) { ; returns true if opp has moved (theoretically)
-  LogField3("PollZone(" . which_zone . ")")
+  LogField3("poll zone " which_zone )
   n := 1
   while zone[n] {
     spot := zone[n]
     color := SqStat(spot)
-    creds.spot := spot
     GoSpot(spot)
     if DidSquareChange(spot, color) {
       hybrid_color := CheckAntecedents(spot) ; descendents too
       if ( hybrid_color == opp_color ) {
-        opp_move := true
-        return opp_move
+        LogField3("opp moved: " spot)
+        creds.spot := spot
+        return true
       }
     }
     n := A_Index + 1
@@ -125,35 +125,6 @@ PollPiece(spot) {
   }
 }
 
-WhichZones() {
-  if ( move_num < 50 ) {
-    zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
-  } else if ( move_num < 5 ) {
-    period := "opening"
-    zones := [ z1, z2 ]
-  } else if ( move_num < 9 ) {
-    period := "opening"
-    zones := [ z1, z2, z5, z1, z2, z6 ]
-  } else if ( move_num < 13 ) {
-    period := "early game"
-    zones := [ z1, z2, z5, z1, z2, z6 ]
-  } else if ( move_num < 17 ) {
-    period := "early game"
-    zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
-  } else if ( move_num < 23 ) {
-    period := "mid game"
-    zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
-  } else if ( move_num < 31 ) {
-    period := "mid game"
-    zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
-  } else if ( move_num < 37 ) {
-    period := "end game"
-    zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
-  } else {
-    period := "end game"
-    zones := [ z1, z2, z5, z1, z6, z2, z3, z1, z4, z2, z7, z1, z2, z8 ]
-  }
-}
 
 CombineArrays(array_1, array_2, array_3="", array_4="", array_5="", array_6="", array_7="") {
   source_arrays := [array_1, array_2, array_3, array_4, array_5, array_6, array_7]
@@ -182,6 +153,39 @@ ReadArray(arr) {
   }
   return array_contents
 }
+
+
+
+
+; WhichZones() {
+;   if ( move_num < 50 ) {
+;     zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
+;   } else if ( move_num < 5 ) {
+;     period := "opening"
+;     zones := [ z1, z2 ]
+;   } else if ( move_num < 9 ) {
+;     period := "opening"
+;     zones := [ z1, z2, z5, z1, z2, z6 ]
+;   } else if ( move_num < 13 ) {
+;     period := "early game"
+;     zones := [ z1, z2, z5, z1, z2, z6 ]
+;   } else if ( move_num < 17 ) {
+;     period := "early game"
+;     zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
+;   } else if ( move_num < 23 ) {
+;     period := "mid game"
+;     zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
+;   } else if ( move_num < 31 ) {
+;     period := "mid game"
+;     zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
+;   } else if ( move_num < 37 ) {
+;     period := "end game"
+;     zones := [ z1, z2, z5, z1, z2, z6, z1, z2, z3, z1, z2, z4 ]
+;   } else {
+;     period := "end game"
+;     zones := [ z1, z2, z5, z1, z6, z2, z3, z1, z4, z2, z7, z1, z2, z8 ]
+;   }
+; }
 
 ; ;____old_zones____
 ; global z1 := ["c5","d5","e5","f5","c6","d6","e6","f6"] ; opp_front
