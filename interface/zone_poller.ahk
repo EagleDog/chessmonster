@@ -16,19 +16,6 @@ global z8 := ["a8","b8","c8","d8","e8","f8","g8","h8"]
 
 global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
-PostCredentials() {
-  msgbox, , CREDENTIALS, % ""
-    .      "color:          " creds["color"]
-    . "`n" "piece:          " creds["piece"]
-    . "`n" "spot:             " creds["spot"]
-    . "`n" "assoc_spot:    " creds["assoc_spot"]
-    . "`n" "h_color:       " creds["h_color"]
-    . "`n" "prev_color:    " creds["prev_color"]
-    . "`n" "prev_piece:    " creds["prev_piece"]
-    . "`n" "prev_assoc:  " creds["prev_assoc"]
-    . "", 0.5
-}
-
 
 PollOpp() {
   paused := false
@@ -37,18 +24,14 @@ PollOpp() {
   sleep % move_delay
     n += 1
     opp_move := PollZones()
-    ; opp_move := PollPieces()
-    ; if !opp_move {
-    ;   opp_move := PollZones()
-    ; }
     if opp_move {
       n := 0
-      PostCredentials()
+      PostCreds()
       RunUCI()
     }
     if ( n >= 4 ) {
       n := 0
-      msgbox, , loop ended, loop ended, 1
+      msgbox, , loop ended, loop ended, 0.4
       PollPieces()
       RunUCI()
     }
@@ -76,28 +59,38 @@ PollZones() { ; looks for opp_move
   }
 }
 
-PollZone(zone) { ; returns true if opp has moved (theoretically)
-  LogField3("poll zone " which_zone )
+PollZone(zone) { ; returns true if opp has moved. Bug fixed. Working well.
+  LogField2("poll zone " which_zone )
   n := 1
   while zone[n] {
     spot := zone[n]
-
     color := SqStat(spot)
     GoSpot(spot)
     if DidSquareChange(spot, color) {  ; DID SQUARE CHANGE ?  <===
-
-      hybrid_color := CheckAntecedents(spot) ; descendents too
-
+      hybrid_color := CheckAntecedents(spot)   ; CheckAntecents(spot)
       if ( hybrid_color == opp_color ) {
-
-        LogField3("opp moved: " spot)
-
-        creds.spot := spot    ; CREDENTIALS  <===
+        captured_piece := CheckCaptures()    ; CheckCaptures()
+        if captured_piece {
+          LogField4("opp captured "captured_piece)
+        } else {
+          LogField4("")
+        }
+        LogField3("opp moved " creds["spot"] " " creds["assoc_spot"])
+        ; creds.spot := spot
         return true
       }
     }
     n := A_Index + 1
   }
+}
+
+CheckCaptures() {
+  if ( creds["prev_color"] == my_color ) {
+    captured_piece := creds["prev_piece"]
+  } else if ( creds["prev_assoc_color"] == my_color ) {
+    captured_piece := creds["prev_assoc_piece"]
+  }
+  return captured_piece
 }
 
 PollPieces() {
@@ -161,6 +154,33 @@ ReadArray(arr) {
   return array_contents
 }
 
+PostCredentials() {
+  msgbox, , CREDENTIALS, % ""
+    . "`n" "spot:                           " creds["spot"]
+    . "`n" "color:                       " creds["color"]
+    . "`n" "piece:                       " creds["piece"]
+    . "`n" "prev_color:              " creds["prev_color"]
+    . "`n" "prev_piece:              " creds["prev_piece"]
+    . "`n" "assoc_spot:                 " creds["assoc_spot"]
+    . "`n" "assoc_color:             " creds["assoc_color"]
+    . "`n" "assoc_piece:             " creds["assoc_piece"]
+    . "`n" "prev_assoc_color:    " creds["prev_assoc_color"]
+    . "`n" "prev_assoc_piece:    " creds["prev_assoc_piece"]
+    . "`n" "h_color:                     " creds["h_color"]
+    . "", 0.5
+}
+
+PostCreds() {
+  msgbox, , CREDENTIALS, % ""
+    . "`n" "spot:                           " creds["spot"]
+    . "`n" "prev_color:              " creds["prev_color"]
+    . "`n" "prev_piece:              " creds["prev_piece"]
+    . "`n" "assoc_spot:                 " creds["assoc_spot"]
+    . "`n" "prev_assoc_color:    " creds["prev_assoc_color"]
+    . "`n" "prev_assoc_piece:    " creds["prev_assoc_piece"]
+    . "" ;, 0.5
+
+}
 
 
 

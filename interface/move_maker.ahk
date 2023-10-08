@@ -14,7 +14,7 @@
 global fail := false
 
 MovePiece(spot, target) {
-LogField5("move  " spot " to " target)
+LogField5("my move " spot " to " target)
 ;Chill()
   fail := MoveAndFailCheck(spot, target)
   if !fail {

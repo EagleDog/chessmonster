@@ -45,6 +45,7 @@ AssignMovePatterns(spot, prev_piece) {
 }
 
 SearchSuccessors(spot, move_patterns) {
+  GetSpotCreds(spot)
   position := positions[spot]
   spot_col := position.col
   spot_row := position.row
@@ -65,9 +66,10 @@ SearchSuccessors(spot, move_patterns) {
         color := SqStat(spot)
   ; ____CHECK CREDENTIALS____
         if DidSquareChange(spot, color) {
-          creds.assoc_spot := spot
-          creds.assoc_color := color
-          FindPrevAssoc(spot)
+          GetAssocCreds(spot)
+          ; creds.assoc_spot := spot
+          ; creds.assoc_color := color
+          ; FindPrevAssoc(spot)
 ;          snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
         }
         if ( color == opp_color ) {
@@ -79,9 +81,20 @@ SearchSuccessors(spot, move_patterns) {
   }
 }
 
-FindPrevAssoc(assoc_spot) {
-  prev_assoc := snapshots[move_num][assoc_spot].piece
-  creds.prev_assoc := prev_assoc
+GetSpotCreds(spot) {
+  creds.spot := spot
+  creds.color := positions[spot].color
+  creds.piece := positions[spot].piece
+  creds.prev_piece := snapshots[move_num][spot].piece
+  creds.prev_color := snapshots[move_num][spot].color
+}
+
+GetAssocCreds(spot) {
+  creds.assoc_spot := spot
+  creds.assoc_color := positions[spot].color
+  creds.assoc_piece := positions[spot].piece
+  creds.prev_assoc_piece := snapshots[move_num][spot].piece
+  creds.prev_assoc_color := snapshots[move_num][spot].color
 }
 
 OutOfBoundsCheck(col, row) {
@@ -97,25 +110,13 @@ CheckPawnDescendents(spot) {   ; pawn
   forward_diag_1 := [ 1, -1 ]
   forward_diag_2 := [ -1, -1 ]
   descendents := [ forward_one, forward_two, forward_diag_1, forward_diag_2 ]
-  ; if (board[spot].rank == 7) {
-  ;   descendents.push(forward_two)
-  ; }
   RunAntecedentsEngine(spot, descendents)
 }
 
 CheckPawnSuccessors(spot) {
-  ; CheckOppEnPassant(spot)
-  ; en_passant := CheckOppEnPassant(spot)
   CheckPawnAntecedents(spot)
   CheckPawnDescendents(spot)
-  msgbox % "check en passant opp" 
-         . "`n" "creds.spot: " creds.spot
-         . "`n"  "creds.assoc_spot: " creds.assoc_spot
-         . "`n"  "creds.prev_assoc: " creds.prev_assoc
   CheckOppEnPassant(creds["spot"])
-  sleep 50
   CheckOppEnPassant(creds["assoc_spot"])
-  sleep 50
-  CheckOppEnPassant(creds["prev_assoc"])
 }
 

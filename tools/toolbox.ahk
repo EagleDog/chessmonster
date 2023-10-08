@@ -9,7 +9,8 @@ Move_MsgBox(P) {
     Process, Exist
     DetectHiddenWindows, % (Setting_A_DetectHiddenWindows := A_DetectHiddenWindows) ? "On" :
     if WinExist("ahk_class #32770 ahk_pid " ErrorLevel)
-      WinMove, 1000, 400
+      WinMove, 800, 300
+;      WinMove, , , 800, 300, 300, 500
     DetectHiddenWindows, %Setting_A_DetectHiddenWindows%
   }
 }
@@ -38,7 +39,7 @@ PauseMatch() {
 }
 
 PauseDisplay() {
-  LogField1("           ready")
+  LogField1("ready")
   LogField2("1 new match")
   LogField3("2 continue")
   LogField4("r rematch")

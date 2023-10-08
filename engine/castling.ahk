@@ -35,12 +35,12 @@ CheckOppEnPassant(spot) {
       GoSpot(spot)
       msgbox, , en passant, % "en passant: " spot
                        . "`n" "ant_piece: " ant_piece
-                       . "`n" "ant_color: " ant_color ;, 2
+                       . "`n" "ant_color: " ant_color, 1
       en_passant := spot
     } else {
-      msgbox, , NON passant, % "NON passant: " spot
-                        . "`n" "ant_piece: " ant_piece
-                        . "`n" "ant_color: " ant_color ;, 2
+      ; msgbox, , NON passant, % "NON passant: " spot
+      ;                   . "`n" "ant_piece: " ant_piece
+      ;                   . "`n" "ant_color: " ant_color, 1
       en_passant := "-"
     }
   }

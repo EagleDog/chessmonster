@@ -19,7 +19,7 @@ global paused := false
 
 global move_num := 1
 
-global elo := 4000
+global elo := 1000
 global move_delay := 0
 
 #Include includer.ahk
@@ -31,20 +31,18 @@ MainSequence()
 
 MainSequence() {
   ActivateChess()
-  ; CreateGui()
   CreateBoard()
   StartEngine()
   GetStartingPositions()
   ResetSnapshots()
-  ; DidGameEnd()
 }
 
 ;
 ;   ======= NEW GAME ========================
 
 NewGame() {
-;  ActivateChess()
-;  ScrollUp()
+  ActivateChess()
+  ScrollUp()
   GetMyColor()
   ResetMoves()
   ResetCastleRights()

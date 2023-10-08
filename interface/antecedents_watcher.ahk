@@ -50,7 +50,7 @@ CheckAntecedents(spot) {
 }
 
 RunAntecedentsEngine(spot, antecedents) {
-  creds.spot := spot
+  GetSpotCreds(spot)
   position := positions[spot]
   spot_col := position.col
   spot_rank := position.rank
@@ -65,9 +65,7 @@ RunAntecedentsEngine(spot, antecedents) {
       color := SqStat(spot)
       ; ____CHECK CREDENTIALS____
       if ( DidSquareChange(spot, color) ) {
-        creds.assoc_spot := spot
-        creds.assoc_color := color
-        FindPrevAssoc(spot)
+        GetAssocCreds(spot)
       }
       GoSpot(spot)
     }
