@@ -19,7 +19,7 @@ global paused := false
 
 global move_num := 1
 
-global elo := 3500
+global elo := 4000
 global move_delay := 0
 
 #Include includer.ahk

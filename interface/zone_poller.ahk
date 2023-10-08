@@ -16,6 +16,19 @@ global z8 := ["a8","b8","c8","d8","e8","f8","g8","h8"]
 
 global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
+PostCredentials() {
+  msgbox, , CREDENTIALS, % ""
+    .      "spot:           " creds["spot"]
+    . "`n" "assoc_spot:  " creds["assoc_spot"]
+    . "`n" "color:       " creds["color"]
+    . "`n" "piece:       " creds["piece"]
+    . "`n" "h_color:     " creds["h_color"]
+    . "`n" "prev_color:  " creds["prev_color"]
+    . "`n" "prev_piece:  " creds["prev_piece"]
+    . "`n" "prev_assoc:  " creds["prev_assoc"]
+    . "", 0.5
+}
+
 
 PollOpp() {
   paused := false
@@ -30,17 +43,7 @@ PollOpp() {
     ; }
     if opp_move {
       n := 0
-      msgbox, , CREDENTIALS, % ""
-          .      "spot:           " creds["spot"]
-          . "`n" "assoc_spot:  " creds["assoc_spot"]
-          . "`n" "color:       " creds["color"]
-          . "`n" "piece:       " creds["piece"]
-          . "`n" "h_color:     " creds["h_color"]
-          . "`n" "prev_color:  " creds["prev_color"]
-          . "`n" "prev_piece:  " creds["prev_piece"]
-          . "`n" "prev_assoc:  " creds["prev_assoc"]
-          . "", 1
-
+      PostCredentials()
       RunUCI()
     }
     if ( n >= 4 ) {
