@@ -21,6 +21,7 @@ ClearLogFields() {
   LogField3("")
   LogField4("")
   LogField5("")
+  LogField6("")
 }
 
 FlipBoard() {

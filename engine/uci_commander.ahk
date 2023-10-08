@@ -38,11 +38,12 @@ RunUCI() {
   GetReady()
    move_time := RandMoveTime()
   CalculateMove(move_time)   ; go movetime 500  ; ActivateChess()
-   sleep % move_time + 100
+   sleep % move_time + 50
    bestmove := GetBestMove()
    bestmoves := ParseBestMove(bestmove)
   ActivateChess()
   DidGameEnd()
+  CheckMyCaptures(bestmoves)
   SendMoveToGUI(bestmoves)
   CheckMyEnPassant(bestmove)
   CheckMyCastling(bestmove)

@@ -33,24 +33,31 @@ DidSquareChange(spot, color) {  ; returns true or false
 CheckAntecedents(spot) {
   LogField2("CheckAntecedents( " . spot . " )")
   piece := positions[spot].piece
+
   hybrid_color := positions[spot].color
   switch piece {
     case "empty": hybrid_color := CheckDescendents(spot)
+
     case "pawn": CheckPawnSuccessors(spot)
     case "knight": CheckKnightAntecedents(spot)
+    case "king": CheckKingAntecedents(spot)
+
     case "bishop": SearchSuccessors(spot, bishop_patterns)
     case "rook": SearchSuccessors(spot, rook_patterns)
     case "queen": SearchSuccessors(spot, queen_patterns)
-    case "king": CheckKingAntecedents(spot)
   }
+
   CheckOppCastling(spot)
 ;  snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
+
   creds.h_color := hybrid_color
   return hybrid_color
 }
 
 RunAntecedentsEngine(spot, antecedents) {
+
   GetSpotCreds(spot)
+
   position := positions[spot]
   spot_col := position.col
   spot_rank := position.rank
@@ -65,7 +72,9 @@ RunAntecedentsEngine(spot, antecedents) {
       color := SqStat(spot)
       ; ____CHECK CREDENTIALS____
       if ( DidSquareChange(spot, color) ) {
+
         GetAssocCreds(spot)
+
       }
       GoSpot(spot)
     }

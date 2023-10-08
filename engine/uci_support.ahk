@@ -12,4 +12,12 @@ RandMoveTime(){
   return rand_move_time
 }
 
+CheckMyCaptures(bestmoves) {
+  if ( positions[bestmoves[2]].color == opp_color ) {
+    my_capture := positions[bestmoves[2]].piece
+    LogField6("we captured " my_capture)
+  } else {
+    LogField6("")
+  }
+}
 

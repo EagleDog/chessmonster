@@ -34,12 +34,14 @@ LogField2("CheckDescendents( " spot " )")
 AssignMovePatterns(spot, prev_piece) {
   switch prev_piece {
     case "empty": DoNothing()
+
     case "pawn": CheckPawnSuccessors(spot)
     case "knight": CheckKnightAntecedents(spot)
+    case "king": CheckKingAntecedents(spot)
+
     case "bishop": move_patterns := bishop_patterns
     case "rook": move_patterns := rook_patterns
     case "queen": move_patterns := queen_patterns
-    case "king": CheckKingAntecedents(spot)
   }
   return move_patterns
 }

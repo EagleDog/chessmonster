@@ -59,7 +59,7 @@ PollZones() { ; looks for opp_move
   }
 }
 
-PollZone(zone) { ; returns true if opp has moved. Bug fixed. Working well.
+PollZone(zone) { ; true if opp moved. Bug fixed. Working well.
   LogField2("poll zone " which_zone )
   n := 1
   while zone[n] {
@@ -69,12 +69,13 @@ PollZone(zone) { ; returns true if opp has moved. Bug fixed. Working well.
     if DidSquareChange(spot, color) {  ; DID SQUARE CHANGE ?  <===
       hybrid_color := CheckAntecedents(spot)   ; CheckAntecents(spot)
       if ( hybrid_color == opp_color ) {
-        captured_piece := CheckCaptures()    ; CheckCaptures()
-        if captured_piece {
-          LogField4("opp captured "captured_piece)
-        } else {
-          LogField4("")
-        }
+        CheckOppCaptures()
+        ; captured_piece := CheckOppCaptures()    ; CheckOppCaptures()
+        ; if captured_piece {
+        ;   LogField4("opp captured "captured_piece)
+        ; } else {
+        ;   LogField4("")
+        ; }
         LogField3("opp moved " creds["spot"] " " creds["assoc_spot"])
         ; creds.spot := spot
         return true
@@ -84,13 +85,16 @@ PollZone(zone) { ; returns true if opp has moved. Bug fixed. Working well.
   }
 }
 
-CheckCaptures() {
+CheckOppCaptures() {
   if ( creds["prev_color"] == my_color ) {
     captured_piece := creds["prev_piece"]
+    LogField4("opp captured "captured_piece)
   } else if ( creds["prev_assoc_color"] == my_color ) {
     captured_piece := creds["prev_assoc_piece"]
+    LogField4("opp captured "captured_piece)
+  } else {
+    LogField4("")
   }
-  return captured_piece
 }
 
 PollPieces() {

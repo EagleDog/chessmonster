@@ -24,6 +24,7 @@ gui add, Text, w280 h20 x20 y135 center Vfield_2, % field_2_text
 gui add, Text, w280 h20 x20 y165 center Vfield_3, % field_3_text
 gui add, Text, w280 h20 x20 y192 center Vfield_4, % field_4_text
 gui add, Text, w280 h20 x20 y219 center Vfield_5, % field_5_text
+gui add, Text, w280 h20 x20 y246 center Vfield_6, % field_6_text
 
 gui add, Text, w280 h20 x20 y270 center Vblack_title_field, % black_title_text
 gui add, Text, w280 h200 x30 y290 right Vpositions_field, % positions_text
@@ -35,13 +36,11 @@ gui add, Text, w280 h40 x34 y620 center Vmy_color_field, % my_color_text
 
 ; gui add, Text, w280 h20 x20 y500 center Vnum_pieces_field, % num_pieces_text
 
-
 ZoomGui()
 RefreshGui()
 MoveGui1()
 MoveGui2()
 ; ShakeGui()
-
 
 RefreshGui() {
   LogField1("initialize")
@@ -79,6 +78,9 @@ LogField4(field_4_text) {
 LogField5(field_5_text) {
   GuiControl,, field_5, % field_5_text
 }
+LogField6(field_6_text) {
+  GuiControl,, field_6, % field_6_text
+}
 ;
 LogBlackTitle(black_title_text) {
   GuiControl,, black_title_field, % "black  " black_title_text  " pieces"
@@ -111,7 +113,7 @@ MoveGui1() {
   sleep 15
   gui show, x851 y106 w340 h680, chessmonster info, NoActivate
   sleep 15
-  LogField2("1 MoveGui1()")
+  ; LogField2("1 MoveGui1()")
   ActivateChess()
 }
 MoveGui2() {
@@ -125,7 +127,7 @@ MoveGui2() {
   sleep 15
   gui, show, x1251 y106 w340 h680, chessmonster info, NoActivate
   sleep 15
-  LogField2("2 MoveGui2()")
+  ; LogField2("2 MoveGui2()")
   ActivateChess()
 }
 MoveGui3() {
@@ -139,7 +141,7 @@ MoveGui3() {
   sleep 15
   gui show, x951 y106 w340 h680, chessmonster info, NoActivate
   sleep 15
-  LogField2("3 MoveGui3()")
+  ; LogField2("3 MoveGui3()")
   ActivateChess()
 }
 ShakeGui() {
