@@ -14,10 +14,10 @@ global opp_spots := []
 
 ;------------------------------------------------------------------
 ;                                                  UPDATE POSITION
-UpdatePosition(spot) {  ; LogMain("UpdatePosition()")
-  color := SquareStatus(spot)
-  piece := IDPiece(spot, color)
-  abbr := GetAbbr(piece, color)
+UpdatePosition(spot) {
+  color := SquareStatus(spot)     ; SqStat(spot)
+  piece := IDPiece(spot, color)   ; IDPiece(spot,color)
+  abbr := GetAbbr(piece, color)   ; GetAbbr(piece,color)
   position := positions[spot]
   col := position.col
   file := position.file
@@ -25,9 +25,7 @@ UpdatePosition(spot) {  ; LogMain("UpdatePosition()")
   rank := position.rank
   positions[spot] := { spot: spot, piece: piece, color: color, abbr: abbr, col: col, file: file, row: row, rank: rank }
   OutputPositions()
-;  if ( ( row < 9 ) and ( col < 9 ) and ( row > 0 ) and ( col > 0 ) ) {
-    LogField1( spot "  " abbr )
-;  }
+  LogField1( spot "  " abbr )
   return color
 }
 ;
@@ -45,12 +43,12 @@ OutputPositions() {
       file := Chr(96 + col)     ; a_index > a-h
       spot := file . rank
       abbr := positions[spot].abbr
-      pos_text := % "" . pos_text . abbr . " "
+      pos_text := % pos_text . abbr " "
     }
     text_rows[A_index] := pos_text
     pos_text := ""
   }
-  pos_text := "`n" . text_rows[8] . "`n" . text_rows[7] . "`n" . text_rows[6] . "`n" . text_rows[5] . "`n" . text_rows[4] . "`n" . text_rows[3] . "`n" . text_rows[2] . "`n" . text_rows[1] . "`n"
+  pos_text := "`n" text_rows[8] "`n" text_rows[7] "`n" text_rows[6] "`n" text_rows[5] "`n" text_rows[4] "`n" text_rows[3] "`n" text_rows[2] "`n" text_rows[1] "`n"
 
   LogPositions(pos_text)
 

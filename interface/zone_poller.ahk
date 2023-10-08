@@ -18,13 +18,13 @@ global zones := [ z1, z2, z3, z4, z5, z6, z7, z8 ]
 
 PostCredentials() {
   msgbox, , CREDENTIALS, % ""
-    .      "spot:           " creds["spot"]
-    . "`n" "assoc_spot:  " creds["assoc_spot"]
-    . "`n" "color:       " creds["color"]
-    . "`n" "piece:       " creds["piece"]
-    . "`n" "h_color:     " creds["h_color"]
-    . "`n" "prev_color:  " creds["prev_color"]
-    . "`n" "prev_piece:  " creds["prev_piece"]
+    .      "color:          " creds["color"]
+    . "`n" "piece:          " creds["piece"]
+    . "`n" "spot:             " creds["spot"]
+    . "`n" "assoc_spot:    " creds["assoc_spot"]
+    . "`n" "h_color:       " creds["h_color"]
+    . "`n" "prev_color:    " creds["prev_color"]
+    . "`n" "prev_piece:    " creds["prev_piece"]
     . "`n" "prev_assoc:  " creds["prev_assoc"]
     . "", 0.5
 }
@@ -81,13 +81,18 @@ PollZone(zone) { ; returns true if opp has moved (theoretically)
   n := 1
   while zone[n] {
     spot := zone[n]
+
     color := SqStat(spot)
     GoSpot(spot)
-    if DidSquareChange(spot, color) {
+    if DidSquareChange(spot, color) {  ; DID SQUARE CHANGE ?  <===
+
       hybrid_color := CheckAntecedents(spot) ; descendents too
+
       if ( hybrid_color == opp_color ) {
+
         LogField3("opp moved: " spot)
-        creds.spot := spot
+
+        creds.spot := spot    ; CREDENTIALS  <===
         return true
       }
     }
@@ -127,7 +132,6 @@ PollPiece(spot) {
     }
   }
 }
-
 
 CombineArrays(array_1, array_2, array_3="", array_4="", array_5="", array_6="", array_7="") {
   source_arrays := [array_1, array_2, array_3, array_4, array_5, array_6, array_7]

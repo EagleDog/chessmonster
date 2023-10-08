@@ -1,7 +1,5 @@
 ;antecedents_watcher.ahk
 ;
-; DoNothing()
-; FindOppPieces()
 ; DidSquareChange()
 ; Antecedents
 ; CREDENTIALS
@@ -28,13 +26,6 @@ DidSquareChange(spot, color) {  ; returns true or false
     creds.piece := piece
     creds.prev_color := prev_color
     creds.prev_piece := prev_piece
-
-  ;______possible problem area below_______
-    ; if ( prev_piece == piece ) {
-    ;   return false  ; square is same
-    ; } else {  ; square changed
-    ;   return true
-    ; }
     return true
   }
 }
@@ -53,7 +44,7 @@ CheckAntecedents(spot) {
     case "king": CheckKingAntecedents(spot)
   }
   CheckOppCastling(spot)
-  snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
+;  snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
   creds.h_color := hybrid_color
   return hybrid_color
 }
@@ -69,7 +60,6 @@ RunAntecedentsEngine(spot, antecedents) {
     rank := spot_rank + antecedents[n][2]
     n := A_Index + 1
     if ( !OutofBoundsCheck(col, rank) ) {
-      ; break ; <== is this the bug???
       file := ColToFile(col)
       spot := file . rank
       color := SqStat(spot)
@@ -77,6 +67,7 @@ RunAntecedentsEngine(spot, antecedents) {
       if ( DidSquareChange(spot, color) ) {
         creds.assoc_spot := spot
         creds.assoc_color := color
+        FindPrevAssoc(spot)
       }
       GoSpot(spot)
     }
@@ -120,49 +111,3 @@ CheckKingAntecedents(spot) {  ; king
   antecedents :=  [ up_left_1, up_right_1, down_right_1, down_left_1, left_1, up_1, right_1, down_1 ]
   RunAntecedentsEngine(spot, antecedents)
 }
-
-; CheckBishopAntecedents(spot) {  ; bishop
-;   up_left_1 := [ -1, -1 ]
-;   up_left_2 := [ -2, -2 ]
-;   up_right_1 := [ 1, -1 ]
-;   up_right_2 := [ 2, -2 ]
-;   down_right_1 := [ 1, 1 ]
-;   down_right_2 := [ 2, 2 ]
-;   down_left_1 := [ -1, 1 ]
-;   down_left_2 := [ -2, 2 ]
-;   antecedents :=  [ up_left_1, up_left_2, up_right_1, up_right_2, down_right_1, down_right_2, down_left_1, down_left_2 ]
-;   RunAntecedentsEngine(spot, antecedents)
-; }
-; CheckRookAntecedents(spot) {  ; rook
-;   left_1 := [ -1, 0 ]
-;   left_2 := [ -2, 0 ]
-;   up_1 := [ 0, -1 ]
-;   up_2 := [ 0, -2 ]
-;   right_1 := [ 1, 0 ]
-;   right_2 := [ 2, 0 ]
-;   down_1 := [ 0, 1 ]
-;   down_2 := [ 0, 2 ]
-;   antecedents := [ left_1, left_2, up_1, up_2, right_1, right_2, down_1, down_2 ]
-;   RunAntecedentsEngine(spot, antecedents)
-; }
-; CheckQueenAntecedents(spot) {  ; queen
-;   up_left_1 := [ -1, -1 ]
-;   up_left_2 := [ -2, -2 ]
-;   up_right_1 := [ 1, -1 ]
-;   up_right_2 := [ 2, -2 ]
-;   down_right_1 := [ 1, 1 ]
-;   down_right_2 := [ 2, 2 ]
-;   down_left_1 := [ -1, 1 ]
-;   down_left_2 := [ -2, 2 ]
-;   left_1 := [ -1, 0 ]
-;   left_2 := [ -2, 0 ]
-;   up_1 := [ 0, -1 ]
-;   up_2 := [ 0, -2 ]
-;   right_1 := [ 1, 0 ]
-;   right_2 := [ 2, 0 ]
-;   down_1 := [ 0, 1 ]
-;   down_2 := [ 0, 2 ]
-;   antecedents :=  [up_left_1,up_left_2,up_right_1,up_right_2,down_right_1,down_right_2,down_left_1,down_left_2,left_1,left_2,up_1,up_2,right_1,right_2,down_1,down_2]
-;   RunAntecedentsEngine(spot, antecedents)
-; }
-

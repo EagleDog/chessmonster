@@ -17,31 +17,38 @@ CheckOppEnPassant(spot) {
   row := SubStr(spot, 2, 1)
   piece := positions[spot].piece
   color := positions[spot].color
-  if ( piece == "pawn") {
 
-    ResetHalfMoves()
-    if ( ( row == 4 ) or ( row == 5 ) ) {
-      if ( row == 4 ) {
-        ant_row := 2
-      } else {
-        ant_row := 7
-      }
-      ant_spot := file . ant_row
-      ant_piece := snapshots[move_num][ant_spot].piece
-      ant_color := snapshots[move_num][ant_spot].color
+  ; if ( piece == "pawn") {
+  ;   ResetHalfMoves()
 
-      if ( ( ant_piece == "pawn" ) and ( ant_color == color ) ) {
-        GoSpot(spot)
-        msgbox, , en passant, % "en passant: " spot "`nant_piece: " ant_piece "`nant_color: " ant_color, 1
-        return spot
-      } else {
-        return "-"
-      }
+  if ( ( row == 4 ) or ( row == 5 ) ) {
+    if ( row == 4 ) {
+      ant_row := 2
+    } else {
+      ant_row := 7
     }
-  } else {
-    IncreaseHalfMoves()
-    return "-"
+    ant_spot := file . ant_row
+    ant_piece := snapshots[move_num][ant_spot].piece
+    ant_color := snapshots[move_num][ant_spot].color
+
+    if ( ( ant_piece == "pawn" ) and ( ant_color == color ) ) {
+      GoSpot(spot)
+      msgbox, , en passant, % "en passant: " spot
+                       . "`n" "ant_piece: " ant_piece
+                       . "`n" "ant_color: " ant_color ;, 2
+      en_passant := spot
+    } else {
+      msgbox, , NON passant, % "NON passant: " spot
+                        . "`n" "ant_piece: " ant_piece
+                        . "`n" "ant_color: " ant_color ;, 2
+      en_passant := "-"
+    }
   }
+
+  ; } else {
+  ;   IncreaseHalfMoves()
+  ;   en_passant := "-"
+  ; }
 }
 
 CheckMyEnPassant(bestmove) {

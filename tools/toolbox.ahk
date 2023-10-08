@@ -30,11 +30,11 @@ FlipBoard() {
 }
 
 PauseMatch() {
-  if paused {
-    paused := false
-  } else {
+  ; if paused {
+  ;   paused := false
+  ; } else {
     paused := true
-  }
+  ; }
 }
 
 PauseDisplay() {

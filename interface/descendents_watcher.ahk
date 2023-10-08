@@ -1,4 +1,4 @@
-;descnedents_watcher.ahk
+;descendents_watcher.ahk
 ;
 ;  STEP 1 -- rook, bishop, queen
 ;  STEP 2 -- antecedents
@@ -58,7 +58,6 @@ SearchSuccessors(spot, move_patterns) {
       col := col + move_patterns[n][1]
       row := row + move_patterns[n][2]
       if ( !OutOfBoundsCheck(col, row) ) {
-        ; break ; <== bug??
         file := ColToFile(col)
         rank := row
         spot := file . rank
@@ -67,7 +66,9 @@ SearchSuccessors(spot, move_patterns) {
   ; ____CHECK CREDENTIALS____
         if DidSquareChange(spot, color) {
           creds.assoc_spot := spot
-          snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
+          creds.assoc_color := color
+          FindPrevAssoc(spot)
+;          snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
         }
         if ( color == opp_color ) {
           break
@@ -76,6 +77,11 @@ SearchSuccessors(spot, move_patterns) {
     }
     n := A_Index + 1
   }
+}
+
+FindPrevAssoc(assoc_spot) {
+  prev_assoc := snapshots[move_num][assoc_spot].piece
+  creds.prev_assoc := prev_assoc
 }
 
 OutOfBoundsCheck(col, row) {
@@ -98,8 +104,18 @@ CheckPawnDescendents(spot) {   ; pawn
 }
 
 CheckPawnSuccessors(spot) {
-  en_passant := CheckOppEnPassant(spot)
+  ; CheckOppEnPassant(spot)
+  ; en_passant := CheckOppEnPassant(spot)
   CheckPawnAntecedents(spot)
   CheckPawnDescendents(spot)
+  msgbox % "check en passant opp" 
+         . "`n" "creds.spot: " creds.spot
+         . "`n"  "creds.assoc_spot: " creds.assoc_spot
+         . "`n"  "creds.prev_assoc: " creds.prev_assoc
+  CheckOppEnPassant(creds["spot"])
+  sleep 50
+  CheckOppEnPassant(creds["assoc_spot"])
+  sleep 50
+  CheckOppEnPassant(creds["prev_assoc"])
 }
 
