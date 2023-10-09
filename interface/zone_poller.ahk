@@ -26,12 +26,12 @@ PollOpp() {
     opp_move := PollZones()
     if opp_move {
       n := 0
-      PostCreds()
+      ; PostCreds()
       RunUCI()
     }
     if ( n >= 4 ) {
       n := 0
-      msgbox, , loop ended, loop ended, 0.4
+      ; msgbox, , loop ended, loop ended, 0.4
       PollPieces()
       RunUCI()
     }
@@ -70,14 +70,7 @@ PollZone(zone) { ; true if opp moved. Bug fixed. Working well.
       hybrid_color := CheckAntecedents(spot)   ; CheckAntecents(spot)
       if ( hybrid_color == opp_color ) {
         CheckOppCaptures()
-        ; captured_piece := CheckOppCaptures()    ; CheckOppCaptures()
-        ; if captured_piece {
-        ;   LogField4("opp captured "captured_piece)
-        ; } else {
-        ;   LogField4("")
-        ; }
         LogField3("opp moved " creds["spot"] " " creds["assoc_spot"])
-        ; creds.spot := spot
         return true
       }
     }
@@ -86,6 +79,7 @@ PollZone(zone) { ; true if opp moved. Bug fixed. Working well.
 }
 
 CheckOppCaptures() {
+  LogField6("")
   if ( creds["prev_color"] == my_color ) {
     captured_piece := creds["prev_piece"]
     LogField4("opp captured "captured_piece)
@@ -182,7 +176,7 @@ PostCreds() {
     . "`n" "assoc_spot:                 " creds["assoc_spot"]
     . "`n" "prev_assoc_color:    " creds["prev_assoc_color"]
     . "`n" "prev_assoc_piece:    " creds["prev_assoc_piece"]
-    . "" ;, 0.5
+    . "", 1
 
 }
 

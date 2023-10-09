@@ -47,7 +47,7 @@ RematchLive(timeout=10000, refreshed=false) {
     ButtonB()     ; move click B
   }
   sleep 100
-  ; MoveGui2()
+  MoveGui1()
   NewGame()
 }
 
@@ -80,7 +80,7 @@ RematchComputer(timeout=10000) {
   sleep 50
   ClickEmpty()  ; click empty space (hide remaining browser dialogs)
   sleep 50
-  MoveGui2()
+  MoveGui1()
   NewGame()
 }
 

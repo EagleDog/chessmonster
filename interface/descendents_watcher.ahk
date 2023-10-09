@@ -47,7 +47,9 @@ AssignMovePatterns(spot, prev_piece) {
 }
 
 SearchSuccessors(spot, move_patterns) {
+
   GetSpotCreds(spot)
+
   position := positions[spot]
   spot_col := position.col
   spot_row := position.row
@@ -68,7 +70,9 @@ SearchSuccessors(spot, move_patterns) {
         color := SqStat(spot)
   ; ____CHECK CREDENTIALS____
         if DidSquareChange(spot, color) {
+
           GetAssocCreds(spot)
+
           ; creds.assoc_spot := spot
           ; creds.assoc_color := color
           ; FindPrevAssoc(spot)

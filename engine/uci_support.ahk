@@ -8,11 +8,12 @@ AdjustElo() {
 }
 
 RandMoveTime(){
-  random rand_move_time, 800, 1200
+  random rand_move_time, 300, 1800
   return rand_move_time
 }
 
 CheckMyCaptures(bestmoves) {
+  LogField4("")
   if ( positions[bestmoves[2]].color == opp_color ) {
     my_capture := positions[bestmoves[2]].piece
     LogField6("we captured " my_capture)

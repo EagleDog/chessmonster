@@ -33,9 +33,9 @@ CheckOppEnPassant(spot) {
 
     if ( ( ant_piece == "pawn" ) and ( ant_color == color ) ) {
       GoSpot(spot)
-      msgbox, , en passant, % "en passant: " spot
-                       . "`n" "ant_piece: " ant_piece
-                       . "`n" "ant_color: " ant_color, 1
+      msgbox, , en passant, % "en passant: " spot, 0.5
+                       ; . "`n" "ant_piece: " ant_piece
+                       ; . "`n" "ant_color: " ant_color, 1
       en_passant := spot
     } else {
       ; msgbox, , NON passant, % "NON passant: " spot
@@ -62,12 +62,12 @@ CheckMyEnPassant(bestmove) {
     ResetHalfMoves()
     if ( ( my_color == "black" )
     and ( row2 == 5 ) and ( row1 == 7) ) {
-      msgbox, , en passant, % "en passant: " spot, 1
+      ; msgbox, , en passant, % "en passant: " spot, 1
       ResetHalfMoves()
       en_passant := spot
     } else if ( ( my_color == "white" ) and ( piece == "pawn" )
     and ( row2 == 4 ) and ( row1 == 2) ) {
-      msgbox, , en passant, % "en passant: " spot, 1
+      ; msgbox, , en passant, % "en passant: " spot, 1
       ResetHalfMoves()
       en_passant := spot
     } else {

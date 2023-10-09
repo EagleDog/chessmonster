@@ -22,10 +22,10 @@ DidSquareChange(spot, color) {  ; returns true or false
     position := positions[spot]
     piece := position.piece
 
-    creds.color := color
-    creds.piece := piece
-    creds.prev_color := prev_color
-    creds.prev_piece := prev_piece
+    ; creds.color := color
+    ; creds.piece := piece
+    ; creds.prev_color := prev_color
+    ; creds.prev_piece := prev_piece
     return true
   }
 }

@@ -39,7 +39,7 @@ gui add, Text, w280 h40 x34 y620 center Vmy_color_field, % my_color_text
 ZoomGui()
 RefreshGui()
 MoveGui1()
-MoveGui2()
+; MoveGui2()
 ; ShakeGui()
 
 RefreshGui() {
@@ -111,7 +111,7 @@ MoveGui1() {
   sleep 15
   gui show, x901 y106 w340 h680, chessmonster info, NoActivate
   sleep 15
-  gui show, x851 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x851 y106 w680 h680, chessmonster info, NoActivate
   sleep 15
   ; LogField2("1 MoveGui1()")
   ActivateChess()
