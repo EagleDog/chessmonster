@@ -131,7 +131,8 @@ m::DriftMouse()
 q::MoveGui1()
 e::MoveGui2()
 s::ShakeGui()
-
+h::HideGui()
+^h::ShowGui()
 ;9::New3Min()
 
 d::DebugSnapshots()

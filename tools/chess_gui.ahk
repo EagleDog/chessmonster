@@ -11,20 +11,20 @@
 
 
 
-gui add, Text, w280 h10 center, 
-GuiAddBorder("Black", 10, "0 10 w400 h80")
+gui add, Text, w280 h0 center 
+GuiAddBorder("Black", 10, "0 0 w400 h80")
 gui font, s14 w1000, Courier New
 gui add, Text, xp-40 yp-5 wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
 gui +AlwaysOnTop +ToolWindow -SysMenu
 gui color, 0x888877     ; BACKGROUND COLOR  <-------
 
-gui add, Text, w280 h20 x20 y110 right Vfield_1, % field_1_text
-gui add, Text, w280 h20 x20 y135 center Vfield_2, % field_2_text
+gui add, Text, w280 h20 x20 y100 right Vfield_1, % field_1_text
+gui add, Text, w280 h20 x20 y125 right Vfield_2, % field_2_text
 
-gui add, Text, w280 h20 x20 y165 center Vfield_3, % field_3_text
-gui add, Text, w280 h20 x20 y192 center Vfield_4, % field_4_text
-gui add, Text, w280 h20 x20 y219 center Vfield_5, % field_5_text
-gui add, Text, w280 h20 x20 y246 center Vfield_6, % field_6_text
+gui add, Text, w280 h20 x20 y155 center Vfield_3, % field_3_text
+gui add, Text, w280 h20 x20 y182 center Vfield_4, % field_4_text
+gui add, Text, w280 h20 x20 y209 center Vfield_5, % field_5_text
+gui add, Text, w280 h20 x20 y236 center Vfield_6, % field_6_text
 
 gui add, Text, w280 h20 x20 y270 center Vblack_title_field, % black_title_text
 gui add, Text, w280 h200 x30 y290 right Vpositions_field, % positions_text
@@ -100,6 +100,13 @@ LogCastle(castle_text) {
 }
 LogMyColor(my_color_text) {
   GuiControl,, my_color_field, % my_color_text
+}
+
+HideGui() {
+  gui hide
+}
+ShowGui(){
+  gui show
 }
 
 MoveGui1() {

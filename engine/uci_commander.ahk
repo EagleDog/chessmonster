@@ -43,7 +43,6 @@ RunUCI() {
    bestmoves := ParseBestMove(bestmove)
   ActivateChess()
   DidGameEnd()
-  CheckMyCaptures(bestmoves)
   SendMoveToGUI(bestmoves)
   CheckMyEnPassant(bestmove)
   CheckMyCastling(bestmove)
@@ -57,7 +56,10 @@ GetBestMove() {
 }
 
 SendMoveToGUI(bestmoves) {        ; move piece
+  LogField3("")
   MovePiece(bestmoves[1], bestmoves[2])
+  LogField5("we moved " bestmoves[1] " to " bestmoves[2])
+  CheckMyCaptures(bestmoves)
   fileappend % "move " bestmoves[1] " to " bestmoves[2] " sent to gui", *
 }
 

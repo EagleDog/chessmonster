@@ -22,7 +22,6 @@ global bishop_patterns := [up_left, up_right, down_right, down_left]
 global queen_patterns := CombineArrays(rook_patterns, bishop_patterns)
 
 CheckDescendents(spot) { 
-LogField2("CheckDescendents( " spot " )")
   prev_piece := snapshots[move_num][spot].piece
   prev_color := snapshots[move_num][spot].color
   piece := positions[spot].piece
@@ -101,6 +100,18 @@ GetAssocCreds(spot) {
   creds.assoc_piece := positions[spot].piece
   creds.prev_assoc_piece := snapshots[move_num][spot].piece
   creds.prev_assoc_color := snapshots[move_num][spot].color
+}
+
+OppSpotToSpot() {
+  if ( creds["piece"] == "empty" ) {
+    source := creds["spot"]
+    target := creds["assoc_spot"]
+  } else {
+    source := creds["assoc_spot"]
+    target := creds["spot"]
+  }
+  LogField5("")
+  LogField3("opp moved " source " to " target)
 }
 
 OutOfBoundsCheck(col, row) {

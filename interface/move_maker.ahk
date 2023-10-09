@@ -14,12 +14,10 @@
 global fail := false
 
 MovePiece(spot, target) {
-LogField5("my move " spot " to " target)
-;Chill()
+;  LogField5("my move " spot " to " target)
   fail := MoveAndFailCheck(spot, target)
   if !fail {
     IncreaseMoveNum()   ; <== UpdateSnapshots() included
-;    LogField4(period)
   } else {
     UpdateSnapshots()
   }
