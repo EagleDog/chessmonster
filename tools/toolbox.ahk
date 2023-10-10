@@ -69,6 +69,40 @@ ShowGui(){
   ActivateChess()
 }
 
+LogOpp1(log_text) {
+  if ( opp_color == "black" ) {
+    LogField3(log_text)
+  } else {
+    LogField5(log_text)
+  }
+}
+
+LogOpp2(log_text) {
+  if ( opp_color == "black" ) {
+    LogField4(log_text)
+  } else {
+    LogField6(log_text)
+  }
+}
+
+LogMine1(log_text) {
+  if ( my_color == "black" ) {
+    LogField3(log_text)
+  } else {
+    LogField5(log_text)
+  }
+}
+
+LogMine2(log_text) {
+  if ( my_color == "black" ) {
+    LogField4(log_text)
+  } else {
+    LogField6(log_text)
+  }
+
+}
+
+
 Print(outout_text) {
   fileappend % output_text " ", *
 }

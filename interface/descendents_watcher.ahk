@@ -101,8 +101,8 @@ OppSpotToSpot() {
     target := creds["spot"]
     piece := creds["piece"]
   }
-  LogField5("")
-  LogField3(piece " " source " to " target)
+  LogMine1("")
+  LogOpp1(piece " " source " to " target)
   if ( piece == "pawn" ) {
     CheckOppEnPassant(source, target)
   } else {

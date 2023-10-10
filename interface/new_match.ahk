@@ -97,8 +97,8 @@ RematchComputer(timeout=10000) {
 
 ShowTimeoutTimer(timeout) {
   while ( timeout > 0 ) {
-    LogField4("intermission ")
-    LogField5(Floor(timeout/1000))
+    LogField3("intermission ")
+    LogField4(Floor(timeout/1000))
     sleep, 1000
     timeout := timeout - 1000
   }

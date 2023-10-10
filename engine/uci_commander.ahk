@@ -56,14 +56,14 @@ GetBestMove() {
 }
 
 SendMoveToGUI(bestmoves) {        ; move piece
-  LogField3("")
-  LogField4("")
+  LogOpp1("")
+  LogOpp2("")
   my_capture := CheckMyCaptures(bestmoves)
   MovePiece(bestmoves[1], bestmoves[2])
   piece := positions[bestmoves[2]].piece
-  LogField5(piece " " bestmoves[1] " to " bestmoves[2])
+  LogMine1(piece " " bestmoves[1] " to " bestmoves[2])
   if my_capture {
-    LogField6(piece " took " my_capture)
+    LogMine2(piece " took " my_capture)
   }
   fileappend % "move " bestmoves[1] " to " bestmoves[2] " sent to gui", *
 }

@@ -19,11 +19,11 @@ CheckOppEnPassant(source, target) {
   target_row := SubStr(target, 2, 1)
   file := SubStr(target, 1, 1)
   if ( ( source_row == 2 ) and ( target_row == 4 ) ) {
-    LogField4("enpassantable")
+    LogOpp2("enpassantable")
     passed_square := file . 3
     en_passant := passed_square
   } else if ( ( source_row == 7 ) and ( target_row == 5 ) ) {
-    LogField4("enpassantable")
+    LogOpp2("enpassantable")
     passed_square := file . 6
     en_passant := passed_square
   } else {
@@ -43,12 +43,12 @@ CheckMyEnPassant(bestmove) {
     ResetHalfMoves()
     if ( ( my_color == "black" )
     and ( row2 == 5 ) and ( row1 == 7) ) {
-      LogField6("enpassantable")
+      LogMine2("enpassantable")
       passed_square := file2 . 6
       en_passant := passed_square
     } else if ( ( my_color == "white" ) and ( piece == "pawn" )
     and ( row2 == 4 ) and ( row1 == 2) ) {
-      LogField6("enpassantable")
+      LogMine2("enpassantable")
       passed_square := file2 . 3
       en_passant := spot
     } else {
@@ -147,7 +147,7 @@ UpdateCastleRightsAll() {
   if ( c_rights_all == "" ) {
     c_rights_all := "-"
   }
-  LogCastle(c_rights_all " " en_passant " " half_moves)
+  LogFen(c_rights_all " " en_passant " " half_moves " " move_num)
 }
 
 ResetCastleRights() {

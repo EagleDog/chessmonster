@@ -43,7 +43,7 @@ OutputSnapshot() {
   snap_move_num := snapshot["move_number"]
   LogBlackTitle(num_pieces_black)
   LogWhiteTitle(num_pieces_white)
-  LogMoves(snap_move_num)
+  LogFen("move num" snap_move_num)
 }
 
 DebugSnapshots() {

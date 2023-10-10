@@ -64,7 +64,7 @@ PollZones() { ; looks for opp move
 }
 
 PollZone(zone) { ; true if opp moved. Bug fixed. Working well.
-  LogField2(which_zone )
+  LogField1(which_zone )
   n := 1
   while zone[n] {
     spot := zone[n]
@@ -84,20 +84,17 @@ PollZone(zone) { ; true if opp moved. Bug fixed. Working well.
 }
 
 CheckOppCaptures() {
-  LogField5("")
-  LogField6("")
+  LogMine1("")
+  LogMine2("")
   if ( creds["prev_color"] == my_color ) {
     captured_piece := creds["prev_piece"]
     piece := creds["piece"]
-    LogField4(piece " took "captured_piece)
+    LogOpp2(piece " took "captured_piece)
   } else if ( creds["prev_assoc_color"] == my_color ) {
     captured_piece := creds["prev_assoc_piece"]
     piece := creds["assoc_piece"]
-    LogField4(piece " took "captured_piece)
+    LogOpp2(piece " took "captured_piece)
   }
-  ; } else {
-  ;   LogField4("")
-  ; }
 }
 
 PollPieces() {

@@ -131,18 +131,21 @@ DriftMouse() {
 
 ResetMoves() {
   move_num := 1
-  LogMoves(move_num)
+  UpdateCastleRightsAll()
+  ; LogMoves(move_num)
 }
 
 IncreaseMoveNum() {
   move_num += 1
-  LogMoves(move_num)
+  UpdateCastleRightsAll()
+  ; LogMoves(move_num)
   UpdateSnapshots()
 }
 
 DecreaseMoveNum() {
   move_num -= 1
-  LogMoves(move_num)
+  UpdateCastleRightsAll()
+  ; LogMoves(move_num)
   UpdateSnapshots()
 }
 

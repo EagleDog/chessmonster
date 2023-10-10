@@ -58,7 +58,8 @@ OutputPositions() {
 
   LogBlackTitle( num_pieces_black )
   LogWhiteTitle( num_pieces_white )
-  LogMoves(move_num)
+  UpdateCastleRightsAll()
+  ; LogMoves(move_num)
 
   positions["num_pieces_black"] := num_pieces_black
   positions["num_pieces_white"] := num_pieces_white

@@ -21,41 +21,35 @@ gui color, 0x888877     ; BACKGROUND COLOR  <-------
 gui add, Text, w280 h20 x20 y100 right Vfield_1, % field_1_text
 gui add, Text, w280 h20 x20 y125 right Vfield_2, % field_2_text
 
-gui add, Text, w280 h20 x20 y155 center Vfield_3, % field_3_text
-gui add, Text, w280 h20 x20 y182 center Vfield_4, % field_4_text
-gui add, Text, w280 h20 x20 y209 center Vfield_5, % field_5_text
-gui add, Text, w280 h20 x20 y236 center Vfield_6, % field_6_text
+gui add, Text, w280 h20 x20 y185 center Vfield_3, % field_3_text
+gui add, Text, w280 h20 x20 y212 center Vfield_4, % field_4_text
 
-gui add, Text, w280 h20 x20 y270 center Vblack_title_field, % black_title_text
-gui add, Text, w280 h200 x30 y290 right Vpositions_field, % positions_text
-gui add, Text, w280 h20 x20 y500 center Vwhite_title_field, % white_title_text
+gui add, Text, w280 h20 x20 y245 center Vblack_title_field, % black_title_text
+gui add, Text, w280 h290 x30 y262 right Vpositions_field, % positions_text
+gui add, Text, w280 h20 x20 y469 center Vwhite_title_field, % white_title_text
 
-gui add, Text, w280 h20 x20 y550 center Vmoves_field, % moves_text
-gui add, Text, w280 h20 x20 y590 center Vcastle_field, % castle_text
-gui add, Text, w280 h40 x34 y620 center Vmy_color_field, % my_color_text
+gui add, Text, w280 h20 x20 y511 center Vfield_5, % field_5_text
+gui add, Text, w280 h20 x20 y538 center Vfield_6, % field_6_text
 
-; gui add, Text, w280 h20 x20 y500 center Vnum_pieces_field, % num_pieces_text
+gui add, Text, w280 h20 x20 y595 center Vfen_field, % fen_text
+gui add, Text, w280 h40 x34 y630 center Vmy_color_field, % my_color_text
 
 ZoomGui()
 RefreshGui()
-MoveGui1()
-; MoveGui2()
-; ShakeGui()
+; MoveGui1()
+
 
 RefreshGui() {
   LogField1("initialize")
-  LogField2("a1 white rook")
+  LogField2("")
   LogField3("A for positions")
   LogField4("1 to start")
   LogField5("R for rematch")
-  LogBlackTitle("black")
-  LogPositions("positions")
-  LogWhiteTitle("white")
-  ; LogNumPieces("white 16  black 16")
-  ; LogMoves("move_num == " . move_num)
-  LogMoves(1)
-  LogCastle("KQkq")
-  LogMyColor("WHITE")
+  LogBlackTitle("16")
+  ; LogPositions(".........")
+  LogWhiteTitle("16")
+  LogFen("KQkq - 0 0")
+  LogMyColor("")
 }
 
 CreateGui() {
@@ -83,106 +77,98 @@ LogField6(field_6_text) {
 }
 ;
 LogBlackTitle(black_title_text) {
-  GuiControl,, black_title_field, % "black  " black_title_text  " pieces"
+  GuiControl,, black_title_field, % "black " black_title_text  " pieces"
 }
 LogPositions(positions_text) {
   GuiControl,, positions_field, % positions_text
 }
 LogWhiteTitle(white_title_text) {
-  GuiControl,, white_title_field, % "white  " white_title_text " pieces"
+  GuiControl,, white_title_field, % "white " white_title_text " pieces"
 }
-;
-LogMoves(moves_text) {
-  GuiControl,, moves_field, % moves_text . "  move_num "
-}
-LogCastle(castle_text) {
-  GuiControl,, castle_field, % "fen info: " castle_text
+LogFen(fen_text) {
+  GuiControl,, fen_field, % "fen: " fen_text
 }
 LogMyColor(my_color_text) {
   GuiControl,, my_color_field, % my_color_text
 }
 
 MoveGui1() {
-  gui show, x1151 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x1151 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui show, x1051 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x1051 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui show, x951 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x951 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui show, x901 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x901 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui show, x851 y106 w680 h680, chessmonster info, NoActivate
+  gui show, x851 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  ; LogField2("1 MoveGui1()")
   ActivateChess()
 }
 MoveGui2() {
-  gui, show, x870 y106 w340 h680, chessmonster info, NoActivate
+  gui, show, x870 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui, show, x970 y106 w340 h680, chessmonster info, NoActivate
+  gui, show, x970 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui, show, x1070 y106 w340 h680, chessmonster info, NoActivate
+  gui, show, x1070 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui, show, x1170 y106 w340 h680, chessmonster info, NoActivate
+  gui, show, x1170 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui, show, x1251 y106 w340 h680, chessmonster info, NoActivate
+  gui, show, x1251 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  ; LogField2("2 MoveGui2()")
   ActivateChess()
 }
 MoveGui3() {
-  gui show, x1251 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x1251 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui show, x1151 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x1151 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui show, x1051 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x1051 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui show, x1001 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x1001 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui show, x951 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x951 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  ; LogField2("3 MoveGui3()")
   ActivateChess()
 }
 ShakeGui() {
-  gui show, x851 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x851 y106 w660 h680, chessmonster info, NoActivate
   sleep 5
-  gui show, x840 y98 w340 h680, chessmonster info, NoActivate
+  gui show, x840 y98 w660 h680, chessmonster info, NoActivate
   sleep 5
-  gui show, x851 y109 w340 h680, chessmonster info, NoActivate
+  gui show, x851 y109 w660 h680, chessmonster info, NoActivate
   sleep 5
-  Gui, Show, x864 y97 w340 h680, chessmonster info, NoActivate
+  Gui, Show, x864 y97 w660 h680, chessmonster info, NoActivate
   sleep 5
-  Gui, Show, x838 y105 w340 h680, chessmonster info, NoActivate
+  Gui, Show, x838 y105 w660 h680, chessmonster info, NoActivate
   sleep 5
-  Gui, Show, x872 y102 w340 h680, chessmonster info, NoActivate
+  Gui, Show, x872 y102 w660 h680, chessmonster info, NoActivate
   sleep 5
-  Gui, Show, x842 y96 w340 h680, chessmonster info, NoActivate
+  Gui, Show, x842 y96 w660 h680, chessmonster info, NoActivate
   sleep 5
-  Gui, Show, x867 y108 w340 h680, chessmonster info, NoActivate
+  Gui, Show, x867 y108 w660 h680, chessmonster info, NoActivate
   sleep 5
-  gui show, x851 y106 w340 h680, chessmonster info, NoActivate
+  gui show, x851 y106 w660 h680, chessmonster info, NoActivate
   sleep 50
 }
 ZoomGui() {
-  gui show, x980 y140 w255 h510, chessmonster info, NoActivate
+  gui show, x980 y500 w150 h200, chessmonster info, NoActivate
   sleep 10
-  gui show, x945 y135 w270 h540, chessmonster info, NoActivate
+  gui show, x945 y450 w200 h250, chessmonster info, NoActivate
   sleep 10
-  gui show, x910 y130 w280 h560, chessmonster info, NoActivate
+  gui show, x910 y400 w250 h300, chessmonster info, NoActivate
   sleep 10
-  gui show, x888 y125 w290 h580, chessmonster info, NoActivate
+  gui show, x888 y350 w300 h350, chessmonster info, NoActivate
   sleep 10
-  gui show, x875 y120 w300 h600, chessmonster info, NoActivate
+  gui show, x875 y300 w350 h400, chessmonster info, NoActivate
   sleep 10
-  gui show, x865 y115 w310 h620, chessmonster info, NoActivate
+  gui show, x865 y250 w400 h450, chessmonster info, NoActivate
   sleep 10
-  gui show, x860 y110 w320 h640, chessmonster info, NoActivate
-  sleep 20
-  gui show, x855 y108 w330 h660, chessmonster info, NoActivate
-  sleep 20
-  gui show, x851 y106 w340 h680, chessmonster info, NoActivate
-  sleep 20
+  gui show, x860 y200 w450 h500, chessmonster info, NoActivate
+  sleep 10
+  gui show, x855 y150 w550 h600, chessmonster info, NoActivate
+  sleep 10
+  gui show, x851 y106 w660 h680, chessmonster info, NoActivate
 }
 ZoomGui2() {
   gui show, x1080 y140 w255 h510, chessmonster info, NoActivate
@@ -195,6 +181,7 @@ ZoomGui2() {
   sleep 20
   gui show, x951 y106 w340 h680, chessmonster info, NoActivate
   sleep 20
+  gui show, x851 y106 w660 h680, chessmonster info, NoActivate
 }
 
 
