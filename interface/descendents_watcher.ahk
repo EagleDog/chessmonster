@@ -33,11 +33,9 @@ CheckDescendents(spot) {
 AssignMovePatterns(spot, prev_piece) {
   switch prev_piece {
     case "empty": DoNothing()
-
     case "pawn": CheckPawnSuccessors(spot)
     case "knight": CheckKnightAntecedents(spot)
     case "king": CheckKingAntecedents(spot)
-
     case "bishop": move_patterns := bishop_patterns
     case "rook": move_patterns := rook_patterns
     case "queen": move_patterns := queen_patterns
@@ -105,6 +103,11 @@ OppSpotToSpot() {
   }
   LogField5("")
   LogField3(piece " " source " to " target)
+  if ( piece == "pawn" ) {
+    CheckOppEnPassant(source, target)
+  } else {
+    en_passant := "-"
+  }
 }
 
 OutOfBoundsCheck(col, row) {
@@ -126,7 +129,7 @@ CheckPawnDescendents(spot) {   ; pawn
 CheckPawnSuccessors(spot) {
   CheckPawnAntecedents(spot)
   CheckPawnDescendents(spot)
-  CheckOppEnPassant(creds["spot"])
-  CheckOppEnPassant(creds["assoc_spot"])
+  ; CheckOppEnPassant(creds["spot"])
+  ; CheckOppEnPassant(creds["assoc_spot"])
 }
 

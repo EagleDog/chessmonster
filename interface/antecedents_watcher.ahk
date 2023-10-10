@@ -32,23 +32,17 @@ DidSquareChange(spot, color) {  ; returns true or false
 
 CheckAntecedents(spot) {
   piece := positions[spot].piece
-
   hybrid_color := positions[spot].color
   switch piece {
     case "empty": hybrid_color := CheckDescendents(spot)
-
     case "pawn": CheckPawnSuccessors(spot)
     case "knight": CheckKnightAntecedents(spot)
     case "king": CheckKingAntecedents(spot)
-
     case "bishop": SearchSuccessors(spot, bishop_patterns)
     case "rook": SearchSuccessors(spot, rook_patterns)
     case "queen": SearchSuccessors(spot, queen_patterns)
   }
-
   CheckOppCastling(spot)
-;  snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
-
   creds.h_color := hybrid_color
   return hybrid_color
 }

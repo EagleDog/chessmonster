@@ -21,12 +21,11 @@ PollOpp() {
   paused := false
   n := 0
   loop {
-  sleep % move_delay
+  ( move_num != 1 ) ? sleep %move_delay%
     n += 1
     opp_move := PollZones()
     if opp_move {
       n := 0
-      ; PostCreds()
       RunUCI()
     }
     if ( n >= 4 ) {
@@ -41,20 +40,25 @@ PollOpp() {
   }
 }
 
-PollZones() { ; looks for opp_move
+PollZones() { ; looks for opp move
+  if ( my_color == "black" ) {
+    which_zone := 8
+  } else {
+    which_zone := 4
+  }
   loop 8 {
+    paused ? break
+    ; if (paused == true) {
+    ;   break
+    ; }
     DidGameEnd()
     zone := zones[which_zone]
-    ; opp_move := PollZone(zone)
     if PollZone(zone) {
       return true
     }
     which_zone += 1
     if ( which_zone > zones.count() ) {
       which_zone := 1
-    }
-    if (paused == true) {
-      break
     }
   }
 }
@@ -80,6 +84,7 @@ PollZone(zone) { ; true if opp moved. Bug fixed. Working well.
 }
 
 CheckOppCaptures() {
+  LogField5("")
   LogField6("")
   if ( creds["prev_color"] == my_color ) {
     captured_piece := creds["prev_piece"]
@@ -89,9 +94,10 @@ CheckOppCaptures() {
     captured_piece := creds["prev_assoc_piece"]
     piece := creds["assoc_piece"]
     LogField4(piece " took "captured_piece)
-  } else {
-    LogField4("")
   }
+  ; } else {
+  ;   LogField4("")
+  ; }
 }
 
 PollPieces() {

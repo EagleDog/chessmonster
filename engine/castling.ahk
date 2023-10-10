@@ -13,27 +13,21 @@ global en_passant := "-"
 global half_moves := 0
 global captures := false
 
-CheckOppEnPassant(spot) {
-  file := SubStr(spot, 1, 1)
-  row := SubStr(spot, 2, 1)
-  piece := positions[spot].piece
-  color := positions[spot].color
-  if ( ( row == 4 ) or ( row == 5 ) ) {
-    if ( row == 4 ) {
-      ant_row := 2
-    } else {
-      ant_row := 7
-    }
-    ant_spot := file . ant_row
-    ant_piece := snapshots[move_num][ant_spot].piece
-    ant_color := snapshots[move_num][ant_spot].color
-    if ( ( ant_piece == "pawn" ) and ( ant_color == color ) ) {
-      GoSpot(spot)
-      LogField4("passant-able")
-      en_passant := spot
-    } else {
-      en_passant := "-"
-    }
+
+CheckOppEnPassant(source, target) {
+  source_row := SubStr(source, 2, 1)
+  target_row := SubStr(target, 2, 1)
+  file := SubStr(target, 1, 1)
+  if ( ( source_row == 2 ) and ( target_row == 4 ) ) {
+    LogField4("enpassantable")
+    passed_square := file . 3
+    en_passant := passed_square
+  } else if ( ( source_row == 7 ) and ( target_row == 5 ) ) {
+    LogField4("enpassantable")
+    passed_square := file . 6
+    en_passant := passed_square
+  } else {
+    en_passant := "-"
   }
   UpdateCastleRightsAll()
 }
@@ -48,10 +42,14 @@ CheckMyEnPassant(bestmove) {
   if ( piece == "pawn") {
     ResetHalfMoves()
     if ( ( my_color == "black" )
-    and ( row2 == 5 ) and ( row1 == 7) )
-    or ( ( my_color == "white" ) and ( piece == "pawn" )
+    and ( row2 == 5 ) and ( row1 == 7) ) {
+      LogField6("enpassantable")
+      passed_square := file2 . 6
+      en_passant := passed_square
+    } else if ( ( my_color == "white" ) and ( piece == "pawn" )
     and ( row2 == 4 ) and ( row1 == 2) ) {
-      LogField4("passant-able")
+      LogField6("enpassantable")
+      passed_square := file2 . 3
       en_passant := spot
     } else {
       en_passant := "-"
@@ -85,7 +83,7 @@ ResetEnPassant() {
   en_passant := "-"
 }
 
-CheckMyCastling(bestmove) { ; also check if piece is king?
+CheckMyCastling(bestmove) {
   if ( ( bestmove == "e8g8" )
   or   ( bestmove == "e8c8" ) ) {
     SearchCastleZoneBlack()
@@ -185,6 +183,30 @@ DidCastlersMove() {
   UpdateCastleRightsAll()
 }
 
+; CheckOppEnPassantOld(spot) {
+;   file := SubStr(spot, 1, 1)
+;   row := SubStr(spot, 2, 1)
+;   piece := positions[spot].piece
+;   color := positions[spot].color
+;   if ( ( row == 4 ) or ( row == 5 ) ) {
+;     if ( row == 4 ) {
+;       ant_row := 2
+;     } else {
+;       ant_row := 7
+;     }
+;     ant_spot := file . ant_row
+;     ant_piece := snapshots[move_num][ant_spot].piece
+;     ant_color := snapshots[move_num][ant_spot].color
+;     if ( ( ant_piece == "pawn" ) and ( ant_color == color ) ) {
+;       GoSpot(spot)
+;       LogField4("passant-able")
+;       en_passant := spot
+;     } else {
+;       en_passant := "-"
+;     }
+;   }
+;   UpdateCastleRightsAll()
+; }
 
 ; CastleRights1() {  ; white king
 ;   if ( c_rights_1 == "K" ) {
