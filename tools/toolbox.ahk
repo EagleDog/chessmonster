@@ -69,7 +69,6 @@ ShowGui(){
   ActivateChess()
 }
 
-
 Print(outout_text) {
   fileappend % output_text " ", *
 }

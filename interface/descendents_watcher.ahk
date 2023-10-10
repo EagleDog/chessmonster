@@ -97,12 +97,14 @@ OppSpotToSpot() {
   if ( creds["piece"] == "empty" ) {
     source := creds["spot"]
     target := creds["assoc_spot"]
+    piece := creds["assoc_piece"]
   } else {
     source := creds["assoc_spot"]
     target := creds["spot"]
+    piece := creds["piece"]
   }
   LogField5("")
-  LogField3("opp moved " source " to " target)
+  LogField3(piece " " source " to " target)
 }
 
 OutOfBoundsCheck(col, row) {

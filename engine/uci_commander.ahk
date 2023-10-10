@@ -60,9 +60,10 @@ SendMoveToGUI(bestmoves) {        ; move piece
   LogField4("")
   my_capture := CheckMyCaptures(bestmoves)
   MovePiece(bestmoves[1], bestmoves[2])
-  LogField5("we moved " bestmoves[1] " to " bestmoves[2])
+  piece := positions[bestmoves[2]].piece
+  LogField5(piece " " bestmoves[1] " to " bestmoves[2])
   if my_capture {
-    LogField6("we captured " my_capture)
+    LogField6(piece " took " my_capture)
   }
   fileappend % "move " bestmoves[1] " to " bestmoves[2] " sent to gui", *
 }

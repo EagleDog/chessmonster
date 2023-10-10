@@ -83,10 +83,12 @@ CheckOppCaptures() {
   LogField6("")
   if ( creds["prev_color"] == my_color ) {
     captured_piece := creds["prev_piece"]
-    LogField4("opp captured "captured_piece)
+    piece := creds["piece"]
+    LogField4(piece " took "captured_piece)
   } else if ( creds["prev_assoc_color"] == my_color ) {
     captured_piece := creds["prev_assoc_piece"]
-    LogField4("opp captured "captured_piece)
+    piece := creds["assoc_piece"]
+    LogField4(piece " took "captured_piece)
   } else {
     LogField4("")
   }

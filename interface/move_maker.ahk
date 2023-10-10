@@ -136,7 +136,6 @@ ResetMoves() {
 
 IncreaseMoveNum() {
   move_num += 1
-  half_moves += 1
   LogMoves(move_num)
   UpdateSnapshots()
 }
