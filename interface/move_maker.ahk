@@ -14,12 +14,14 @@
 global fail := false
 
 MovePiece(spot, target) {
-;  LogField5("my move " spot " to " target)
   fail := MoveAndFailCheck(spot, target)
-  if !fail {
-    IncreaseMoveNum()   ; <== UpdateSnapshots() included
-  } else {
+  if fail {
     UpdateSnapshots()
+  } else {
+    PromotePawn(old_spot, piece, target)   ; <== PromotePawn(spot,piece,target)
+    UndoPreMove(old_spot, target)
+    UpdateHalfMoves(spot)
+    IncreaseMoveNum()   ; <== UpdateSnapshots() included
   }
 }
 
@@ -40,9 +42,7 @@ MoveAndFailCheck(old_spot, target) { ; Pawn Promotion too!
     ; MsgBox, , % "FAIL", % "FAIL", % 0.5
     fail := true
   } else {
-    PromotePawn(old_spot, piece, target)   ; <== PromotePawn(spot,piece,target)
     fail := false
-    UndoPreMove(old_spot, target)
   }
   return fail
 }

@@ -36,11 +36,16 @@ RematchSequence(timeout=10000) {
 
 RematchLive(timeout=10000, refreshed=false) {
   ClearLogFields()
+  LogField2("rematch live")
   MoveGui2()
   ClickEmpty()
   ShowTimeoutTimer(timeout)
-  ; Beep()
-  sleep 500
+  Beep()
+  sleep 100
+  gui hide
+  sleep 50
+  gui show
+  sleep 100
   if refreshed {
     ButtonA()
   } else {
@@ -63,6 +68,7 @@ FailSafe() {
 
 RematchComputer(timeout=10000) {
   ClearLogFields()
+  LogField2("rematch cpu")
   MoveGui2()
   ClickEmpty()
   ShowTimeoutTimer(timeout)
@@ -75,7 +81,12 @@ RematchComputer(timeout=10000) {
   sleep 400
   YesButton()   ; move click Yes
   sleep 800
-  Beep()
+  ; Beep()
+  ; sleep 100
+  ; gui hide
+  ; sleep 50
+  ; gui show
+  ; sleep 100
   ButtonA()     ; move click A
   sleep 50
   ClickEmpty()  ; click empty space (hide remaining browser dialogs)

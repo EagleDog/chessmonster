@@ -11,7 +11,7 @@
 
 
 
-gui add, Text, w280 h0 center 
+gui add, Text, w280 h0 center,
 GuiAddBorder("Black", 10, "0 0 w400 h80")
 gui font, s14 w1000, Courier New
 gui add, Text, xp-40 yp-5 wp hp Center +0x0200 BackgroundTrans, CHESSMONSTER ; 0x0200 centers single-line text vertically
@@ -100,13 +100,6 @@ LogCastle(castle_text) {
 }
 LogMyColor(my_color_text) {
   GuiControl,, my_color_field, % my_color_text
-}
-
-HideGui() {
-  gui hide
-}
-ShowGui(){
-  gui show
 }
 
 MoveGui1() {

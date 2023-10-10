@@ -13,12 +13,10 @@ RandMoveTime(){
 }
 
 CheckMyCaptures(bestmoves) {
-  LogField4("")
   if ( positions[bestmoves[2]].color == opp_color ) {
     my_capture := positions[bestmoves[2]].piece
-    LogField6("we captured " my_capture)
-  } else {
-    LogField6("")
+    captures := true
+    return my_capture
   }
 }
 

@@ -9,7 +9,7 @@ Move_MsgBox(P) {
     Process, Exist
     DetectHiddenWindows, % (Setting_A_DetectHiddenWindows := A_DetectHiddenWindows) ? "On" :
     if WinExist("ahk_class #32770 ahk_pid " ErrorLevel)
-      WinMove, 800, 300
+      WinMove, 500, 200
 ;      WinMove, , , 800, 300, 300, 500
     DetectHiddenWindows, %Setting_A_DetectHiddenWindows%
   }
@@ -59,6 +59,16 @@ Beep() {
   SoundBeep, 448, 600 ; [ Freq, Duration]
   sleep 500
 }
+
+HideGui() {
+  gui hide
+  ActivateChess()
+}
+ShowGui(){
+  gui show
+  ActivateChess()
+}
+
 
 Print(outout_text) {
   fileappend % output_text " ", *

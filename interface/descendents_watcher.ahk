@@ -46,9 +46,7 @@ AssignMovePatterns(spot, prev_piece) {
 }
 
 SearchSuccessors(spot, move_patterns) {
-
-  GetSpotCreds(spot)
-
+  GetSpotCreds(spot)    ; CREDENTIALS
   position := positions[spot]
   spot_col := position.col
   spot_row := position.row
@@ -67,15 +65,8 @@ SearchSuccessors(spot, move_patterns) {
         spot := file . rank
         GoSpot(spot)
         color := SqStat(spot)
-  ; ____CHECK CREDENTIALS____
         if DidSquareChange(spot, color) {
-
-          GetAssocCreds(spot)
-
-          ; creds.assoc_spot := spot
-          ; creds.assoc_color := color
-          ; FindPrevAssoc(spot)
-;          snapshots[move_num][spot] := positions[spot].Clone() ; non-redundant
+          GetAssocCreds(spot)       ; CREDENTIALS
         }
         if ( color == opp_color ) {
           break

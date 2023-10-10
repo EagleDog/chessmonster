@@ -11,6 +11,7 @@ global c_rights_all := "KQkq"
 
 global en_passant := "-"
 global half_moves := 0
+global captures := false
 
 CheckOppEnPassant(spot) {
   file := SubStr(spot, 1, 1)
@@ -33,6 +34,7 @@ CheckOppEnPassant(spot) {
 
     if ( ( ant_piece == "pawn" ) and ( ant_color == color ) ) {
       GoSpot(spot)
+      LogField4("passant-able")
       msgbox, , en passant, % "en passant: " spot, 0.5
                        ; . "`n" "ant_piece: " ant_piece
                        ; . "`n" "ant_color: " ant_color, 1
@@ -44,7 +46,7 @@ CheckOppEnPassant(spot) {
       en_passant := "-"
     }
   }
-
+  UpdateCastleRightsAll()
   ; } else {
   ;   IncreaseHalfMoves()
   ;   en_passant := "-"
@@ -61,23 +63,33 @@ CheckMyEnPassant(bestmove) {
   if ( piece == "pawn") {
     ResetHalfMoves()
     if ( ( my_color == "black" )
-    and ( row2 == 5 ) and ( row1 == 7) ) {
-      ; msgbox, , en passant, % "en passant: " spot, 1
-      ResetHalfMoves()
-      en_passant := spot
-    } else if ( ( my_color == "white" ) and ( piece == "pawn" )
+    and ( row2 == 5 ) and ( row1 == 7) )
+    or ( ( my_color == "white" ) and ( piece == "pawn" )
     and ( row2 == 4 ) and ( row1 == 2) ) {
+      LogField4("passant-able")
       ; msgbox, , en passant, % "en passant: " spot, 1
-      ResetHalfMoves()
+      ; ResetHalfMoves()
       en_passant := spot
     } else {
-      IncreaseHalfMoves()
+      ; IncreaseHalfMoves()
       en_passant := "-"
     }
   } else {
-    IncreaseHalfMoves()
+    ; IncreaseHalfMoves()
     en_passant := "-"
   }
+  UpdateCastleRightsAll()
+}
+
+UpdateHalfMoves(spot) {
+  if ( positions[spot].piece == "pawn" ) 
+  or ( captures == true ) {
+    ResetHalfMoves()
+    captures := false
+  } else {
+    IncreaseHalfMoves()
+  }
+  UpdateCastleRightsAll()
 }
 
 ResetHalfMoves() {

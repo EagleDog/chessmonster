@@ -70,9 +70,8 @@ PollZone(zone) { ; true if opp moved. Bug fixed. Working well.
       hybrid_color := CheckAntecedents(spot)   ; CheckAntecents(spot)
       if ( hybrid_color == opp_color ) {
         OppSpotToSpot()
-        ; LogField5("")
-        ; LogField3("opp moved " creds["spot"] " " creds["assoc_spot"])
         CheckOppCaptures()
+        UpdateHalfMoves(spot)
         return true
       }
     }
