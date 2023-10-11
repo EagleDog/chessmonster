@@ -18,8 +18,8 @@ MovePiece(spot, target) {
   if fail {
     UpdateSnapshots()
   } else {
-    PromotePawn(old_spot, piece, target)   ; <== PromotePawn(spot,piece,target)
-    UndoPreMove(old_spot, target)
+    PromotePawn(spot, piece, target)   ; <== PromotePawn(spot,piece,target)
+    UndoPreMove(spot, target)
     UpdateHalfMoves(spot)
     IncreaseMoveNum()   ; <== UpdateSnapshots() included
   }
@@ -47,11 +47,11 @@ MoveAndFailCheck(old_spot, target) { ; Pawn Promotion too!
   return fail
 }
 
-redtest(){
+RedTest(){
   red1 := 0x4361B5
   red2 := 0x7F8BEE
-  x1 := 440
-  y1 := 410
+  x1 := 140
+  y1 := 250
   x2 := x1 + 3
   y2 := y1 - 3
   if ( CheckColorCoords(x1, y1, x2, y2, red1)
@@ -107,7 +107,7 @@ PromotePawn(old_spot, piece, target) {
 }
 
 MoveMouse(x, y, speed=0) {
-  mousemove x, y, speed
+  ; mousemove x, y, speed
 }
 GoSpot(spot) {
   MoveMouse(board[spot].x, board[spot].y)

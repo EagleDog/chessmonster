@@ -21,14 +21,16 @@ PollOpp() {
   paused := false
   n := 0
   loop {
-  ( move_num != 1 ) ? sleep %move_delay%
+    if ( move_num != 1 ) {
+      DelayMove()
+    }
     n += 1
     opp_move := PollZones()
     if opp_move {
       n := 0
       RunUCI()
     }
-    if ( n >= 4 ) {
+    if ( n >= 5 ) {
       n := 0
       ; msgbox, , loop ended, loop ended, 0.4
       PollPieces()

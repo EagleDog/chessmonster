@@ -19,8 +19,8 @@ global paused := false
 
 global move_num := 1
 
-global elo := 2000
-global move_delay := 1800
+global elo := 300
+; global move_delay := 2800
 
 #Include includer.ahk
 
@@ -52,7 +52,7 @@ NewGame() {
   ResetSnapshots()
   NewGameUCI()
   ClearLogFields()
-  sleep 1000
+  sleep 500
   GetMyColor()
   ; FailSafe()
   StartGame()
@@ -115,7 +115,10 @@ ExitChessMonster() {
 
 
 c::ColorTest()
-g::msgbox % SqStat("e2")
+^c::RedTest()
+g::GetMyColor()
+
+; g::msgbox % SqStat("e2")
 
 
 ;5::CheckPawnSize()
@@ -127,7 +130,7 @@ g::msgbox % SqStat("e2")
 ^2::GoLoop()
 ^3::MoveGui3()
 
-r::RematchSequence(10)
+r::RematchSequence(3000)
 
 m::DriftMouse()
 q::MoveGui1()

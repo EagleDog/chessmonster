@@ -40,18 +40,20 @@ RematchLive(timeout=10000, refreshed=false) {
   MoveGui2()
   ClickEmpty()
   ShowTimeoutTimer(timeout)
-  Beep()
-  sleep 100
-  gui hide
-  sleep 50
-  gui show
-  sleep 100
+  ; Beep()
+  ; sleep 100
+  ; gui hide
+  ; sleep 50
+  ; gui show
+  ; sleep 100
   if refreshed {
     ButtonA()
   } else {
-    ButtonB()     ; move click B
+    ButtonB()
+    sleep 100
+    ButtonB()
   }
-  sleep 100
+  sleep 500
   MoveGui1()
   NewGame()
 }
