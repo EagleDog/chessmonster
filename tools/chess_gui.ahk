@@ -101,7 +101,7 @@ MoveGui1() {
   sleep 15
   gui show, x901 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
-  gui show, x851 y106 w660 h680, chessmonster info, NoActivate
+  gui show, x885 y106 w660 h680, chessmonster info, NoActivate
   sleep 15
   ActivateChess()
 }
@@ -148,27 +148,27 @@ ShakeGui() {
   sleep 5
   Gui, Show, x867 y108 w660 h680, chessmonster info, NoActivate
   sleep 5
-  gui show, x851 y106 w660 h680, chessmonster info, NoActivate
+  gui show, x877 y106 w660 h680, chessmonster info, NoActivate
   sleep 50
 }
 ZoomGui() {
-  gui show, x980 y500 w150 h200, chessmonster info, NoActivate
+  gui show, x1000 y500 w150 h200, chessmonster info, NoActivate
   sleep 10
-  gui show, x945 y450 w200 h250, chessmonster info, NoActivate
+  gui show, x960 y450 w200 h250, chessmonster info, NoActivate
   sleep 10
-  gui show, x910 y400 w250 h300, chessmonster info, NoActivate
+  gui show, x930 y400 w250 h300, chessmonster info, NoActivate
   sleep 10
-  gui show, x888 y350 w300 h350, chessmonster info, NoActivate
+  gui show, x915 y350 w300 h350, chessmonster info, NoActivate
   sleep 10
-  gui show, x875 y300 w350 h400, chessmonster info, NoActivate
+  gui show, x905 y300 w350 h400, chessmonster info, NoActivate
   sleep 10
-  gui show, x865 y250 w400 h450, chessmonster info, NoActivate
+  gui show, x900 y250 w400 h450, chessmonster info, NoActivate
   sleep 10
-  gui show, x860 y200 w450 h500, chessmonster info, NoActivate
+  gui show, x895 y200 w450 h500, chessmonster info, NoActivate
   sleep 10
-  gui show, x855 y150 w550 h600, chessmonster info, NoActivate
+  gui show, x890 y150 w550 h600, chessmonster info, NoActivate
   sleep 10
-  gui show, x851 y106 w660 h680, chessmonster info, NoActivate
+  gui show, x885 y106 w660 h680, chessmonster info, NoActivate
 }
 ZoomGui2() {
   gui show, x1080 y140 w255 h510, chessmonster info, NoActivate

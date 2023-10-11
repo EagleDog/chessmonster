@@ -37,8 +37,10 @@ RunUCI() {
   SendFenToUCI(fen)
   GetReady()
    move_time := RandMoveTime()
-  CalculateMove(move_time)   ; go movetime 500  ; ActivateChess()
-   sleep % move_time + 50
+  FindMove()   ; go movetime 500  ; ActivateChess()
+  ; CalculateMove(move_time)   ; go movetime 500  ; ActivateChess()
+   sleep 50
+   ; sleep % move_time + 50
    bestmove := GetBestMove()
    bestmoves := ParseBestMove(bestmove)
   ActivateChess()
@@ -101,7 +103,9 @@ ReceiveFromUCI() {
 }
 
 NewGameUCI() {
+  SendToUCI("uci")
   SendToUCI("ucinewgame")
+  AdjustElo()
 }
 
 StartPos() {
@@ -110,6 +114,10 @@ StartPos() {
 
 CalculateMove(movetime) {
   SendToUCI("go movetime " movetime)
+}
+
+FindMove() {
+  SendToUCI("go depth 1")
 }
 
 StopThinking() {

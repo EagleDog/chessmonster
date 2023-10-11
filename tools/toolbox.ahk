@@ -16,8 +16,8 @@ Move_MsgBox(P) {
 }
 
 DelayMove() {
-  random delay, 500, 7500
-  ; delay := 500 + extra_delay
+  random extra_delay, 1000, move_delay_max
+  delay := 1000 + extra_delay
   while ( delay > -0.4 ) {
     LogField1("delay " Floor(delay/1000))
     sleep, 1000

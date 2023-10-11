@@ -3,13 +3,14 @@
 ;
 
 AdjustElo() {
-  SendToUCI("setoption name UCI_LimitStrength value true")
-  SendToUCI("setoption name UCI_Elo value " elo)
+  ; SendToUCI("setoption name UCI_LimitStrength value true")
+  ; SendToUCI("setoption name UCI_Elo value " elo)
+  SendToUCI("setoption name Skill Level value " skill_level)
 }
 
 RandMoveTime(){
-  random rand_move_time, 100, 300
-  return rand_move_time
+  random rand_move_time, 50, 150
+  return 5
 }
 
 CheckMyCaptures(bestmoves) {
