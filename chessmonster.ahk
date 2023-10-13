@@ -22,7 +22,7 @@ global move_num := 1
 global elo := 250
 global skill_level := 0
 global move_delay_max := 8500
-
+global move_delay := 1000
 #Include includer.ahk
 
 MainSequence()
@@ -102,15 +102,23 @@ ExitChessMonster() {
 1::StartGame(false)
 ^1::StartGame(true)
 ^+1::StartGame(true)
-;1::CheckBackField()
-;1::DidGameEnd()
-;2::StartGame()
 5::PollOpp()
-;2::PollOpp()
 3::RunUCI()
 
-4::SearchSuccessors("d4", rook_patterns)
+up::IncreaseMoveNum()
+down::DecreaseMoveNum()
+right::IncreaseMoveDelay()
+left::DecreaseMoveDelay()
+
+
+;1::CheckBackField()
+;1::DidGameEnd()
+;2::PollOpp()
+;2::StartGame()
 ; 4::SearchSuccessors("h8", rook_patterns)
+
+
+4::SearchSuccessors("d4", rook_patterns)
 
 8::UndoPremove("a1", "b1")
 
@@ -157,7 +165,5 @@ p::PauseMatch()
 
 o::OutputSnapshot()
 
-Up::IncreaseMoveNum()
-Down::DecreaseMoveNum()
 
 z::Beep()
