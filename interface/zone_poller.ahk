@@ -126,15 +126,15 @@ PollPieces() {
 }
 
 PollPiece(spot) {
-  GoSpot(spot)
   color := SqStat(spot)
+  GoSpot(spot)
   if DidSquareChange(spot, color) {
-;    msgbox, , square changed, change , 1 ;% "hybrid color: " hybrid_color
     hybrid_color := CheckAntecedents(spot) ; descendents too
     if ( hybrid_color = opp_color ) {
-      opp_move := true
-      ; CheckOppCastling(spot)
-      return opp_move
+      OppSpotToSpot()
+      CheckOppCaptures()
+      UpdateHalfMoves(spot)
+      return true
     }
   }
 }

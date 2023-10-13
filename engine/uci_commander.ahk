@@ -36,11 +36,14 @@ RunUCI() {
   fen := GetFenFromGUI()
   SendFenToUCI(fen)
   GetReady()
-   move_time := RandMoveTime()
-  FindMove()   ; go movetime 500  ; ActivateChess()
-  ; CalculateMove(move_time)   ; go movetime 500  ; ActivateChess()
-   sleep 50
-   ; sleep % move_time + 50
+  if ( skill_level == 0 ) {
+    FindMove()
+    sleep 50
+  } else {
+    move_time := RandMoveTime()
+    CalculateMove(move_time)   ; go movetime 500  ; ActivateChess()
+    sleep % move_time + 50
+  }
    bestmove := GetBestMove()
    bestmoves := ParseBestMove(bestmove)
   ActivateChess()
@@ -48,6 +51,15 @@ RunUCI() {
   SendMoveToGUI(bestmoves)
   CheckMyEnPassant(bestmove)
   CheckMyCastling(bestmove)
+}
+
+CalculateMove(movetime) {
+  SendToUCI("go movetime " movetime)
+}
+
+FindMove() {
+  SendToUCI("go depth 1")
+  UpdateFishlog()
 }
 
 GetBestMove() {
@@ -58,12 +70,16 @@ GetBestMove() {
 }
 
 SendMoveToGUI(bestmoves) {        ; move piece
+  spot := bestmoves[1]
+  target := bestmoves[2]
   LogOpp1("")
   LogOpp2("")
   my_capture := CheckMyCaptures(bestmoves)
-  MovePiece(bestmoves[1], bestmoves[2])
-  piece := positions[bestmoves[2]].piece
-  LogMine1(piece " " bestmoves[1] " to " bestmoves[2])
+  MovePiece(spot, target)
+  piece := positions[target].piece
+  ; PromotePawn(spot, piece, target) ; <== PromotePawn(spot,piece,target)
+  LogMine1(piece " " target)
+  ; LogMine1(piece " " spot " to " target)
   if my_capture {
     LogMine2(piece " took " my_capture)
   }
@@ -110,14 +126,6 @@ NewGameUCI() {
 
 StartPos() {
   SendToUCI("position startpos")
-}
-
-CalculateMove(movetime) {
-  SendToUCI("go movetime " movetime)
-}
-
-FindMove() {
-  SendToUCI("go depth 1")
 }
 
 StopThinking() {

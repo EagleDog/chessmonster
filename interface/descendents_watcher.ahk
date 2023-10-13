@@ -102,7 +102,10 @@ OppSpotToSpot() {
     piece := creds["piece"]
   }
   LogMine1("")
-  LogOpp1(piece " " source " to " target)
+  LogOpp1(piece " " target)
+  ; LogOpp1(piece " " source " to " target)
+  ; msgbox % piece " " target
+
   if ( piece == "pawn" ) {
     CheckOppEnPassant(source, target)
   } else {

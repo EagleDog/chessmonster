@@ -19,12 +19,14 @@ global paused := false
 
 global move_num := 1
 
-global elo := 250
-global skill_level := 0
-global move_delay_max := 0  ; 0 for off
+; ________GLOBAL_SETTINGS________
+global skill_level := 0 ;"off" ;0 ; "off" for off
+global elo := "off" ; 1300 ;"off" ;1300 ; "off" for off
+global move_delay_max := "off" ;8500  ; "off" for off
 global move_delay := 1000
 
 global polling := "pieces"  ; "zones"
+global mouse_moves_visible := false
 
 #Include includer.ahk
 

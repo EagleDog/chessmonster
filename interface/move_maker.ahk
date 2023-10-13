@@ -18,7 +18,7 @@ MovePiece(spot, target) {
   if fail {
     UpdateSnapshots()
   } else {
-    PromotePawn(spot, piece, target)   ; <== PromotePawn(spot,piece,target)
+    ; PromotePawn(spot, piece, target)   ; <== PromotePawn(spot,piece,target)
     UndoPreMove(spot, target)
     UpdateHalfMoves(spot)
     IncreaseMoveNum()   ; <== UpdateSnapshots() included
@@ -39,10 +39,12 @@ MoveAndFailCheck(old_spot, target) { ; Pawn Promotion too!
   sleep 50
   ID1 := positions[old_spot].piece  ; msgbox % target " ID2: " ID2 "  " spot " ID1: " ID1
   if ( ID2 == ID1 ) {  ; <=== fail check
+    MsgBox FAIL
     ; MsgBox, , % "FAIL", % "FAIL", % 0.5
     fail := true
   } else {
     fail := false
+    PromotePawn(old_spot, piece, target) ; <== PromotePawn(spot,piece,target)
   }
   return fail
 }
@@ -98,7 +100,8 @@ ClickDrag(spot, target) {  ; L-Left b-board 2-Speed 0-100
 PromotePawn(old_spot, piece, target) {
   if ( (my_color == "white") and (piece == "pawn") and (target contains 8) ) 
   or ( (my_color == "black") and (piece == "pawn") and (target contains 1) ) {
-    GoSpot(target), sleep 50
+    GoSpot(target)
+    sleep 50
     mouseclick Left    ;  Promotion  choose queen
     sleep 50
     UpdatePosition(old_spot)
@@ -107,7 +110,8 @@ PromotePawn(old_spot, piece, target) {
 }
 
 MoveMouse(x, y, speed=0) {
-  mousemove x, y, speed
+  if mouse_moves_visible
+    mousemove x, y, speed
 }
 GoSpot(spot) {
   MoveMouse(board[spot].x, board[spot].y)

@@ -73,7 +73,7 @@ OutputPositions() {
 ;-------------------------------------------------------
 ;                                          GET POSITIONS
 GetPositions(speed="fast") {
-  LogField5("get positions.....")
+  LogField2("get positions.....")
   GetMyColor()
   piece := ""
   color := ""
@@ -98,7 +98,7 @@ GetPositions(speed="fast") {
     }
   }
   UpdateSnapshots()
-  LogField5("positions updated")
+  LogField2("ready")
   OutputPositions()
 }
 ;
@@ -143,6 +143,7 @@ LogField4("get starting positions...")
   OutputPositions()
   LogField2("ready")
   LogField4("1 to start")
+  LogField5("r for rematch")
 }
 
 GenericColumnsLoop(row, color, abbrs) {

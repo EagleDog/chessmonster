@@ -16,7 +16,7 @@ Move_MsgBox(P) {
 }
 
 DelayMove() {
-  if ( move_delay_max == 0 ) {
+  if ( move_delay_max == "off" ) {
     return
   } else {
     random extra_delay, 1000, move_delay_max
