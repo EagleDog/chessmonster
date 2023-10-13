@@ -21,11 +21,20 @@ PollOpp() {
   paused := false
   n := 0
   loop {
+
     if ( move_num != 1 ) {
       DelayMove()
     }
     n += 1
-    opp_move := PollZones()
+    LogField1(n)
+    if ( paused == true ) {
+      return
+    }
+    if ( polling == "pieces" ) {
+      opp_move := PollPieces()
+    } else {
+      opp_move := PollZones()
+    }
     if opp_move {
       n := 0
       RunUCI()
@@ -34,10 +43,8 @@ PollOpp() {
       n := 0
       ; msgbox, , loop ended, loop ended, 0.4
       PollPieces()
+      PollZones()
       RunUCI()
-    }
-    if ( paused == true ) {
-      return
     }
   }
 }

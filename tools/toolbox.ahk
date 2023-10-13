@@ -16,13 +16,17 @@ Move_MsgBox(P) {
 }
 
 DelayMove() {
-  random extra_delay, 1000, move_delay_max
-  move_delay := 1000 + extra_delay
-  LogField1("delay " Floor(move_delay/1000))
-  while ( move_delay > -0.4 ) {
-    sleep, 1000
-    DecreaseMoveDelay()
-    ; move_delay := move_delay - 1000
+  if ( move_delay_max == 0 ) {
+    return
+  } else {
+    random extra_delay, 1000, move_delay_max
+    move_delay := 1000 + extra_delay
+    LogField1("delay " Floor(move_delay/1000))
+    while ( move_delay > -0.4 ) {
+      sleep, 1000
+      DecreaseMoveDelay()
+      ; move_delay := move_delay - 1000
+    }
   }
 }
 

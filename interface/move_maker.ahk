@@ -107,7 +107,7 @@ PromotePawn(old_spot, piece, target) {
 }
 
 MoveMouse(x, y, speed=0) {
-  ; mousemove x, y, speed
+  mousemove x, y, speed
 }
 GoSpot(spot) {
   MoveMouse(board[spot].x, board[spot].y)

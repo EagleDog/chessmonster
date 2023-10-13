@@ -21,8 +21,11 @@ global move_num := 1
 
 global elo := 250
 global skill_level := 0
-global move_delay_max := 8500
+global move_delay_max := 0  ; 0 for off
 global move_delay := 1000
+
+global polling := "pieces"  ; "zones"
+
 #Include includer.ahk
 
 MainSequence()
