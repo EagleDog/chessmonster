@@ -22,7 +22,8 @@ PollOpp() {
   n := 0
   loop {
 
-    if ( move_num != 1 ) {
+    if ( move_num > 2 ) {
+    ; if ( move_num != 1 ) {
       DelayMove()
     }
     n += 1
@@ -56,10 +57,9 @@ PollZones() { ; looks for opp move
     which_zone := 4
   }
   loop 8 {
-    paused ? break
-    ; if (paused == true) {
-    ;   break
-    ; }
+    if (paused == true) {
+      return false
+    }
     DidGameEnd()
     zone := zones[which_zone]
     if PollZone(zone) {
@@ -72,7 +72,7 @@ PollZones() { ; looks for opp move
   }
 }
 
-PollZone(zone) { ; true if opp moved. Bug fixed. Working well.
+PollZone(zone) { ; true if opp moved
   LogField1(which_zone )
   n := 1
   while zone[n] {

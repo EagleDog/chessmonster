@@ -58,15 +58,15 @@ RematchLive(timeout=10000, refreshed=false) {
   NewGame()
 }
 
-FailSafe() {
-  sleep 500
-    MovePiece("e2", "e4")
-    MovePiece("d7", "d6")
-  ; if ( my_color == "white") {
-  ;   MovePiece("e2", "e4")
-  ; }
-  GetMyColor()
-}
+; NewMatchFailSafe() {
+;   sleep 500
+;     MovePiece("e2", "e4")
+;     MovePiece("d7", "d6")
+;   ; if ( my_color == "white") {
+;   ;   MovePiece("e2", "e4")
+;   ; }
+;   GetMyColor()
+; }
 
 RematchComputer(timeout=10000) {
   ClearLogFields()

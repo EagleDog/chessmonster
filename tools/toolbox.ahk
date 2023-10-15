@@ -19,8 +19,8 @@ DelayMove() {
   if ( move_delay_max == "off" ) {
     return
   } else {
-    random extra_delay, 1000, move_delay_max
-    move_delay := 1000 + extra_delay
+    random extra_delay, 10, move_delay_max
+    move_delay := base_move_delay + extra_delay
     LogField1("delay " Floor(move_delay/1000))
     while ( move_delay > -0.4 ) {
       sleep, 1000
