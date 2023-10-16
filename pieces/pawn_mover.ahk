@@ -16,7 +16,10 @@ MovePawn(spot) {
   target := PawnAttack(diags)  ; diag attacks
   if target {
     return target
-  } else if (b[spot].rank = 2) {
+  } else if ( ( b[spot].rank = 2 )
+  and ( my_color == "white" ) )
+  or ( ( b[spot].rank = 7 ) 
+  and ( my_color == "black" ) ) {
     target := MovePawn2(spot) 
     if target {
       return target
@@ -46,8 +49,13 @@ PawnAttack(diags) {  ; Diagonal Attack
 
 MovePawn2(spot) {  ; Forward Two Squares
   file := b[spot].file  ; b-board
-  t_rank_1 := b[spot].rank + 1  ; t-target
-  t_rank_2 := b[spot].rank + 2
+  if ( my_color == "black" ) {
+    t_rank_1 := b[spot].rank - 1  ; t-target
+    t_rank_2 := b[spot].rank - 2
+  } else {
+    t_rank_1 := b[spot].rank + 1  ; t-target
+    t_rank_2 := b[spot].rank + 2
+  }
   target_1 := "" . file . t_rank_1 . ""
   target_2 := "" . file . t_rank_2 . ""
   t1_stat := SqStat(target_1)  ;SqStat()--SquareStatus()
@@ -74,7 +82,11 @@ MovePawn2(spot) {  ; Forward Two Squares
 
 MovePawn3(spot) {  ; Forward One Square
   file := b[spot].file
-  t_rank := b[spot].rank + 1
+  if ( my_color == "black" ) {
+    t_rank := b[spot].rank - 1
+  } else {
+    t_rank := b[spot].rank + 1
+  }
   target := "" . file . t_rank . ""
 ;  MsgBox, %target%
   if SqStat(target) = "empty" {
@@ -88,19 +100,28 @@ MovePawn3(spot) {  ; Forward One Square
 FindDiags(spot) {
   rank := board[spot].rank
   col := board[spot].col
+  if ( my_color == "black" ) {
+    diag_1_rank := rank - 1
+    diag_1_col := col - 1
+    diag_1_file := Chr(96 + diag_1_col)
+    diag_1_spot := "" . diag_1_file . diag_1_rank . ""
 
-  diag_1_rank := rank + 1
-  diag_1_col := col - 1
-  diag_1_file := Chr(96 + diag_1_col)
-  diag_1_spot := "" . diag_1_file . diag_1_rank . ""
+    diag_2_rank := rank - 1
+    diag_2_col := col + 1
+    diag_2_file := Chr(96 + diag_2_col)
+    diag_2_spot := "" . diag_2_file . diag_2_rank . ""
+  } else {
+    diag_1_rank := rank + 1
+    diag_1_col := col - 1
+    diag_1_file := Chr(96 + diag_1_col)
+    diag_1_spot := "" . diag_1_file . diag_1_rank . ""
 
-  diag_2_rank := rank + 1
-  diag_2_col := col + 1
-  diag_2_file := Chr(96 + diag_2_col)
-  diag_2_spot := "" . diag_2_file . diag_2_rank . ""
-
+    diag_2_rank := rank + 1
+    diag_2_col := col + 1
+    diag_2_file := Chr(96 + diag_2_col)
+    diag_2_spot := "" . diag_2_file . diag_2_rank . ""
+  }
 ;  MsgBox, % "diag_1: " . diag_1_spot . "  diag_2: " . diag_2_spot . ""
-
   return [diag_1_spot, diag_2_spot]
 }
 

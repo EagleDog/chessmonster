@@ -22,10 +22,11 @@ global move_num := 1
 ; ________GLOBAL_SETTINGS________
 global skill_level := 0 ;"off" ;0 ; "off" for off
 global elo := "off" ; 1300 ;"off" ;1300 ; "off" for off
-global move_delay_max := 7500 ;"off" ;8500  ; "off" for off
+global move_delay_max := 4500 ;"off" ;8500  ; "off" for off
 global base_move_delay := 100
 global move_delay
-
+global delay := true
+global blunder_rate := 8
 global polling := "zones" ;"pieces"  ;"zones"
 global mouse_moves_visible := false
 

@@ -29,6 +29,10 @@ StartEngine() {
 }
 
 RunUCI() {
+  blunder := Blunderize()
+  if blunder {
+    return
+  }
   if not WinExist("ahk_exe stockfish.exe") {
     StartEngine()
   }
@@ -51,6 +55,7 @@ RunUCI() {
   SendMoveToGUI(bestmoves)
   CheckMyEnPassant(bestmove)
   CheckMyCastling(bestmove)
+  delay := true
 }
 
 CalculateMove(movetime) {

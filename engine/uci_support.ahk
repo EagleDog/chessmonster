@@ -29,3 +29,9 @@ Fishlog(log_text) {
   fileappend % log_text, % fishlog
 }
 
+Blunderize() {
+  if RandomChoice(blunder_rate) {
+    BlunderMove()
+    return true
+  }
+}

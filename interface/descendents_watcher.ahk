@@ -101,7 +101,9 @@ OppSpotToSpot() {
     target := creds["spot"]
     piece := creds["piece"]
   }
+  LogField2("")
   LogMine1("")
+  LogMine2("")
   LogOpp1(piece " " target)
   ; LogOpp1(piece " " source " to " target)
   ; msgbox % piece " " target

@@ -15,10 +15,9 @@ Chill()
   ActivateChess()
   loop {
     UpdateSnapshots()  ; <== UpdateSnapshots()
+
     spot := ChooseSquare()
     spot_color := SqStat(spot)
-;    spot_color := UpdatePosition(spot)
-
     spot := FindMyGuys(spot, spot_color)    ; return spot   ( color = my_color )
 
     piece_type := positions[spot].piece  ;       <<============
@@ -40,8 +39,27 @@ Chill()
     }
   }
 }
-;
 ;------------------------------------------------------------------------
+
+BlunderMove() {
+  LogField2("blundering")
+  spot := ChooseSquare()
+  spot_color := SqStat(spot)
+  spot := FindMyGuys(spot, spot_color)
+  piece_type := positions[spot].piece
+  target := MoveWhichPiece(spot, piece_type)
+  MovePiece(spot, target)
+}
+
+FindMyGuys(spot, spot_color) {
+  while (spot_color != my_color) {   ; find my guys
+    spot := ChooseMySpots()
+    ; spot := ChooseSquare()
+    spot_color := SqStat(spot)
+    GoSpot(spot)
+  }
+  return spot
+}
 
 UseSpecificPiece() { ; for testing piece movements
   ; if ( (piece_type != "bishop") ) {
@@ -61,19 +79,8 @@ MoveWhichPiece(spot, piece_type) {
   return target
 }
 
-FindMyGuys(spot, spot_color) {
-  while (spot_color != my_color) {   ; find my guys
-    piece := positions[spot].piece
-    spot := ChooseSquare()
-    spot_color := SqStat(spot)
-;    spot_color := UpdatePosition(spot)
-    GoSpot(spot)
-  }
-  return spot
-}
-
 ChooseSquare() {
-  LogField2("ChooseSquare()")
+  ; LogField2("ChooseSquare()")
   if fail {    ; fail from move_maker.ahk
     fail := false
     spot := FailChoose()
@@ -81,7 +88,7 @@ ChooseSquare() {
     spot := ChooseMySpots()
   } else {
     spot := RandomSquare()
-    LogField2("ChooseSquare() " . spot . " rand square")
+    ; LogField2("ChooseSquare() " . spot . " rand square")
     Chill()
   }
   return spot
@@ -98,7 +105,7 @@ FailChoose() {
 }
 
 ChooseMySpots() {
-    LogField2( "ChooseMySpots()" )
+    ; LogField2( "ChooseMySpots()" )
     my_spots := GetMySpots()
     length_my_spots := my_spots.length()
     Random, spot_num, 1, length_my_spots

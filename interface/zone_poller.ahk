@@ -40,7 +40,7 @@ PollOpp() {
       n := 0
       RunUCI()
     }
-    if ( n >= 5 ) {
+    if ( n >= 3 ) {
       n := 0
       ; msgbox, , loop ended, loop ended, 0.4
       PollPieces()
@@ -70,6 +70,7 @@ PollZones() { ; looks for opp move
       which_zone := 1
     }
   }
+  delay := false
 }
 
 PollZone(zone) { ; true if opp moved
