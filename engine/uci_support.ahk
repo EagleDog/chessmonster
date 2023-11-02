@@ -30,8 +30,18 @@ Fishlog(log_text) {
 }
 
 Blunderize() {
-  if RandomChoice(blunder_rate) {
+  ; if RandomChoice(blunder_rate) {
+  if FilledBlunderGap() {
     BlunderMove()
     return true
+  }
+}
+
+FilledBlunderGap() {
+  if ( blunder_gap >= blunder_rate) {
+    blunder_gap := 0
+    return true
+  } else {
+    blunder_gap += 1
   }
 }

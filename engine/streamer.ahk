@@ -13,14 +13,14 @@ AttachStockfish() {
   } else {
     winactivate ahk_exe stockfish.exe
   }
-  winwaitactive ahk_exe stockfish.exe, , 0.2
+  winwaitactive, ahk_exe stockfish.exe
   winget stockfishPID, PID, ahk_exe stockfish.exe
   dllcall("AttachConsole", "int", stockfishPID)
 }
 
 ActivateStockfish() {
   winactivate ahk_exe stockfish.exe
-  winwaitactive ahk_exe stockfish.exe, , 0.2
+  winwaitactive ahk_exe stockfish.exe
 }
 
 GetConsoleText() {

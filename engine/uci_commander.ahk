@@ -33,6 +33,7 @@ RunUCI() {
   if blunder {
     return
   }
+  LogField2("")
   if not WinExist("ahk_exe stockfish.exe") {
     StartEngine()
   }

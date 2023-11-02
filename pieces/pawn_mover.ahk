@@ -9,9 +9,9 @@
 
 MovePawn(spot) {
   LogField4("move pawn '" spot "'")
-  if ( RandomChoice(3) ) {  ; reduce pawn move frequency
-    return
-  }
+  ; if ( RandomChoice(3) ) {  ; reduce pawn move frequency
+  ;   return
+  ; }
   diags := FindDiags(spot)   ; array
   target := PawnAttack(diags)  ; diag attacks
   if target {
